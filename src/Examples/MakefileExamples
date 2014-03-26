@@ -1,0 +1,71 @@
+PLATFORM = Linux
+
+ifeq ($(PLATFORM),Linux)
+	CFLAGS_EXT = -ffriend-injection
+	TARGET_RELEASE = Example.elf
+	TARGET_DEBUG = ExampleD.elf
+	SYSLIBS = -lGLEW -lglut -lGLU -lGL	
+	SYSLPATH = -L/usr/X11R6/lib
+endif
+
+ifeq ($(PLATFORM),OSX)
+ 	CFLAGS_EXT = -fvisibility-inlines-hidden
+	TARGET_RELEASE = Example
+	TARGET_DEBUG = ExampleD
+	SYSLIBS = -framework GLUT -framework OpenGL -framework	Foundation -framework AppKit
+	SYSLPATH =
+endif
+
+ifeq ($(PLATFORM),MinGW)
+	CFLAGS_EXT = 
+	TARGET_RELEASE = Example.exe
+	TARGET_DEBUG = ExampleD.exe
+	SYSLIBS = -lglew32s -lglut32 -lglu32 -lopengl32	
+	SYSLPATH = -L../../../../glew/lib -L../../../../gl
+endif
+
+LIBRARIES = $(SYSLIBS) $(EXTRAIVLIBS)  -lIvEngineOGL -lIvEngine -lIvGraphicsOGL -lIvGraphics -lIvMath -lIvUtility $(SYSLIBS)
+IPATH = -I. -I../../.. -I../../../common/Includes
+
+CC = g++
+
+release: BUILD = Release
+release: CFLAGS = -c -O $(IPATH) $(CFLAGS_EXT)
+release: $(TARGET_RELEASE)
+
+debug: BUILD = Debug
+debug: CFLAGS = -c -g -D_DEBUG $(IPATH) $(CFLAGS_EXT)
+debug: $(TARGET_DEBUG)
+
+#------------------------------
+# set based on build type
+
+OBJSDIR = $(PLATFORM)$(BUILD)
+LFLAGS = -L../../../../common/Libs/$(PLATFORM)$(BUILD) $(SYSLPATH)
+
+OBJS = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+vpath %.o $(OBJSDIR)
+
+#-------------------------------
+
+$(TARGET_RELEASE): $(OBJS)
+	cd $(OBJSDIR) && $(CC) -o ../$(TARGET_RELEASE) $(LFLAGS) $(OBJS) $(LIBRARIES)
+
+$(TARGET_DEBUG): $(OBJS)
+	cd $(OBJSDIR) && $(CC) -o ../$(TARGET_DEBUG) $(LFLAGS) $(OBJS) $(LIBRARIES)
+
+$(OBJS): $(OBJSDIR)
+
+.cpp.o: 
+	$(CC) $(CFLAGS) -DPLATFORM_$(PLATFORM) $< -o $(OBJSDIR)/$@
+
+$(OBJSDIR):
+	-mkdir -p $(OBJSDIR)
+
+#-------------------------------
+
+clean:
+	-rm -f $(PLATFORM)Release/$(OBJS)
+	-rm -f $(PLATFORM)Debug/$(OBJS)
+	-rm -f $(TARGET_RELEASE) 
+	-rm -f $(TARGET_DEBUG) 

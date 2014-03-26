@@ -1,0 +1,250 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE90E69D0D751006007DA437 /* IvAABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E6900D751006007DA437 /* IvAABB.cpp */; };
+		CE90E69E0D751006007DA437 /* IvAABB.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E6910D751006007DA437 /* IvAABB.h */; };
+		CE90E69F0D751006007DA437 /* IvBoundingSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E6920D751006007DA437 /* IvBoundingSphere.cpp */; };
+		CE90E6A00D751006007DA437 /* IvBoundingSphere.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E6930D751006007DA437 /* IvBoundingSphere.h */; };
+		CE90E6A10D751006007DA437 /* IvCapsule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E6940D751006007DA437 /* IvCapsule.cpp */; };
+		CE90E6A20D751006007DA437 /* IvCapsule.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E6950D751006007DA437 /* IvCapsule.h */; };
+		CE90E6A30D751006007DA437 /* IvCovariance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E6990D751006007DA437 /* IvCovariance.cpp */; };
+		CE90E6A40D751006007DA437 /* IvCovariance.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E69A0D751006007DA437 /* IvCovariance.h */; };
+		CE90E6A50D751006007DA437 /* IvOBB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E69B0D751006007DA437 /* IvOBB.cpp */; };
+		CE90E6A60D751006007DA437 /* IvOBB.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E69C0D751006007DA437 /* IvOBB.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CE90E6900D751006007DA437 /* IvAABB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvAABB.cpp; sourceTree = "<group>"; };
+		CE90E6910D751006007DA437 /* IvAABB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvAABB.h; sourceTree = "<group>"; };
+		CE90E6920D751006007DA437 /* IvBoundingSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvBoundingSphere.cpp; sourceTree = "<group>"; };
+		CE90E6930D751006007DA437 /* IvBoundingSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvBoundingSphere.h; sourceTree = "<group>"; };
+		CE90E6940D751006007DA437 /* IvCapsule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvCapsule.cpp; sourceTree = "<group>"; };
+		CE90E6950D751006007DA437 /* IvCapsule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvCapsule.h; sourceTree = "<group>"; };
+		CE90E6990D751006007DA437 /* IvCovariance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvCovariance.cpp; sourceTree = "<group>"; };
+		CE90E69A0D751006007DA437 /* IvCovariance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvCovariance.h; sourceTree = "<group>"; };
+		CE90E69B0D751006007DA437 /* IvOBB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvOBB.cpp; sourceTree = "<group>"; };
+		CE90E69C0D751006007DA437 /* IvOBB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvOBB.h; sourceTree = "<group>"; };
+		D2AAC046055464E500DB518D /* libIvCollision.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIvCollision.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D289987405E68DCB004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* IvGraphics */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = IvGraphics;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CE90E6900D751006007DA437 /* IvAABB.cpp */,
+				CE90E6910D751006007DA437 /* IvAABB.h */,
+				CE90E6920D751006007DA437 /* IvBoundingSphere.cpp */,
+				CE90E6930D751006007DA437 /* IvBoundingSphere.h */,
+				CE90E6940D751006007DA437 /* IvCapsule.cpp */,
+				CE90E6950D751006007DA437 /* IvCapsule.h */,
+				CE90E6990D751006007DA437 /* IvCovariance.cpp */,
+				CE90E69A0D751006007DA437 /* IvCovariance.h */,
+				CE90E69B0D751006007DA437 /* IvOBB.cpp */,
+				CE90E69C0D751006007DA437 /* IvOBB.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC046055464E500DB518D /* libIvCollision.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC043055464E500DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE90E69E0D751006007DA437 /* IvAABB.h in Headers */,
+				CE90E6A00D751006007DA437 /* IvBoundingSphere.h in Headers */,
+				CE90E6A20D751006007DA437 /* IvCapsule.h in Headers */,
+				CE90E6A40D751006007DA437 /* IvCovariance.h in Headers */,
+				CE90E6A60D751006007DA437 /* IvOBB.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC045055464E500DB518D /* IvCollision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "IvCollision" */;
+			buildPhases = (
+				D2AAC043055464E500DB518D /* Headers */,
+				D2AAC044055464E500DB518D /* Sources */,
+				D289987405E68DCB004EDB86 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IvCollision;
+			productName = IvGraphics;
+			productReference = D2AAC046055464E500DB518D /* libIvCollision.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "IvCollision" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* IvGraphics */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC045055464E500DB518D /* IvCollision */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC044055464E500DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE90E69D0D751006007DA437 /* IvAABB.cpp in Sources */,
+				CE90E69F0D751006007DA437 /* IvBoundingSphere.cpp in Sources */,
+				CE90E6A10D751006007DA437 /* IvCapsule.cpp in Sources */,
+				CE90E6A30D751006007DA437 /* IvCovariance.cpp in Sources */,
+				CE90E6A50D751006007DA437 /* IvOBB.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91EC08733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvCollision;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB91ED08733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvCollision;
+			};
+			name = Release;
+		};
+		1DEB91F008733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_OSX;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../IvMath,
+					../IvUtility,
+				);
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+			};
+			name = Debug;
+		};
+		1DEB91F108733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_OSX;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../IvMath,
+					../IvUtility,
+					../IvGraphics,
+					../..,
+				);
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "IvCollision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91EC08733DB70010E9CD /* Debug */,
+				1DEB91ED08733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "IvCollision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91F008733DB70010E9CD /* Debug */,
+				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

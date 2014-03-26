@@ -1,0 +1,7 @@
+uniform float4 dirLightPosition;
+sampler Texture;
+
+float4 ps_main( float2 uv : TEXCOORD0 ) : COLOR
+{
+    return clamp(dot(2.0 * (tex2D(Texture, uv).rgb - 0.5), dirLightPosition.xyz), 0.0, 1.0);
+}

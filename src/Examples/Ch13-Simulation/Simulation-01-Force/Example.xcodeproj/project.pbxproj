@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE9C45290D74C78900FBB88B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45280D74C78900FBB88B /* GLUT.framework */; };
+		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
+		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
+		CE9C45440D74C7B700FBB88B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45430D74C7B700FBB88B /* AppKit.framework */; };
+		CE9C45640D74C88600FBB88B /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE9C45620D74C88600FBB88B /* Player.cpp */; };
+		CE9C45670D74C89400FBB88B /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE9C45650D74C89400FBB88B /* Game.cpp */; };
+		CE9C45830D74CBD900FBB88B /* libIvMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45520D74C81600FBB88B /* libIvMath.a */; };
+		CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45580D74C82D00FBB88B /* libIvEngine.a */; };
+		CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C454C0D74C80100FBB88B /* libIvUtility.a */; };
+		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
+		CED8597B0D7E38CC00108FEE /* libIvCollision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CED8593F0D7E377600108FEE /* libIvCollision.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CE9C454B0D74C80100FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = IvUtility;
+		};
+		CE9C45510D74C81600FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = IvMath;
+		};
+		CE9C45570D74C82D00FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = IvEngine;
+		};
+		CE9C455D0D74C84100FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = IvGraphics;
+		};
+		CE9C45730D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IvEngine;
+		};
+		CE9C45750D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IvUtility;
+		};
+		CE9C45770D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IvMath;
+		};
+		CE9C45790D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = IvGraphics;
+		};
+		CED8593E0D7E377600108FEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED859370D7E377600108FEE /* IvCollision.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = IvCollision;
+		};
+		CED859490D7E379400108FEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED859370D7E377600108FEE /* IvCollision.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = IvCollision;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9C45280D74C78900FBB88B /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		CE9C45430D74C7B700FBB88B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvUtility.xcodeproj; path = ../../../common/IvUtility/IvUtility.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvMath.xcodeproj; path = ../../../common/IvMath/IvMath.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvEngine.xcodeproj; path = ../../../common/IvEngine/IvEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvGraphics.xcodeproj; path = ../../../common/IvGraphics/IvGraphics.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CE9C45620D74C88600FBB88B /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		CE9C45630D74C88600FBB88B /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		CE9C45650D74C89400FBB88B /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		CED859370D7E377600108FEE /* IvCollision.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvCollision.xcodeproj; path = ../../../common/IvCollision/IvCollision.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D0C4E910486CD37000505A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CED8597B0D7E38CC00108FEE /* libIvCollision.a in Frameworks */,
+				CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */,
+				CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */,
+				CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */,
+				CE9C45830D74CBD900FBB88B /* libIvMath.a in Frameworks */,
+				CE9C45290D74C78900FBB88B /* GLUT.framework in Frameworks */,
+				CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */,
+				CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */,
+				CE9C45440D74C7B700FBB88B /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		195DF8CFFE9D517E11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D0C4E970486CD37000505A6 /* ExampleD.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20286C29FDCF999611CA2CEA /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				CED859370D7E377600108FEE /* IvCollision.xcodeproj */,
+				CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */,
+				CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */,
+				CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */,
+				CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */,
+				20286C2AFDCF999611CA2CEA /* Sources */,
+				20286C2CFDCF999611CA2CEA /* Resources */,
+				20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */,
+				195DF8CFFE9D517E11CA2CBB /* Products */,
+			);
+			name = Example;
+			sourceTree = "<group>";
+		};
+		20286C2AFDCF999611CA2CEA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				CE9C45650D74C89400FBB88B /* Game.cpp */,
+				CE9C45660D74C89400FBB88B /* Game.h */,
+				CE9C45620D74C88600FBB88B /* Player.cpp */,
+				CE9C45630D74C88600FBB88B /* Player.h */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		20286C2CFDCF999611CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				CE9C45430D74C7B700FBB88B /* AppKit.framework */,
+				CE9C453F0D74C7AD00FBB88B /* Foundation.framework */,
+				CE9C453D0D74C79D00FBB88B /* OpenGL.framework */,
+				CE9C45280D74C78900FBB88B /* GLUT.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		CE9C45480D74C80100FBB88B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE9C454C0D74C80100FBB88B /* libIvUtility.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE9C454E0D74C81500FBB88B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE9C45520D74C81600FBB88B /* libIvMath.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE9C45540D74C82D00FBB88B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE9C45580D74C82D00FBB88B /* libIvEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE9C455A0D74C84100FBB88B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE9C455E0D74C84100FBB88B /* libIvGraphics.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CED859380D7E377600108FEE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CED8593F0D7E377600108FEE /* libIvCollision.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D0C4E890486CD37000505A6 /* Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C0E91AC508A95435008D54AB /* Build configuration list for PBXNativeTarget "Example" */;
+			buildPhases = (
+				8D0C4E8C0486CD37000505A6 /* Resources */,
+				8D0C4E8F0486CD37000505A6 /* Sources */,
+				8D0C4E910486CD37000505A6 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE9C45740D74CA3300FBB88B /* PBXTargetDependency */,
+				CE9C45760D74CA3300FBB88B /* PBXTargetDependency */,
+				CE9C45780D74CA3300FBB88B /* PBXTargetDependency */,
+				CE9C457A0D74CA3300FBB88B /* PBXTargetDependency */,
+				CED8594A0D7E379400108FEE /* PBXTargetDependency */,
+			);
+			name = Example;
+			productInstallPath = "$(HOME)/Applications";
+			productName = Example;
+			productReference = 8D0C4E970486CD37000505A6 /* ExampleD.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		20286C28FDCF999611CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Example" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 20286C29FDCF999611CA2CEA /* Example */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CED859380D7E377600108FEE /* Products */;
+					ProjectRef = CED859370D7E377600108FEE /* IvCollision.xcodeproj */;
+				},
+				{
+					ProductGroup = CE9C45540D74C82D00FBB88B /* Products */;
+					ProjectRef = CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */;
+				},
+				{
+					ProductGroup = CE9C455A0D74C84100FBB88B /* Products */;
+					ProjectRef = CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */;
+				},
+				{
+					ProductGroup = CE9C454E0D74C81500FBB88B /* Products */;
+					ProjectRef = CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */;
+				},
+				{
+					ProductGroup = CE9C45480D74C80100FBB88B /* Products */;
+					ProjectRef = CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D0C4E890486CD37000505A6 /* Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CE9C454C0D74C80100FBB88B /* libIvUtility.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIvUtility.a;
+			remoteRef = CE9C454B0D74C80100FBB88B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE9C45520D74C81600FBB88B /* libIvMath.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIvMath.a;
+			remoteRef = CE9C45510D74C81600FBB88B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE9C45580D74C82D00FBB88B /* libIvEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIvEngine.a;
+			remoteRef = CE9C45570D74C82D00FBB88B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE9C455E0D74C84100FBB88B /* libIvGraphics.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIvGraphics.a;
+			remoteRef = CE9C455D0D74C84100FBB88B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CED8593F0D7E377600108FEE /* libIvCollision.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIvCollision.a;
+			remoteRef = CED8593E0D7E377600108FEE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D0C4E8C0486CD37000505A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D0C4E8F0486CD37000505A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE9C45640D74C88600FBB88B /* Player.cpp in Sources */,
+				CE9C45670D74C89400FBB88B /* Game.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CE9C45740D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvEngine;
+			targetProxy = CE9C45730D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+		CE9C45760D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvUtility;
+			targetProxy = CE9C45750D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+		CE9C45780D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvMath;
+			targetProxy = CE9C45770D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+		CE9C457A0D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvGraphics;
+			targetProxy = CE9C45790D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+		CED8594A0D7E379400108FEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvCollision;
+			targetProxy = CED859490D7E379400108FEE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C0E91AC608A95435008D54AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = .;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OBJROOT = build;
+				PRODUCT_NAME = ExampleD;
+				SYMROOT = .;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C0E91AC708A95435008D54AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = .;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OBJROOT = build;
+				PRODUCT_NAME = Example;
+				SYMROOT = .;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C0E91ACA08A95435008D54AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../common/IvUtility,
+					../../../common/IvMath,
+					../../../common/IvEngine,
+					../../../common/IvGraphics,
+					../../../common/IvCollision,
+					../../../common/IvScene,
+				);
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		C0E91ACB08A95435008D54AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../common/IvUtility,
+					../../../common/IvMath,
+					../../../common/IvEngine,
+					../../../common/IvGraphics,
+					../../../common/IvCollision,
+					../../../common/IvScene,
+				);
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C0E91AC508A95435008D54AB /* Build configuration list for PBXNativeTarget "Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0E91AC608A95435008D54AB /* Debug */,
+				C0E91AC708A95435008D54AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0E91ACA08A95435008D54AB /* Debug */,
+				C0E91ACB08A95435008D54AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 20286C28FDCF999611CA2CEA /* Project object */;
+}

@@ -1,0 +1,5 @@
+float4 ps_main( ) : COLOR
+{
+	float4 test = float4(1.0, 1.0, 0.0, 1.0);
+	return test;
+}

@@ -1,0 +1,5 @@
+float4 constColor;
+float4 ps_main( ) : COLOR
+{
+	return constColor;
+}

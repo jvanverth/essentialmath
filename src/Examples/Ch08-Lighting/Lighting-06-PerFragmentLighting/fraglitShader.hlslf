@@ -1,0 +1,7 @@
+float4 dirLightPosition;
+
+float4 ps_main(float3 normal : TEXCOORD0) : COLOR
+{
+	float3 unitNormal = normalize(normal);
+    return clamp(dot(unitNormal, dirLightPosition.xyz), 0.0, 1.0);
+}

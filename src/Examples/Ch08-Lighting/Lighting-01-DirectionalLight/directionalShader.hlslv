@@ -1,0 +1,38 @@
+float4x4 IvModelViewProjectionMatrix;
+struct VS_OUTPUT
+{
+	float4 pos : POSITION;
+	float4 color : COLOR0;
+};
+
+float4 dirLightPosition; 
+float dirLightIntensity;
+
+struct lightSampleValues
+{
+	float3 L;
+	float iL;
+};
+
+lightSampleValues computeDirLightValues()
+{
+	lightSampleValues values;
+
+	values.L = dirLightPosition.xyz;
+
+	values.iL = dirLightIntensity;
+
+	return values;
+}
+
+VS_OUTPUT vs_main( float3 normal : NORMAL, float4 pos : POSITION )
+{
+    VS_OUTPUT Out = (VS_OUTPUT) 0;
+
+	lightSampleValues lightValues = computeDirLightValues();
+
+    Out.pos = mul(pos, IvModelViewProjectionMatrix);
+    Out.color = clamp(dot(normal, lightValues.L) * lightValues.iL, 0.0, 1.0);
+    return Out;
+}
+

@@ -1,0 +1,303 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CEFD624A0C5D855500AF64E7 /* IvGaussianElim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62440C5D855500AF64E7 /* IvGaussianElim.cpp */; };
+		CEFD624B0C5D855500AF64E7 /* IvGaussianElim.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62450C5D855500AF64E7 /* IvGaussianElim.h */; };
+		CEFD624C0C5D855500AF64E7 /* IvLine3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62460C5D855500AF64E7 /* IvLine3.cpp */; };
+		CEFD624D0C5D855500AF64E7 /* IvLine3.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62470C5D855500AF64E7 /* IvLine3.h */; };
+		CEFD624E0C5D855500AF64E7 /* IvLineSegment3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62480C5D855500AF64E7 /* IvLineSegment3.cpp */; };
+		CEFD624F0C5D855500AF64E7 /* IvLineSegment3.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62490C5D855500AF64E7 /* IvLineSegment3.h */; };
+		CEFD62510C5D856900AF64E7 /* IvMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62500C5D856900AF64E7 /* IvMath.cpp */; };
+		CEFD62530C5D857200AF64E7 /* IvMath.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62520C5D857200AF64E7 /* IvMath.h */; };
+		CEFD62660C5D858500AF64E7 /* IvMatrix33.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62540C5D858500AF64E7 /* IvMatrix33.cpp */; };
+		CEFD62670C5D858500AF64E7 /* IvMatrix33.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62550C5D858500AF64E7 /* IvMatrix33.h */; };
+		CEFD62680C5D858500AF64E7 /* IvMatrix44.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62560C5D858500AF64E7 /* IvMatrix44.cpp */; };
+		CEFD62690C5D858500AF64E7 /* IvMatrix44.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62570C5D858500AF64E7 /* IvMatrix44.h */; };
+		CEFD626A0C5D858500AF64E7 /* IvPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62580C5D858500AF64E7 /* IvPlane.cpp */; };
+		CEFD626B0C5D858500AF64E7 /* IvPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62590C5D858500AF64E7 /* IvPlane.h */; };
+		CEFD626C0C5D858500AF64E7 /* IvQuat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD625A0C5D858500AF64E7 /* IvQuat.cpp */; };
+		CEFD626D0C5D858500AF64E7 /* IvQuat.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD625B0C5D858500AF64E7 /* IvQuat.h */; };
+		CEFD626E0C5D858500AF64E7 /* IvRay3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD625C0C5D858500AF64E7 /* IvRay3.cpp */; };
+		CEFD626F0C5D858500AF64E7 /* IvRay3.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD625D0C5D858500AF64E7 /* IvRay3.h */; };
+		CEFD62700C5D858500AF64E7 /* IvTriangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD625E0C5D858500AF64E7 /* IvTriangle.cpp */; };
+		CEFD62710C5D858500AF64E7 /* IvTriangle.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD625F0C5D858500AF64E7 /* IvTriangle.h */; };
+		CEFD62720C5D858500AF64E7 /* IvVector2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62600C5D858500AF64E7 /* IvVector2.cpp */; };
+		CEFD62730C5D858500AF64E7 /* IvVector2.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62610C5D858500AF64E7 /* IvVector2.h */; };
+		CEFD62740C5D858500AF64E7 /* IvVector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62620C5D858500AF64E7 /* IvVector3.cpp */; };
+		CEFD62750C5D858500AF64E7 /* IvVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62630C5D858500AF64E7 /* IvVector3.h */; };
+		CEFD62760C5D858500AF64E7 /* IvVector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD62640C5D858500AF64E7 /* IvVector4.cpp */; };
+		CEFD62770C5D858500AF64E7 /* IvVector4.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD62650C5D858500AF64E7 /* IvVector4.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CEFD62440C5D855500AF64E7 /* IvGaussianElim.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvGaussianElim.cpp; sourceTree = "<group>"; };
+		CEFD62450C5D855500AF64E7 /* IvGaussianElim.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvGaussianElim.h; sourceTree = "<group>"; };
+		CEFD62460C5D855500AF64E7 /* IvLine3.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvLine3.cpp; sourceTree = "<group>"; };
+		CEFD62470C5D855500AF64E7 /* IvLine3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvLine3.h; sourceTree = "<group>"; };
+		CEFD62480C5D855500AF64E7 /* IvLineSegment3.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvLineSegment3.cpp; sourceTree = "<group>"; };
+		CEFD62490C5D855500AF64E7 /* IvLineSegment3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvLineSegment3.h; sourceTree = "<group>"; };
+		CEFD62500C5D856900AF64E7 /* IvMath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvMath.cpp; sourceTree = "<group>"; };
+		CEFD62520C5D857200AF64E7 /* IvMath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvMath.h; sourceTree = "<group>"; };
+		CEFD62540C5D858500AF64E7 /* IvMatrix33.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvMatrix33.cpp; sourceTree = "<group>"; };
+		CEFD62550C5D858500AF64E7 /* IvMatrix33.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvMatrix33.h; sourceTree = "<group>"; };
+		CEFD62560C5D858500AF64E7 /* IvMatrix44.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvMatrix44.cpp; sourceTree = "<group>"; };
+		CEFD62570C5D858500AF64E7 /* IvMatrix44.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvMatrix44.h; sourceTree = "<group>"; };
+		CEFD62580C5D858500AF64E7 /* IvPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvPlane.cpp; sourceTree = "<group>"; };
+		CEFD62590C5D858500AF64E7 /* IvPlane.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvPlane.h; sourceTree = "<group>"; };
+		CEFD625A0C5D858500AF64E7 /* IvQuat.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvQuat.cpp; sourceTree = "<group>"; };
+		CEFD625B0C5D858500AF64E7 /* IvQuat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvQuat.h; sourceTree = "<group>"; };
+		CEFD625C0C5D858500AF64E7 /* IvRay3.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvRay3.cpp; sourceTree = "<group>"; };
+		CEFD625D0C5D858500AF64E7 /* IvRay3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvRay3.h; sourceTree = "<group>"; };
+		CEFD625E0C5D858500AF64E7 /* IvTriangle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvTriangle.cpp; sourceTree = "<group>"; };
+		CEFD625F0C5D858500AF64E7 /* IvTriangle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvTriangle.h; sourceTree = "<group>"; };
+		CEFD62600C5D858500AF64E7 /* IvVector2.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvVector2.cpp; sourceTree = "<group>"; };
+		CEFD62610C5D858500AF64E7 /* IvVector2.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVector2.h; sourceTree = "<group>"; };
+		CEFD62620C5D858500AF64E7 /* IvVector3.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvVector3.cpp; sourceTree = "<group>"; };
+		CEFD62630C5D858500AF64E7 /* IvVector3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVector3.h; sourceTree = "<group>"; };
+		CEFD62640C5D858500AF64E7 /* IvVector4.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvVector4.cpp; sourceTree = "<group>"; };
+		CEFD62650C5D858500AF64E7 /* IvVector4.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVector4.h; sourceTree = "<group>"; };
+		D2AAC07E0554694100DB518D /* libIvMath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIvMath.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* libIvMath.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* IvMath */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AEFE84172EC02AAC07 /* Sources */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = IvMath;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				CEFD62540C5D858500AF64E7 /* IvMatrix33.cpp */,
+				CEFD62550C5D858500AF64E7 /* IvMatrix33.h */,
+				CEFD62560C5D858500AF64E7 /* IvMatrix44.cpp */,
+				CEFD62570C5D858500AF64E7 /* IvMatrix44.h */,
+				CEFD62580C5D858500AF64E7 /* IvPlane.cpp */,
+				CEFD62590C5D858500AF64E7 /* IvPlane.h */,
+				CEFD625A0C5D858500AF64E7 /* IvQuat.cpp */,
+				CEFD625B0C5D858500AF64E7 /* IvQuat.h */,
+				CEFD625C0C5D858500AF64E7 /* IvRay3.cpp */,
+				CEFD625D0C5D858500AF64E7 /* IvRay3.h */,
+				CEFD625E0C5D858500AF64E7 /* IvTriangle.cpp */,
+				CEFD625F0C5D858500AF64E7 /* IvTriangle.h */,
+				CEFD62600C5D858500AF64E7 /* IvVector2.cpp */,
+				CEFD62610C5D858500AF64E7 /* IvVector2.h */,
+				CEFD62620C5D858500AF64E7 /* IvVector3.cpp */,
+				CEFD62630C5D858500AF64E7 /* IvVector3.h */,
+				CEFD62640C5D858500AF64E7 /* IvVector4.cpp */,
+				CEFD62650C5D858500AF64E7 /* IvVector4.h */,
+				CEFD62520C5D857200AF64E7 /* IvMath.h */,
+				CEFD62500C5D856900AF64E7 /* IvMath.cpp */,
+				CEFD62440C5D855500AF64E7 /* IvGaussianElim.cpp */,
+				CEFD62450C5D855500AF64E7 /* IvGaussianElim.h */,
+				CEFD62460C5D855500AF64E7 /* IvLine3.cpp */,
+				CEFD62470C5D855500AF64E7 /* IvLine3.h */,
+				CEFD62480C5D855500AF64E7 /* IvLineSegment3.cpp */,
+				CEFD62490C5D855500AF64E7 /* IvLineSegment3.h */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEFD624B0C5D855500AF64E7 /* IvGaussianElim.h in Headers */,
+				CEFD624D0C5D855500AF64E7 /* IvLine3.h in Headers */,
+				CEFD624F0C5D855500AF64E7 /* IvLineSegment3.h in Headers */,
+				CEFD62530C5D857200AF64E7 /* IvMath.h in Headers */,
+				CEFD62670C5D858500AF64E7 /* IvMatrix33.h in Headers */,
+				CEFD62690C5D858500AF64E7 /* IvMatrix44.h in Headers */,
+				CEFD626B0C5D858500AF64E7 /* IvPlane.h in Headers */,
+				CEFD626D0C5D858500AF64E7 /* IvQuat.h in Headers */,
+				CEFD626F0C5D858500AF64E7 /* IvRay3.h in Headers */,
+				CEFD62710C5D858500AF64E7 /* IvTriangle.h in Headers */,
+				CEFD62730C5D858500AF64E7 /* IvVector2.h in Headers */,
+				CEFD62750C5D858500AF64E7 /* IvVector3.h in Headers */,
+				CEFD62770C5D858500AF64E7 /* IvVector4.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC07D0554694100DB518D /* IvMath */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "IvMath" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IvMath;
+			productName = IvMath;
+			productReference = D2AAC07E0554694100DB518D /* libIvMath.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "IvMath" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* IvMath */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* IvMath */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEFD624A0C5D855500AF64E7 /* IvGaussianElim.cpp in Sources */,
+				CEFD624C0C5D855500AF64E7 /* IvLine3.cpp in Sources */,
+				CEFD624E0C5D855500AF64E7 /* IvLineSegment3.cpp in Sources */,
+				CEFD62510C5D856900AF64E7 /* IvMath.cpp in Sources */,
+				CEFD62660C5D858500AF64E7 /* IvMatrix33.cpp in Sources */,
+				CEFD62680C5D858500AF64E7 /* IvMatrix44.cpp in Sources */,
+				CEFD626A0C5D858500AF64E7 /* IvPlane.cpp in Sources */,
+				CEFD626C0C5D858500AF64E7 /* IvQuat.cpp in Sources */,
+				CEFD626E0C5D858500AF64E7 /* IvRay3.cpp in Sources */,
+				CEFD62700C5D858500AF64E7 /* IvTriangle.cpp in Sources */,
+				CEFD62720C5D858500AF64E7 /* IvVector2.cpp in Sources */,
+				CEFD62740C5D858500AF64E7 /* IvVector3.cpp in Sources */,
+				CEFD62760C5D858500AF64E7 /* IvVector4.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					../IvUtility,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvMath;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					../IvUtility,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvMath;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "IvMath" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "IvMath" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

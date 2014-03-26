@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Example", "Example.vcproj", "{7A165EC8-22E5-454A-9385-2C2D0B772FFC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0} = {9EADBD9D-C4D2-4D67-9642-9D03873550D0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IvEngine", "..\..\..\common\IvEngine\IvEngine.vcproj", "{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IvMath", "..\..\..\common\IvMath\IvMath.vcproj", "{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IvUtility", "..\..\..\common\IvUtility\IvUtility.vcproj", "{5047925C-44FE-4DC8-9B6E-B161E31CB216}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IvGraphics", "..\..\..\common\IvGraphics\IvGraphics.vcproj", "{9EADBD9D-C4D2-4D67-9642-9D03873550D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug D3D9|Win32 = Debug D3D9|Win32
+		Debug OGL|Win32 = Debug OGL|Win32
+		Release D3D9|Win32 = Release D3D9|Win32
+		Release OGL|Win32 = Release OGL|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Debug D3D9|Win32.ActiveCfg = Debug D3D9|Win32
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Debug D3D9|Win32.Build.0 = Debug D3D9|Win32
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Debug OGL|Win32.ActiveCfg = Debug OGL|Win32
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Debug OGL|Win32.Build.0 = Debug OGL|Win32
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Release D3D9|Win32.ActiveCfg = Release D3D9|Win32
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Release D3D9|Win32.Build.0 = Release D3D9|Win32
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Release OGL|Win32.ActiveCfg = Release OGL|Win32
+		{7A165EC8-22E5-454A-9385-2C2D0B772FFC}.Release OGL|Win32.Build.0 = Release OGL|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Debug D3D9|Win32.ActiveCfg = Debug D3D9|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Debug D3D9|Win32.Build.0 = Debug D3D9|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Debug OGL|Win32.ActiveCfg = Debug OGL|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Debug OGL|Win32.Build.0 = Debug OGL|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Release D3D9|Win32.ActiveCfg = Release D3D9|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Release D3D9|Win32.Build.0 = Release D3D9|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Release OGL|Win32.ActiveCfg = Release OGL|Win32
+		{A052D0A6-07C3-44AE-B484-D6DD7FB3EC26}.Release OGL|Win32.Build.0 = Release OGL|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Debug D3D9|Win32.ActiveCfg = Debug|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Debug D3D9|Win32.Build.0 = Debug|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Debug OGL|Win32.ActiveCfg = Debug|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Debug OGL|Win32.Build.0 = Debug|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Release D3D9|Win32.ActiveCfg = Release|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Release D3D9|Win32.Build.0 = Release|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Release OGL|Win32.ActiveCfg = Release|Win32
+		{5CDB3B5A-6B4D-494A-B393-1E955C50DDCB}.Release OGL|Win32.Build.0 = Release|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Debug D3D9|Win32.ActiveCfg = Debug|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Debug D3D9|Win32.Build.0 = Debug|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Debug OGL|Win32.ActiveCfg = Debug|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Debug OGL|Win32.Build.0 = Debug|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Release D3D9|Win32.ActiveCfg = Release|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Release D3D9|Win32.Build.0 = Release|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Release OGL|Win32.ActiveCfg = Release|Win32
+		{5047925C-44FE-4DC8-9B6E-B161E31CB216}.Release OGL|Win32.Build.0 = Release|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Debug D3D9|Win32.ActiveCfg = Debug D3D9|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Debug D3D9|Win32.Build.0 = Debug D3D9|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Debug OGL|Win32.ActiveCfg = Debug OGL|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Debug OGL|Win32.Build.0 = Debug OGL|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Release D3D9|Win32.ActiveCfg = Release D3D9|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Release D3D9|Win32.Build.0 = Release D3D9|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Release OGL|Win32.ActiveCfg = Release OGL|Win32
+		{9EADBD9D-C4D2-4D67-9642-9D03873550D0}.Release OGL|Win32.Build.0 = Release OGL|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

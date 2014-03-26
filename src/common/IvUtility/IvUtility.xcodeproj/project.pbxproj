@@ -1,0 +1,226 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CEFD61840C5D83D700AF64E7 /* IvAssert.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD617C0C5D83D700AF64E7 /* IvAssert.h */; };
+		CEFD61850C5D83D700AF64E7 /* IvDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD617D0C5D83D700AF64E7 /* IvDebugger.cpp */; };
+		CEFD61860C5D83D700AF64E7 /* IvDebugger.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD617E0C5D83D700AF64E7 /* IvDebugger.h */; };
+		CEFD61870C5D83D700AF64E7 /* IvFileReader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD617F0C5D83D700AF64E7 /* IvFileReader.h */; };
+		CEFD61880C5D83D700AF64E7 /* IvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD61800C5D83D700AF64E7 /* IvImage.cpp */; };
+		CEFD61890C5D83D700AF64E7 /* IvImage.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD61810C5D83D700AF64E7 /* IvImage.h */; };
+		CEFD618A0C5D83D700AF64E7 /* IvReader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD61820C5D83D700AF64E7 /* IvReader.h */; };
+		CEFD618B0C5D83D700AF64E7 /* IvTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD61830C5D83D700AF64E7 /* IvTypes.h */; };
+		CEFD618F0C5D83E400AF64E7 /* IvWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD618D0C5D83E400AF64E7 /* IvWriter.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CEFD617C0C5D83D700AF64E7 /* IvAssert.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvAssert.h; sourceTree = "<group>"; };
+		CEFD617D0C5D83D700AF64E7 /* IvDebugger.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvDebugger.cpp; sourceTree = "<group>"; };
+		CEFD617E0C5D83D700AF64E7 /* IvDebugger.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvDebugger.h; sourceTree = "<group>"; };
+		CEFD617F0C5D83D700AF64E7 /* IvFileReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvFileReader.h; sourceTree = "<group>"; };
+		CEFD61800C5D83D700AF64E7 /* IvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvImage.cpp; sourceTree = "<group>"; };
+		CEFD61810C5D83D700AF64E7 /* IvImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvImage.h; sourceTree = "<group>"; };
+		CEFD61820C5D83D700AF64E7 /* IvReader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvReader.h; sourceTree = "<group>"; };
+		CEFD61830C5D83D700AF64E7 /* IvTypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvTypes.h; sourceTree = "<group>"; };
+		CEFD618D0C5D83E400AF64E7 /* IvWriter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvWriter.h; sourceTree = "<group>"; };
+		D2AAC07E0554694100DB518D /* libIvUtility.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIvUtility.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* libIvUtility.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* IvUtility */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AEFE84172EC02AAC07 /* Sources */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = IvUtility;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				CEFD618D0C5D83E400AF64E7 /* IvWriter.h */,
+				CEFD617C0C5D83D700AF64E7 /* IvAssert.h */,
+				CEFD617D0C5D83D700AF64E7 /* IvDebugger.cpp */,
+				CEFD617E0C5D83D700AF64E7 /* IvDebugger.h */,
+				CEFD617F0C5D83D700AF64E7 /* IvFileReader.h */,
+				CEFD61800C5D83D700AF64E7 /* IvImage.cpp */,
+				CEFD61810C5D83D700AF64E7 /* IvImage.h */,
+				CEFD61820C5D83D700AF64E7 /* IvReader.h */,
+				CEFD61830C5D83D700AF64E7 /* IvTypes.h */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEFD61840C5D83D700AF64E7 /* IvAssert.h in Headers */,
+				CEFD61860C5D83D700AF64E7 /* IvDebugger.h in Headers */,
+				CEFD61870C5D83D700AF64E7 /* IvFileReader.h in Headers */,
+				CEFD61890C5D83D700AF64E7 /* IvImage.h in Headers */,
+				CEFD618A0C5D83D700AF64E7 /* IvReader.h in Headers */,
+				CEFD618B0C5D83D700AF64E7 /* IvTypes.h in Headers */,
+				CEFD618F0C5D83E400AF64E7 /* IvWriter.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC07D0554694100DB518D /* IvUtility */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "IvUtility" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IvUtility;
+			productName = IvUtility;
+			productReference = D2AAC07E0554694100DB518D /* libIvUtility.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "IvUtility" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* IvUtility */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* IvUtility */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEFD61850C5D83D700AF64E7 /* IvDebugger.cpp in Sources */,
+				CEFD61880C5D83D700AF64E7 /* IvImage.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvUtility;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvUtility;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "IvUtility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "IvUtility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

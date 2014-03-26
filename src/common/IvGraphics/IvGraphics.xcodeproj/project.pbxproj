@@ -1,0 +1,366 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE29002A0C94CA0C002F23B6 /* IvShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2900290C94CA0C002F23B6 /* IvShaderProgram.h */; };
+		CE29002D0C94CA1A002F23B6 /* IvShaderProgramOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE29002B0C94CA1A002F23B6 /* IvShaderProgramOGL.cpp */; };
+		CE29002E0C94CA1A002F23B6 /* IvShaderProgramOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE29002C0C94CA1A002F23B6 /* IvShaderProgramOGL.h */; };
+		CE2900830C94E0AA002F23B6 /* IvRendererHelpOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE2900810C94E0AA002F23B6 /* IvRendererHelpOGL.cpp */; };
+		CE2900840C94E0AA002F23B6 /* IvRendererHelpOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2900820C94E0AA002F23B6 /* IvRendererHelpOGL.h */; };
+		CE8C5E280D748EAC0006FDB9 /* IvTextureOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE8C5E240D748EAC0006FDB9 /* IvTextureOGL.cpp */; };
+		CE8C5E290D748EAC0006FDB9 /* IvTextureOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E250D748EAC0006FDB9 /* IvTextureOGL.h */; };
+		CE8C5E2A0D748EAC0006FDB9 /* IvUniformOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE8C5E260D748EAC0006FDB9 /* IvUniformOGL.cpp */; };
+		CE8C5E2B0D748EAC0006FDB9 /* IvUniformOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E270D748EAC0006FDB9 /* IvUniformOGL.h */; };
+		CE8C5E2D0D748EBA0006FDB9 /* IvColor.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E2C0D748EBA0006FDB9 /* IvColor.h */; };
+		CE8C5E340D748EC90006FDB9 /* IvRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE8C5E2E0D748EC90006FDB9 /* IvRenderer.cpp */; };
+		CE8C5E350D748EC90006FDB9 /* IvRendererHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE8C5E2F0D748EC90006FDB9 /* IvRendererHelp.cpp */; };
+		CE8C5E360D748EC90006FDB9 /* IvTeapot.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E300D748EC90006FDB9 /* IvTeapot.h */; };
+		CE8C5E370D748EC90006FDB9 /* IvTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E310D748EC90006FDB9 /* IvTexture.h */; };
+		CE8C5E380D748EC90006FDB9 /* IvTextureFormats.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E320D748EC90006FDB9 /* IvTextureFormats.h */; };
+		CE8C5E390D748EC90006FDB9 /* IvUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E330D748EC90006FDB9 /* IvUniform.h */; };
+		CEE19D890C67F7E100D80249 /* IvDeviceListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE19D710C67F7E100D80249 /* IvDeviceListener.h */; };
+		CEE19D8D0C67F7E100D80249 /* IvVertexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE19D750C67F7E100D80249 /* IvVertexBuffer.h */; };
+		CEE19D920C67F7E100D80249 /* IvVertexBufferOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE19D7B0C67F7E100D80249 /* IvVertexBufferOGL.h */; };
+		CEE19D990C67F7E100D80249 /* IvVertexBufferOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEE19D820C67F7E100D80249 /* IvVertexBufferOGL.cpp */; };
+		CEE19D9F0C67F7E100D80249 /* IvVertexFormats.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE19D880C67F7E100D80249 /* IvVertexFormats.h */; };
+		CEE6FC730D7CF8CA0055EDC3 /* IvTeapot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEE6FC720D7CF8CA0055EDC3 /* IvTeapot.cpp */; };
+		CEEACEB10C90E8DC00995013 /* IvIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEB00C90E8DC00995013 /* IvIndexBuffer.h */; };
+		CEEACEB70C90E8EB00995013 /* IvRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEB30C90E8EB00995013 /* IvRenderer.h */; };
+		CEEACEB80C90E8EB00995013 /* IvRendererHelp.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEB40C90E8EB00995013 /* IvRendererHelp.h */; };
+		CEEACEB90C90E8EB00995013 /* IvResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEB50C90E8EB00995013 /* IvResourceManager.h */; };
+		CEEACEBC0C90E90800995013 /* IvIndexBufferOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEACEBA0C90E90800995013 /* IvIndexBufferOGL.cpp */; };
+		CEEACEBD0C90E90800995013 /* IvIndexBufferOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEBB0C90E90800995013 /* IvIndexBufferOGL.h */; };
+		CEEACEC00C90E91500995013 /* IvResourceManagerOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEACEBE0C90E91500995013 /* IvResourceManagerOGL.cpp */; };
+		CEEACEC10C90E91500995013 /* IvResourceManagerOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEBF0C90E91500995013 /* IvResourceManagerOGL.h */; };
+		CEEACEEA0C90EC6900995013 /* IvFragmentShader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEE90C90EC6900995013 /* IvFragmentShader.h */; };
+		CEEACEEC0C90EC7300995013 /* IvVertexShader.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEACEEB0C90EC7300995013 /* IvVertexShader.h */; };
+		CEEFD4340C932FDE0050541B /* IvRendererOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD4320C932FDE0050541B /* IvRendererOGL.cpp */; };
+		CEEFD4350C932FDE0050541B /* IvRendererOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEFD4330C932FDE0050541B /* IvRendererOGL.h */; };
+		CEF2879F0C92292200FC2FAC /* IvVertexShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEF2879E0C92292200FC2FAC /* IvVertexShaderOGL.cpp */; };
+		CEF287A10C92292700FC2FAC /* IvVertexShaderOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CEF287A00C92292700FC2FAC /* IvVertexShaderOGL.h */; };
+		CEF287CF0C92311000FC2FAC /* IvFragmentShaderOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEF287CD0C92311000FC2FAC /* IvFragmentShaderOGL.cpp */; };
+		CEF287D00C92311000FC2FAC /* IvFragmentShaderOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CEF287CE0C92311000FC2FAC /* IvFragmentShaderOGL.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CE2900290C94CA0C002F23B6 /* IvShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvShaderProgram.h; sourceTree = "<group>"; };
+		CE29002B0C94CA1A002F23B6 /* IvShaderProgramOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvShaderProgramOGL.cpp; sourceTree = "<group>"; };
+		CE29002C0C94CA1A002F23B6 /* IvShaderProgramOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvShaderProgramOGL.h; sourceTree = "<group>"; };
+		CE2900810C94E0AA002F23B6 /* IvRendererHelpOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvRendererHelpOGL.cpp; sourceTree = "<group>"; };
+		CE2900820C94E0AA002F23B6 /* IvRendererHelpOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvRendererHelpOGL.h; sourceTree = "<group>"; };
+		CE8C5E240D748EAC0006FDB9 /* IvTextureOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvTextureOGL.cpp; sourceTree = "<group>"; };
+		CE8C5E250D748EAC0006FDB9 /* IvTextureOGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvTextureOGL.h; sourceTree = "<group>"; };
+		CE8C5E260D748EAC0006FDB9 /* IvUniformOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvUniformOGL.cpp; sourceTree = "<group>"; };
+		CE8C5E270D748EAC0006FDB9 /* IvUniformOGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvUniformOGL.h; sourceTree = "<group>"; };
+		CE8C5E2C0D748EBA0006FDB9 /* IvColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvColor.h; sourceTree = "<group>"; };
+		CE8C5E2E0D748EC90006FDB9 /* IvRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvRenderer.cpp; sourceTree = "<group>"; };
+		CE8C5E2F0D748EC90006FDB9 /* IvRendererHelp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvRendererHelp.cpp; sourceTree = "<group>"; };
+		CE8C5E300D748EC90006FDB9 /* IvTeapot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvTeapot.h; sourceTree = "<group>"; };
+		CE8C5E310D748EC90006FDB9 /* IvTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvTexture.h; sourceTree = "<group>"; };
+		CE8C5E320D748EC90006FDB9 /* IvTextureFormats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvTextureFormats.h; sourceTree = "<group>"; };
+		CE8C5E330D748EC90006FDB9 /* IvUniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvUniform.h; sourceTree = "<group>"; };
+		CEE19D710C67F7E100D80249 /* IvDeviceListener.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvDeviceListener.h; sourceTree = "<group>"; };
+		CEE19D750C67F7E100D80249 /* IvVertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVertexBuffer.h; sourceTree = "<group>"; };
+		CEE19D7B0C67F7E100D80249 /* IvVertexBufferOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVertexBufferOGL.h; sourceTree = "<group>"; };
+		CEE19D820C67F7E100D80249 /* IvVertexBufferOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvVertexBufferOGL.cpp; sourceTree = "<group>"; };
+		CEE19D880C67F7E100D80249 /* IvVertexFormats.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVertexFormats.h; sourceTree = "<group>"; };
+		CEE6FC720D7CF8CA0055EDC3 /* IvTeapot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvTeapot.cpp; sourceTree = "<group>"; };
+		CEEACEB00C90E8DC00995013 /* IvIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvIndexBuffer.h; sourceTree = "<group>"; };
+		CEEACEB30C90E8EB00995013 /* IvRenderer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvRenderer.h; sourceTree = "<group>"; };
+		CEEACEB40C90E8EB00995013 /* IvRendererHelp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvRendererHelp.h; sourceTree = "<group>"; };
+		CEEACEB50C90E8EB00995013 /* IvResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvResourceManager.h; sourceTree = "<group>"; };
+		CEEACEBA0C90E90800995013 /* IvIndexBufferOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvIndexBufferOGL.cpp; sourceTree = "<group>"; };
+		CEEACEBB0C90E90800995013 /* IvIndexBufferOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvIndexBufferOGL.h; sourceTree = "<group>"; };
+		CEEACEBE0C90E91500995013 /* IvResourceManagerOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvResourceManagerOGL.cpp; sourceTree = "<group>"; };
+		CEEACEBF0C90E91500995013 /* IvResourceManagerOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvResourceManagerOGL.h; sourceTree = "<group>"; };
+		CEEACEE90C90EC6900995013 /* IvFragmentShader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvFragmentShader.h; sourceTree = "<group>"; };
+		CEEACEEB0C90EC7300995013 /* IvVertexShader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVertexShader.h; sourceTree = "<group>"; };
+		CEEFD4320C932FDE0050541B /* IvRendererOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvRendererOGL.cpp; sourceTree = "<group>"; };
+		CEEFD4330C932FDE0050541B /* IvRendererOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvRendererOGL.h; sourceTree = "<group>"; };
+		CEF2879E0C92292200FC2FAC /* IvVertexShaderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvVertexShaderOGL.cpp; sourceTree = "<group>"; };
+		CEF287A00C92292700FC2FAC /* IvVertexShaderOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVertexShaderOGL.h; sourceTree = "<group>"; };
+		CEF287CD0C92311000FC2FAC /* IvFragmentShaderOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvFragmentShaderOGL.cpp; sourceTree = "<group>"; };
+		CEF287CE0C92311000FC2FAC /* IvFragmentShaderOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvFragmentShaderOGL.h; sourceTree = "<group>"; };
+		D2AAC046055464E500DB518D /* libIvGraphics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIvGraphics.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D289987405E68DCB004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* IvGraphics */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = IvGraphics;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				CEE6FC720D7CF8CA0055EDC3 /* IvTeapot.cpp */,
+				CE8C5E2E0D748EC90006FDB9 /* IvRenderer.cpp */,
+				CE8C5E2F0D748EC90006FDB9 /* IvRendererHelp.cpp */,
+				CE8C5E300D748EC90006FDB9 /* IvTeapot.h */,
+				CE8C5E310D748EC90006FDB9 /* IvTexture.h */,
+				CE8C5E320D748EC90006FDB9 /* IvTextureFormats.h */,
+				CE8C5E330D748EC90006FDB9 /* IvUniform.h */,
+				CE8C5E2C0D748EBA0006FDB9 /* IvColor.h */,
+				CEE19D710C67F7E100D80249 /* IvDeviceListener.h */,
+				CEEACEE90C90EC6900995013 /* IvFragmentShader.h */,
+				CEEACEB00C90E8DC00995013 /* IvIndexBuffer.h */,
+				CEEACEB30C90E8EB00995013 /* IvRenderer.h */,
+				CEEACEB40C90E8EB00995013 /* IvRendererHelp.h */,
+				CEEACEB50C90E8EB00995013 /* IvResourceManager.h */,
+				CE2900290C94CA0C002F23B6 /* IvShaderProgram.h */,
+				CEE19D750C67F7E100D80249 /* IvVertexBuffer.h */,
+				CEE19D880C67F7E100D80249 /* IvVertexFormats.h */,
+				CEEACEEB0C90EC7300995013 /* IvVertexShader.h */,
+				CEE19D780C67F7E100D80249 /* OGL */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC046055464E500DB518D /* libIvGraphics.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEE19D780C67F7E100D80249 /* OGL */ = {
+			isa = PBXGroup;
+			children = (
+				CE8C5E240D748EAC0006FDB9 /* IvTextureOGL.cpp */,
+				CE8C5E250D748EAC0006FDB9 /* IvTextureOGL.h */,
+				CE8C5E260D748EAC0006FDB9 /* IvUniformOGL.cpp */,
+				CE8C5E270D748EAC0006FDB9 /* IvUniformOGL.h */,
+				CEF287CD0C92311000FC2FAC /* IvFragmentShaderOGL.cpp */,
+				CEF287CE0C92311000FC2FAC /* IvFragmentShaderOGL.h */,
+				CEEACEBA0C90E90800995013 /* IvIndexBufferOGL.cpp */,
+				CEEACEBB0C90E90800995013 /* IvIndexBufferOGL.h */,
+				CEEFD4320C932FDE0050541B /* IvRendererOGL.cpp */,
+				CEEFD4330C932FDE0050541B /* IvRendererOGL.h */,
+				CE2900810C94E0AA002F23B6 /* IvRendererHelpOGL.cpp */,
+				CE2900820C94E0AA002F23B6 /* IvRendererHelpOGL.h */,
+				CEEACEBE0C90E91500995013 /* IvResourceManagerOGL.cpp */,
+				CEEACEBF0C90E91500995013 /* IvResourceManagerOGL.h */,
+				CE29002B0C94CA1A002F23B6 /* IvShaderProgramOGL.cpp */,
+				CE29002C0C94CA1A002F23B6 /* IvShaderProgramOGL.h */,
+				CEE19D820C67F7E100D80249 /* IvVertexBufferOGL.cpp */,
+				CEE19D7B0C67F7E100D80249 /* IvVertexBufferOGL.h */,
+				CEF2879E0C92292200FC2FAC /* IvVertexShaderOGL.cpp */,
+				CEF287A00C92292700FC2FAC /* IvVertexShaderOGL.h */,
+			);
+			path = OGL;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC043055464E500DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEE19D890C67F7E100D80249 /* IvDeviceListener.h in Headers */,
+				CEE19D8D0C67F7E100D80249 /* IvVertexBuffer.h in Headers */,
+				CEE19D920C67F7E100D80249 /* IvVertexBufferOGL.h in Headers */,
+				CEE19D9F0C67F7E100D80249 /* IvVertexFormats.h in Headers */,
+				CEEACEB10C90E8DC00995013 /* IvIndexBuffer.h in Headers */,
+				CEEACEB70C90E8EB00995013 /* IvRenderer.h in Headers */,
+				CEEACEB80C90E8EB00995013 /* IvRendererHelp.h in Headers */,
+				CEEACEB90C90E8EB00995013 /* IvResourceManager.h in Headers */,
+				CEEACEBD0C90E90800995013 /* IvIndexBufferOGL.h in Headers */,
+				CEEACEC10C90E91500995013 /* IvResourceManagerOGL.h in Headers */,
+				CEEACEEA0C90EC6900995013 /* IvFragmentShader.h in Headers */,
+				CEEACEEC0C90EC7300995013 /* IvVertexShader.h in Headers */,
+				CEF287A10C92292700FC2FAC /* IvVertexShaderOGL.h in Headers */,
+				CEF287D00C92311000FC2FAC /* IvFragmentShaderOGL.h in Headers */,
+				CEEFD4350C932FDE0050541B /* IvRendererOGL.h in Headers */,
+				CE29002A0C94CA0C002F23B6 /* IvShaderProgram.h in Headers */,
+				CE29002E0C94CA1A002F23B6 /* IvShaderProgramOGL.h in Headers */,
+				CE2900840C94E0AA002F23B6 /* IvRendererHelpOGL.h in Headers */,
+				CE8C5E290D748EAC0006FDB9 /* IvTextureOGL.h in Headers */,
+				CE8C5E2B0D748EAC0006FDB9 /* IvUniformOGL.h in Headers */,
+				CE8C5E2D0D748EBA0006FDB9 /* IvColor.h in Headers */,
+				CE8C5E360D748EC90006FDB9 /* IvTeapot.h in Headers */,
+				CE8C5E370D748EC90006FDB9 /* IvTexture.h in Headers */,
+				CE8C5E380D748EC90006FDB9 /* IvTextureFormats.h in Headers */,
+				CE8C5E390D748EC90006FDB9 /* IvUniform.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC045055464E500DB518D /* IvGraphics */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "IvGraphics" */;
+			buildPhases = (
+				D2AAC043055464E500DB518D /* Headers */,
+				D2AAC044055464E500DB518D /* Sources */,
+				D289987405E68DCB004EDB86 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IvGraphics;
+			productName = IvGraphics;
+			productReference = D2AAC046055464E500DB518D /* libIvGraphics.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "IvGraphics" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* IvGraphics */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC045055464E500DB518D /* IvGraphics */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC044055464E500DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEE19D990C67F7E100D80249 /* IvVertexBufferOGL.cpp in Sources */,
+				CEEACEBC0C90E90800995013 /* IvIndexBufferOGL.cpp in Sources */,
+				CEEACEC00C90E91500995013 /* IvResourceManagerOGL.cpp in Sources */,
+				CEF2879F0C92292200FC2FAC /* IvVertexShaderOGL.cpp in Sources */,
+				CEF287CF0C92311000FC2FAC /* IvFragmentShaderOGL.cpp in Sources */,
+				CEEFD4340C932FDE0050541B /* IvRendererOGL.cpp in Sources */,
+				CE29002D0C94CA1A002F23B6 /* IvShaderProgramOGL.cpp in Sources */,
+				CE2900830C94E0AA002F23B6 /* IvRendererHelpOGL.cpp in Sources */,
+				CE8C5E280D748EAC0006FDB9 /* IvTextureOGL.cpp in Sources */,
+				CE8C5E2A0D748EAC0006FDB9 /* IvUniformOGL.cpp in Sources */,
+				CE8C5E340D748EC90006FDB9 /* IvRenderer.cpp in Sources */,
+				CE8C5E350D748EC90006FDB9 /* IvRendererHelp.cpp in Sources */,
+				CEE6FC730D7CF8CA0055EDC3 /* IvTeapot.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91EC08733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvGraphics;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB91ED08733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = IvGraphics;
+			};
+			name = Release;
+		};
+		1DEB91F008733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_OSX;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../IvMath,
+					../IvUtility,
+					../IvGraphics,
+					../..,
+				);
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+			};
+			name = Debug;
+		};
+		1DEB91F108733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/OSX$(CONFIGURATION)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_OSX;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../IvMath,
+					../IvUtility,
+					../IvGraphics,
+					../..,
+				);
+				OBJROOT = build;
+				PREBINDING = NO;
+				SYMROOT = ../Libs;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "IvGraphics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91EC08733DB70010E9CD /* Debug */,
+				1DEB91ED08733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "IvGraphics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91F008733DB70010E9CD /* Debug */,
+				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

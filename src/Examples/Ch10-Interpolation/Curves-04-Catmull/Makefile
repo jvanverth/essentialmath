@@ -1,0 +1,2 @@
+EXTRAIVLIBS = -lIvCurves
+include ../../MakefileExamples

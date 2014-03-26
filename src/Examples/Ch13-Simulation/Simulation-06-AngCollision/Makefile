@@ -1,0 +1,2 @@
+EXTRAIVLIBS = -lIvCollision
+include ../../MakefileExamples

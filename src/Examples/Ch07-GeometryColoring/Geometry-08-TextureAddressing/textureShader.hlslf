@@ -1,0 +1,7 @@
+sampler Texture;
+
+float4 ps_main( float4 color : COLOR0, float2 uv : TEXCOORD0 ) : COLOR
+{
+	float4 test = tex2D( Texture, uv ) * color;
+	return test;
+}

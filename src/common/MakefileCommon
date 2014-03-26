@@ -1,0 +1,95 @@
+TARGET = lib$(IVTARGET).a
+
+PLATFORM = Linux
+
+NOLIB ?= False
+COPYHEADERS ?= True
+
+CC = g++
+
+CFLAGS_EXT = 
+ifeq ($(PLATFORM), Linux)
+	CFLAGS_EXT = -ffriend-injection
+endif 
+
+ifeq ($(PLATFORM), OSX)
+ 	CFLAGS_EXT = -fvisibility-inlines-hidden
+endif
+
+ifeq ($(PLATFORM), MinGW)
+ 	CFLAGS_EXT = -DGLEW_STATIC
+endif
+
+release: BUILD = Release
+release: CFLAGS = -c -O $(CFLAGS_EXT) 
+ifneq ($(NOLIB), True)
+release: $(TARGET)
+endif
+ifeq ($(COPYHEADERS), True)
+release: copyheaders
+endif
+
+debug: BUILD = Debug
+debug: CFLAGS = -c -g -D_DEBUG $(CFLAGS_EXT)
+ifneq ($(NOLIB), True)
+debug: $(TARGET)
+endif
+ifeq ($(COPYHEADERS), True)
+debug: copyheaders
+endif
+
+#------------------------------
+# set based on build type
+
+COMMONDIR ?= ../
+
+TARGETDIR = $(COMMONDIR)/Libs/$(PLATFORM)$(BUILD)
+OBJSDIR = $(PLATFORM)$(BUILD)
+HEADERSDIR = $(COMMONDIR)/Includes$(TARGETSUFFIX)
+
+ifeq ($(PLATFORM),Linux)
+	SYSIPATH = -I/usr/X11R6/include
+else
+	SYSIPATH =
+endif
+
+$(OBJSDIR):
+	-mkdir -p $(OBJSDIR)
+	
+$(TARGETDIR):
+	-mkdir -p $(TARGETDIR)
+
+#-------------------------------
+
+OBJS = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+HEADERS = $(wildcard *.h)
+
+#-------------------------------
+
+ifneq ($(NOLIB), True)
+
+$(TARGET): $(OBJS) $(TARGETDIR)
+	cd $(OBJSDIR) && ar rc ../$(TARGETDIR)/$(TARGET) $(OBJS)
+	ranlib $(TARGETDIR)/$(TARGET)
+
+%.o: %.cpp $(OBJSDIR)
+	$(CC) $(CFLAGS) -DPLATFORM_$(PLATFORM) $(IVINCLUDEDIRS) $(SYSIPATH) $< -o $(OBJSDIR)/$@
+
+endif
+
+#-------------------------------
+
+ifeq ($(COPYHEADERS), True)
+.PHONY: copyheaders
+endif
+copyheaders:
+	mkdir -p $(HEADERSDIR)
+	cp -f $(HEADERS) $(HEADERSDIR)
+
+.PHONY: clean
+clean:
+	-cd $(PLATFORM)Release && rm -f $(OBJS)
+	-cd .. && cd Libs && cd $(PLATFORM)Release && rm -f $(TARGET) 
+	-cd $(PLATFORM)Debug && rm -f $(OBJS)
+	-cd .. && cd Libs && cd $(PLATFORM)Debug && rm -f $(TARGET) 
+	-cd .. && cd Includes && rm -f $(HEADERS) 

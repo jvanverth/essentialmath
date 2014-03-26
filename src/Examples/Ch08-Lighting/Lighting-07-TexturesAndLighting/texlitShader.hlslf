@@ -1,0 +1,8 @@
+uniform float splitColor;
+sampler Texture;
+
+float4 ps_main( float4 diffColor : COLOR0,  float4 specColor : COLOR1, float2 uv : TEXCOORD0 ) : COLOR
+{
+	float4 tex = tex2D( Texture, uv );
+	return splitColor * (specColor + diffColor * tex) + (1.0 - splitColor) * ((specColor + diffColor) * tex);
+}

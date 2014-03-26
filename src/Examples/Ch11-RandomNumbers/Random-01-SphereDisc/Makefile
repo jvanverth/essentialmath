@@ -1,0 +1,2 @@
+EXTRAIVLIBS = -lIvRandom
+include ../../MakefileExamples

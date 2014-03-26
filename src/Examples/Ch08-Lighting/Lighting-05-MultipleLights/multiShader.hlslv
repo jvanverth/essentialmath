@@ -1,0 +1,109 @@
+float4x4 IvModelViewProjectionMatrix;
+struct VS_OUTPUT
+{
+	float4 pos : POSITION;
+	float4 color : COLOR0;
+};
+
+struct lightSampleValues
+{
+	float3 L;
+	float iL;
+};
+
+float4 pointLightPosition[2];
+float4 pointLightAttenuation; 
+float pointLightIntensity;
+
+float4 materialAmbientColor;
+float4 materialDiffuseColor;
+float4 materialSpecularColor;
+float materialSpecularExp;
+
+float4 lightAmbDiffSpec;
+float4 viewPosition; 
+
+float4 lightColor;
+
+float3 computeAmbientComponent(lightSampleValues light)
+{
+	return light.iL * (lightColor * lightAmbDiffSpec.x)
+		* materialAmbientColor;
+}
+
+// surfaceNormal is assumed to be unit-length
+
+float3 computeDiffuseComponent(float3 surfaceNormal, 
+							   lightSampleValues light)
+{
+	return light.iL * (lightColor.rgb * lightAmbDiffSpec.y) 
+					* materialDiffuseColor.rgb
+					* max(0.0, dot(surfaceNormal, light.L));
+}
+
+float3 computeSpecularComponent(float3 surfaceNormal, 
+							    float4 surfacePosition,
+							    lightSampleValues light)
+{
+	float3 viewVector = normalize(viewPosition.xyz - surfacePosition.xyz);
+	float3 reflectionVector 
+		= 2.0 * dot(light.L, surfaceNormal) * surfaceNormal 
+			- light.L;
+
+	return (dot(surfaceNormal, light.L) <= 0.0) 
+		? 0.0 
+		: (light.iL * (lightColor.rgb * lightAmbDiffSpec.z) 
+		* materialSpecularColor.rgb
+		* pow(max(0.0, dot(reflectionVector, viewVector)), 
+		materialSpecularExp));
+}
+
+float3 computeLitColor(lightSampleValues light,
+					   float4 surfacePosition,
+					   float3 surfaceNormal)
+{
+	return computeAmbientComponent(light)
+		+ computeDiffuseComponent(surfaceNormal, light)
+		+ computeSpecularComponent(surfaceNormal, surfacePosition,
+								   light);
+}
+
+lightSampleValues computePointLightValues(float4 surfacePosition, int i)
+{
+	lightSampleValues values;
+
+	values.L = (pointLightPosition[i] - surfacePosition).xyz;
+
+	float dist = length(values.L);
+	values.L = values.L / dist; // normalize
+
+	// Dot computes the 3-term attenuation in one operation
+	// k_c * 1.0 + k_l * dist + k_q * dist * dist
+
+	float distAtten = dot(pointLightAttenuation.xyz, 
+		float3(1.0, dist, dist*dist));
+
+	values.iL = pointLightIntensity / distAtten;
+
+	return values;
+}
+
+VS_OUTPUT vs_main( float3 normal : NORMAL, float4 pos : POSITION )
+{
+    VS_OUTPUT Out = (VS_OUTPUT) 0;
+
+    Out.pos = mul(pos, IvModelViewProjectionMatrix);
+    Out.color = 0.0;
+    Out.color.a = 1.0;
+
+	lightColor = float4(1, 0, 0, 0);
+	lightSampleValues lightValues = computePointLightValues(pos, 0);
+	Out.color.rgb += computeLitColor(lightValues, pos, normal);
+	
+	lightColor = float4(0, 0, 1, 0);
+	lightValues = computePointLightValues(pos, 1);
+	Out.color.rgb += computeLitColor(lightValues, pos, normal);
+
+    return Out;
+}
+
