@@ -52,7 +52,7 @@ void IvDrawArrays( const IvVector3* verts, const IvVector3* normals,
                    unsigned int numIndices );
 
 // set up some defaults
-void IvSetDefaultViewer( float xPos, float yPos, float zPos );
+void IvSetDefaultViewer(float xPos, float yPos, float zPos);
 void IvSetDefaultLighting();
 
 // set up graphics pipeline

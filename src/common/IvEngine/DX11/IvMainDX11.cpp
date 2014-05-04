@@ -31,6 +31,9 @@ IDXGISwapChain*         gSwapChain = NULL;
 ID3D11Device*			gDevice = NULL;
 ID3D11DeviceContext*    gContext = NULL;
 ID3D11RenderTargetView* gRenderTargetView = NULL;
+ID3D11Texture2D*        gDepthStencilBuffer = NULL;
+ID3D11DepthStencilView* gDepthStencilView = NULL;
+UINT					gSyncInterval = 0;
 
 PCHAR*  CommandLineWToArgvA( PWCHAR CmdLine, int* _argc );
 
@@ -49,9 +52,10 @@ bool    CALLBACK IsDeviceAcceptable( D3DCAPS11* pCaps, D3DFORMAT AdapterFormat, 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 bool    InitWindow(LPWSTR name, int& width, int& height, bool fullScreen = false);
-bool    InitDeviceAndSwapChain(unsigned int width, unsigned int height, 
-	                           bool fullscreen = false, bool vsync = false);
-bool    GetRefreshRate(IDXGIFactory* factory, unsigned int width, unsigned int height, 
+bool    InitDevice(unsigned int width, unsigned int height, 
+	               bool fullscreen = false, bool vsync = false);
+void    DestroyDevice();
+bool    GetRefreshRate(unsigned int width, unsigned int height, 
 	                   int& numerator, int& denominator);
 
 //-------------------------------------------------------------------------------
@@ -84,17 +88,23 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 	int height = 480;
 	if (!InitWindow(L"Example", width, height))
 	{
+		IvGame::Destroy();
 		return 1;
 	}
-	if (!InitDeviceAndSwapChain(width, height))
+
+	if (!InitDevice(width, height))
 	{
+		DestroyDevice();
+		IvGame::Destroy();
 		return 1;
 	}
 
 	// set up renderer
-	if (!IvRendererDX11::Create(gDevice, gContext) || !IvRendererDX11::mRenderer->Initialize(width, height))
+	if (!IvRendererDX11::Create(gDevice, gContext, gRenderTargetView, gDepthStencilView)
+		|| !IvRendererDX11::mRenderer->Initialize(width, height))
 	{
 		IvRenderer::Destroy();
+		DestroyDevice();
 		IvGame::Destroy();
 		return 1;
 	}
@@ -103,6 +113,7 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 	if (!IvGame::mGame->PostRendererInitialize())
 	{
 		IvRenderer::Destroy();
+		DestroyDevice();
 		IvGame::Destroy();
 		return 1;
 	}
@@ -118,104 +129,24 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 		}
 		else
 		{
-			//*** Render();
+			// clear the back buffer
+			IvRenderer::mRenderer->ClearBuffers(kColorDepthClear);
+
+			// Render the scene
+			IvGame::mGame->Display();
+
+			// swap buffers
+			gSwapChain->Present(gSyncInterval, 0);
 		}
 	}
 
     // Perform any application-level cleanup here
-	//*** shutdown renderer/DX11
+
 	IvRenderer::Destroy();
+	DestroyDevice();
 	IvGame::Destroy();
 
 	return (int)msg.wParam;
-}
-
-//
-// CommandLineWToArgvA - converts Windows command line string to Unix-style command line arguments
-//
-// Based on code by Alexander A. Telyatnikov (http://alter.org.ua/en/docs/win/args/)
-// 
-PCHAR*
-CommandLineWToArgvA( PWCHAR CmdLine, int* _argc )
-{
-    PCHAR* argv;
-    PCHAR  _argv;
-    ULONG   len;
-    ULONG   argc;
-    WCHAR   w;
-    ULONG   i, j;
-
-    BOOLEAN  in_QM;
-    BOOLEAN  in_TEXT;
-    BOOLEAN  in_SPACE;
-
-    len = wcslen(CmdLine);
-    i = ((len+2)/2)*sizeof(PVOID) + sizeof(PVOID);
-
-    argv = (PCHAR*)GlobalAlloc(GMEM_FIXED,
-        i + (len+2)*sizeof(CHAR));
-
-    _argv = (PCHAR)(((PCHAR)argv)+i);
-
-    argc = 0;
-    argv[argc] = _argv;
-    in_QM = FALSE;
-    in_TEXT = FALSE;
-    in_SPACE = TRUE;
-    i = 0;
-    j = 0;
-
-    while( w = CmdLine[i] ) {
-		int a = wctob(w);	// convert to char
-		assert( a >= 0 );
-        if(in_QM) {
-            if(a == '\"') {
-                in_QM = FALSE;
-            } else {
-                _argv[j] = a;
-                j++;
-            }
-        } else {
-            switch(a) {
-            case '\"':
-                in_QM = TRUE;
-                in_TEXT = TRUE;
-                if(in_SPACE) {
-                    argv[argc] = _argv+j;
-                    argc++;
-                }
-                in_SPACE = FALSE;
-                break;
-            case ' ':
-            case '\t':
-            case '\n':
-            case '\r':
-                if(in_TEXT) {
-                    _argv[j] = '\0';
-                    j++;
-                }
-                in_TEXT = FALSE;
-                in_SPACE = TRUE;
-                break;
-            default:
-                in_TEXT = TRUE;
-                if(in_SPACE) {
-                    argv[argc] = _argv+j;
-                    argc++;
-                }
-                _argv[j] = a;
-                j++;
-                in_SPACE = FALSE;
-                break;
-            }
-        }
-        i++;
-    }
-    _argv[j] = '\0';
-    argv[argc] = NULL;
-
-    (*_argc) = argc;
-    return argv;
 }
 
 bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
@@ -282,37 +213,22 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
 	return true;
 }
 
-bool InitDeviceAndSwapChain(unsigned int width, unsigned int height, bool fullscreen, bool vsync)
+bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool vsync)
 {
-	// create a DXGIFactory so we can create the swap chain
-	IDXGIFactory* factory;
-#if _DEBUG
-	UINT flags = DXGI_CREATE_FACTORY_DEBUG;
-#else
-	UINT flags = 0;
-#endif
-	HRESULT result = CreateDXGIFactory2(flags, __uuidof(IDXGIFactory2), (void**)&factory);
-	if (FAILED(result))
-	{
-		result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
-	}
-	if (FAILED(result))
-	{ 
-		return false;
-	}
-
 	int numerator, denominator;
 	if (vsync)
 	{
-		if (!GetRefreshRate(factory, width, height, numerator, denominator))
+		if (!GetRefreshRate(width, height, numerator, denominator))
 		{
 			return false;
 		}
+		gSyncInterval = 1;
 	}
 	else
 	{
 		numerator = 0;
 		denominator = 1;
+		gSyncInterval = 0;
 	}
 
 	// Set up the swap chain description
@@ -336,7 +252,7 @@ bool InitDeviceAndSwapChain(unsigned int width, unsigned int height, bool fullsc
 	UINT deviceFlags = 0;
 #endif
 	// Create the swap chain, Direct3D device, and Direct3D device context.
-	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, deviceFlags, NULL, 0,
+	HRESULT result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, deviceFlags, NULL, 0,
 		                                   D3D11_SDK_VERSION, &swapChainDesc, &gSwapChain, 
 										   &gDevice, NULL, &gContext);
 	if (FAILED(result))
@@ -350,10 +266,8 @@ bool InitDeviceAndSwapChain(unsigned int width, unsigned int height, bool fullsc
 	HRESULT hr = gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
 	if (FAILED(hr))
 	{
-		//*** clean up
 		return false;
 	}
-
 	hr = gDevice->CreateRenderTargetView(backBuffer, NULL, &gRenderTargetView);
 	backBuffer->Release();
 	if (FAILED(hr))
@@ -361,24 +275,75 @@ bool InitDeviceAndSwapChain(unsigned int width, unsigned int height, bool fullsc
 		return false;
 	}
 
-	gContext->OMSetRenderTargets(1, &gRenderTargetView, NULL);
+	// Create depth/stencil buffer
+	D3D11_TEXTURE2D_DESC depthBufferDesc;
+	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
+	depthBufferDesc.Width = width;
+	depthBufferDesc.Height = height;
+	depthBufferDesc.MipLevels = 1;
+	depthBufferDesc.ArraySize = 1;
+	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthBufferDesc.SampleDesc.Count = 1;
+	depthBufferDesc.SampleDesc.Quality = 0;
+	depthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthBufferDesc.CPUAccessFlags = 0;
+	depthBufferDesc.MiscFlags = 0;
+	result = gDevice->CreateTexture2D(&depthBufferDesc, NULL, &gDepthStencilBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// And now create the depth stencil view
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+	result = gDevice->CreateDepthStencilView(gDepthStencilBuffer, &depthStencilViewDesc, &gDepthStencilView);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Bind the render target view and depth stencil buffer to the output render pipeline.
+	gContext->OMSetRenderTargets(1, &gRenderTargetView, gDepthStencilView);
 
 	return true;
 }
 
-bool GetRefreshRate(IDXGIFactory* factory, unsigned int width, unsigned int height, 
+bool GetRefreshRate(unsigned int width, unsigned int height, 
 	                int& numerator, int& denominator)
 {
+	IDXGIFactory* factory;
+#if _DEBUG
+	UINT flags = DXGI_CREATE_FACTORY_DEBUG;
+#else
+	UINT flags = 0;
+#endif
+	HRESULT result = CreateDXGIFactory2(flags, __uuidof(IDXGIFactory2), (void**)&factory);
+	if (FAILED(result))
+	{
+		result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
+	}
+	if (FAILED(result))
+	{
+		return false;
+	}
+
 	// We start by getting the primary graphics interface, and from that getting the primary output 
 	IDXGIAdapter* adapter;
 	IDXGIOutput* adapterOutput;
-	HRESULT	result = factory->EnumAdapters(0, &adapter);
+	result = factory->EnumAdapters(0, &adapter);
 	if (SUCCEEDED(result))
 	{
 		result = adapter->EnumOutputs(0, &adapterOutput);
 	} 
 	else
 	{
+		adapter->Release();
+		factory->Release();
 		return false;
 	}
 
@@ -396,6 +361,9 @@ bool GetRefreshRate(IDXGIFactory* factory, unsigned int width, unsigned int heig
 	}
 	if (NULL == displayModeList || FAILED(result))
 	{
+		adapterOutput->Release();
+		adapter->Release();
+		factory->Release();
 		return false;
 	}
 
@@ -439,6 +407,50 @@ bool GetRefreshRate(IDXGIFactory* factory, unsigned int width, unsigned int heig
 	factory->Release();
 
 	return true;
+}
+
+void DestroyDevice()
+{
+	if (gSwapChain)
+	{
+		gSwapChain->SetFullscreenState(false, NULL);
+	}
+
+	if (gDepthStencilView)
+	{
+		gDepthStencilView->Release();
+		gDepthStencilView = NULL;
+	}
+
+	if (gDepthStencilBuffer)
+	{
+		gDepthStencilBuffer->Release();
+		gDepthStencilBuffer = NULL;
+	}
+
+	if (gRenderTargetView)
+	{
+		gRenderTargetView->Release();
+		gRenderTargetView = NULL;
+	}
+
+	if (gContext)
+	{
+		gContext->Release();
+		gContext = NULL;
+	}
+
+	if (gDevice)
+	{
+		gDevice->Release();
+		gDevice = NULL;
+	}
+
+	if (gSwapChain)
+	{
+		gSwapChain->Release();
+		gSwapChain = NULL;
+	}
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -612,3 +624,92 @@ SetWindowTitle( const char* title )
     SetWindowTextA( gHwnd, title );
 }
 
+//
+// CommandLineWToArgvA - converts Windows command line string to Unix-style command line arguments
+//
+// Based on code by Alexander A. Telyatnikov (http://alter.org.ua/en/docs/win/args/)
+// 
+PCHAR*
+CommandLineWToArgvA(PWCHAR CmdLine, int* _argc)
+{
+	PCHAR* argv;
+	PCHAR  _argv;
+	ULONG   len;
+	ULONG   argc;
+	WCHAR   w;
+	ULONG   i, j;
+
+	BOOLEAN  in_QM;
+	BOOLEAN  in_TEXT;
+	BOOLEAN  in_SPACE;
+
+	len = wcslen(CmdLine);
+	i = ((len + 2) / 2)*sizeof(PVOID)+sizeof(PVOID);
+
+	argv = (PCHAR*)GlobalAlloc(GMEM_FIXED,
+		i + (len + 2)*sizeof(CHAR));
+
+	_argv = (PCHAR)(((PCHAR)argv) + i);
+
+	argc = 0;
+	argv[argc] = _argv;
+	in_QM = FALSE;
+	in_TEXT = FALSE;
+	in_SPACE = TRUE;
+	i = 0;
+	j = 0;
+
+	while (w = CmdLine[i]) {
+		int a = wctob(w);	// convert to char
+		assert(a >= 0);
+		if (in_QM) {
+			if (a == '\"') {
+				in_QM = FALSE;
+			}
+			else {
+				_argv[j] = a;
+				j++;
+			}
+		}
+		else {
+			switch (a) {
+			case '\"':
+				in_QM = TRUE;
+				in_TEXT = TRUE;
+				if (in_SPACE) {
+					argv[argc] = _argv + j;
+					argc++;
+				}
+				in_SPACE = FALSE;
+				break;
+			case ' ':
+			case '\t':
+			case '\n':
+			case '\r':
+				if (in_TEXT) {
+					_argv[j] = '\0';
+					j++;
+				}
+				in_TEXT = FALSE;
+				in_SPACE = TRUE;
+				break;
+			default:
+				in_TEXT = TRUE;
+				if (in_SPACE) {
+					argv[argc] = _argv + j;
+					argc++;
+				}
+				_argv[j] = a;
+				j++;
+				in_SPACE = FALSE;
+				break;
+			}
+		}
+		i++;
+	}
+	_argv[j] = '\0';
+	argv[argc] = NULL;
+
+	(*_argc) = argc;
+	return argv;
+}
