@@ -278,8 +278,12 @@ copy .\DX11\Iv*.h ..\Includes\DX11
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DX11\IvIndexBufferDX11.h" />
     <ClInclude Include="DX11\IvRendererDX11.h" />
     <ClInclude Include="DX11\IvRendererHelpDX11.h" />
+    <ClInclude Include="DX11\IvResourceManagerDX11.h" />
+    <ClInclude Include="DX11\IvShaderProgramDX11.h" />
+    <ClInclude Include="DX11\IvVertexBufferDX11.h" />
     <ClInclude Include="IvColor.h">
       <SubType>Designer</SubType>
     </ClInclude>

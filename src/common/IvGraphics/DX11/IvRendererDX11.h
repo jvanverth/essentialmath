@@ -33,7 +33,7 @@ class IvRendererDX11 : public IvRenderer
 friend class IvRenderer;
 
 public:
-	bool static Create( HWND parentWindow );
+	bool static Create(ID3D11Device* device, ID3D11DeviceContext* context);
 
     virtual bool Initialize( unsigned int  width, unsigned int  height );
     virtual void Resize( unsigned int width, unsigned int height );
@@ -78,7 +78,7 @@ protected:
 
 private:
     // constructor/destructor
-    IvRendererDX11( HWND window );
+	IvRendererDX11(ID3D11Device* device, ID3D11DeviceContext* context);
     ~IvRendererDX11();
 
     // copy operations
@@ -87,10 +87,11 @@ private:
 
 private: 
     // private DX11 things 
-//	IDirect3DDevice11* mDevice;
+	ID3D11Device*        mDevice;
+	ID3D11DeviceContext* mContext;
 
-//	D3DCOLOR 	      mClearColor;
-	float			  mClearDepth;
+	DWORD 	             mClearColor;
+	float			     mClearDepth;
 };
 
 

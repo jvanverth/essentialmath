@@ -13,7 +13,8 @@
 
 //#pragma warning( disable : 4995 )
 #include <windows.h>
-#include <d3d11_1.h>
+#include <d3d11.h>
+#include <dxgi1_3.h>
 #include <directxcolors.h>
 
 #include <stdlib.h>
@@ -24,8 +25,12 @@
 #include <IvEventHandler.h>
 #include <DX11/IvRendererDX11.h>
 
-HINSTANCE               gHInstance = 0;
-HWND                    gHwnd = 0;
+HINSTANCE               gHInstance = NULL;
+HWND                    gHwnd = NULL;
+IDXGISwapChain*         gSwapChain = NULL;
+ID3D11Device*			gDevice = NULL;
+ID3D11DeviceContext*    gContext = NULL;
+ID3D11RenderTargetView* gRenderTargetView = NULL;
 
 PCHAR*  CommandLineWToArgvA( PWCHAR CmdLine, int* _argc );
 
@@ -41,8 +46,13 @@ bool	CALLBACK OnDeviceRemoved();
 bool    CALLBACK IsDeviceAcceptable( D3DCAPS11* pCaps, D3DFORMAT AdapterFormat, D3DFORMAT BackBufferFormat, bool bWindowed );
 */
 
-bool    InitWindow(LPWSTR name, int& width, int& height, bool fullScreen = false);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+bool    InitWindow(LPWSTR name, int& width, int& height, bool fullScreen = false);
+bool    InitDeviceAndSwapChain(unsigned int width, unsigned int height, 
+	                           bool fullscreen = false, bool vsync = false);
+bool    GetRefreshRate(IDXGIFactory* factory, unsigned int width, unsigned int height, 
+	                   int& numerator, int& denominator);
 
 //-------------------------------------------------------------------------------
 // @ wWinMain()
@@ -76,9 +86,13 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 	{
 		return 1;
 	}
+	if (!InitDeviceAndSwapChain(width, height))
+	{
+		return 1;
+	}
 
 	// set up renderer
-	if (!IvRendererDX11::Create(gHwnd) || !IvRendererDX11::mRenderer->Initialize(640, 480))
+	if (!IvRendererDX11::Create(gDevice, gContext) || !IvRendererDX11::mRenderer->Initialize(width, height))
 	{
 		IvRenderer::Destroy();
 		IvGame::Destroy();
@@ -204,7 +218,7 @@ CommandLineWToArgvA( PWCHAR CmdLine, int* _argc )
     return argv;
 }
 
-bool InitWindow(LPWSTR name, int& width, int& height, bool fullScreen)
+bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
 {
 	gHInstance = GetModuleHandle(NULL);
 
@@ -223,15 +237,13 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullScreen)
 	wcex.lpszClassName = L"ExampleWindowClass";
 	wcex.hIconSm = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_WINLOGO);
 	if (!RegisterClassEx(&wcex))
-		return false;
-
-	// Adjust for fullscreen
-	int posX, posY;
-	if (fullScreen)
 	{
-		width = GetSystemMetrics(SM_CXSCREEN);
-		height = GetSystemMetrics(SM_CYSCREEN);
+		return false;
+	}
 
+	int posX, posY;
+	if (fullscreen)
+	{
 		DEVMODE dmScreenSettings;
 		// If full screen set the screen to maximum size of the users desktop and 32bit.
 		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
@@ -249,12 +261,12 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullScreen)
 	}
 	else
 	{
-		posX = posY = CW_USEDEFAULT;
-
 		RECT rc = { 0, 0, width, height };
 		AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 		width = rc.right - rc.left;
 		height = rc.bottom - rc.top;
+
+		posX = posY = CW_USEDEFAULT;
 	}
 
 	// Create window
@@ -266,6 +278,165 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullScreen)
 	}
 
 	ShowWindow(gHwnd, SW_SHOW);
+
+	return true;
+}
+
+bool InitDeviceAndSwapChain(unsigned int width, unsigned int height, bool fullscreen, bool vsync)
+{
+	// create a DXGIFactory so we can create the swap chain
+	IDXGIFactory* factory;
+#if _DEBUG
+	UINT flags = DXGI_CREATE_FACTORY_DEBUG;
+#else
+	UINT flags = 0;
+#endif
+	HRESULT result = CreateDXGIFactory2(flags, __uuidof(IDXGIFactory2), (void**)&factory);
+	if (FAILED(result))
+	{
+		result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
+	}
+	if (FAILED(result))
+	{ 
+		return false;
+	}
+
+	int numerator, denominator;
+	if (vsync)
+	{
+		if (!GetRefreshRate(factory, width, height, numerator, denominator))
+		{
+			return false;
+		}
+	}
+	else
+	{
+		numerator = 0;
+		denominator = 1;
+	}
+
+	// Set up the swap chain description
+	DXGI_SWAP_CHAIN_DESC swapChainDesc;
+	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
+	swapChainDesc.BufferCount = 1;                                  // one backbuffer
+	swapChainDesc.BufferDesc.Width = width;
+	swapChainDesc.BufferDesc.Height = height;
+	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.BufferDesc.RefreshRate.Numerator = numerator;
+	swapChainDesc.BufferDesc.RefreshRate.Denominator = denominator;
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc.OutputWindow = gHwnd;
+	swapChainDesc.SampleDesc.Count = 1;       
+	swapChainDesc.SampleDesc.Quality = 0;
+	swapChainDesc.Windowed = !fullscreen;
+
+#if _DEBUG
+	UINT deviceFlags = D3D11_CREATE_DEVICE_DEBUG;
+#else
+	UINT deviceFlags = 0;
+#endif
+	// Create the swap chain, Direct3D device, and Direct3D device context.
+	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, deviceFlags, NULL, 0,
+		                                   D3D11_SDK_VERSION, &swapChainDesc, &gSwapChain, 
+										   &gDevice, NULL, &gContext);
+	if (FAILED(result))
+	{
+		//*** fallback to WARP?
+		return false;
+	}
+
+	// Create a render target view
+	ID3D11Texture2D* backBuffer = NULL;
+	HRESULT hr = gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
+	if (FAILED(hr))
+	{
+		//*** clean up
+		return false;
+	}
+
+	hr = gDevice->CreateRenderTargetView(backBuffer, NULL, &gRenderTargetView);
+	backBuffer->Release();
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	gContext->OMSetRenderTargets(1, &gRenderTargetView, NULL);
+
+	return true;
+}
+
+bool GetRefreshRate(IDXGIFactory* factory, unsigned int width, unsigned int height, 
+	                int& numerator, int& denominator)
+{
+	// We start by getting the primary graphics interface, and from that getting the primary output 
+	IDXGIAdapter* adapter;
+	IDXGIOutput* adapterOutput;
+	HRESULT	result = factory->EnumAdapters(0, &adapter);
+	if (SUCCEEDED(result))
+	{
+		result = adapter->EnumOutputs(0, &adapterOutput);
+	} 
+	else
+	{
+		return false;
+	}
+
+	// Now we enumerate all the display modes that match 32-bit RGBA
+	unsigned int numModes;
+	DXGI_MODE_DESC* displayModeList;
+	result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL);
+	if (SUCCEEDED(result))
+	{
+		displayModeList = new DXGI_MODE_DESC[numModes];
+		if (NULL != displayModeList)
+		{
+			result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList);
+		}
+	}
+	if (NULL == displayModeList || FAILED(result))
+	{
+		return false;
+	}
+
+	// Now go through all the display modes and find the one that matches the screen width and height.
+	// When a match is found store the numerator and denominator of the refresh rate for that monitor.
+	for (unsigned int i = 0; i<numModes; i++)
+	{
+		if (displayModeList[i].Width == width)
+		{
+			if (displayModeList[i].Height == height)
+			{
+				numerator = displayModeList[i].RefreshRate.Numerator;
+				denominator = displayModeList[i].RefreshRate.Denominator;
+			}
+		}
+	}
+
+	// Get the adapter (video card) description.
+	//DXGI_ADAPTER_DESC adapterDesc;
+	//result = adapter->GetDesc(&adapterDesc);
+	//if (FAILED(result))
+	//{
+	//	return false;
+	//}
+
+	//// Store the dedicated video card memory in megabytes.
+	//m_videoCardMemory = (int)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
+
+	//// Convert the name of the video card to a character array and store it.
+	//unsigned int stringLength;
+	//error = wcstombs_s(&stringLength, m_videoCardDescription, 128, adapterDesc.Description, 128);
+	//if (error != 0)
+	//{
+	//	return false;
+	//}
+
+	// Clean up
+	delete[] displayModeList;
+	adapterOutput->Release();
+	adapter->Release();
+	factory->Release();
 
 	return true;
 }
