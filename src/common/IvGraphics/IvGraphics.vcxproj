@@ -232,8 +232,14 @@ copy .\DX11\Iv*.h ..\Includes\DX11
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DX11\IvIndexBufferDX11.cpp" />
     <ClCompile Include="DX11\IvRendererDX11.cpp" />
     <ClCompile Include="DX11\IvRendererHelpDX11.cpp" />
+    <ClCompile Include="DX11\IvResourceManagerDX11.cpp" />
+    <ClCompile Include="DX11\IvShaderProgramDX11.cpp" />
+    <ClCompile Include="DX11\IvTextureDX11.cpp" />
+    <ClCompile Include="DX11\IvVertexBufferDX11.cpp" />
+    <ClCompile Include="DX11\IvVertexShaderDX11.cpp" />
     <ClCompile Include="IvRenderer.cpp" />
     <ClCompile Include="IvRendererHelp.cpp" />
     <ClCompile Include="IvTeapot.cpp" />
@@ -284,7 +290,9 @@ copy .\DX11\Iv*.h ..\Includes\DX11
     <ClInclude Include="DX11\IvRendererHelpDX11.h" />
     <ClInclude Include="DX11\IvResourceManagerDX11.h" />
     <ClInclude Include="DX11\IvShaderProgramDX11.h" />
+    <ClInclude Include="DX11\IvTextureDX11.h" />
     <ClInclude Include="DX11\IvVertexBufferDX11.h" />
+    <ClInclude Include="DX11\IvVertexShaderDX11.h" />
     <ClInclude Include="IvColor.h">
       <SubType>Designer</SubType>
     </ClInclude>

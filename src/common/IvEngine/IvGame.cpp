@@ -15,9 +15,9 @@
 
 #include "IvGame.h"
 #include "IvClock.h"
+#include "IvEventHandler.h"
 #include "IvRenderer.h"
 #include "IvRendererHelp.h"
-#include "IvEventHandler.h"
 
 #include "IvDebugger.h"
 
@@ -26,7 +26,7 @@
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-IvGame* IvGame::mGame = 0;
+IvGame*          IvGame::mGame = 0;
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -70,6 +70,12 @@ IvGame::~IvGame()
         delete mClock;
         mClock = 0;
     }
+
+	if (IvStackAllocator::mScratchAllocator)
+	{
+		delete IvStackAllocator::mScratchAllocator;
+		IvStackAllocator::mScratchAllocator = 0;
+	}
 
 }   // End of IvGame::~IvGame() 
 
@@ -141,6 +147,9 @@ IvGame::ParseCommandLine( int, char*[] )
 bool 
 IvGame::SetupSubsystems()
 {
+	// create the scratch allocator
+	IvStackAllocator::mScratchAllocator = new IvStackAllocator(1 * 1024 * 1024);
+
     // create display
     mClock = new IvClock;
     if ( !mClock )
@@ -167,6 +176,8 @@ IvGame::SetupSubsystems()
 void
 IvGame::Update()
 {
+	IvStackAllocator::mScratchAllocator->Reset();
+
     if ( mQuit )
     {
         IvGame::Destroy();

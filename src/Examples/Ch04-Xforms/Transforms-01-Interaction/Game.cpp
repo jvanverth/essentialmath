@@ -108,12 +108,12 @@ void
 Game::Render()                                  // Here's Where We Do All The Drawing
 {   
     // set up viewer
-    ::IvSetDefaultViewer( -10.f, 2.0f, 10.0f );
+    IvSetDefaultViewer( -10.f, 2.0f, 10.0f );
 
     // draw coordinate axes
-    ::IvDrawAxes();
+//    IvDrawAxes();
     
     // draw the main object
-    mPlayer->Render();
+//    mPlayer->Render();
 }
 

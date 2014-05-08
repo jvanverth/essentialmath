@@ -171,7 +171,7 @@ IvRendererDX11::Initialize( unsigned int width, unsigned int height )
     Resize( width, height );
     
     // create resource manager
-//    mResourceManager = new IvResourceManagerDX11( mDevice );
+    mResourceManager = new IvResourceManagerDX11( mDevice );
 
     return true;
     
@@ -631,15 +631,15 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 	//	}
 	//}
 
- //   if (vertexBuffer)
- //       static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mDevice );
- //   else
- //       return;
+    if (vertexBuffer)
+        static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
+    else
+        return;
 
- //   if (indexBuffer)
- //       static_cast<IvIndexBufferDX11*>(indexBuffer)->MakeActive( mDevice );
- //   else
- //       return;
+    if (indexBuffer)
+		static_cast<IvIndexBufferDX11*>(indexBuffer)->MakeActive( mContext );
+    else
+        return;
 
 	//int primCount = 0;
 	//switch ( primType )

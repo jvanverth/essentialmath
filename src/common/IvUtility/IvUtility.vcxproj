@@ -118,6 +118,7 @@ copy .\Iv*.h ..\Includes
   <ItemGroup>
     <ClCompile Include="IvDebugger.cpp" />
     <ClCompile Include="IvImage.cpp" />
+    <ClCompile Include="IvStackAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IvAssert.h" />
@@ -125,6 +126,7 @@ copy .\Iv*.h ..\Includes
     <ClInclude Include="IvFileReader.h" />
     <ClInclude Include="IvImage.h" />
     <ClInclude Include="IvReader.h" />
+    <ClInclude Include="IvStackAllocator.h" />
     <ClInclude Include="IvTypes.h" />
     <ClInclude Include="IvWriter.h" />
   </ItemGroup>

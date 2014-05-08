@@ -32,8 +32,6 @@ class IvIndexBufferDX11 : private IvIndexBuffer
 {
 public:
     // interface routines
-    void* BeginLoadData();
-    bool  EndLoadData();
 
     friend class IvResourceManagerDX11;
     friend class IvRendererDX11;
@@ -44,13 +42,13 @@ private:
 	~IvIndexBufferDX11();
 
     // creation 
-	bool Create(unsigned int numVertices, ID3D11Device* device);
+	bool Create(unsigned int numVertices, void* data, ID3D11Device* device);
     
     // destruction
     void Destroy();
     
     // activate
-	bool MakeActive(ID3D11Device* device);
+	bool MakeActive(ID3D11DeviceContext* device);
 
 private:
     // copy operations

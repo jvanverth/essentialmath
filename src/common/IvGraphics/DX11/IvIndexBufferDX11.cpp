@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvIndexBufferD3D9.cpp
+// @ IvIndexBufferDX11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,7 +12,7 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvIndexBufferD3D9.h"
+#include "IvIndexBufferDX11.h"
 #include "IvTypes.h"
 #include <stdio.h>
 
@@ -25,34 +25,46 @@
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferD3D9::IvIndexBufferD3D9()
+// @ IvIndexBufferDX11::IvIndexBufferDX11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvIndexBufferD3D9::IvIndexBufferD3D9() : IvIndexBuffer(), mBufferPtr(0)
+IvIndexBufferDX11::IvIndexBufferDX11() : IvIndexBuffer(), mBufferPtr(0)
 {
-}	// End of IvIndexBufferD3D9::IvIndexBufferD3D9()
+}	// End of IvIndexBufferDX11::IvIndexBufferDX11()
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferD3D9::~IvIndexBufferD3D9()
+// @ IvIndexBufferDX11::~IvIndexBufferDX11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvIndexBufferD3D9::~IvIndexBufferD3D9()
+IvIndexBufferDX11::~IvIndexBufferDX11()
 {
     Destroy();
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferD3D9::Create()
+// @ IvIndexBufferDX11::Create()
 //-------------------------------------------------------------------------------
 // Create the platform-specific data
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferD3D9::Create( unsigned int numIndices, IDirect3DDevice9* device )
+IvIndexBufferDX11::Create(unsigned int numIndices, void* data, ID3D11Device* device)
 {
-	if( FAILED( device->CreateIndexBuffer( numIndices*sizeof(UInt32),
-			D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &mBufferPtr, NULL ) ) )
+	D3D11_BUFFER_DESC indexBufferDesc;
+	indexBufferDesc.ByteWidth = sizeof(unsigned int)*3;
+	indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	indexBufferDesc.CPUAccessFlags = 0;
+	indexBufferDesc.MiscFlags = 0;
+	//*** replacement for D3DMANAGED?
+
+	D3D11_SUBRESOURCE_DATA initData;
+	initData.pSysMem = data;
+	initData.SysMemPitch = 0;
+	initData.SysMemSlicePitch = 0;
+
+	if (FAILED(device->CreateBuffer(&indexBufferDesc, &initData, &mBufferPtr)))
 	{
 		mBufferPtr = 0;
 		return false;
@@ -64,12 +76,12 @@ IvIndexBufferD3D9::Create( unsigned int numIndices, IDirect3DDevice9* device )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferD3D9::Destroy()
+// @ IvIndexBufferDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Destroy the platform-specific data
 //-------------------------------------------------------------------------------
 void
-IvIndexBufferD3D9::Destroy()
+IvIndexBufferDX11::Destroy()
 {
 	if (mBufferPtr)
 	{
@@ -82,50 +94,19 @@ IvIndexBufferD3D9::Destroy()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferD3D9::MakeActive()
+// @ IvIndexBufferDX11::MakeActive()
 //-------------------------------------------------------------------------------
 // Make this the active index buffer
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferD3D9::MakeActive( IDirect3DDevice9* device )
+IvIndexBufferDX11::MakeActive(ID3D11DeviceContext* context)
 {
     if ( mBufferPtr == 0 || mNumIndices == 0 )
         return false;
     
-    device->SetIndices( mBufferPtr );
+	context->IASetIndexBuffer(mBufferPtr, DXGI_FORMAT_R32_UINT, 0);
     
     return true;
-}
-
-//-------------------------------------------------------------------------------
-// @ IvIndexBufferD3D9::BeginLoadData()
-//-------------------------------------------------------------------------------
-// Lock down the buffer and start loading
-// Returns pointer to client side data area
-//-------------------------------------------------------------------------------
-void *
-IvIndexBufferD3D9::BeginLoadData()
-{
-	void* dataPtr = 0;
-	if(FAILED(mBufferPtr->Lock(0, mNumIndices*sizeof(unsigned short), &dataPtr, 0 ) ) ) 
-		return 0;
-
-    return dataPtr;
-}
-
-//-------------------------------------------------------------------------------
-// @ IvIndexBufferD3D9::EndLoadData()
-//-------------------------------------------------------------------------------
-// Unlock the buffer, we're done loading
-// Returns true if all went well
-//-------------------------------------------------------------------------------
-bool
-IvIndexBufferD3D9::EndLoadData()
-{
-    if(FAILED(mBufferPtr->Unlock()))
-		return false;
-	else
-		return true;
 }
 
 

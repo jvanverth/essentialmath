@@ -21,6 +21,7 @@
 #include <IvLineSegment3.h>
 #include <IvMath.h>
 #include <IvQuat.h>
+#include <IvStackAllocator.h>
 #include <IvVertexFormats.h>
 #include <IvVertexBuffer.h>
 #include <IvIndexBuffer.h>
@@ -164,8 +165,8 @@ IvDrawAxes()
 	// build data if not there
 	if ( axesVerts == 0 )
 	{
-		axesVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6);
-		IvCPVertex* dataPtr = (IvCPVertex*) axesVerts->BeginLoadData();
+		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+		IvCPVertex* dataPtr = (IvCPVertex*) IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 6);
 
 		dataPtr[0].color.Set(255, 0, 0, 255);
 		dataPtr[0].position.Set(0.0f, 0.0f, 0.0f);
@@ -182,11 +183,9 @@ IvDrawAxes()
 		dataPtr[5].color.Set(0, 0, 255, 255);
 		dataPtr[5].position.Set(0.0f, 0.0f, 2.5f);
 
-		if (!axesVerts->EndLoadData())
-		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(axesVerts);
-			axesVerts = 0;
-		}
+		axesVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6, dataPtr);
+
+		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 	}
 
     IvSetWorldIdentity();
@@ -215,10 +214,9 @@ IvDrawFloor()
 	// build data if not there
 	if ( floorVerts == 0 )
 	{
-		floorVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 4*81);
-		IvCPVertex* vertexPtr = (IvCPVertex*) floorVerts->BeginLoadData();
-		floorIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6*81);
-		UInt32* indexPtr = (UInt32*) floorIndices->BeginLoadData();
+		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+		IvCPVertex* vertexPtr = (IvCPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 4 * 81); 
+		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * 6 * 81);
 		int currentVertex = 0;
 		int currentIndex = 0;
 		for ( int i = -12; i <= 12; i += 3 )
@@ -247,13 +245,25 @@ IvDrawFloor()
 				currentVertex += 4;
 			}
 		}
-		if (!floorVerts->EndLoadData() || !floorIndices->EndLoadData())
+
+		floorVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 4 * 81, vertexPtr);
+		floorIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 81, indexPtr);
+
+		if (!floorVerts || !floorIndices)
 		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(floorVerts);
-			floorVerts = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(floorIndices);
-			floorIndices = 0;
+			if (floorVerts)
+			{
+				IvRenderer::mRenderer->GetResourceManager()->Destroy(floorVerts);
+				floorVerts = 0;
+			}
+			if (floorIndices)
+			{
+				IvRenderer::mRenderer->GetResourceManager()->Destroy(floorIndices);
+				floorIndices = 0;
+			}
 		}
+
+		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 	}
 
     IvSetWorldIdentity();
@@ -270,7 +280,7 @@ IvDrawFloor()
 
 }   // End of IvDrawFloor()
 
-
+/*
 //-------------------------------------------------------------------------------
 // @ IvDrawCube()
 //-------------------------------------------------------------------------------
@@ -928,7 +938,7 @@ IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
 
 
 }   // End of IvDrawLine()
-
+*/
 
 //-------------------------------------------------------------------------------
 // @ IvDrawTeapot()
@@ -947,34 +957,39 @@ IvDrawTeapot( IvColor color, bool useDefaultShader )
         BuildTeapot( vertices, indices );
 
         unsigned int numTeapotVerts = vertices.size();
-		teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numTeapotVerts);
-		IvNPVertex* dataPtr = (IvNPVertex*) teapotVertexBuffer->BeginLoadData();
-        
+		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+		IvNPVertex* dataPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numTeapotVerts);        
         for ( unsigned int i = 0; i < numTeapotVerts; ++i )
         {
             dataPtr[i].position = vertices[i].position;
             dataPtr[i].normal = vertices[i].normal;
         }
-		if (!teapotVertexBuffer->EndLoadData())
-		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
-			teapotVertexBuffer = 0;
-		}
+		teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numTeapotVerts, dataPtr);
 
         unsigned int numTeapotIndices = indices.size();
-		teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices);
-		unsigned int* indexPtr = (unsigned int*) teapotIndexBuffer->BeginLoadData();
+		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32)* numTeapotIndices);
         for ( unsigned int i = 0; i < numTeapotIndices; ++i )
         {
             indexPtr[i] = indices[i];
         }
-		if (!teapotIndexBuffer->EndLoadData())
+
+		teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices, indexPtr);
+
+		if (!teapotVertexBuffer || !teapotIndexBuffer)
 		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
-			teapotVertexBuffer = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
-			teapotIndexBuffer = 0;
+			if (teapotVertexBuffer)
+			{
+				IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
+				teapotVertexBuffer = 0;
+			}
+			if (teapotIndexBuffer)
+			{
+				IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
+				teapotIndexBuffer = 0;
+			}
 		}
+
+		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 	}
 
     IvShaderProgram* oldShader = NULL;
@@ -997,7 +1012,7 @@ IvDrawTeapot( IvColor color, bool useDefaultShader )
     }
 }   // End of IvDrawTeapot()
 
-
+/*
 //-------------------------------------------------------------------------------
 // @ IvDrawTexturedTeapot()
 //-------------------------------------------------------------------------------
@@ -1061,7 +1076,7 @@ IvDrawTexturedTeapot( bool useDefaultShader )
 	    IvRenderer::mRenderer->SetShaderProgram( oldShader );
     }
 }   // End of IvDrawTexturedTeapot()
-
+*/
 //-------------------------------------------------------------------------------
 // @ IvSetDefaultLighting()
 //-------------------------------------------------------------------------------

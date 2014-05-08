@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvResourceManagerD3D9.cpp
+// @ IvResourceManagerDX11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,13 +12,13 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvResourceManagerD3D9.h"
-#include "IvVertexBufferD3D9.h"
-#include "IvIndexBufferD3D9.h"
-#include "IvVertexShaderD3D9.h"
-#include "IvFragmentShaderD3D9.h"
-#include "IvShaderProgramD3D9.h"
-#include "IvTextureD3D9.h"
+#include "IvResourceManagerDX11.h"
+#include "IvVertexBufferDX11.h"
+#include "IvIndexBufferDX11.h"
+#include "IvVertexShaderDX11.h"
+#include "IvFragmentShaderDX11.h"
+#include "IvShaderProgramDX11.h"
+#include "IvTextureDX11.h"
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
@@ -29,36 +29,36 @@
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::IvResourceManagerD3D9()
+// @ IvResourceManagerDX11::IvResourceManagerDX11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvResourceManagerD3D9::IvResourceManagerD3D9( IDirect3DDevice9* device ) : IvResourceManager()
+IvResourceManagerDX11::IvResourceManagerDX11(ID3D11Device* device) : IvResourceManager()
 {
 	mDevice = device;
 	mDevice->AddRef();
-}	// End of IvResourceManagerD3D9::IvResourceManagerD3D9()
+}	// End of IvResourceManagerDX11::IvResourceManagerDX11()
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::~IvResourceManagerD3D9()
+// @ IvResourceManagerDX11::~IvResourceManagerDX11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvResourceManagerD3D9::~IvResourceManagerD3D9()
+IvResourceManagerDX11::~IvResourceManagerDX11()
 {
 	mDevice->Release();
-}	// End of IvResourceManagerD3D9::~IvResourceManagerD3D9()
+}	// End of IvResourceManagerDX11::~IvResourceManagerDX11()
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateVertexBuffer()
+// @ IvResourceManagerDX11::CreateVertexBuffer()
 //-------------------------------------------------------------------------------
 // Create platform-dependent vertex buffer
 //-------------------------------------------------------------------------------
 IvVertexBuffer* 
-IvResourceManagerD3D9::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices )
+IvResourceManagerDX11::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices, void* data )
 {
-    IvVertexBufferD3D9* newBuffer = new IvVertexBufferD3D9();
-    if ( !newBuffer->Create( format, numVertices, mDevice ) )
+    IvVertexBufferDX11* newBuffer = new IvVertexBufferDX11();
+    if ( !newBuffer->Create( format, numVertices, data, mDevice ) )
     {
         delete newBuffer;
         newBuffer = 0;
@@ -68,28 +68,28 @@ IvResourceManagerD3D9::CreateVertexBuffer( IvVertexFormat format, unsigned int n
 
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::Destroy()
+// @ IvResourceManagerDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Delete platform-dependent vertex buffer
 //-------------------------------------------------------------------------------
 void 
-IvResourceManagerD3D9::Destroy( IvVertexBuffer* vb)
+IvResourceManagerDX11::Destroy( IvVertexBuffer* vb)
 {
-    IvVertexBufferD3D9* vbD3D9 = static_cast<IvVertexBufferD3D9*>(vb);
-    vbD3D9->Destroy();
-    delete vbD3D9;
+    IvVertexBufferDX11* vbDX11 = static_cast<IvVertexBufferDX11*>(vb);
+    vbDX11->Destroy();
+    delete vbDX11;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateIndexBuffer()
+// @ IvResourceManagerDX11::CreateIndexBuffer()
 //-------------------------------------------------------------------------------
 // Create platform-dependent index buffer
 //-------------------------------------------------------------------------------
 IvIndexBuffer* 
-IvResourceManagerD3D9::CreateIndexBuffer( unsigned int numIndices )
+IvResourceManagerDX11::CreateIndexBuffer( unsigned int numIndices, void* data )
 {
-    IvIndexBufferD3D9* newBuffer = new IvIndexBufferD3D9();
-    if ( !newBuffer->Create( numIndices, mDevice ) )
+    IvIndexBufferDX11* newBuffer = new IvIndexBufferDX11();
+    if ( !newBuffer->Create( numIndices, data, mDevice ) )
     {
         delete newBuffer;
         newBuffer = 0;
@@ -98,27 +98,27 @@ IvResourceManagerD3D9::CreateIndexBuffer( unsigned int numIndices )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::Destroy()
+// @ IvResourceManagerDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Delete platform-dependent index buffer
 //-------------------------------------------------------------------------------
 void 
-IvResourceManagerD3D9::Destroy( IvIndexBuffer* ib)
+IvResourceManagerDX11::Destroy( IvIndexBuffer* ib)
 {
-    IvIndexBufferD3D9* ibD3D9 = static_cast<IvIndexBufferD3D9*>(ib);
-    ibD3D9->Destroy();
-    delete ibD3D9;
+    IvIndexBufferDX11* ibDX11 = static_cast<IvIndexBufferDX11*>(ib);
+    ibDX11->Destroy();
+    delete ibDX11;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateVertexShaderFromFile()
+// @ IvResourceManagerDX11::CreateVertexShaderFromFile()
 //-------------------------------------------------------------------------------
 // Create platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 IvVertexShader* 
-IvResourceManagerD3D9::CreateVertexShaderFromFile( const char* filename )
+IvResourceManagerDX11::CreateVertexShaderFromFile( const char* filename )
 {
-    IvVertexShaderD3D9* vertexShader = new IvVertexShaderD3D9();
+    IvVertexShaderDX11* vertexShader = new IvVertexShaderDX11();
     if ( !vertexShader->CreateFromFile( filename, mDevice ) )
     {
         delete vertexShader;
@@ -128,14 +128,14 @@ IvResourceManagerD3D9::CreateVertexShaderFromFile( const char* filename )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateVertexShaderFromString()
+// @ IvResourceManagerDX11::CreateVertexShaderFromString()
 //-------------------------------------------------------------------------------
 // Create platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 IvVertexShader* 
-IvResourceManagerD3D9::CreateVertexShaderFromString( const char* string )
+IvResourceManagerDX11::CreateVertexShaderFromString( const char* string )
 {
-    IvVertexShaderD3D9* vertexShader = new IvVertexShaderD3D9();
+    IvVertexShaderDX11* vertexShader = new IvVertexShaderDX11();
     if ( !vertexShader->CreateFromString( string, mDevice ) )
     {
         delete vertexShader;
@@ -145,14 +145,14 @@ IvResourceManagerD3D9::CreateVertexShaderFromString( const char* string )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateVertexShader()
+// @ IvResourceManagerDX11::CreateVertexShader()
 //-------------------------------------------------------------------------------
 // Create platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 IvVertexShader* 
-IvResourceManagerD3D9::CreateDefaultVertexShader( IvVertexFormat format )
+IvResourceManagerDX11::CreateDefaultVertexShader( IvVertexFormat format )
 {
-    IvVertexShaderD3D9* vertexShader = new IvVertexShaderD3D9();
+    IvVertexShaderDX11* vertexShader = new IvVertexShaderDX11();
     if ( !vertexShader->CreateDefault( format, mDevice ) )
     {
         delete vertexShader;
@@ -162,30 +162,30 @@ IvResourceManagerD3D9::CreateDefaultVertexShader( IvVertexFormat format )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::Destroy()
+// @ IvResourceManagerDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Delete platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 void 
-IvResourceManagerD3D9::Destroy( IvVertexShader* vs)
+IvResourceManagerDX11::Destroy( IvVertexShader* vs)
 {
     if ( vs )
     {
-        IvVertexShaderD3D9* vsD3D9 = static_cast<IvVertexShaderD3D9*>(vs);
-        vsD3D9->Destroy();
-        delete vsD3D9;
+        IvVertexShaderDX11* vsDX11 = static_cast<IvVertexShaderDX11*>(vs);
+        vsDX11->Destroy();
+        delete vsDX11;
     }
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateFragmentShaderFromFile()
+// @ IvResourceManagerDX11::CreateFragmentShaderFromFile()
 //-------------------------------------------------------------------------------
 // Create platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 IvFragmentShader* 
-IvResourceManagerD3D9::CreateFragmentShaderFromFile( const char* filename )
+IvResourceManagerDX11::CreateFragmentShaderFromFile( const char* filename )
 {
-    IvFragmentShaderD3D9* fragmentShader = new IvFragmentShaderD3D9();
+    IvFragmentShaderDX11* fragmentShader = new IvFragmentShaderDX11();
     if ( !fragmentShader->CreateFromFile( filename, mDevice ) )
     {
         delete fragmentShader;
@@ -195,14 +195,14 @@ IvResourceManagerD3D9::CreateFragmentShaderFromFile( const char* filename )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateFragmentShaderFromString()
+// @ IvResourceManagerDX11::CreateFragmentShaderFromString()
 //-------------------------------------------------------------------------------
 // Create platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 IvFragmentShader* 
-IvResourceManagerD3D9::CreateFragmentShaderFromString( const char* string )
+IvResourceManagerDX11::CreateFragmentShaderFromString( const char* string )
 {
-    IvFragmentShaderD3D9* fragmentShader = new IvFragmentShaderD3D9();
+    IvFragmentShaderDX11* fragmentShader = new IvFragmentShaderDX11();
     if ( !fragmentShader->CreateFromString( string, mDevice ) )
     {
         delete fragmentShader;
@@ -212,14 +212,14 @@ IvResourceManagerD3D9::CreateFragmentShaderFromString( const char* string )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateFragmentShader()
+// @ IvResourceManagerDX11::CreateFragmentShader()
 //-------------------------------------------------------------------------------
 // Create platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 IvFragmentShader* 
-IvResourceManagerD3D9::CreateDefaultFragmentShader( IvVertexFormat format )
+IvResourceManagerDX11::CreateDefaultFragmentShader( IvVertexFormat format )
 {
-    IvFragmentShaderD3D9* fragmentShader = new IvFragmentShaderD3D9();
+    IvFragmentShaderDX11* fragmentShader = new IvFragmentShaderDX11();
     if ( !fragmentShader->CreateDefault( format, mDevice ) )
     {
         delete fragmentShader;
@@ -229,36 +229,36 @@ IvResourceManagerD3D9::CreateDefaultFragmentShader( IvVertexFormat format )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::Destroy()
+// @ IvResourceManagerDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Delete platform-dependent vertex shader
 //-------------------------------------------------------------------------------
 void 
-IvResourceManagerD3D9::Destroy( IvFragmentShader* fs)
+IvResourceManagerDX11::Destroy( IvFragmentShader* fs)
 {
     if ( fs )
     {
-        IvFragmentShaderD3D9* fsD3D9 = static_cast<IvFragmentShaderD3D9*>(fs);
-        fsD3D9->Destroy();
-        delete fsD3D9;
+        IvFragmentShaderDX11* fsDX11 = static_cast<IvFragmentShaderDX11*>(fs);
+        fsDX11->Destroy();
+        delete fsDX11;
     }
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateShaderProgram()
+// @ IvResourceManagerDX11::CreateShaderProgram()
 //-------------------------------------------------------------------------------
 // Create platform-dependent shader program
 //-------------------------------------------------------------------------------
 IvShaderProgram* 
-IvResourceManagerD3D9::CreateShaderProgram( IvVertexShader* vs, IvFragmentShader* fs )
+IvResourceManagerDX11::CreateShaderProgram( IvVertexShader* vs, IvFragmentShader* fs )
 {
 	// make sure we're not handed garbage
 	if ( vs == 0 || fs == 0 )
 		return 0;
 
-    IvShaderProgramD3D9* newProgram = new IvShaderProgramD3D9();
-    if ( !newProgram->Create( static_cast<IvVertexShaderD3D9*>(vs), 
-                              static_cast<IvFragmentShaderD3D9*>(fs) ) )
+    IvShaderProgramDX11* newProgram = new IvShaderProgramDX11();
+    if ( !newProgram->Create( static_cast<IvVertexShaderDX11*>(vs), 
+                              static_cast<IvFragmentShaderDX11*>(fs) ) )
     {
         delete newProgram;
         newProgram = 0;
@@ -267,28 +267,28 @@ IvResourceManagerD3D9::CreateShaderProgram( IvVertexShader* vs, IvFragmentShader
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::Destroy()
+// @ IvResourceManagerDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Delete platform-dependent index buffer
 //-------------------------------------------------------------------------------
 void 
-IvResourceManagerD3D9::Destroy( IvShaderProgram* sp )
+IvResourceManagerDX11::Destroy( IvShaderProgram* sp )
 {
-    IvShaderProgramD3D9* spD3D9 = static_cast<IvShaderProgramD3D9*>(sp);
-    spD3D9->Destroy();
-    delete spD3D9;
+    IvShaderProgramDX11* spDX11 = static_cast<IvShaderProgramDX11*>(sp);
+    spDX11->Destroy();
+    delete spDX11;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::CreateTexture()
+// @ IvResourceManagerDX11::CreateTexture()
 //-------------------------------------------------------------------------------
 // Create platform-dependent texture
 //-------------------------------------------------------------------------------
 IvTexture*
-IvResourceManagerD3D9::CreateTexture( IvTextureFormat format, 
+IvResourceManagerDX11::CreateTexture( IvTextureFormat format, 
     unsigned int width, unsigned int height )
 {
-	IvTextureD3D9* newTexture = new IvTextureD3D9();
+	IvTextureDX11* newTexture = new IvTextureDX11();
     if ( !newTexture->Create( width, height, format, mDevice ) )
     {
         delete newTexture;
@@ -298,14 +298,14 @@ IvResourceManagerD3D9::CreateTexture( IvTextureFormat format,
 }
 
 //-------------------------------------------------------------------------------
-// @ IvResourceManagerD3D9::Destroy()
+// @ IvResourceManagerDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Delete platform-dependent texture
 //-------------------------------------------------------------------------------
 void 
-IvResourceManagerD3D9::Destroy( IvTexture* tex )
+IvResourceManagerDX11::Destroy( IvTexture* tex )
 {
-    IvTextureD3D9* texD3D9 = static_cast<IvTextureD3D9*>(tex);
-    texD3D9->Destroy();
-    delete texD3D9;
+    IvTextureDX11* texDX11 = static_cast<IvTextureDX11*>(tex);
+    texDX11->Destroy();
+    delete texDX11;
 }
