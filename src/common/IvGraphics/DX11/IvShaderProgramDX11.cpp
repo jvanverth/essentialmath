@@ -94,7 +94,7 @@ IvShaderProgramDX11::Destroy()
     }
     if (mVertexShaderConstants)
     {
-		// shader will delete this
+		mVertexShaderConstants->Release();
         mVertexShaderConstants = 0;
     }
 
@@ -105,7 +105,7 @@ IvShaderProgramDX11::Destroy()
     }
     if (mFragmentShaderConstants)
     {
-		// shader will delete this
+		mFragmentShaderConstants->Release();
 		mFragmentShaderConstants = 0;
     }
 

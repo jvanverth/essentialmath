@@ -62,8 +62,8 @@ IvGame::~IvGame()
         mEventHandler = 0;
     }
 
-//***    IvCleanUpRendererHelpData();
-//***	IvRenderer::Destroy();
+    IvCleanUpRendererHelpData();
+    IvRenderer::Destroy();
 
     if (mClock)
     {

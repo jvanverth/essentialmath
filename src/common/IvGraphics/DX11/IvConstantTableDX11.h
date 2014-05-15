@@ -59,7 +59,11 @@ private:
 		                    mDirty(false) {}
 	~IvConstantTableDX11()
 	{
-		mBuffer->Release();
+		if (mBuffer)
+		{
+			mBuffer->Release();
+			mBuffer = NULL;
+		}
 		delete mBacking;
 	}
 

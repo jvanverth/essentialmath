@@ -34,6 +34,8 @@ ID3D11RenderTargetView* gRenderTargetView = NULL;
 ID3D11Texture2D*        gDepthStencilBuffer = NULL;
 ID3D11DepthStencilView* gDepthStencilView = NULL;
 UINT					gSyncInterval = 0;
+ID3D11Debug*            gD3dDebug;
+
 
 PCHAR*  CommandLineWToArgvA( PWCHAR CmdLine, int* _argc );
 
@@ -142,9 +144,9 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 
     // Perform any application-level cleanup here
 
-	IvRenderer::Destroy();
-	DestroyDevice();
 	IvGame::Destroy();
+//****	IvRenderer::Destroy();
+	DestroyDevice();
 
 	return (int)msg.wParam;
 }
@@ -260,6 +262,9 @@ bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool v
 		//*** fallback to WARP?
 		return false;
 	}
+
+	//*** need error checking here
+	gDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&gD3dDebug));
 
 	// Create a render target view
 	ID3D11Texture2D* backBuffer = NULL;
@@ -440,6 +445,7 @@ void DestroyDevice()
 		gContext = NULL;
 	}
 
+//	gD3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
 	if (gDevice)
 	{
 		gDevice->Release();
@@ -451,6 +457,7 @@ void DestroyDevice()
 		gSwapChain->Release();
 		gSwapChain = NULL;
 	}
+
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
