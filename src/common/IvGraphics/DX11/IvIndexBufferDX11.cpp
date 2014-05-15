@@ -52,7 +52,7 @@ bool
 IvIndexBufferDX11::Create(unsigned int numIndices, void* data, ID3D11Device* device)
 {
 	D3D11_BUFFER_DESC indexBufferDesc;
-	indexBufferDesc.ByteWidth = sizeof(unsigned int)*3;
+	indexBufferDesc.ByteWidth = sizeof(unsigned int)*numIndices;
 	indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	indexBufferDesc.CPUAccessFlags = 0;

@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvShaderProgramD3D9.cpp
+// @ IvShaderProgramDX11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,14 +12,15 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvShaderProgramD3D9.h"
-#include "IvFragmentShaderD3D9.h"
-#include "IvUniformD3D9.h"
-#include "IvVertexShaderD3D9.h"
+#include "IvShaderProgramDX11.h"
+#include "IvConstantTableDX11.h"
+#include "IvFragmentShaderDX11.h"
+#include "IvUniformDX11.h"
+#include "IvVertexShaderDX11.h"
 
 // probably don't belong here
 #include "IvMatrix44.h"
-#include "IvRendererD3D9.h"
+#include "IvRendererDX11.h"
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
@@ -30,11 +31,11 @@
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvShaderProgramD3D9::IvShaderProgramD3D9()
+// @ IvShaderProgramDX11::IvShaderProgramDX11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvShaderProgramD3D9::IvShaderProgramD3D9() : 
+IvShaderProgramDX11::IvShaderProgramDX11() : 
     IvShaderProgram(), 
     mVertexShaderPtr(0), 
     mFragmentShaderPtr(0),
@@ -44,22 +45,22 @@ IvShaderProgramD3D9::IvShaderProgramD3D9() :
 }
 
 //-------------------------------------------------------------------------------
-// @ IvShaderProgramD3D9::~IvShaderProgramD3D9()
+// @ IvShaderProgramDX11::~IvShaderProgramDX11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvShaderProgramD3D9::~IvShaderProgramD3D9()
+IvShaderProgramDX11::~IvShaderProgramDX11()
 {
     Destroy();
 }
 
 //-------------------------------------------------------------------------------
-// @ IvShaderProgramD3D9::Create()
+// @ IvShaderProgramDX11::Create()
 //-------------------------------------------------------------------------------
 // Create a shader program
 //-------------------------------------------------------------------------------
 bool
-IvShaderProgramD3D9::Create( IvVertexShaderD3D9* vertexShaderPtr, IvFragmentShaderD3D9* fragmentShaderPtr )
+IvShaderProgramDX11::Create( IvVertexShaderDX11* vertexShaderPtr, IvFragmentShaderDX11* fragmentShaderPtr )
 {
     // check for valid inputs
     if ( 0 == vertexShaderPtr || 0 == fragmentShaderPtr )
@@ -68,23 +69,23 @@ IvShaderProgramD3D9::Create( IvVertexShaderD3D9* vertexShaderPtr, IvFragmentShad
 	mVertexShaderPtr = vertexShaderPtr->mShaderPtr;
 	mVertexShaderPtr->AddRef();
     mVertexShaderConstants = vertexShaderPtr->mConstantTable;
-    mVertexShaderConstants->AddRef();
+	mVertexShaderConstants->AddRef();
    
 	mFragmentShaderPtr = fragmentShaderPtr->mShaderPtr;
 	mFragmentShaderPtr->AddRef();
     mFragmentShaderConstants = fragmentShaderPtr->mConstantTable;
-    mFragmentShaderConstants->AddRef();
+	mFragmentShaderConstants->AddRef();
 
     return true;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvShaderProgramD3D9::Destroy()
+// @ IvShaderProgramDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Clean up before destructor
 //-------------------------------------------------------------------------------
 void
-IvShaderProgramD3D9::Destroy()
+IvShaderProgramDX11::Destroy()
 {
     if (mVertexShaderPtr)
     {
@@ -93,7 +94,7 @@ IvShaderProgramD3D9::Destroy()
     }
     if (mVertexShaderConstants)
     {
-        mVertexShaderConstants->Release();
+		// shader will delete this
         mVertexShaderConstants = 0;
     }
 
@@ -104,11 +105,11 @@ IvShaderProgramD3D9::Destroy()
     }
     if (mFragmentShaderConstants)
     {
-        mFragmentShaderConstants->Release();
-        mFragmentShaderConstants = 0;
+		// shader will delete this
+		mFragmentShaderConstants = 0;
     }
 
-    std::map<std::string, IvUniformD3D9*>::iterator iter = mUniforms.begin();
+    std::map<std::string, IvUniformDX11*>::iterator iter = mUniforms.begin();
     while (iter != mUniforms.end())
     {
         delete iter->second;
@@ -118,20 +119,20 @@ IvShaderProgramD3D9::Destroy()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvShaderProgramD3D9::MakeActive()
+// @ IvShaderProgramDX11::MakeActive()
 //-------------------------------------------------------------------------------
 // Make this the active program
 //-------------------------------------------------------------------------------
 bool
-IvShaderProgramD3D9::MakeActive( IDirect3DDevice9* device )
+IvShaderProgramDX11::MakeActive(ID3D11DeviceContext* context)
 {
     if ( mVertexShaderPtr == 0 || mFragmentShaderPtr == 0 )
         return false;
 	
-	device->SetVertexShader( mVertexShaderPtr );
-	device->SetPixelShader( mFragmentShaderPtr );
+	context->VSSetShader(mVertexShaderPtr, NULL, 0);
+	context->PSSetShader(mFragmentShaderPtr, NULL, 0);
 
-    std::map<std::string, IvUniformD3D9*>::iterator iter = mUniforms.begin();
+    std::map<std::string, IvUniformDX11*>::iterator iter = mUniforms.begin();
    
     while (iter != mUniforms.end())
     {
@@ -144,12 +145,12 @@ IvShaderProgramD3D9::MakeActive( IDirect3DDevice9* device )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvShaderProgramD3D9::GetUniform()
+// @ IvShaderProgramDX11::GetUniform()
 //-------------------------------------------------------------------------------
 // Queries, returns and caches a shader uniform
 //-------------------------------------------------------------------------------
 IvUniform*
-IvShaderProgramD3D9::GetUniform(char const* name)
+IvShaderProgramDX11::GetUniform(char const* name)
 {
     // Did we already query the uniform?
     if (mUniforms.find(name) != mUniforms.end())
@@ -157,67 +158,24 @@ IvShaderProgramD3D9::GetUniform(char const* name)
         return static_cast<IvUniform*>(mUniforms[name]);
     }
 
-    // check the vertex shader first
-    LPD3DXCONSTANTTABLE constantTable = mVertexShaderConstants;
-    D3DXHANDLE cHandle = constantTable->GetConstantByName(NULL, name);
+	IvConstantDesc desc;
 
-    // check the fragment/pixel shader last
-    if (!cHandle)
-    {
-        constantTable = mFragmentShaderConstants;
-        cHandle = constantTable->GetConstantByName(NULL, name);
-    }
-       
-    if (!cHandle)
-    {
-        return NULL;
-    }
+	// check the vertex shader first
+	IvConstantTableDX11* constantTable;
+	if (mVertexShaderConstants->GetConstantDesc(name, &desc))
+	{
+		constantTable = mVertexShaderConstants;
+	} 
+	else if (mFragmentShaderConstants->GetConstantDesc(name, &desc))
+	{
+		constantTable = mFragmentShaderConstants;
+	}
+	else
+	{
+		return NULL;
+	}
 
-    // get a constant description so we can tell what this is
-    D3DXCONSTANT_DESC constantDesc;
-    unsigned int descCount = 1;
-    
-    if ( D3D_OK != constantTable->GetConstantDesc( cHandle, &constantDesc, &descCount ) )
-        return NULL;
-
-    // set our local description
-    unsigned int count = constantDesc.RegisterCount;
-    IvUniformType ivType;
-    switch ( constantDesc.Class )
-    {
-    case D3DXPC_SCALAR:
-        if ( constantDesc.Type == D3DXPT_FLOAT )
-            ivType = kFloatUniform;
-        else
-            return NULL;
-        break;
-    case D3DXPC_VECTOR:
-        if ( constantDesc.Type == D3DXPT_FLOAT 
-            && constantDesc.Columns == 4 )
-            ivType = kFloat4Uniform;
-        else
-            return NULL;
-        break;
-    case D3DXPC_MATRIX_ROWS: 
-    case D3DXPC_MATRIX_COLUMNS: 
-        if ( constantDesc.Type == D3DXPT_FLOAT 
-            && constantDesc.Rows == 4
-            && constantDesc.Columns == 4 )
-            ivType = kFloatMatrix44Uniform;
-        else
-            return NULL;
-        break;
-    case D3DXPC_OBJECT:
-        if ( constantDesc.Type == D3DXPT_SAMPLER2D )
-            ivType = kTextureUniform;
-        else
-            return NULL;
-        break;
-    default:
-        return NULL;
-    }
-
-    IvUniformD3D9* uniform = new IvUniformD3D9(ivType, count, cHandle, constantTable, this);
+	IvUniformDX11* uniform = new IvUniformDX11(desc.mType, desc.mOffset, desc.mCount, constantTable, this);
 
     mUniforms[name] = uniform;
 

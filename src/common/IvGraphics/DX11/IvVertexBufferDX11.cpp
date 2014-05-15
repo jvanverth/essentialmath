@@ -1,9 +1,9 @@
 //===============================================================================
-// @ IvVertexBufferD3D9.cpp
+// @ IvVertexBufferDX11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008  Elsevier, Inc.
+// Copyright (C) 2014  James M. Van Verth & Lars M. Bishop. 
 //
 // Implementation notes
 //===============================================================================
@@ -12,114 +12,122 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvVertexBufferD3D9.h"
+#include "IvVertexBufferDX11.h"
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-static IDirect3DVertexDeclaration9* sVertexDeclaration[kVertexFormatCount] = {0};
+static ID3D11InputLayout * sInputLayout[kVertexFormatCount] = { 0 };
 
-D3DVERTEXELEMENT9 sCPFormatElements[] =
+D3D11_INPUT_ELEMENT_DESC sCPFormatElements[] =
 {
-  {0, 0, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0},
-  {0, 4, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
-  D3DDECL_END() // this macro is needed as the last item!
+	{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
-D3DVERTEXELEMENT9 sNPFormatElements[] =
+D3D11_INPUT_ELEMENT_DESC sNPFormatElements[] =
 {
-  {0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0},
-  {0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
-  D3DDECL_END() // this macro is needed as the last item!
+	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
-D3DVERTEXELEMENT9 sCNPFormatElements[] =
+D3D11_INPUT_ELEMENT_DESC sCNPFormatElements[] =
 {
-  {0, 0, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0},
-  {0, 4, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0},
-  {0, 16, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
-  D3DDECL_END() // this macro is needed as the last item!
+	{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
-D3DVERTEXELEMENT9 sTCPFormatElements[] =
+D3D11_INPUT_ELEMENT_DESC sTCPFormatElements[] =
 {
-  {0, 0, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
-  {0, 8, D3DDECLTYPE_D3DCOLOR, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0},
-  {0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
-  D3DDECL_END() // this macro is needed as the last item!
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
-D3DVERTEXELEMENT9 sTNPFormatElements[] =
+D3D11_INPUT_ELEMENT_DESC sTNPFormatElements[] =
 {
-  {0, 0, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0},
-  {0, 8, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0},
-  {0, 20, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
-  D3DDECL_END() // this macro is needed as the last item!
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
+
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferD3D9::IvVertexBufferD3D9()
+// @ IvVertexBufferDX11::IvVertexBufferDX11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvVertexBufferD3D9::IvVertexBufferD3D9() : IvVertexBuffer(), mBufferPtr(0), mDataPtr(0)
+IvVertexBufferDX11::IvVertexBufferDX11() : IvVertexBuffer(), mBufferPtr(0), mDataPtr(0)
 {
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferD3D9::~IvVertexBufferD3D9()
+// @ IvVertexBufferDX11::~IvVertexBufferDX11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvVertexBufferD3D9::~IvVertexBufferD3D9()
+IvVertexBufferDX11::~IvVertexBufferDX11()
 {
     Destroy();
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferD3D9::Create()
+// @ IvVertexBufferDX11::Create()
 //-------------------------------------------------------------------------------
 // Create the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferD3D9::Create( IvVertexFormat format, unsigned int numVertices, IDirect3DDevice9* device )
+IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void* data, ID3D11Device* device)
 {
-	if( FAILED( device->CreateVertexBuffer( numVertices*kIvVFSize[format],
-			D3DUSAGE_WRITEONLY, 0/*format*/, D3DPOOL_MANAGED, &mBufferPtr, NULL ) ) )
+	D3D11_BUFFER_DESC vertexBufferDesc;
+	vertexBufferDesc.ByteWidth = numVertices*kIvVFSize[format];
+	vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+	//*** replacement for D3DMANAGED?
+
+	D3D11_SUBRESOURCE_DATA initData;
+	initData.pSysMem = data;
+	initData.SysMemPitch = 0;
+	initData.SysMemSlicePitch = 0;
+
+	if (FAILED(device->CreateBuffer(&vertexBufferDesc, &initData, &mBufferPtr)))
 	{
 		mBufferPtr = 0;
 		return false;
 	}
 
-	if ( sVertexDeclaration[format] == 0 )
+	if (sInputLayout[format] == 0)
 	{
 		switch (format)
 		{
 		case kCPFormat:
-			device->CreateVertexDeclaration( sCPFormatElements, &sVertexDeclaration[format] );
+			device->CreateInputLayout(sCPFormatElements, sizeof(sCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
 			break;
 		case kNPFormat:
-			device->CreateVertexDeclaration( sNPFormatElements, &sVertexDeclaration[format] );
+			device->CreateInputLayout(sNPFormatElements, sizeof(sNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
 			break;
 		case kCNPFormat:
-			device->CreateVertexDeclaration( sCNPFormatElements, &sVertexDeclaration[format] );
+			device->CreateInputLayout(sCNPFormatElements, sizeof(sCNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
 			break;
 		case kTCPFormat:
-			device->CreateVertexDeclaration( sTCPFormatElements, &sVertexDeclaration[format] );
+			device->CreateInputLayout(sTCPFormatElements, sizeof(sTCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
 			break;
 		case kTNPFormat:
-			device->CreateVertexDeclaration( sTNPFormatElements, &sVertexDeclaration[format] );
+			device->CreateInputLayout(sTNPFormatElements, sizeof(sTNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
 			break;
 		}
 	}
     else
     {
-        sVertexDeclaration[format]->AddRef();
+		sInputLayout[format]->AddRef();
     }
 
 	mVertexFormat = format;
@@ -129,12 +137,12 @@ IvVertexBufferD3D9::Create( IvVertexFormat format, unsigned int numVertices, IDi
 }	
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferD3D9::Destroy()
+// @ IvVertexBufferDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Destroy the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 void
-IvVertexBufferD3D9::Destroy()
+IvVertexBufferDX11::Destroy()
 {
 	if ( mBufferPtr )
 	{
@@ -143,11 +151,11 @@ IvVertexBufferD3D9::Destroy()
 		mBufferPtr = 0;
 	}
 
-    if ( sVertexDeclaration[mVertexFormat] )
+	if (sInputLayout[mVertexFormat])
     {
-        if ( sVertexDeclaration[mVertexFormat]->Release() == 0 )
+		if (sInputLayout[mVertexFormat]->Release() == 0)
         {
-            sVertexDeclaration[mVertexFormat] = 0;
+			sInputLayout[mVertexFormat] = 0;
         }
     }
 
@@ -155,112 +163,22 @@ IvVertexBufferD3D9::Destroy()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferD3D9::MakeActive()
+// @ IvVertexBufferDX11::MakeActive()
 //-------------------------------------------------------------------------------
 // Make this the active vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferD3D9::MakeActive( IDirect3DDevice9* device )
+IvVertexBufferDX11::MakeActive(ID3D11DeviceContext* context)
 {
     if ( mBufferPtr == 0 || mNumVertices == 0 )
         return false;
     
-	device->SetStreamSource(0, mBufferPtr, 0, kIvVFSize[mVertexFormat] );
-	device->SetVertexDeclaration( sVertexDeclaration[mVertexFormat] );
+	UINT stride = kIvVFSize[mVertexFormat];
+	UINT offset = 0;
+	context->IASetVertexBuffers(0, 1, &mBufferPtr, &stride, &offset);
+
+	context->IASetInputLayout(sInputLayout[mVertexFormat]);
     
     return true;
-}
-
-//-------------------------------------------------------------------------------
-// @ IvVertexBufferD3D9::BeginLoadData()
-//-------------------------------------------------------------------------------
-// Lock down the buffer and start loading
-// Returns pointer to client side data area
-//-------------------------------------------------------------------------------
-void *
-IvVertexBufferD3D9::BeginLoadData()
-{
-	// already loading data...
-	if ( mDataPtr )
-		return 0;
-	if(FAILED(mBufferPtr->Lock(0, mNumVertices*kIvVFSize[mVertexFormat], &mDataPtr, 0 ) ) ) 
-		return 0;
-
-	// patch colors for engine order, if needed
-	char* colorPtr;
-	unsigned int stride = kIvVFSize[mVertexFormat];
-	switch (mVertexFormat)
-	{
-        default:
-            colorPtr = 0;
-            break;
-        case kCPFormat:
-            colorPtr = reinterpret_cast<char*>(&static_cast<IvCPVertex*>(mDataPtr)->color);
-            break;
-        case kCNPFormat:
-            colorPtr = reinterpret_cast<char*>(&static_cast<IvCNPVertex*>(mDataPtr)->color);
-            break;
-        case kTCPFormat:
-            colorPtr = reinterpret_cast<char*>(&static_cast<IvTCPVertex*>(mDataPtr)->color);
-            break;
-	}
-    
-	if ( colorPtr )
-	{
-		for ( unsigned int i = 0; i < mNumVertices; ++i, colorPtr += stride )
-		{
-			unsigned char temp = colorPtr[0];
-			colorPtr[0] = colorPtr[2];
-			colorPtr[2] = temp;
-		}
-	}
-    
-    return mDataPtr;
-}
-
-//-------------------------------------------------------------------------------
-// @ IvVertexBufferD3D9::EndLoadData()
-//-------------------------------------------------------------------------------
-// Unlock the buffer, we're done loading
-// Returns true if all went well
-//-------------------------------------------------------------------------------
-bool
-IvVertexBufferD3D9::EndLoadData()
-{
-	// patch up colors for D3D order, if needed
-	char* colorPtr;
-	unsigned int stride = kIvVFSize[mVertexFormat];
-	switch (mVertexFormat)
-	{
-	default:
-		colorPtr = 0;
-		break;
-	case kCPFormat:
-		colorPtr = reinterpret_cast<char*>(&static_cast<IvCPVertex*>(mDataPtr)->color);
-		break;
-	case kCNPFormat:
-		colorPtr = reinterpret_cast<char*>(&static_cast<IvCNPVertex*>(mDataPtr)->color);
-		break;
-	case kTCPFormat:
-		colorPtr = reinterpret_cast<char*>(&static_cast<IvTCPVertex*>(mDataPtr)->color);
-		break;
-	}
-
-	if ( colorPtr )
-	{
-		for ( unsigned int i = 0; i < mNumVertices; ++i, colorPtr += stride )
-		{
-			unsigned char temp = colorPtr[0];
-			colorPtr[0] = colorPtr[2];
-			colorPtr[2] = temp;
-		}
-	}
-
-	// unlock the pointer and return
-    mDataPtr = 0;
-	if(FAILED(mBufferPtr->Unlock()))
-		return false;
-	else
-		return true;
 }
 

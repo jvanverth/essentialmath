@@ -1,81 +1,78 @@
 //===============================================================================
-// @ IvShaderProgramD3D9.h
+// @ IvConstantTableDX11.h
 // 
-// Description
+// Replacement for D3D9 constant table
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008   Elsevier, Inc.
+// Copyright (C) 2014   James M. Van Verth & Lars M. Bishop
 //
 // Change history:
 //
 // Usage notes
 //===============================================================================
 
-#ifndef __IvShaderProgramD3D9__h__
-#define __IvShaderProgramD3D9__h__
+#ifndef __IvConstantTableDX11__h__
+#define __IvConstantTableDX11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
-
-#include <map>
-#include <string>
-
 #include <d3d11.h>
-//#include <D3DX9Shader.h>
+#include <map>
 
-#include "../IvShaderProgram.h"
-#include "../IvVertexFormats.h"
+#include "IvUniform.h"
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvConstantTableDX11;
-class IvResourceManagerDX11;
-class IvUniformDX11;
-class IvVertexShaderDX11;
-class IvFragmentShaderDX11;
-
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvShaderProgramDX11 : public IvShaderProgram
+typedef int IvConstantHandle;
+
+struct IvConstantDesc
+{
+	void*         mOffset;
+	IvUniformType mType;
+	unsigned int  mCount;
+};
+
+class IvConstantTableDX11
 {
 public:
-    // interface routines
-    virtual IvUniform* GetUniform(char const* name);
+	static IvConstantTableDX11* Create(ID3D11Device* device, ID3DBlob* code);
 
-    friend class IvResourceManagerDX11;
-    friend class IvRendererDX11;
-    
-private:
-    // constructor/destructor
-    IvShaderProgramDX11();
-	~IvShaderProgramDX11();
-    
-    // initialization
-    bool Create( IvVertexShaderDX11* vertexShaderPtr, IvFragmentShaderDX11* fragmentShaderPtr );
-    
-    // destruction
-    void Destroy();
-    
-    // make this the active program
-	bool MakeActive(ID3D11DeviceContext* device);
-    
-private:
-    // copy operations
-    IvShaderProgramDX11(const IvShaderProgramDX11& other);
-	IvShaderProgramDX11& operator=(const IvShaderProgramDX11& other);
+	void AddRef() { ++mRefCount; }
+	void Release() { Destroy(this); }
+
+	bool GetConstantDesc(const char* name, IvConstantDesc* constantDesc);
+	void MarkDirty() { mDirty = true;  }
+
+	bool MakeActive(ID3D11DeviceContext* context);
 
 private:
-    // D3D-specific data
-	ID3D11VertexShader*  mVertexShaderPtr;
-	IvConstantTableDX11* mVertexShaderConstants;
-	ID3D11PixelShader*   mFragmentShaderPtr;
-	IvConstantTableDX11* mFragmentShaderConstants;
+	static void Destroy(IvConstantTableDX11* table);
 
-    std::map<std::string, IvUniformDX11*> mUniforms;
+	// constructor/destructor
+	IvConstantTableDX11() : mRefCount(1), mBuffer(NULL), mBacking(NULL), 
+		                    mDirty(false) {}
+	~IvConstantTableDX11()
+	{
+		mBuffer->Release();
+		delete mBacking;
+	}
+
+private:
+	// copy operations
+	IvConstantTableDX11(const IvConstantTableDX11& other);
+	IvConstantTableDX11& operator=(const IvConstantTableDX11& other);
+
+	int									  mRefCount;
+	std::map<std::string, IvConstantDesc> mConstants;
+	ID3D11Buffer*						  mBuffer;
+	char*                                 mBacking;
+	bool								  mDirty;
 };
 
 

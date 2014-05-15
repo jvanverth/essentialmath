@@ -186,7 +186,6 @@ IvRendererDX11::Initialize( unsigned int width, unsigned int height )
 void 
 IvRendererDX11::Resize(unsigned int width, unsigned int height ) 
 {
-	/*
 	// prevent divide by zero
     if (height == 0)                                    
     {
@@ -194,8 +193,8 @@ IvRendererDX11::Resize(unsigned int width, unsigned int height )
     }
 
     // set up current viewport
-	D3DVIEWPORT9 viewPort = { 0, 0, width, height, 0.0f, 1.0f };
-    mDevice->SetViewport( &viewPort );                     
+	//D3DVIEWPORT9 viewPort = { 0, 0, width, height, 0.0f, 1.0f };
+    //mDevice->SetViewport( &viewPort );                     
     mWidth = width;
     mHeight = height;
 
@@ -216,7 +215,7 @@ IvRendererDX11::Resize(unsigned int width, unsigned int height )
     IvMatrix44 ident;
     SetViewMatrix(ident);
     SetWorldMatrix(ident);
-*/
+
 }   // End of IvRendererDX11::Resize()
 
 
@@ -523,7 +522,7 @@ void IvRendererDX11::SetDepthWrite(bool write)
 //-------------------------------------------------------------------------------
 void IvRendererDX11::SetWorldMatrix(const IvMatrix44& matrix)
 {
- //   IvRenderer::SetWorldMatrix(matrix);
+    IvRenderer::SetWorldMatrix(matrix);
 
 	//mDevice->SetTransform( D3DTS_WORLDMATRIX(0), (const D3DMATRIX *)&mWorldMat );
 }
@@ -535,7 +534,7 @@ void IvRendererDX11::SetWorldMatrix(const IvMatrix44& matrix)
 //-------------------------------------------------------------------------------
 void IvRendererDX11::SetViewMatrix(const IvMatrix44& matrix)
 {
- //   IvRenderer::SetViewMatrix(matrix);
+    IvRenderer::SetViewMatrix(matrix);
 
 	//mDevice->SetTransform( D3DTS_VIEW, (const D3DMATRIX *)&mViewMat );
 }
@@ -547,7 +546,7 @@ void IvRendererDX11::SetViewMatrix(const IvMatrix44& matrix)
 //-------------------------------------------------------------------------------
 void IvRendererDX11::SetProjectionMatrix(const IvMatrix44& matrix)
 {
- //   IvRenderer::SetProjectionMatrix(matrix);
+    IvRenderer::SetProjectionMatrix(matrix);
 
 	//mDevice->SetTransform( D3DTS_PROJECTION, (const D3DMATRIX *)&mProjectionMat );
 }
@@ -572,17 +571,17 @@ void IvRendererDX11::SetShaderProgram(IvShaderProgram* program)
 {
     // This is a safe cast, since we will only link IvShaderProgramDX11 with the
     // DX11 renderer.
-    //mShader = static_cast<IvShaderProgramDX11*>(program);
-    //if (mShader)
-    //{
-    //    mShader->MakeActive( mDevice );
-    //}
-    //else
-    //{
-    //    // Otherwise (NULL shader), we will need to bind a default shader later 
-	   // mDevice->SetVertexShader( 0 );
-	   // mDevice->SetPixelShader( 0 );
-    //}
+    mShader = static_cast<IvShaderProgramDX11*>(program);
+    if (mShader)
+    {
+        mShader->MakeActive( mContext );
+    }
+    else
+    {
+        // Otherwise (NULL shader), we will need to bind a default shader later 
+		mContext->VSSetShader(NULL, NULL, 0);
+		mContext->VSSetShader(NULL, NULL, 0);
+    }
 }
 
 
@@ -594,42 +593,42 @@ void IvRendererDX11::SetShaderProgram(IvShaderProgram* program)
 void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, 
                   IvIndexBuffer* indexBuffer, unsigned int numIndices)
 {
- //   BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
+    BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
-	//// update any default uniforms
-	//if ( mShader )
-	//{
-	//	IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-	//	if ( modelviewproj )
-	//	{
-	//		modelviewproj->SetValue( mWVPMat, 0 );
-	//	}
-	//	IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-	//	if ( normalMat )
-	//	{
-	//		normalMat->SetValue( mNormalMat, 0 );
-	//	}
-	//	IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-	//	if (diffuseColor)
-	//	{
-	//		diffuseColor->SetValue(mDiffuseColor,0);
-	//	}
-	//	IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-	//	if ( ambient )
-	//	{
-	//		ambient->SetValue(mLightAmbient,0);
-	//	}
-	//	IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-	//	if ( diffuse )
-	//	{
-	//		diffuse->SetValue(mLightDiffuse,0);
-	//	}
-	//	IvUniform* direction = mShader->GetUniform("IvLightDirection");
-	//	if ( direction )
-	//	{
-	//		direction->SetValue(mLightDirection,0);
-	//	}
-	//}
+	// update any default uniforms
+	if ( mShader )
+	{
+		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+		if ( modelviewproj )
+		{
+			modelviewproj->SetValue( mWVPMat, 0 );
+		}
+		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
+		if ( normalMat )
+		{
+			normalMat->SetValue( mNormalMat, 0 );
+		}
+		IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
+		if (diffuseColor)
+		{
+			diffuseColor->SetValue(mDiffuseColor,0);
+		}
+		IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
+		if ( ambient )
+		{
+			ambient->SetValue(mLightAmbient,0);
+		}
+		IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
+		if ( diffuse )
+		{
+			diffuse->SetValue(mLightDiffuse,0);
+		}
+		IvUniform* direction = mShader->GetUniform("IvLightDirection");
+		if ( direction )
+		{
+			direction->SetValue(mLightDirection,0);
+		}
+	}
 
     if (vertexBuffer)
         static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
@@ -675,47 +674,47 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 //-------------------------------------------------------------------------------
 void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices)
 {
- //   BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
+    BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
-	//// update any default uniforms
-	//if ( mShader )
-	//{
-	//	IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-	//	if ( modelviewproj )
-	//	{
-	//		modelviewproj->SetValue(mWVPMat, 0);
-	//	}
-	//	IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-	//	if ( normalMat )
-	//	{
-	//		normalMat->SetValue(mNormalMat, 0);
-	//	}
-	//	IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-	//	if (diffuseColor)
-	//	{
-	//		diffuseColor->SetValue(mDiffuseColor,0);
-	//	}
-	//	IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-	//	if ( ambient )
-	//	{
-	//		ambient->SetValue(mLightAmbient,0);
-	//	}
-	//	IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-	//	if ( diffuse )
-	//	{
-	//		diffuse->SetValue(mLightDiffuse,0);
-	//	}
-	//	IvUniform* direction = mShader->GetUniform("IvLightDirection");
-	//	if ( direction )
-	//	{
-	//		direction->SetValue(mLightDirection,0);
-	//	}
-	//}
+	// update any default uniforms
+	if ( mShader )
+	{
+		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+		if ( modelviewproj )
+		{
+			modelviewproj->SetValue(mWVPMat, 0);
+		}
+		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
+		if ( normalMat )
+		{
+			normalMat->SetValue(mNormalMat, 0);
+		}
+		IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
+		if (diffuseColor)
+		{
+			diffuseColor->SetValue(mDiffuseColor,0);
+		}
+		IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
+		if ( ambient )
+		{
+			ambient->SetValue(mLightAmbient,0);
+		}
+		IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
+		if ( diffuse )
+		{
+			diffuse->SetValue(mLightDiffuse,0);
+		}
+		IvUniform* direction = mShader->GetUniform("IvLightDirection");
+		if ( direction )
+		{
+			direction->SetValue(mLightDirection,0);
+		}
+	}
 
- //   if (vertexBuffer)
- //       static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mDevice );
- //   else
- //       return;
+    if (vertexBuffer)
+        static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
+    else
+        return;
 
 	//int primCount = 0;
 	//switch ( primType )
@@ -754,7 +753,7 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, uns
 //-------------------------------------------------------------------------------
 void IvRendererDX11::BindDefaultShaderIfNeeded(IvVertexFormat format)
 {
-/*    if (mShader)
+    if (mShader)
         return;
 
     if (!sDefaultShaders[format])
@@ -774,6 +773,6 @@ void IvRendererDX11::BindDefaultShaderIfNeeded(IvVertexFormat format)
 		}
     }
 
-    SetShaderProgram(sDefaultShaders[format]);*/
+    SetShaderProgram(sDefaultShaders[format]);
 }
         

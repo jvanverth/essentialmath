@@ -1,83 +1,81 @@
 //===============================================================================
-// @ IvShaderProgramD3D9.h
+// @ IvUniformDX11.h
 // 
 // Description
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008   Elsevier, Inc.
-//
-// Change history:
+// Copyright (C) 2008  Elsevier, Inc.
 //
 // Usage notes
 //===============================================================================
 
-#ifndef __IvShaderProgramD3D9__h__
-#define __IvShaderProgramD3D9__h__
+#ifndef __IvUniformDX11__h__
+#define __IvUniformDX11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include <map>
-#include <string>
-
+#include "IvUniform.h"
 #include <d3d11.h>
-//#include <D3DX9Shader.h>
-
-#include "../IvShaderProgram.h"
-#include "../IvVertexFormats.h"
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
 
 class IvConstantTableDX11;
-class IvResourceManagerDX11;
-class IvUniformDX11;
-class IvVertexShaderDX11;
-class IvFragmentShaderDX11;
+class IvMatrix44;
+class IvTextureDX11;
+class IvVector4;
+class IvShaderProgramDX11;
 
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvShaderProgramDX11 : public IvShaderProgram
+typedef int D3DXHANDLE;
+
+class IvUniformDX11 : public IvUniform
 {
 public:
-    // interface routines
-    virtual IvUniform* GetUniform(char const* name);
+    friend class IvShaderProgramDX11;
 
-    friend class IvResourceManagerDX11;
-    friend class IvRendererDX11;
+    virtual void SetValue( float value, unsigned int index);
+    virtual void SetValue( const IvVector4& value, unsigned int index );
+    virtual void SetValue( const IvMatrix44& value, unsigned int index );
+    virtual void SetValue( IvTexture* value );
     
-private:
+    // return false on type mismatch
+    virtual bool GetValue( float& value, unsigned int index) const;
+    virtual bool GetValue( IvVector4& value, unsigned int index ) const;
+    virtual bool GetValue( IvMatrix44& value, unsigned int index ) const;
+    virtual bool GetValue( IvTexture*& value ) const;
+    
+protected:
     // constructor/destructor
-    IvShaderProgramDX11();
-	~IvShaderProgramDX11();
-    
-    // initialization
-    bool Create( IvVertexShaderDX11* vertexShaderPtr, IvFragmentShaderDX11* fragmentShaderPtr );
-    
-    // destruction
-    void Destroy();
-    
-    // make this the active program
-	bool MakeActive(ID3D11DeviceContext* device);
-    
-private:
-    // copy operations
-    IvShaderProgramDX11(const IvShaderProgramDX11& other);
-	IvShaderProgramDX11& operator=(const IvShaderProgramDX11& other);
+	IvUniformDX11(IvUniformType type, void* offset, unsigned int count,
+		          IvConstantTableDX11* constantTable, 
+				  IvShaderProgramDX11* shader);
+    virtual ~IvUniformDX11();
+    void Update();
+
+    IvShaderProgramDX11*	mShader;
+    void*				    mOffset;
+	IvConstantTableDX11*	mConstantTable;
+
+    // Could subclass for each type, but likely not worth it.
+    union  
+    {
+        float* mFloat;
+        IvVector4* mVector4;
+        IvMatrix44* mMatrix44;
+        IvTextureDX11* mTexture;
+    } mValue;
 
 private:
-    // D3D-specific data
-	ID3D11VertexShader*  mVertexShaderPtr;
-	IvConstantTableDX11* mVertexShaderConstants;
-	ID3D11PixelShader*   mFragmentShaderPtr;
-	IvConstantTableDX11* mFragmentShaderConstants;
-
-    std::map<std::string, IvUniformDX11*> mUniforms;
-};
-
+    // copy operations (unimplemented so we can't copy)
+    IvUniformDX11(const IvUniformDX11& other);
+	IvUniformDX11& operator=(const IvUniformDX11& other);
+}; 
 
 //-------------------------------------------------------------------------------
 //-- Inlines --------------------------------------------------------------------

@@ -207,7 +207,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;dxgi.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>ExampleDX11_d.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\common\Libs\DX11Debug;..\..\..\common\Libs\Win32Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -251,7 +251,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;dxgi.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>ExampleDX11.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\common\Libs\DX11Release;..\..\..\common\Libs\Win32Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvShaderProgramD3D9.h
+// @ IvFragmentShaderDX11.h
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -10,21 +10,16 @@
 // Usage notes
 //===============================================================================
 
-#ifndef __IvShaderProgramD3D9__h__
-#define __IvShaderProgramD3D9__h__
+#ifndef __IvFragmentShaderDX11__h__
+#define __IvFragmentShaderDX11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include <map>
-#include <string>
-
-#include <d3d11.h>
-//#include <D3DX9Shader.h>
-
-#include "../IvShaderProgram.h"
+#include "../IvFragmentShader.h"
 #include "../IvVertexFormats.h"
+#include <d3d11.h>
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
@@ -32,50 +27,39 @@
 
 class IvConstantTableDX11;
 class IvResourceManagerDX11;
-class IvUniformDX11;
-class IvVertexShaderDX11;
-class IvFragmentShaderDX11;
+class IvShaderProgramDX11;
 
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvShaderProgramDX11 : public IvShaderProgram
+class IvFragmentShaderDX11 : private IvFragmentShader
 {
 public:
     // interface routines
-    virtual IvUniform* GetUniform(char const* name);
 
     friend class IvResourceManagerDX11;
-    friend class IvRendererDX11;
-    
+    friend class IvShaderProgramDX11;
+
 private:
     // constructor/destructor
-    IvShaderProgramDX11();
-	~IvShaderProgramDX11();
+    IvFragmentShaderDX11();
+	~IvFragmentShaderDX11();
     
     // initialization
-    bool Create( IvVertexShaderDX11* vertexShaderPtr, IvFragmentShaderDX11* fragmentShaderPtr );
+	bool CreateFromFile(const char* filename, ID3D11Device* device);
+	bool CreateFromString(const char* filename, ID3D11Device* device);
+	bool CreateDefault(IvVertexFormat format, ID3D11Device* device);
     
-    // destruction
     void Destroy();
-    
-    // make this the active program
-	bool MakeActive(ID3D11DeviceContext* device);
     
 private:
     // copy operations
-    IvShaderProgramDX11(const IvShaderProgramDX11& other);
-	IvShaderProgramDX11& operator=(const IvShaderProgramDX11& other);
+    IvFragmentShaderDX11(const IvFragmentShaderDX11& other);
+	IvFragmentShaderDX11& operator=(const IvFragmentShaderDX11& other);
 
-private:
-    // D3D-specific data
-	ID3D11VertexShader*  mVertexShaderPtr;
-	IvConstantTableDX11* mVertexShaderConstants;
-	ID3D11PixelShader*   mFragmentShaderPtr;
-	IvConstantTableDX11* mFragmentShaderConstants;
-
-    std::map<std::string, IvUniformDX11*> mUniforms;
+	ID3D11PixelShader*   mShaderPtr;
+	IvConstantTableDX11* mConstantTable;
 };
 
 
