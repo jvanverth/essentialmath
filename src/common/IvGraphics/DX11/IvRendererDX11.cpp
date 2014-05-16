@@ -193,8 +193,14 @@ IvRendererDX11::Resize(unsigned int width, unsigned int height )
     }
 
     // set up current viewport
-	//D3DVIEWPORT9 viewPort = { 0, 0, width, height, 0.0f, 1.0f };
-    //mDevice->SetViewport( &viewPort );                     
+	D3D11_VIEWPORT vp;
+	vp.Width = (FLOAT)width;
+	vp.Height = (FLOAT)height;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	mContext->RSSetViewports(1, &vp);
     mWidth = width;
     mHeight = height;
 
@@ -630,7 +636,9 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 		}
 	}
 
-    if (vertexBuffer)
+	//**** or update the uniforms here ?
+
+	if (vertexBuffer)
         static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
     else
         return;
@@ -640,31 +648,8 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
     else
         return;
 
-	//int primCount = 0;
-	//switch ( primType )
-	//{
-	//case kLineListPrim:
-	//	primCount = numIndices/2;
-	//	break;
-
-	//case kLineStripPrim:
-	//	primCount = numIndices-1;
-	//	break;
-
-	//case kTriangleListPrim:
-	//	primCount = numIndices/3;
-	//	break;
-
-	//case kTriangleStripPrim:
-	//	primCount = numIndices-2;
-	//	break;
-	//}
-
-	//if ( primCount < 1 )
-	//	return;
-
- //   mDevice->DrawIndexedPrimitive( sPrimTypeMap[primType], 0, 0, vertexBuffer->GetVertexCount(), 
-	//	0, primCount );
+	mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
+	mContext->DrawIndexed(numIndices, 0, 0);
 }
 
 //-------------------------------------------------------------------------------
@@ -711,38 +696,15 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, uns
 		}
 	}
 
+	//**** or update the uniforms here ?
+
     if (vertexBuffer)
         static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
     else
         return;
 
-	//int primCount = 0;
-	//switch ( primType )
-	//{
-	//case kPointListPrim:
-	//	primCount = numVertices;
-	//	break;
-
-	//case kLineListPrim:
-	//	primCount = numVertices/2;
-	//	break;
-
-	//case kLineStripPrim:
-	//	primCount = numVertices-1;
-	//	break;
-
-	//case kTriangleListPrim:
-	//	primCount = numVertices/3;
-	//	break;
-
-	//case kTriangleStripPrim:
-	//	primCount = numVertices-2;
-	//	break;
-
-	//if ( primCount < 1 )
-	//	return;
-
- //   mDevice->DrawPrimitive( sPrimTypeMap[primType], 0, primCount );
+	mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
+	mContext->Draw(numVertices, 0);
 }
 
 

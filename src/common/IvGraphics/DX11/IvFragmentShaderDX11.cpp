@@ -26,35 +26,62 @@
 static char const* sDefaultFragmentShader[kVertexFormatCount] = {0};
 
 static const char sShaderCPFormat[] =
-"float4 ps_main( float4 color : COLOR0 ) : SV_Target\n"
+"struct VS_OUTPUT\n"
 "{\n"
-"    return color;\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"};\n"
+"float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
+"{\n"
+"    return input.color;\n"
 "}\n";
 
 static const char sShaderNPFormat[] = 
-"float4 ps_main( float4 color : COLOR0 ) : SV_Target\n"
+"struct VS_OUTPUT\n"
 "{\n"
-"    return color;\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"};\n"
+"float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
+"{\n"
+"    return input.color;\n"
 "}\n";
 
 static const char sShaderCNPFormat[] = 
-"float4 ps_main( float4 color : COLOR0 ) : SV_Target\n"
+"struct VS_OUTPUT\n"
 "{\n"
-"    return color;\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"};\n"
+"float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
+"{\n"
+"    return input.color;\n"
 "}\n";
 
 static const char sShaderTCPFormat[] = 
-"sampler defaultTexture;\n"
-"float4 ps_main( float4 color : COLOR0, float2 uv : TEXCOORD0 ) : SV_Target\n"
+"struct VS_OUTPUT\n"
 "{\n"
-"    return mul(color, tex2D( defaultTexture, uv ));\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"	 float2 uv : TEXCOORD0;\n"
+"};\n"
+"sampler defaultTexture;\n"
+"float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
+"{\n"
+"    return mul(input.color, tex2D( defaultTexture, input.uv ));\n"
 "}\n";
 
 static const char sShaderTNPFormat[] = 
-"sampler defaultTexture;\n"
-"float4 ps_main( float4 color : COLOR0, float2 uv : TEXCOORD0 ) : SV_Target\n"
+"struct VS_OUTPUT\n"
 "{\n"
-"    return mul(color, tex2D( defaultTexture, uv ));\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"	 float2 uv : TEXCOORD0;\n"
+"};\n"
+"sampler defaultTexture;\n"
+"float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
+"{\n"
+"    return mul(input.color, tex2D( defaultTexture, input.uv ));\n"
 "}\n";
 
 //-------------------------------------------------------------------------------

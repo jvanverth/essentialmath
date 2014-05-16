@@ -132,6 +132,8 @@ IvShaderProgramDX11::MakeActive(ID3D11DeviceContext* context)
 	context->VSSetShader(mVertexShaderPtr, NULL, 0);
 	context->PSSetShader(mFragmentShaderPtr, NULL, 0);
 
+	//*** Update the uniforms here?
+
     std::map<std::string, IvUniformDX11*>::iterator iter = mUniforms.begin();
    
     while (iter != mUniforms.end())

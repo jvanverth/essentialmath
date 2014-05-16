@@ -14,6 +14,9 @@
 
 #include "IvVertexBufferDX11.h"
 
+#include "IvDebugger.h"
+#include <d3dcompiler.h>
+
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
@@ -53,6 +56,67 @@ D3D11_INPUT_ELEMENT_DESC sTNPFormatElements[] =
 	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
+static const char sDummyShaderCPFormat[] =
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"};\n"
+"VS_OUTPUT vs_main( float4 color : COLOR0, float4 pos : POSITION )\n"
+"{\n"
+"    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
+"    return Out;\n"
+"}\n";
+
+static const char sDummyShaderNPFormat[] =
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"};\n"
+"VS_OUTPUT vs_main( float4 normal : NORMAL, float4 pos : POSITION )\n"
+"{\n"
+"    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
+"    return Out;\n"
+"}\n";
+
+static const char sDummyShaderCNPFormat[] =
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"};\n"
+"VS_OUTPUT vs_main( float4 color : COLOR0, float4 normal : NORMAL, float4 pos : POSITION )\n"
+"{\n"
+"    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
+"    return Out;\n"
+"}\n";
+
+static const char sDummyShaderTCPFormat[] =
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"	 float2 uv : TEXCOORD0;\n"
+"};\n"
+"VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 color : COLOR0, float4 pos : POSITION )\n"
+"{\n"
+"    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
+"    return Out;\n"
+"}\n";
+
+static const char sDummyShaderTNPFormat[] =
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"    float4 color : COLOR0;\n"
+"	 float2 uv : TEXCOORD0;\n"
+"};\n"
+"VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 color : COLOR0, float4 pos : POSITION )\n"
+"{\n"
+"    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
+"    return Out;\n"
+"}\n";
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -106,24 +170,65 @@ IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void
 
 	if (sInputLayout[format] == 0)
 	{
+		D3D11_INPUT_ELEMENT_DESC* elements = NULL;
+		UINT numElements = 0;
+		const char* shaderString = NULL;
+
 		switch (format)
 		{
 		case kCPFormat:
-			device->CreateInputLayout(sCPFormatElements, sizeof(sCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
+			elements = sCPFormatElements;
+			numElements = sizeof(sCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+			shaderString = sDummyShaderCPFormat;
 			break;
 		case kNPFormat:
-			device->CreateInputLayout(sNPFormatElements, sizeof(sNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
+			elements = sNPFormatElements;
+			numElements = sizeof(sNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+			shaderString = sDummyShaderNPFormat;
 			break;
 		case kCNPFormat:
-			device->CreateInputLayout(sCNPFormatElements, sizeof(sCNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
+			elements = sCNPFormatElements;
+			numElements = sizeof(sCNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+			shaderString = sDummyShaderCNPFormat;
 			break;
 		case kTCPFormat:
-			device->CreateInputLayout(sTCPFormatElements, sizeof(sTCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
+			elements = sTCPFormatElements;
+			numElements = sizeof(sTCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+			shaderString = sDummyShaderTCPFormat;
 			break;
 		case kTNPFormat:
-			device->CreateInputLayout(sTNPFormatElements, sizeof(sTNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC), NULL/*shaderBuffer*/, 0/*shaderBufferSize*/, &sInputLayout[format]);
+			elements = sTNPFormatElements;
+			numElements = sizeof(sTNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+			shaderString = sDummyShaderTNPFormat;
 			break;
 		}
+
+		ID3DBlob* code;
+		ID3DBlob* errorMessages = NULL;
+
+		// compile the shader to assembly
+		if (FAILED(D3DCompile(shaderString, strlen(shaderString) + 1, NULL, NULL, NULL, "vs_main", "vs_4_0",
+			D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG, 0, &code, &errorMessages)))
+		{
+			const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
+			DEBUG_OUT("Vertex shader error: ");
+			DEBUG_OUT(errors << std::endl);
+			errorMessages->Release();
+			mBufferPtr->Release();
+			return false;
+		}
+		if (errorMessages)
+		{
+			errorMessages->Release();
+		}
+
+		if (FAILED(device->CreateInputLayout(elements, numElements, code->GetBufferPointer(), code->GetBufferSize(), &sInputLayout[format])))
+		{
+			mBufferPtr->Release();
+			code->Release();
+			return false;
+		}
+		code->Release();
 	}
     else
     {
