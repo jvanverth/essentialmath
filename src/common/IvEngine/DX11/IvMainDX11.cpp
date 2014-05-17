@@ -36,15 +36,14 @@ ID3D11DepthStencilView* gDepthStencilView = NULL;
 UINT					gSyncInterval = 0;
 ID3D11Debug*            gD3dDebug;
 
-
 PCHAR*  CommandLineWToArgvA( PWCHAR CmdLine, int* _argc );
 
-/*void    CALLBACK OnFrameMove(double fTime, float fElapsedTime, void* userContext);
+//void    CALLBACK OnFrameMove(double fTime, float fElapsedTime, void* userContext);
 void    CALLBACK OnKeyboard( UINT nChar, bool bKeyDown, bool bAltDown );
 void	CALLBACK OnMouse( bool bLeftButtonDown, bool bRightButtonDown, bool bMiddleButtonDown, 
                          bool bSideButton1Down, bool bSideButton2Down, int nMouseWheelDelta, 
                          int xPos, int yPos );
-LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool* pbNoFurtherProcessing );
+/*LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool* pbNoFurtherProcessing );
 void    CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, const D3DCAPS11* pCaps );
 bool	CALLBACK OnDeviceRemoved();
 
@@ -114,9 +113,8 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 	// Do post-renderer creation initialization
 	if (!IvGame::mGame->PostRendererInitialize())
 	{
-		IvRenderer::Destroy();
-		DestroyDevice();
 		IvGame::Destroy();
+		DestroyDevice();
 		return 1;
 	}
 
@@ -131,6 +129,9 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 		}
 		else
 		{
+			// game move objects and the like
+			IvGame::mGame->Update();
+
 			// clear the back buffer
 			IvRenderer::mRenderer->ClearBuffers(kColorDepthClear);
 
@@ -141,11 +142,10 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 			gSwapChain->Present(gSyncInterval, 0);
 		}
 	}
-
+	
     // Perform any application-level cleanup here
 
 	IvGame::Destroy();
-//****	IvRenderer::Destroy();
 	DestroyDevice();
 
 	return (int)msg.wParam;
@@ -262,9 +262,13 @@ bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool v
 		//*** fallback to WARP?
 		return false;
 	}
-
-	//*** need error checking here
-	gDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&gD3dDebug));
+	
+#if _DEBUG
+	if (FAILED(gDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&gD3dDebug))))
+	{
+		return false;
+	}
+#endif
 
 	// Create a render target view
 	ID3D11Texture2D* backBuffer = NULL;
@@ -279,7 +283,7 @@ bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool v
 	{
 		return false;
 	}
-
+	
 	// Create depth/stencil buffer
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
@@ -311,10 +315,10 @@ bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool v
 	{
 		return false;
 	}
-
+	
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	gContext->OMSetRenderTargets(1, &gRenderTargetView, gDepthStencilView);
-
+	
 	return true;
 }
 
@@ -354,7 +358,7 @@ bool GetRefreshRate(unsigned int width, unsigned int height,
 
 	// Now we enumerate all the display modes that match 32-bit RGBA
 	unsigned int numModes;
-	DXGI_MODE_DESC* displayModeList;
+	DXGI_MODE_DESC* displayModeList = NULL;
 	result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL);
 	if (SUCCEEDED(result))
 	{
@@ -420,7 +424,7 @@ void DestroyDevice()
 	{
 		gSwapChain->SetFullscreenState(false, NULL);
 	}
-
+	
 	if (gDepthStencilView)
 	{
 		gDepthStencilView->Release();
@@ -432,7 +436,7 @@ void DestroyDevice()
 		gDepthStencilBuffer->Release();
 		gDepthStencilBuffer = NULL;
 	}
-
+	
 	if (gRenderTargetView)
 	{
 		gRenderTargetView->Release();
@@ -444,8 +448,16 @@ void DestroyDevice()
 		gContext->Release();
 		gContext = NULL;
 	}
-
+	
+#if _DEBUG
 //	gD3dDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+	if (gD3dDebug)
+	{
+		gD3dDebug->Release();
+		gD3dDebug = NULL;
+	}
+#endif
+
 	if (gDevice)
 	{
 		gDevice->Release();
@@ -457,7 +469,7 @@ void DestroyDevice()
 		gSwapChain->Release();
 		gSwapChain = NULL;
 	}
-
+	
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -484,6 +496,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_SIZE:
 		//*** IvRenderer::mRenderer->Resize(LOWORD(lParam), HIWORD(lParam));
 		break;
+
+	case WM_KEYDOWN:
+	case WM_SYSKEYDOWN:
+		{
+			DWORD dwMask = (1 << 29);
+			bool bAltDown = ((lParam & dwMask) != 0);
+
+			OnKeyboard((UINT)wParam, true, bAltDown);
+		}
+		break;
+
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		{
+			DWORD dwMask = (1 << 29);
+			bool bAltDown = ((lParam & dwMask) != 0);
+
+			OnKeyboard((UINT)wParam, false, bAltDown);
+		}
+		break;
+
 
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
@@ -562,7 +595,7 @@ void CALLBACK OnDestroyDevice()
 	// delete the renderer
 	//*** IvRenderer::Destroy();
 }
-
+*/
 
 //--------------------------------------------------------------------------------------
 // Handle key presses
@@ -580,7 +613,6 @@ void CALLBACK OnKeyboard( UINT nChar, bool bKeyDown, bool bAltDown )
 	}
 }
 
-
 //--------------------------------------------------------------------------------------
 // Handle mouse button presses
 //--------------------------------------------------------------------------------------
@@ -597,7 +629,7 @@ void CALLBACK OnMouse( bool bLeftButtonDown, bool bRightButtonDown, bool bMiddle
         IvGame::mGame->mEventHandler->MouseUp();
     }
 }
-*/
+
 
 //-------------------------------------------------------------------------------
 // @ GetTime()

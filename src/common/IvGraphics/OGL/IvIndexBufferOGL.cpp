@@ -14,6 +14,7 @@
 
 #include "IvIndexBufferOGL.h"
 #include <stdio.h>
+#include <string.h>
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
@@ -49,7 +50,7 @@ IvIndexBufferOGL::~IvIndexBufferOGL()
 // Create the platform-specific data
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferOGL::Create( unsigned int numIndices )
+IvIndexBufferOGL::Create( unsigned int numIndices, void* data )
 {
     if ( numIndices == 0 || mBufferID != 0 )
         return false;
@@ -60,7 +61,7 @@ IvIndexBufferOGL::Create( unsigned int numIndices )
     
     // allocate the memory    
     (void) glGetError();  // clear any previous errors (probably not safe)
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, numIndices*GL_UNSIGNED_SHORT, 0, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, numIndices*sizeof(GL_UNSIGNED_INT), data, GL_STATIC_DRAW );
     if ( glGetError() != GL_NO_ERROR )
     {
         Destroy();
@@ -101,34 +102,4 @@ IvIndexBufferOGL::MakeActive()
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mBufferID );
     
     return true;
-}
-
-//-------------------------------------------------------------------------------
-// @ IvIndexBufferOGL::BeginLoadData()
-//-------------------------------------------------------------------------------
-// Lock down the buffer and start loading
-// Returns pointer to client side data area
-//-------------------------------------------------------------------------------
-void *
-IvIndexBufferOGL::BeginLoadData()
-{
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mBufferID );
-    return glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-}
-
-//-------------------------------------------------------------------------------
-// @ IvIndexBufferOGL::EndLoadData()
-//-------------------------------------------------------------------------------
-// Unlock the buffer, we're done loading
-// Returns true if all went well
-//-------------------------------------------------------------------------------
-bool
-IvIndexBufferOGL::EndLoadData()
-{
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mBufferID );
-
-    bool ret = (glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER) != GL_FALSE);
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-
-    return ret;
 }

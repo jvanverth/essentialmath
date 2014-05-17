@@ -888,7 +888,7 @@ IvMatrix33::operator-() const
 {
     IvMatrix33 result;
 
-    for (unsigned int i = 0; i < 16; ++i)
+    for (unsigned int i = 0; i < 9; ++i)
     {
         result.mV[i] = -mV[i];
     }

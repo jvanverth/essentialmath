@@ -203,6 +203,12 @@ IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void
 			break;
 		}
 
+		if (NULL == shaderString)
+		{
+			mBufferPtr->Release();
+			return false;
+		}
+
 		ID3DBlob* code;
 		ID3DBlob* errorMessages = NULL;
 

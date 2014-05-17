@@ -135,11 +135,11 @@ IvRendererDX11::~IvRendererDX11()
         }
     }
 
-/*    if (mResourceManager)
+    if (mResourceManager)
     {
         delete (IvResourceManagerDX11*)(mResourceManager);
         mResourceManager = 0;
-    }*/
+    }
 
 	mDepthStencilTarget->Release();
 	mDepthStencilTarget = 0;
@@ -257,7 +257,7 @@ IvRendererDX11::InitDX11()
 	rasterDesc.DepthBiasClamp = 0.0f;
 	rasterDesc.DepthClipEnable = true;
 	rasterDesc.FillMode = D3D11_FILL_SOLID;
-	rasterDesc.FrontCounterClockwise = false;
+	rasterDesc.FrontCounterClockwise = true;
 	rasterDesc.MultisampleEnable = false;
 	rasterDesc.ScissorEnable = false;
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
@@ -291,9 +291,6 @@ IvRendererDX11::InitDX11()
 	depthState->Release();
 
 	/*
-    // turn on culling
-	mDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CW );
-
     // set point size
     float pointSize = 5.0f;
     mDevice->SetRenderState( D3DRS_POINTSIZE, *((DWORD*)&pointSize) );
@@ -458,7 +455,7 @@ IvRendererDX11::GetShadeMode()
 	}
 	else*/
 	{
-		ASSERT(false);
+//		ASSERT(false);
 		return kGouraudShaded;
 	}
 	
@@ -636,7 +633,7 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 		}
 	}
 
-	//**** or update the uniforms here ?
+	mShader->BindUniforms( mContext );
 
 	if (vertexBuffer)
         static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
@@ -696,7 +693,7 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, uns
 		}
 	}
 
-	//**** or update the uniforms here ?
+	mShader->BindUniforms(mContext);
 
     if (vertexBuffer)
         static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );

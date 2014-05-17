@@ -61,7 +61,10 @@ private:
     void Destroy();
     
     // make this the active program
-	bool MakeActive(ID3D11DeviceContext* device);
+	bool MakeActive(ID3D11DeviceContext* context);
+
+	// bind the associated uniforms
+	bool BindUniforms(ID3D11DeviceContext* context);
     
 private:
     // copy operations

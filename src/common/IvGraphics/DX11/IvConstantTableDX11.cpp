@@ -60,6 +60,7 @@ IvConstantTableDX11::Create(ID3D11Device* device, ID3DBlob* code)
 	}
 
 	table->mBacking = new char[constantBufferDesc.Size];
+	table->mBackingSize = constantBufferDesc.Size;
 	if (NULL == table->mBacking)
 	{
 		delete table;
@@ -171,11 +172,67 @@ bool IvConstantTableDX11::GetConstantDesc(const char* name, IvConstantDesc* cons
 }
 
 //-------------------------------------------------------------------------------
-// @ IvConstantTableDX11::MakeActive()
+// @ IvConstantTableDX11::MakeActiveVS()
 //-------------------------------------------------------------------------------
-// Make this constant buffer active
+// Make this constant buffer active for vertex shader
 //-------------------------------------------------------------------------------
-bool IvConstantTableDX11::MakeActive(ID3D11DeviceContext* context)
+bool IvConstantTableDX11::MakeActiveVS(ID3D11DeviceContext* context)
 {
-	return false;
+	if (mBuffer == 0 || NULL == mBacking)
+		return false;
+
+	if (mDirty)
+	{
+		// Lock the constant buffer so it can be written to.
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		HRESULT result = context->Map(mBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		if (FAILED(result))
+		{
+			return false;
+		}
+
+		// Copy the data
+		memcpy(mappedResource.pData, mBacking, mBackingSize);
+
+		// Unlock the constant buffer.
+		context->Unmap(mBuffer, 0);
+
+		mDirty = false;
+	}
+
+	context->VSSetConstantBuffers(0, 1, &mBuffer);
+	return true;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvConstantTableDX11::MakeActivePS()
+//-------------------------------------------------------------------------------
+// Make this constant buffer active for pixel shader
+//-------------------------------------------------------------------------------
+bool IvConstantTableDX11::MakeActivePS(ID3D11DeviceContext* context)
+{
+	if (mBuffer == 0 || NULL == mBacking)
+		return false;
+
+	if (mDirty)
+	{
+		// Lock the constant buffer so it can be written to.
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		HRESULT result = context->Map(mBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		if (FAILED(result))
+		{
+			return false;
+		}
+
+		// Copy the data
+		memcpy(mappedResource.pData, mBacking, mBackingSize);
+
+		// Unlock the constant buffer.
+		context->Unmap(mBuffer, 0);
+
+		mDirty = false;
+	}
+
+	context->PSSetConstantBuffers(0, 1, &mBuffer);
+	return true;
 }

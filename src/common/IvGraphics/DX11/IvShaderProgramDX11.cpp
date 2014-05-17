@@ -147,6 +147,24 @@ IvShaderProgramDX11::MakeActive(ID3D11DeviceContext* context)
 }
 
 //-------------------------------------------------------------------------------
+// @ IvShaderProgramDX11::BindUniforms()
+//-------------------------------------------------------------------------------
+// Bind the associated uniforms
+//-------------------------------------------------------------------------------
+bool
+IvShaderProgramDX11::BindUniforms(ID3D11DeviceContext* context)
+{
+	if (mVertexShaderConstants == 0 || mFragmentShaderConstants == 0)
+		return false;
+
+	mVertexShaderConstants->MakeActiveVS(context);
+	mFragmentShaderConstants->MakeActivePS(context);
+
+	return true;
+}
+
+
+//-------------------------------------------------------------------------------
 // @ IvShaderProgramDX11::GetUniform()
 //-------------------------------------------------------------------------------
 // Queries, returns and caches a shader uniform

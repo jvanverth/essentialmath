@@ -280,7 +280,6 @@ IvDrawFloor()
 
 }   // End of IvDrawFloor()
 
-/*
 //-------------------------------------------------------------------------------
 // @ IvDrawCube()
 //-------------------------------------------------------------------------------
@@ -299,7 +298,7 @@ IvDrawCube( IvColor color )
 //-------------------------------------------------------------------------------
 // @ IvDrawBox()
 //-------------------------------------------------------------------------------
-// Draw box using GL calls
+// Draw box 
 //-------------------------------------------------------------------------------
 void 
 IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
@@ -307,10 +306,10 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 	// load data if not there
 	if ( boxVerts == 0 )
 	{
-		boxVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, 4*6);
-		IvNPVertex* vertexPtr = (IvNPVertex*) boxVerts->BeginLoadData();
-		boxIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6*6);
-		UInt32* indexPtr = (UInt32*) boxIndices->BeginLoadData();
+		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+		IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * 4 * 6);
+		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * 6 * 6);
+
 		int currentVertex = 0;
 		int currentIndex = 0;
 
@@ -417,13 +416,22 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 		indexPtr[currentIndex++] = currentVertex+2;
 		currentVertex += 4;  
 
-		if (!boxVerts->EndLoadData() || !boxIndices->EndLoadData())
+		boxVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, 4 * 6, vertexPtr);
+		boxIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 6, indexPtr);
+
+		if (!boxVerts || !boxIndices)
 		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(boxVerts);
-			boxVerts = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(boxIndices);
-			boxIndices = 0;
-		}    
+			if (boxVerts)
+			{
+				IvRenderer::mRenderer->GetResourceManager()->Destroy(boxVerts);
+				boxVerts = 0;
+			}
+			if (boxIndices)
+			{
+				IvRenderer::mRenderer->GetResourceManager()->Destroy(boxIndices);
+				boxIndices = 0;
+			}
+		}
 	}
 
 	// clear to default shader
@@ -443,7 +451,7 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 
 }   // End of IvDrawBox()
 
-
+/*
 //-------------------------------------------------------------------------------
 // @ IvDrawOBB()
 //-------------------------------------------------------------------------------

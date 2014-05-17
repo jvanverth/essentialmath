@@ -36,10 +36,6 @@
 class IvIndexBufferOGL : private IvIndexBuffer
 {
 public:
-    // interface routines
-    void* BeginLoadData();
-    bool  EndLoadData();
-
     friend class IvResourceManagerOGL;
     friend class IvRendererOGL;
     
@@ -49,7 +45,7 @@ private:
 	~IvIndexBufferOGL();
 
     // creation 
-    bool Create( unsigned int numVertices );
+    bool Create( unsigned int numVertices, void* data );
     
     // destruction
     void Destroy();

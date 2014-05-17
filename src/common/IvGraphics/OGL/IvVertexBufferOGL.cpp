@@ -49,7 +49,7 @@ IvVertexBufferOGL::~IvVertexBufferOGL()
 // Create the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices )
+IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void* data )
 {
     if ( numVertices == 0 || mBufferID != 0 )
         return false;
@@ -60,7 +60,7 @@ IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices )
     
     // allocate the memory
     (void) glGetError();  // clear any previous errors (probably not safe)
-    glBufferData( GL_ARRAY_BUFFER, numVertices*kIvVFSize[format], NULL, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, numVertices*kIvVFSize[format], data, GL_STATIC_DRAW );
     if ( glGetError() != GL_NO_ERROR )
     {
         Destroy();
@@ -134,32 +134,4 @@ IvVertexBufferOGL::MakeActive()
     }
     
     return true;
-}
-
-//-------------------------------------------------------------------------------
-// @ IvVertexBufferOGL::BeginLoadData()
-//-------------------------------------------------------------------------------
-// Lock down the buffer and start loading
-// Returns pointer to client side data area
-//-------------------------------------------------------------------------------
-void *
-IvVertexBufferOGL::BeginLoadData()
-{
-    glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
-    return glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-}
-
-//-------------------------------------------------------------------------------
-// @ IvVertexBufferOGL::EndLoadData()
-//-------------------------------------------------------------------------------
-// Unlock the buffer, we're done loading
-// Returns true if all went well
-//-------------------------------------------------------------------------------
-bool
-IvVertexBufferOGL::EndLoadData()
-{
-    glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
-    bool ret = glUnmapBuffer(GL_ARRAY_BUFFER) != GL_FALSE;
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-    return ret;
 }

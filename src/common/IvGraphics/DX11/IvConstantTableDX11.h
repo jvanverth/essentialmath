@@ -49,7 +49,8 @@ public:
 	bool GetConstantDesc(const char* name, IvConstantDesc* constantDesc);
 	void MarkDirty() { mDirty = true;  }
 
-	bool MakeActive(ID3D11DeviceContext* context);
+	bool MakeActiveVS(ID3D11DeviceContext* context);
+	bool MakeActivePS(ID3D11DeviceContext* context);
 
 private:
 	static void Destroy(IvConstantTableDX11* table);
@@ -76,6 +77,7 @@ private:
 	std::map<std::string, IvConstantDesc> mConstants;
 	ID3D11Buffer*						  mBuffer;
 	char*                                 mBacking;
+	size_t								  mBackingSize;
 	bool								  mDirty;
 };
 

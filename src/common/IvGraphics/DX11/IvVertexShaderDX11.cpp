@@ -29,7 +29,7 @@
 
 static char const* sDefaultVertexShader[kVertexFormatCount] = {0};
 
-static const char sShaderCPFormat[] = 
+static const char sShaderCPFormat[] =
 "float4x4 IvModelViewProjectionMatrix;\n"
 "struct VS_OUTPUT\n"
 "{\n"
@@ -39,12 +39,12 @@ static const char sShaderCPFormat[] =
 "VS_OUTPUT vs_main( float4 color : COLOR0, float4 pos : POSITION )\n"
 "{\n"
 "    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
-"    Out.pos = mul(pos, IvModelViewProjectionMatrix);\n"
+"    Out.pos = mul(IvModelViewProjectionMatrix, pos);\n"
 "    Out.color = color;\n"
 "    return Out;\n"
 "}\n";
 
-static const char sShaderNPFormat[] = 
+static const char sShaderNPFormat[] =
 "float4x4 IvModelViewProjectionMatrix;\n"
 "float4x4 IvNormalMatrix;\n"
 "float4   IvDiffuseColor;\n"
@@ -59,8 +59,8 @@ static const char sShaderNPFormat[] =
 "VS_OUTPUT vs_main( float4 normal : NORMAL, float4 pos : POSITION )\n"
 "{\n"
 "    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
-"    Out.pos = mul(pos, IvModelViewProjectionMatrix);\n"
-"    float4 transNormal = normalize(mul(normal, IvNormalMatrix));\n"
+"    Out.pos = mul(IvModelViewProjectionMatrix, pos);\n"
+"    float4 transNormal = normalize(mul(IvNormalMatrix, normal));\n"
 "    float4 lightValue = IvLightAmbient + IvLightDiffuse*saturate(dot(IvLightDirection,transNormal));\n"
 "    Out.color = IvDiffuseColor*lightValue;\n"
 "    return Out;\n"
@@ -80,8 +80,8 @@ static const char sShaderCNPFormat[] =
 "VS_OUTPUT vs_main( float4 color : COLOR0, float4 normal : NORMAL, float4 pos : POSITION )\n"
 "{\n"
 "    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
-"    Out.pos = mul(pos, IvModelViewProjectionMatrix);\n"
-"    float4 transNormal = normalize(mul(normal, IvNormalMatrix));\n"
+"    Out.pos = mul(IvModelViewProjectionMatrix, pos);\n"
+"    float4 transNormal = normalize(mul(IvNormalMatrix, normal));\n"
 "    float4 lightValue = IvLightAmbient + IvLightDiffuse*saturate(dot(IvLightDirection,transNormal));\n"
 "    Out.color = color*lightValue;\n"
 "    return Out;\n"
@@ -98,7 +98,7 @@ static const char sShaderTCPFormat[] =
 "VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 color : COLOR0, float4 pos : POSITION )\n"
 "{\n"
 "    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
-"    Out.pos = mul(pos, IvModelViewProjectionMatrix);\n"
+"    Out.pos = mul(IvModelViewProjectionMatrix, pos);\n"
 "    Out.color = color;\n"
 "    Out.uv.xy = uv.xy;\n"
 "    return Out;\n"
@@ -119,8 +119,8 @@ static const char sShaderTNPFormat[] =
 "VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 color : COLOR0, float4 pos : POSITION )\n"
 "{\n"
 "    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
-"    Out.pos = mul(pos, IvModelViewProjectionMatrix);\n"
-"    float4 transNormal = normalize(mul(normal, IvNormalMatrix));\n"
+"    Out.pos = mul(IvModelViewProjectionMatrix, pos);\n"
+"    float4 transNormal = normalize(mul(IvNormalMatrix, normal));\n"
 "    float ndotVP = saturate(dot3(IvLightDirection,transNormal));\n"
 "    Out.color = IvLightAmbient + IvLightDiffuse*ndotVP;\n"
 "    Out.uv.xy = uv.xy;\n"
