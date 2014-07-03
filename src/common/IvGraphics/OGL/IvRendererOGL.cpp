@@ -82,7 +82,7 @@ IvRendererOGL::IvRendererOGL() : IvRenderer()
     sPrimTypeMap[kLineStripPrim] = GL_LINE_STRIP;
     sPrimTypeMap[kTriangleListPrim] = GL_TRIANGLES;
     sPrimTypeMap[kTriangleStripPrim] = GL_TRIANGLE_STRIP;
-    sPrimTypeMap[kTriangleFanPrim] = GL_TRIANGLE_FAN;
+//    sPrimTypeMap[kTriangleFanPrim] = GL_TRIANGLE_FAN;
 
     sBlendSrcFunc[kNoBlendFunc] = GL_ONE;
     sBlendDestFunc[kNoBlendFunc] = GL_ZERO;

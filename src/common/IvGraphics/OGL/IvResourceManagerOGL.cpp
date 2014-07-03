@@ -52,10 +52,10 @@ IvResourceManagerOGL::~IvResourceManagerOGL()
 // Create platform-dependent vertex buffer
 //-------------------------------------------------------------------------------
 IvVertexBuffer* 
-IvResourceManagerOGL::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices )
+IvResourceManagerOGL::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices, void* data )
 {
     IvVertexBufferOGL* newBuffer = new IvVertexBufferOGL();
-    if ( !newBuffer->Create(  format, numVertices ) )
+    if ( !newBuffer->Create(  format, numVertices, data ) )
     {
         delete newBuffer;
         newBuffer = 0;
@@ -82,10 +82,10 @@ IvResourceManagerOGL::Destroy( IvVertexBuffer* vb)
 // Create platform-dependent index buffer
 //-------------------------------------------------------------------------------
 IvIndexBuffer* 
-IvResourceManagerOGL::CreateIndexBuffer( unsigned int numIndices )
+IvResourceManagerOGL::CreateIndexBuffer( unsigned int numIndices, void* data )
 {
     IvIndexBufferOGL* newBuffer = new IvIndexBufferOGL();
-    if ( !newBuffer->Create(  numIndices ) )
+	if (!newBuffer->Create( numIndices, data ))
     {
         delete newBuffer;
         newBuffer = 0;

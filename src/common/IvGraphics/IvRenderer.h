@@ -77,14 +77,13 @@ enum IvPrimType
     kLineStripPrim,
     kTriangleListPrim,
     kTriangleStripPrim,
-	kTriangleFanPrim,
     kPrimTypeCount
 };
 
 enum IvAPI
 {
 	kOpenGL,
-	kD3D9
+	kDX11
 };
 
 //-------------------------------------------------------------------------------

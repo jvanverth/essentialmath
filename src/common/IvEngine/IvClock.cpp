@@ -69,7 +69,7 @@ IvClock::Update()
     float newTime = ((float)GetTime())*0.001f;
     mElapsedTime = newTime - mCurrentTime;
     mCurrentTime = newTime;
-    
+ 
 }   // End of IvClock::Update()
 
 
