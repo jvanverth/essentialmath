@@ -71,7 +71,7 @@ public:
     inline friend float DistanceSquared( const IvLine3& line, const IvRay3& ray, 
                                   float& s_c, float& t_c )
     {
-        return ::DistanceSquared( ray, line, t_c, s_c );
+        return DistanceSquared( ray, line, t_c, s_c );
     }
     friend float DistanceSquared( const IvRay3& ray, const IvVector3& point, 
                                   float& t_c );

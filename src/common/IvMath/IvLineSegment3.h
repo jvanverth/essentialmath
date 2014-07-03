@@ -30,7 +30,9 @@ class IvRay3;
 class IvMatrix33;
 class IvLineSegment3;
 
-float DistanceSquared( const IvLineSegment3& segment, const IvRay3& ray, 
+float DistanceSquared( const IvLineSegment3& seg0, const IvLineSegment3& seg1,
+                      float& s_c, float& t_c );
+float DistanceSquared( const IvLineSegment3& segment, const IvRay3& ray,
                        float& s_c, float& t_c );
 float DistanceSquared( const IvLineSegment3& segment, const IvLine3& line, 
                        float& s_c, float& t_c );

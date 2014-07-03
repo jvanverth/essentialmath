@@ -202,36 +202,31 @@ IvAABB::Intersect( const IvLine3& line ) const
     // do tests against three sets of planes
     for ( int i = 0; i < 3; ++i )
     {
-        // line is parallel to plane
-        if ( ::IsZero( line.GetDirection()[i] ) )
+        // compute intersection parameters and sort
+        float s;
+        float t;
+        float recip = 1.0f/line.GetDirection()[i];
+        if ( recip >= 0.0f)
         {
-            // line passes by box
-            if ( (line.GetOrigin())[i] < mMinima[i] || (line.GetOrigin())[i] > mMaxima[i] )
-                return false;
+            s = (mMinima[i] - line.GetOrigin()[i])*recip;
+            t = (mMaxima[i] - line.GetOrigin()[i])*recip;
         }
         else
         {
-            // compute intersection parameters and sort
-            float s = (mMinima[i] - line.GetOrigin()[i])/line.GetDirection()[i];
-            float t = (mMaxima[i] - line.GetOrigin()[i])/line.GetDirection()[i];
-            if ( s > t )
-            {
-                float temp = s;
-                s = t;
-                t = temp;
-            }
-
-            // adjust min and max values
-            if ( s > maxS )
-                maxS = s;
-            if ( t < minT )
-                minT = t;
-            // check for intersection failure
-            if ( maxS > minT )
-                return false;
+            s = (mMaxima[i] - line.GetOrigin()[i])*recip;
+            t = (mMinima[i] - line.GetOrigin()[i])*recip;
         }
+        
+        // adjust min and max values
+        if ( s > maxS )
+            maxS = s;
+        if ( t < minT )
+            minT = t;
+        // check for intersection failure
+        if ( maxS > minT )
+            return false;
     }
-
+    
     // done, have intersection
     return true;
 }
@@ -245,42 +240,37 @@ IvAABB::Intersect( const IvLine3& line ) const
 bool
 IvAABB::Intersect( const IvRay3& ray ) const
 {
-    float maxS = -FLT_MAX;
+    float maxS = 0.0f;
     float minT = FLT_MAX;
-
+    
     // do tests against three sets of planes
     for ( int i = 0; i < 3; ++i )
     {
-        // ray is parallel to plane
-        if ( ::IsZero( ray.GetDirection()[i] ) )
+        // compute intersection parameters and sort
+        float s;
+        float t;
+        float recip = 1.0f/ray.GetDirection()[i];
+        if ( recip >= 0.0f)
         {
-            // ray passes by box
-            if ( (ray.GetOrigin())[i] < mMinima[i] || (ray.GetOrigin())[i] > mMaxima[i] )
-                return false;
+            s = (mMinima[i] - ray.GetOrigin()[i])*recip;
+            t = (mMaxima[i] - ray.GetOrigin()[i])*recip;
         }
         else
         {
-            // compute intersection parameters and sort
-            float s = (mMinima[i] - ray.GetOrigin()[i])/ray.GetDirection()[i];
-            float t = (mMaxima[i] - ray.GetOrigin()[i])/ray.GetDirection()[i];
-            if ( s > t )
-            {
-                float temp = s;
-                s = t;
-                t = temp;
-            }
-
-            // adjust min and max values
-            if ( s > maxS )
-                maxS = s;
-            if ( t < minT )
-                minT = t;
-            // check for intersection failure
-            if ( minT < 0.0f || maxS > minT )
-                return false;
+            s = (mMaxima[i] - ray.GetOrigin()[i])*recip;
+            t = (mMinima[i] - ray.GetOrigin()[i])*recip;
         }
+        
+        // adjust min and max values
+        if ( s > maxS )
+            maxS = s;
+        if ( t < minT )
+            minT = t;
+        // check for intersection failure
+        if ( maxS > minT )
+            return false;
     }
-
+    
     // done, have intersection
     return true;
 }
@@ -294,45 +284,40 @@ IvAABB::Intersect( const IvRay3& ray ) const
 bool
 IvAABB::Intersect( const IvLineSegment3& segment ) const
 {
-    float maxS = -FLT_MAX;
-    float minT = FLT_MAX;
-
+    float maxS = 0.0f;
+    float minT = 1.0f;
+    
     // do tests against three sets of planes
     for ( int i = 0; i < 3; ++i )
     {
-        // segment is parallel to plane
-        if ( ::IsZero( segment.GetDirection()[i] ) )
+        // compute intersection parameters and sort
+        float s;
+        float t;
+        float recip = 1.0f/segment.GetDirection()[i];
+        if ( recip >= 0.0f)
         {
-            // segment passes by box
-            if ( (segment.GetOrigin())[i] < mMinima[i] || (segment.GetOrigin())[i] > mMaxima[i] )
-                return false;
+            s = (mMinima[i] - segment.GetOrigin()[i])*recip;
+            t = (mMaxima[i] - segment.GetOrigin()[i])*recip;
         }
         else
         {
-            // compute intersection parameters and sort
-            float s = (mMinima[i] - segment.GetOrigin()[i])/segment.GetDirection()[i];
-            float t = (mMaxima[i] - segment.GetOrigin()[i])/segment.GetDirection()[i];
-            if ( s > t )
-            {
-                float temp = s;
-                s = t;
-                t = temp;
-            }
-
-            // adjust min and max values
-            if ( s > maxS )
-                maxS = s;
-            if ( t < minT )
-                minT = t;
-            // check for intersection failure
-            if ( minT < 0.0f || maxS > 1.0f || maxS > minT )
-                return false;
+            s = (mMaxima[i] - segment.GetOrigin()[i])*recip;
+            t = (mMinima[i] - segment.GetOrigin()[i])*recip;
         }
+        
+        // adjust min and max values
+        if ( s > maxS )
+            maxS = s;
+        if ( t < minT )
+            minT = t;
+        // check for intersection failure
+        if ( maxS > minT )
+            return false;
     }
-
+    
     // done, have intersection
     return true;
-}   
+}
 
 
 //----------------------------------------------------------------------------

@@ -267,16 +267,16 @@ IvMatrix44::Identity()
 //-----------------------------------------------------------------------------
 // @ IvMatrix44::AffineInverse()
 //-----------------------------------------------------------------------------
-/// Set self to matrix inverse, assuming a standard affine matrix 
+/// Set self to matrix inverse, assuming a standard affine matrix
 /// (bottom row is 0 0 0 1)
 //-----------------------------------------------------------------------------
-IvMatrix44& 
+IvMatrix44&
 IvMatrix44::AffineInverse()
 {
     *this = ::AffineInverse( *this );
     
     return *this;
-
+    
 }   // End of IvMatrix44::AffineInverse()
 
 

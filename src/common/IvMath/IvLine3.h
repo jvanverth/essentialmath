@@ -69,14 +69,14 @@ public:
     inline friend float Distance( const IvLine3& line0, const IvLine3& line1, 
                            float& s_c, float& t_c )
     {
-        return ::IvSqrt( ::DistanceSquared( line0, line1, s_c, t_c ) );
+        return IvSqrt( DistanceSquared( line0, line1, s_c, t_c ) );
     }
     friend float DistanceSquared( const IvLine3& line, const IvVector3& point, 
                                   float &t_c );
     inline friend  float Distance( const IvLine3& line, const IvVector3& point, 
                            float &t_c )
     {
-        return ::IvSqrt( ::DistanceSquared( line, point, t_c ) );
+        return IvSqrt( DistanceSquared( line, point, t_c ) );
     }
 
     // closest points

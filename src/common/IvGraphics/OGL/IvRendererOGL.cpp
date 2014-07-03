@@ -201,7 +201,7 @@ IvRendererOGL::Resize(unsigned int width, unsigned int height )
 // Set up base GL parameters
 //-------------------------------------------------------------------------------
 int 
-IvRendererOGL::InitGL(GLvoid)                                   
+IvRendererOGL::InitGL()
 {
     // turn on smooth shading
     glShadeModel(GL_SMOOTH);    

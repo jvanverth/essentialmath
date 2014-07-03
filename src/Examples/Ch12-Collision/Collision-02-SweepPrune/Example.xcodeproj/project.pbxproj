@@ -97,14 +97,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CED859CD0D7E3BA400108FEE /* IvRandom.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libIvRandom.a */;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = IvRandom;
 		};
 		CED859D60D7E3BAE00108FEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CED859CD0D7E3BA400108FEE /* IvRandom.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D /* IvRandom */;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IvRandom;
 		};
 /* End PBXContainerItemProxy section */
@@ -286,9 +286,15 @@
 /* Begin PBXProject section */
 		20286C28FDCF999611CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Example" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 20286C29FDCF999611CA2CEA /* Example */;
 			projectDirPath = "";
 			projectReferences = (
@@ -442,6 +448,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
+				SDKROOT = macosx10.8;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -460,6 +467,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
+				SDKROOT = macosx10.8;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};
