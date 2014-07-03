@@ -432,6 +432,8 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 				boxIndices = 0;
 			}
 		}
+        
+		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 	}
 
 	// clear to default shader
@@ -451,7 +453,7 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 
 }   // End of IvDrawBox()
 
-/*
+
 //-------------------------------------------------------------------------------
 // @ IvDrawOBB()
 //-------------------------------------------------------------------------------
@@ -484,12 +486,16 @@ IvDrawSphere( float radius, IvColor color )
 	// load data if not there
 	if ( sphereVertices == 0 )
 	{
+		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+        
 		const int stacks = 16;
 		const int slices = 24;
-		sphereVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, slices*(stacks-1)+2);
-		IvNPVertex* vertexPtr = (IvNPVertex*) sphereVertices->BeginLoadData();
-		sphereIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6*slices*(stacks-1));
-		UInt32* indexPtr = (UInt32*) sphereIndices->BeginLoadData();
+        const int numVerts = slices*(stacks-1)+2;
+        const int numIndices = 6*slices*(stacks-1);
+        
+		IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numVerts);
+		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * numIndices);
+        
 		int currentVertex = 0;
 		int currentIndex = 0;
 		
@@ -566,13 +572,22 @@ IvDrawSphere( float radius, IvColor color )
 		indexPtr[currentIndex++] = currentVertex-1;
 		indexPtr[currentIndex++] = currentVertex-slices;
 
-		if (!sphereVertices->EndLoadData() || !sphereIndices->EndLoadData())
+		sphereVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr);
+		sphereIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr);
+        
+		if (!sphereVertices || !sphereIndices)
 		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereVertices);
-			sphereVertices = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereIndices);
-			sphereIndices = 0;
-		}    
+            if (sphereVertices)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereVertices);
+                sphereVertices = 0;
+            }
+            if (sphereIndices)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereIndices);
+                sphereIndices = 0;
+            }
+		}
 	}
 
 	// clear to default shader
@@ -599,7 +614,7 @@ IvDrawSphere( float radius, IvColor color )
     IvRenderer::mRenderer->SetWorldMatrix(currentMat);
 
 }   // End of IvDrawSphere()
-
+/*
 //-------------------------------------------------------------------------------
 // @ IvDrawCapsule()
 //-------------------------------------------------------------------------------
@@ -908,7 +923,7 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 	IvRenderer::mRenderer->SetShaderProgram(oldShader);
 
 }   // End of IvDrawCapsule()
-
+*/
 
 //-------------------------------------------------------------------------------
 // @ IvDrawLine()
@@ -921,7 +936,7 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 void 
 IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
 {
-	// create vertex buffer if not there
+/*	// create vertex buffer if not there
 	if ( lineVertexBuffer == 0 )
 	{
 		lineVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2);
@@ -943,10 +958,10 @@ IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
 
     // restore data
 	IvRenderer::mRenderer->SetShaderProgram(oldShader);
-
+*/
 
 }   // End of IvDrawLine()
-*/
+
 
 //-------------------------------------------------------------------------------
 // @ IvDrawTeapot()

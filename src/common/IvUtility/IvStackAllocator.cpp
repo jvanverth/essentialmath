@@ -30,7 +30,7 @@ IvStackAllocator* IvStackAllocator::mScratchAllocator = NULL;
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvStackAllocator::IvStackAllocator(unsigned int totalBytes)
+IvStackAllocator::IvStackAllocator(size_t totalBytes)
 {
 	fAllocation = (unsigned char*) malloc(totalBytes);
 	fCurrentOffset = 0;

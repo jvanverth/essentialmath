@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE3D1ECC1965BA5A00841456 /* IvStackAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE3D1ECA1965BA5A00841456 /* IvStackAllocator.cpp */; };
+		CE3D1ECD1965BA5A00841456 /* IvStackAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3D1ECB1965BA5A00841456 /* IvStackAllocator.h */; };
 		CEFD61840C5D83D700AF64E7 /* IvAssert.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD617C0C5D83D700AF64E7 /* IvAssert.h */; };
 		CEFD61850C5D83D700AF64E7 /* IvDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEFD617D0C5D83D700AF64E7 /* IvDebugger.cpp */; };
 		CEFD61860C5D83D700AF64E7 /* IvDebugger.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFD617E0C5D83D700AF64E7 /* IvDebugger.h */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE3D1ECA1965BA5A00841456 /* IvStackAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvStackAllocator.cpp; sourceTree = "<group>"; };
+		CE3D1ECB1965BA5A00841456 /* IvStackAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvStackAllocator.h; sourceTree = "<group>"; };
 		CEFD617C0C5D83D700AF64E7 /* IvAssert.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvAssert.h; sourceTree = "<group>"; };
 		CEFD617D0C5D83D700AF64E7 /* IvDebugger.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvDebugger.cpp; sourceTree = "<group>"; };
 		CEFD617E0C5D83D700AF64E7 /* IvDebugger.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvDebugger.h; sourceTree = "<group>"; };
@@ -62,6 +66,8 @@
 		08FB77AEFE84172EC02AAC07 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CE3D1ECA1965BA5A00841456 /* IvStackAllocator.cpp */,
+				CE3D1ECB1965BA5A00841456 /* IvStackAllocator.h */,
 				CEFD618D0C5D83E400AF64E7 /* IvWriter.h */,
 				CEFD617C0C5D83D700AF64E7 /* IvAssert.h */,
 				CEFD617D0C5D83D700AF64E7 /* IvDebugger.cpp */,
@@ -88,6 +94,7 @@
 				CEFD61890C5D83D700AF64E7 /* IvImage.h in Headers */,
 				CEFD618A0C5D83D700AF64E7 /* IvReader.h in Headers */,
 				CEFD618B0C5D83D700AF64E7 /* IvTypes.h in Headers */,
+				CE3D1ECD1965BA5A00841456 /* IvStackAllocator.h in Headers */,
 				CEFD618F0C5D83E400AF64E7 /* IvWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3D1ECC1965BA5A00841456 /* IvStackAllocator.cpp in Sources */,
 				CEFD61850C5D83D700AF64E7 /* IvDebugger.cpp in Sources */,
 				CEFD61880C5D83D700AF64E7 /* IvImage.cpp in Sources */,
 			);
