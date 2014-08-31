@@ -47,7 +47,13 @@ int main(int argc, char *argv[])
     {
         ERROR_OUT("Error: could not initialize GLFW" << std::endl);
     }
-
+    
+    // set up for core profile
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
     // set up display
     bool fullscreen = false;
     if (fullscreen)
@@ -131,9 +137,7 @@ int main(int argc, char *argv[])
     glfwSetWindowFocusCallback(window, visibilityCallback);
     glfwSetWindowSizeCallback(window, reshapeCallback);
 
-    // set up event handler
-    
-//    glutIgnoreKeyRepeat(1);
+    // set up event handlers
     glfwSetKeyCallback(window, keyboardCallback);
     glfwSetMouseButtonCallback(window, mouseCallback);
 
@@ -156,7 +160,7 @@ int main(int argc, char *argv[])
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-     
+
     IvGame::Destroy();
 
     glfwDestroyWindow(window);

@@ -57,7 +57,7 @@ IvDebugger::~IvDebugger()
 // Set file to save debug info to
 //-------------------------------------------------------------------------------
 void
-IvDebugger::DumpToFile( char* string )
+IvDebugger::DumpToFile( const char* string )
 {
     if (mOutFile.is_open())
         mOutFile.close();
@@ -91,7 +91,10 @@ IvDebugger::Flush( void )
 
     // Write to output file, if open
     if (mOutFile.is_open())
+    {
         mOutFile << cString;
+        mOutFile.flush();
+    }
 
     // reset the buffer for the next debugging info
     str("");

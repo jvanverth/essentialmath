@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -116,9 +116,10 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "IvEngine" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -159,6 +160,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					PLATFORM_OSX,
+					_DEBUG,
+				);
 				INSTALL_PATH = /usr/local/lib;
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
@@ -170,14 +175,11 @@
 		1DEB922008733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_OSX;
 				INSTALL_PATH = /usr/local/lib;
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
@@ -200,6 +202,7 @@
 					../IvGraphics,
 				);
 				OBJROOT = build;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SYMROOT = ../Libs;
 			};

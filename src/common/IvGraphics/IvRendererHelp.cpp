@@ -593,6 +593,8 @@ IvDrawSphere( float radius, IvColor color )
                 sphereIndices = 0;
             }
 		}
+        
+        IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 	}
 
 	// clear to default shader
