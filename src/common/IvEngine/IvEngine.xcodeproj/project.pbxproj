@@ -115,6 +115,8 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "IvEngine" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
@@ -160,7 +162,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -179,7 +181,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};

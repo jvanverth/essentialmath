@@ -235,6 +235,8 @@
 /* Begin PBXProject section */
 		20286C28FDCF999611CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Example" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
@@ -372,6 +374,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
+				SDKROOT = macosx10.8;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -400,6 +403,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
+				SDKROOT = macosx10.8;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};
