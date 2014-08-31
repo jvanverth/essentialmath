@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
-		CE9C45290D74C78900FBB88B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45280D74C78900FBB88B /* GLUT.framework */; };
 		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
 		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
 		CE9C45440D74C7B700FBB88B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45430D74C7B700FBB88B /* AppKit.framework */; };
@@ -18,6 +17,8 @@
 		CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45580D74C82D00FBB88B /* libIvEngine.a */; };
 		CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C454C0D74C80100FBB88B /* libIvUtility.a */; };
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
+		CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4D19B2B65C008870FC /* IOKit.framework */; };
+		CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +83,6 @@
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.0.4/src/libglfw3.a"; sourceTree = "<group>"; };
-		CE9C45280D74C78900FBB88B /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		CE9C45430D74C7B700FBB88B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -94,6 +94,8 @@
 		CE9C45630D74C88600FBB88B /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		CE9C45650D74C89400FBB88B /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = SYSTEM_DEVELOPER_DIR; };
+		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = SYSTEM_DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,11 +107,12 @@
 				CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */,
 				CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */,
 				CE9C45830D74CBD900FBB88B /* libIvMath.a in Frameworks */,
-				CE9C45290D74C78900FBB88B /* GLUT.framework in Frameworks */,
 				CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */,
 				CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */,
 				CE9C45440D74C7B700FBB88B /* AppKit.framework in Frameworks */,
 				CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */,
+				CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */,
+				CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,11 +163,12 @@
 		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */,
 				CE92666219B2A0940051D56D /* libglfw3.a */,
 				CE9C45430D74C7B700FBB88B /* AppKit.framework */,
 				CE9C453F0D74C7AD00FBB88B /* Foundation.framework */,
+				CEAB1F4D19B2B65C008870FC /* IOKit.framework */,
 				CE9C453D0D74C79D00FBB88B /* OpenGL.framework */,
-				CE9C45280D74C78900FBB88B /* GLUT.framework */,
 			);
 			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -347,6 +351,11 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = .;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -374,6 +383,11 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = .;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;

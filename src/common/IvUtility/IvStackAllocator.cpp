@@ -33,6 +33,7 @@ IvStackAllocator* IvStackAllocator::mScratchAllocator = NULL;
 IvStackAllocator::IvStackAllocator(size_t totalBytes)
 {
 	fAllocation = (unsigned char*) malloc(totalBytes);
+    fTotalBytes = totalBytes;
 	fCurrentOffset = 0;
 }
 

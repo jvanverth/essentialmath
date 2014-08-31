@@ -167,6 +167,11 @@ IvDrawAxes()
 	{
 		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
 		IvCPVertex* dataPtr = (IvCPVertex*) IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 6);
+        
+        if (NULL == dataPtr)
+        {
+            return;
+        }
 
 		dataPtr[0].color.Set(255, 0, 0, 255);
 		dataPtr[0].position.Set(0.0f, 0.0f, 0.0f);

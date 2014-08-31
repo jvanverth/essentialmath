@@ -49,7 +49,6 @@ int main(int argc, char *argv[])
     }
 
     // set up display
-//    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
     bool fullscreen = false;
     if (fullscreen)
     {
@@ -72,6 +71,8 @@ int main(int argc, char *argv[])
     if ( GLEW_OK != err )
     {
         ERROR_OUT("Error: " << glewGetErrorString(err) << std::endl);
+        glfwDestroyWindow(window);
+        glfwTerminate();
         return 1;
     }
 
@@ -79,6 +80,8 @@ int main(int argc, char *argv[])
     if ( !GLEW_VERSION_2_0 )
     {
         ERROR_OUT("Error: OpenGL version 2.0 is not supported." << std::endl);
+        glfwDestroyWindow(window);
+        glfwTerminate();
         return 1;
     }
 
@@ -96,6 +99,8 @@ int main(int argc, char *argv[])
     if (!IvGame::Create() || !IvGame::mGame->PreRendererInitialize( argc, argv ))
     {
         IvGame::Destroy();
+        glfwDestroyWindow(window);
+        glfwTerminate();
         return 1;
     }
 
@@ -104,6 +109,8 @@ int main(int argc, char *argv[])
     {
         IvRenderer::Destroy();
         IvGame::Destroy();
+        glfwDestroyWindow(window);
+        glfwTerminate();
         return 1;
     }
 
@@ -115,6 +122,8 @@ int main(int argc, char *argv[])
     {
         IvRenderer::Destroy();
         IvGame::Destroy();
+        glfwDestroyWindow(window);
+        glfwTerminate();
         return 1;
     }
 
@@ -174,7 +183,7 @@ reshapeCallback(GLFWwindow* window, int w, int h)
 static void 
 keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if (action == GLFW_PRESS) 
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) 
     {
         IvGame::mGame->mEventHandler->KeyDown( key );   // Handle key down event
     }
