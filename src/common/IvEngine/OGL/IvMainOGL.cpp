@@ -13,25 +13,25 @@
 
 #include <stdlib.h>
 
-#ifdef PLATFORM_OSX
-#include <GLUT/glut.h>
-#else
-#include <GL/glew.h>
-#include <GL/glut.h>
-#endif
+#include <GLFW/glfw3.h>
 
 #include <IvGame.h>
 #include <IvDebugger.h>
 #include <IvEventHandler.h>
 #include <OGL/IvRendererOGL.h>
 
-extern "C" void displayCallback(void);
-extern "C" void visibilityCallback(int vis);
-extern "C" void reshapeCallback(int w, int h);
-extern "C" void keyboardCallback(unsigned char key, int x, int y);
-extern "C" void keyboardupCallback(unsigned char key, int x, int y);
-extern "C" void mouseCallback(int button, int state, int x, int y);
-extern "C" void idleCallback(void);
+static void visibilityCallback(GLFWwindow* window, int vis);
+static void reshapeCallback(GLFWwindow* window, int w, int h);
+
+static void keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+static void mouseCallback(GLFWwindow* window, int button, int action, int mods);
+
+static void error_callback(int error, const char* description)
+{
+    ERROR_OUT(description << std::endl);
+}
+
+static GLFWwindow* window = NULL;
 
 //-------------------------------------------------------------------------------
 // @ main()
@@ -40,22 +40,33 @@ extern "C" void idleCallback(void);
 //-------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {   
-    glutInit( &argc, argv );
     gDebugger.DumpToFile( "Debug.txt" );
+    glfwSetErrorCallback(error_callback);
+    
+    if (!glfwInit())
+    {
+        ERROR_OUT("Error: could not initialize GLFW" << std::endl);
+    }
 
     // set up display
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
+//    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
     bool fullscreen = false;
     if (fullscreen)
     {
-        glutGameModeString("640x480:16@60");
-        glutEnterGameMode();
+        window = glfwCreateWindow(640, 480, "Example", glfwGetPrimaryMonitor(), NULL);
     }
     else
     {
-        glutInitWindowSize(640, 480);
-        glutCreateWindow("Example");
+        window = glfwCreateWindow(640, 480, "Example", NULL, NULL);
     }
+    if (NULL == window) 
+    {
+        ERROR_OUT("Error: could not create window" << std::endl);
+        glfwTerminate();
+        return 1;
+    }
+    glfwMakeContextCurrent(window);
+    
 #ifndef PLATFORM_OSX
 	GLenum err = glewInit();
     if ( GLEW_OK != err )
@@ -108,103 +119,88 @@ int main(int argc, char *argv[])
     }
 
     // set up display callbacks
-    glutDisplayFunc(displayCallback);
-    glutVisibilityFunc(visibilityCallback);
-    glutReshapeFunc(reshapeCallback);
+    glfwSetWindowFocusCallback(window, visibilityCallback);
+    glfwSetWindowSizeCallback(window, reshapeCallback);
 
     // set up event handler
-    glutIgnoreKeyRepeat(1);
-    glutKeyboardFunc(keyboardCallback);
-    glutKeyboardUpFunc(keyboardupCallback);
-    glutMouseFunc(mouseCallback);
-
-    // set up game update
-    glutIdleFunc(idleCallback);
+    
+//    glutIgnoreKeyRepeat(1);
+    glfwSetKeyCallback(window, keyboardCallback);
+    glfwSetMouseButtonCallback(window, mouseCallback);
 
     // run it!
-    glutMainLoop();
-    
+    while (!glfwWindowShouldClose(window))
+    {
+        // game does everything it needs to do
+        IvGame::mGame->Update();
+        
+        // clear the back buffer
+        IvRenderer::mRenderer->ClearBuffers(kColorDepthClear);
+        
+        // render the world
+        if ( IvRenderer::mRenderer->IsActive() )
+        {
+            IvGame::mGame->Display();
+        }
+        
+        // swap graphics buffers
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+     
     IvGame::Destroy();
 
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    
     return 0;
     
 }   // End of main()
 
 
-extern "C"
-void
-displayCallback(void)
+static void
+visibilityCallback(GLFWwindow* window, int vis)
 {
-    // clear the back buffer
-	IvRenderer::mRenderer->ClearBuffers(kColorDepthClear);
-
-    IvGame::mGame->Display();
+	IvRenderer::mRenderer->Activate( vis == GL_TRUE );
 }
 
 
-extern "C"
-void
-visibilityCallback(int vis)
-{
-	IvRenderer::mRenderer->Activate( vis == GLUT_VISIBLE );
-}
-
-
-extern "C"
-void
-reshapeCallback(int w, int h)
+static void
+reshapeCallback(GLFWwindow* window, int w, int h)
 {
     IvRenderer::mRenderer->Resize( w, h );
 }
 
-
-extern "C"
-void
-keyboardCallback(unsigned char key, int, int)
+static void 
+keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    IvGame::mGame->mEventHandler->KeyDown( key );   // Handle key down event
-}
-
-
-extern "C"
-void
-keyboardupCallback(unsigned char key, int, int)
-{
-    IvGame::mGame->mEventHandler->KeyUp( key ); // Handle key up event
-}
-
-
-extern "C"
-void mouseCallback(int button, int state, int x, int y)
-{
-    if ( button == GLUT_LEFT_BUTTON )
+    if (action == GLFW_PRESS) 
     {
-        if ( state == GLUT_DOWN )
-            IvGame::mGame->mEventHandler->MouseDown( x, y );
+        IvGame::mGame->mEventHandler->KeyDown( key );   // Handle key down event
+    }
+    else 
+    {
+        IvGame::mGame->mEventHandler->KeyUp( key ); // Handle key up event
+    }
+    
+}
+
+static void 
+mouseCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    if ( button == GLFW_MOUSE_BUTTON_LEFT )
+    {
+        if ( action == GLFW_PRESS )
+        {
+            double x, y;
+            glfwGetCursorPos(window, &x, &y);
+            IvGame::mGame->mEventHandler->MouseDown( (int)x, (int)y );
+        }
         else
+        {
             IvGame::mGame->mEventHandler->MouseUp();
+        }
     }
-}
-
-
-extern "C"
-void
-idleCallback(void)
-{
-    // game does everything it needs to do
-    IvGame::mGame->Update();
-
-    // clear the back buffer
-	IvRenderer::mRenderer->ClearBuffers(kColorDepthClear);
-
-    // render the world
-	if ( IvRenderer::mRenderer->IsActive() )
-    {
-        IvGame::mGame->Display();
-    }
-  
-    // swap graphics buffers
-    glutSwapBuffers();
 }
 
 //-------------------------------------------------------------------------------
@@ -215,7 +211,7 @@ idleCallback(void)
 unsigned int
 GetTime()
 {
-    return glutGet(GLUT_ELAPSED_TIME);
+    return glfwGetTime()*1000.0f;
 }
 
 
@@ -227,7 +223,7 @@ GetTime()
 void
 SetWindowTitle( const char* title )
 {
-    glutSetWindowTitle( title );
+    glfwSetWindowTitle( window, title );
 }
 
 

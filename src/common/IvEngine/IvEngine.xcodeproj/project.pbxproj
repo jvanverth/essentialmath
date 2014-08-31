@@ -162,6 +162,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = IvEngine;
 				SDKROOT = macosx10.8;
+				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				ZERO_LINK = YES;
 			};
 			name = Debug;
