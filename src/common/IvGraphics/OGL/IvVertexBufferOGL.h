@@ -36,6 +36,10 @@
 class IvVertexBufferOGL : private IvVertexBuffer
 {
 public:
+    // interface routines
+    virtual void* BeginLoadData();
+    virtual bool  EndLoadData();
+    
     friend class IvResourceManagerOGL;
     friend class IvRendererOGL;
     
@@ -45,7 +49,8 @@ private:
 	~IvVertexBufferOGL();
     
     // creation 
-    bool Create( IvVertexFormat format, unsigned int numVertices, void* data );
+    bool Create( IvVertexFormat format, unsigned int numVertices, void* data,
+                 bool dynamic = false );
     
     // destruction
     void Destroy();

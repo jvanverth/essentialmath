@@ -50,7 +50,12 @@ private:
 inline float
 IvMersenne::RandomFloat()
 {
-    unsigned int floatInt = 0x3f800000 | (Random() >> 9); 
-    float f = *(float*)(&floatInt) - 1.0f; 
+    union
+    {
+        unsigned int mI;
+        float        mF;
+    } floatConv;
+    floatConv.mI = 0x3f800000 | (Random() >> 9);
+    float f = floatConv.mF - 1.0f;
     return f;
 }

@@ -15,6 +15,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE33FB021972AD7000196B11 /* IvKISS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IvKISS.h; sourceTree = "<group>"; };
+		CE33FB031972AD8600196B11 /* IvXorshift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IvXorshift.h; sourceTree = "<group>"; };
 		CED858C30D7E364900108FEE /* IvCarryMultiply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvCarryMultiply.h; sourceTree = "<group>"; };
 		CED858C40D7E364900108FEE /* IvLCG64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvLCG64.h; sourceTree = "<group>"; };
 		CED858C50D7E364900108FEE /* IvLCGPrime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvLCGPrime.h; sourceTree = "<group>"; };
@@ -59,6 +61,8 @@
 				CED858C50D7E364900108FEE /* IvLCGPrime.h */,
 				CED858C60D7E364900108FEE /* IvMersenne.cpp */,
 				CED858C70D7E364900108FEE /* IvMersenne.h */,
+				CE33FB021972AD7000196B11 /* IvKISS.h */,
+				CE33FB031972AD8600196B11 /* IvXorshift.h */,
 			);
 			name = Sources;
 			sourceTree = "<group>";

@@ -52,10 +52,11 @@ IvResourceManagerOGL::~IvResourceManagerOGL()
 // Create platform-dependent vertex buffer
 //-------------------------------------------------------------------------------
 IvVertexBuffer* 
-IvResourceManagerOGL::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices, void* data )
+IvResourceManagerOGL::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices,
+                                          void* data, bool dynamic )
 {
     IvVertexBufferOGL* newBuffer = new IvVertexBufferOGL();
-    if ( !newBuffer->Create(  format, numVertices, data ) )
+    if ( !newBuffer->Create(  format, numVertices, data, dynamic ) )
     {
         delete newBuffer;
         newBuffer = 0;

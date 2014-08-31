@@ -28,6 +28,10 @@
 class IvVertexBuffer
 {
 public:
+    // interface routines
+    virtual void* BeginLoadData() = 0;
+    virtual bool  EndLoadData() = 0;
+
     inline IvVertexFormat GetVertexFormat() { return mVertexFormat; }
     inline unsigned int GetVertexCount() { return mNumVertices; }
 

@@ -17,7 +17,7 @@
 		CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45580D74C82D00FBB88B /* libIvEngine.a */; };
 		CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C454C0D74C80100FBB88B /* libIvUtility.a */; };
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
-		CED858E20D7E371400108FEE /* libIvMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1F33270D7C6BA000820F67 /* libIvMath.a */; };
+		CED858E20D7E371400108FEE /* libIvRandom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1F33270D7C6BA000820F67 /* libIvRandom.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,13 +88,13 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CE1F331F0D7C6BA000820F67 /* IvRandom.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D /* IvRandom */;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IvRandom;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8D0C4E970486CD37000505A6 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1F331F0D7C6BA000820F67 /* IvRandom.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvRandom.xcodeproj; path = ../../../common/IvRandom/IvRandom.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE9C45280D74C78900FBB88B /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -115,7 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CED858E20D7E371400108FEE /* libIvMath.a in Frameworks */,
+				CED858E20D7E371400108FEE /* libIvRandom.a in Frameworks */,
 				CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */,
 				CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */,
 				CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */,
@@ -133,7 +133,7 @@
 		195DF8CFFE9D517E11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D0C4E970486CD37000505A6 /* Example.app */,
+				8D0C4E970486CD37000505A6 /* ExampleD.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,7 +186,7 @@
 		CE1F33200D7C6BA000820F67 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE1F33270D7C6BA000820F67 /* libIvMath.a */,
+				CE1F33270D7C6BA000820F67 /* libIvRandom.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -246,7 +246,7 @@
 			name = Example;
 			productInstallPath = "$(HOME)/Applications";
 			productName = Example;
-			productReference = 8D0C4E970486CD37000505A6 /* Example.app */;
+			productReference = 8D0C4E970486CD37000505A6 /* ExampleD.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -254,9 +254,15 @@
 /* Begin PBXProject section */
 		20286C28FDCF999611CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Example" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 20286C29FDCF999611CA2CEA /* Example */;
 			projectDirPath = "";
 			projectReferences = (
@@ -289,10 +295,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		CE1F33270D7C6BA000820F67 /* libIvMath.a */ = {
+		CE1F33270D7C6BA000820F67 /* libIvRandom.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libIvMath.a;
+			path = libIvRandom.a;
 			remoteRef = CE1F33260D7C6BA000820F67 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -393,6 +399,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
+				SDKROOT = macosx10.8;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -411,6 +418,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
+				SDKROOT = macosx10.8;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};

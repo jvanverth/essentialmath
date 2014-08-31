@@ -39,7 +39,7 @@
 #include <IvRendererHelp.h>
 #include <IvResourceManager.h>
 #include <IvVertexBuffer.h>
-#include <IvMersenne.h>
+#include <IvXorshift.h>
 
 #include "Game.h"
 #include "Player.h"
@@ -48,7 +48,7 @@
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-static IvMersenne rng(12021966);
+static IvXorshift rng(12021966);
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -63,8 +63,11 @@ Player::Player()
 {
     mRotate.Identity();
     mScale = 1.0f;
+    
+    
 
-	mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1500);
+	mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1500,
+                                                                                NULL, true);
     IvCPVertex* dataPtr = (IvCPVertex*) mVertices->BeginLoadData();
     for (unsigned int i = 0; i < 1500; ++i)
     {
@@ -72,7 +75,7 @@ Player::Player()
         dataPtr[i].position = GenSpherePointIncorrect();
     }
     mVertices->EndLoadData();
-
+    
     mMode = 0;
 
 }   // End of Player::Player()
@@ -176,7 +179,6 @@ Player::Update( float dt )
 {
     float s = 1.0f;
     float r = 0.0f;
-    float x = 0.0f, y = 0.0f, z = 0.0f; 
     IvQuat rotate;
     IvVector3 xlate;
     IvMatrix44 transform;
