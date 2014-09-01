@@ -23,42 +23,52 @@
 static char const* sDefaultFragmentShader[kVertexFormatCount] = {0};
 
 static const char sShaderCPFormat[] = 
-"varying vec4 color;\n"
+"#version 150\n"
+"in vec4 color;\n"
+"out vec4 fragColor;\n"
 "void main()\n"
 "{\n"
-"    gl_FragColor = color;\n"
+"    fragColor = color;\n"
 "}\n";
 
 static const char sShaderNPFormat[] = 
-"varying vec4 color;\n"
+"#version 150\n"
+"in vec4 color;\n"
+"out vec4 fragColor;\n"
 "void main()\n"
 "{\n"
-"    gl_FragColor = color;\n"
+"    fragColor = color;\n"
 "}\n";
 
 static const char sShaderCNPFormat[] = 
-"varying vec4 color;\n"
+"#version 150\n"
+"in vec4 color;\n"
+"out vec4 fragColor;\n"
 "void main()\n"
 "{\n"
-"    gl_FragColor = color;\n"
+"    fragColor = color;\n"
 "}\n";
 
 static const char sShaderTCPFormat[] = 
-"varying sampler2D defaultTexture;\n"
-"varying vec2 uv;\n"
-"varying vec4 color;\n"
+"#version 150\n"
+"in sampler2D defaultTexture;\n"
+"in vec2 uv;\n"
+"in vec4 color;\n"
+"out vec4 fragColor;\n"
 "void main()\n"
 "{\n"
-"    gl_FragColor = color*texture2D(defaultTexture, uv);\n"
+"    fragColor = color*texture2D(defaultTexture, uv);\n"
 "}\n";
 
 static const char sShaderTNPFormat[] = 
-"varying sampler2D defaultTexture;\n"
-"varying vec2 uv;\n"
-"varying vec4 color;\n"
+"#version 150\n"
+"in sampler2D defaultTexture;\n"
+"in vec2 uv;\n"
+"in vec4 color;\n"
+"out vec4 fragColor;\n"
 "void main()\n"
 "{\n"
-"    gl_FragColor = color*texture2D(defaultTexture, uv);\n"
+"    fragColor = color*texture2D(defaultTexture, uv);\n"
 "}\n";
 
 //-------------------------------------------------------------------------------

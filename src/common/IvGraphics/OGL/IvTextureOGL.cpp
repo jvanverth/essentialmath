@@ -10,10 +10,10 @@
 
 #include "IvTextureOGL.h"
 #ifdef PLATFORM_OSX
-#include <GLUT/glut.h>
+#include <OpenGL/gl3.h>
 #else
 #include <GL/glew.h>
-#include <GL/glut.h>
+#include <GL/gl.h>
 #endif
 
 static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 3};
@@ -274,7 +274,7 @@ void IvTextureOGL::GenerateMipmapPyramid()
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex); 
 
     glBindTexture(GL_TEXTURE_2D, mID);
-
+/**** FIX THIS
     switch (mFormat)
     {
         case kRGBA32TexFmt:
@@ -289,7 +289,7 @@ void IvTextureOGL::GenerateMipmapPyramid()
                 GL_UNSIGNED_BYTE, mLevels[0].mData);
             break;
     };
-
+*/
     glBindTexture(GL_TEXTURE_2D, currentTex);
 }
 

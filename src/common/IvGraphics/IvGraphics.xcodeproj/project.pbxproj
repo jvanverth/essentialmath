@@ -321,6 +321,7 @@
 				OBJROOT = build;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				SDKROOT = macosx10.8;
 				SYMROOT = ../Libs;
 			};
 			name = Debug;
@@ -343,6 +344,7 @@
 				);
 				OBJROOT = build;
 				PREBINDING = NO;
+				SDKROOT = macosx10.8;
 				SYMROOT = ../Libs;
 				USER_HEADER_SEARCH_PATHS = "";
 			};

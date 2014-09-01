@@ -66,7 +66,7 @@ IvDebugger::DumpToFile( const char* string )
     if (!string || string[0] == '\0')
         return;
 
-    mOutFile.open(string);    
+    mOutFile.open(string, ios_base::trunc);
 
 }   // End of IvDebugger::Put()
 

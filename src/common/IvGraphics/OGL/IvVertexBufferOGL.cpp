@@ -29,7 +29,7 @@
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvVertexBufferOGL::IvVertexBufferOGL() : IvVertexBuffer(), mBufferID(0)
+IvVertexBufferOGL::IvVertexBufferOGL() : IvVertexBuffer(), mBufferID(0), mVertexArrayID(0)
 {
 }	// End of IvVertexBufferOGL::IvVertexBufferOGL()
 
@@ -54,6 +54,10 @@ IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void
     if ( numVertices == 0 || mBufferID != 0 )
         return false;
     
+    // create vertex array handle
+    glGenVertexArrays(1, &mVertexArrayID);
+    glBindVertexArray(mVertexArrayID);
+
     // create the handle
     glGenBuffers( 1, &mBufferID );
     glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
@@ -71,7 +75,62 @@ IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void
     mVertexFormat = format;
     mNumVertices = numVertices;
 
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    // set up vertex attributes
+    // this should match sShaderHeader in IvVertexShaderOGL.cpp
+#define COLOR 0
+#define NORMAL 1
+#define TEXCOORD0 2
+#define POSITION 3
+    size_t stride = kIvVFSize[mVertexFormat];
+    size_t offset = 0;
+    switch (mVertexFormat)
+    {
+        case kCPFormat:
+        default:
+            glEnableVertexAttribArray(COLOR);
+            glVertexAttribPointer(COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (GLvoid*) offset);
+            offset += 4*sizeof(unsigned char);
+            break;
+            
+        case kNPFormat:
+            glEnableVertexAttribArray(NORMAL);
+            glVertexAttribPointer(NORMAL, 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
+            offset += 3*sizeof(float);
+            break;
+            
+		case kCNPFormat:
+            glEnableVertexAttribArray(COLOR);
+            glVertexAttribPointer(COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (GLvoid*) offset);
+            offset += 4*sizeof(unsigned char);
+            glEnableVertexAttribArray(NORMAL);
+            glVertexAttribPointer(NORMAL, 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
+            offset += 3*sizeof(float);
+			break;
+            
+        case kTCPFormat:
+            glEnableVertexAttribArray(TEXCOORD0);
+            glVertexAttribPointer(TEXCOORD0, 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
+            offset += 2*sizeof(float);
+            glEnableVertexAttribArray(COLOR);
+            glVertexAttribPointer(COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (GLvoid*) offset);
+            offset += 4*sizeof(unsigned char);
+            break;
+            
+        case kTNPFormat:
+            glEnableVertexAttribArray(TEXCOORD0);
+            glVertexAttribPointer(TEXCOORD0, 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
+            offset += 2*sizeof(float);
+            glEnableVertexAttribArray(NORMAL);
+            glVertexAttribPointer(NORMAL, 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
+            offset += 3*sizeof(float);
+            break;
+    }
+    
+    // we always do position
+    glEnableVertexAttribArray(POSITION);
+    glVertexAttribPointer(POSITION, 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
+    
+    glBindVertexArray( 0 );
     
     return true;
 }
@@ -87,6 +146,8 @@ IvVertexBufferOGL::Destroy()
     // clear the handle and any associated memory
     glDeleteBuffers( 1, &mBufferID );
     mBufferID = 0;
+    glDeleteVertexArrays(1, &mVertexArrayID);
+    mVertexArrayID = 0;
     
     mNumVertices = 0;
 }
@@ -99,40 +160,12 @@ IvVertexBufferOGL::Destroy()
 bool
 IvVertexBufferOGL::MakeActive()
 {
+    
     if ( mBufferID == 0 || mNumVertices == 0 )
         return false;
     
-    glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
-    
     // set arrays active
-    switch (mVertexFormat)
-    {
-        case kCPFormat:
-        default:
-            glInterleavedArrays( GL_C4UB_V3F, 0, NULL );
-            break;
-            
-        case kNPFormat:
-            glInterleavedArrays( GL_N3F_V3F, 0, NULL );
-            break;
-            
-		case kCNPFormat:
-			glEnableClientState(GL_COLOR_ARRAY);
-			glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(IvCNPVertex), BUFFER_OFFSET( 0 ));
-			glEnableClientState(GL_NORMAL_ARRAY);
-			glNormalPointer(GL_FLOAT, sizeof(IvCNPVertex), BUFFER_OFFSET( 4 ));
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glVertexPointer(3, GL_FLOAT, sizeof(IvCNPVertex), BUFFER_OFFSET( 16 ));	
-			break;
-
-        case kTCPFormat:
-            glInterleavedArrays( GL_T2F_C4UB_V3F, 0, NULL );
-            break;
-            
-        case kTNPFormat:
-            glInterleavedArrays( GL_T2F_N3F_V3F, 0, NULL );
-            break;
-    }
+    glBindVertexArray(mVertexArrayID);
     
     return true;
 }
@@ -146,6 +179,7 @@ IvVertexBufferOGL::MakeActive()
 void *
 IvVertexBufferOGL::BeginLoadData()
 {
+    glBindVertexArray(mVertexArrayID);
     glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
     return glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 }
@@ -159,9 +193,8 @@ IvVertexBufferOGL::BeginLoadData()
 bool
 IvVertexBufferOGL::EndLoadData()
 {
-    glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
     bool ret = glUnmapBuffer(GL_ARRAY_BUFFER) != GL_FALSE;
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glBindVertexArray(0);
     return ret;
 }
 

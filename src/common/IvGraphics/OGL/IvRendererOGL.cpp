@@ -25,9 +25,9 @@
 #include "IvMatrix33.h"
 
 #ifdef PLATFORM_OSX
-#include <GLUT/glut.h>
+#include <OpenGL/gl3.h>
 #else
-#include <GL/glut.h>
+#include <GL/gl3.h>
 #endif
 
 
@@ -74,8 +74,8 @@ IvRendererOGL::IvRendererOGL() : IvRenderer()
 
 	mAPI = kOpenGL;
 
-	GLfloat diffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
+//	GLfloat diffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+//	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
 
     sPrimTypeMap[kPointListPrim] = GL_POINTS;
     sPrimTypeMap[kLineListPrim] = GL_LINES;
@@ -188,10 +188,6 @@ IvRendererOGL::Resize(unsigned int width, unsigned int height )
     SetViewMatrix(ident);
     SetWorldMatrix(ident);
 
-    // set default modelview matrix
-    glMatrixMode(GL_MODELVIEW);                         
-    glLoadIdentity();                                   
-
 }   // End of IvRendererOGL::Resize()
 
 
@@ -204,10 +200,10 @@ int
 IvRendererOGL::InitGL()
 {
     // turn on smooth shading
-    glShadeModel(GL_SMOOTH);    
+//****    glShadeModel(GL_SMOOTH);
     
     // set clear color and depth
-    SetClearColor(0.0f, 0.0f, 0.35f, 0.5f);          
+    SetClearColor(0.0f, 0.0f, 0.35f, 1.0f);
     SetClearDepth(1.0f); 
     
     // set up depth buffer
@@ -215,7 +211,7 @@ IvRendererOGL::InitGL()
     glDepthFunc(GL_LEQUAL); 
     
     // set up perspective correct textures
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  
+//****    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     // turn on culling
     glCullFace(GL_BACK);
@@ -270,6 +266,7 @@ void IvRendererOGL::ClearBuffers(IvClearBuffer buffer)
             glClear( GL_DEPTH_BUFFER_BIT );
             break;
         case kColorDepthClear:
+        default:
             glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
             break;
     };
@@ -376,10 +373,11 @@ void IvRendererOGL::SetFillMode( IvFillMode fill )
 //-------------------------------------------------------------------------------
 void IvRendererOGL::SetShadeMode( IvShadeMode shade )
 {
-    if (shade == kFlatShaded)
-        glShadeModel(GL_FLAT);
-    else if (shade == kGouraudShaded)
-        glShadeModel(GL_SMOOTH);
+//    if (shade == kFlatShaded)
+//        glShadeModel(GL_FLAT);
+//    else if (shade == kGouraudShaded)
+//        glShadeModel(GL_SMOOTH);
+//
 }
 
 
@@ -391,21 +389,22 @@ void IvRendererOGL::SetShadeMode( IvShadeMode shade )
 IvShadeMode 
 IvRendererOGL::GetShadeMode()
 {
-	GLint mode;
-	glGetIntegerv( GL_SHADE_MODEL, &mode );
-    if (mode == GL_FLAT)
-	{
-        return kFlatShaded;
-	}
-    else if (mode == GL_SMOOTH)
-	{
-		return kGouraudShaded;
-	}
-	else
-	{
-		ASSERT(false);
-		return kGouraudShaded;
-	}
+//	GLint mode;
+//	glGetIntegerv( GL_SHADE_MODEL, &mode );
+//    if (mode == GL_FLAT)
+//	{
+//        return kFlatShaded;
+//	}
+//    else if (mode == GL_SMOOTH)
+//	{
+//		return kGouraudShaded;
+//	}
+//	else
+//	{
+//		ASSERT(false);
+//		return kGouraudShaded;
+//	}
+    return kGouraudShaded;
 }
 
 
@@ -427,10 +426,6 @@ void IvRendererOGL::SetDepthWrite(bool write)
 void IvRendererOGL::SetWorldMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetWorldMatrix(matrix);
-
-    // set fixed function matrix
-    glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixf( (mViewMat * mWorldMat).GetFloatPtr() );
 }
 
 //-------------------------------------------------------------------------------
@@ -441,10 +436,6 @@ void IvRendererOGL::SetWorldMatrix(const IvMatrix44& matrix)
 void IvRendererOGL::SetViewMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetViewMatrix(matrix);
-
-    // set fixed function matrix
-    glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixf( (mViewMat * mWorldMat).GetFloatPtr() );
 }
 
 //-------------------------------------------------------------------------------
@@ -455,10 +446,6 @@ void IvRendererOGL::SetViewMatrix(const IvMatrix44& matrix)
 void IvRendererOGL::SetProjectionMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetProjectionMatrix(matrix);
-        
-    // set fixed function matrix
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf( mProjectionMat.GetFloatPtr() );
 }
 
 //-------------------------------------------------------------------------------
@@ -507,6 +494,11 @@ void IvRendererOGL::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 	// update any default uniforms
 	if ( mShader )
 	{
+		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+		if ( modelviewproj )
+		{
+			modelviewproj->SetValue(mWVPMat, 0);
+		}
 		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
 		if ( normalMat )
 		{

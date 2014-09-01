@@ -267,6 +267,7 @@
 				OBJROOT = build;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				SDKROOT = macosx10.8;
 				SYMROOT = ../Libs;
 			};
 			name = Debug;
@@ -279,6 +280,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OBJROOT = build;
 				PREBINDING = NO;
+				SDKROOT = macosx10.8;
 				SYMROOT = ../Libs;
 			};
 			name = Release;

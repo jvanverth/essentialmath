@@ -19,9 +19,9 @@
 #include <stdlib.h>
 
 #ifdef PLATFORM_OSX
-#include <GLUT/glut.h>
+#include <OpenGL/gl3.h>
 #else
-#include <GL/glut.h>
+#include <GL/gl3.h>
 #endif
 
 //-------------------------------------------------------------------------------

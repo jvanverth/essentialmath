@@ -20,72 +20,98 @@
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+static const char sShaderHeader[] =
+"#version 150\n"
+"#extension GL_ARB_explicit_attrib_location : require\n"
+"#define COLOR 0\n"
+"#define NORMAL 1\n"
+"#define TEXCOORD0 2\n"
+"#define POSITION 3\n";
+
 static char const* sDefaultVertexShader[kVertexFormatCount] = {0};
 
-static const char sShaderCPFormat[] = 
-"varying vec4 color;\n"
+static const char sShaderCPFormat[] =
+"uniform mat4 IvModelViewProjectionMatrix;\n"
+"layout(location = COLOR) in vec4 IvColor;"
+"layout(location = POSITION) in vec3 IvPos;"
+"out vec4 color;\n"
 "void main()\n"
 "{\n"
-"    gl_Position = ftransform();\n"
-"    color = gl_Color;\n"
+"    gl_Position = IvModelViewProjectionMatrix*vec4(IvPos,1.0);\n"
+"    color = IvColor;\n"
 "}\n";
 
 static const char sShaderNPFormat[] = 
+"uniform mat4 IvModelViewProjectionMatrix;\n"
 "uniform mat4 IvNormalMatrix;\n"
 "uniform vec4 IvLightDirection;\n"
 "uniform vec4 IvLightAmbient;\n"
 "uniform vec4 IvLightDiffuse;\n"
 "uniform vec4 IvDiffuseColor;\n"
-"varying vec4 color;\n"
+"layout(location = NORMAL) in vec3 IvNormal;"
+"layout(location = POSITION) in vec3 IvPos;"
+"out vec4 color;\n"
 "void main()\n"
 "{\n"
-"    gl_Position = ftransform();\n"
-"    vec4 transNormal = normalize(IvNormalMatrix * vec4(gl_Normal,0.0));\n"
+"    gl_Position = IvModelViewProjectionMatrix*vec4(IvPos,1.0);\n"
+"    vec4 transNormal = normalize(IvNormalMatrix * vec4(IvNormal,0.0));\n"
 "    float ndotVP = clamp(dot(transNormal,IvLightDirection), 0.0, 1.0);\n"
 "    vec4 lightValue = IvLightAmbient + IvLightDiffuse*ndotVP;\n"
 "    color = IvDiffuseColor*lightValue;\n"
 "}\n";
 
 static const char sShaderCNPFormat[] = 
+"uniform mat4 IvModelViewProjectionMatrix;\n"
 "uniform mat4 IvNormalMatrix;\n"
 "uniform vec4 IvLightDirection;\n"
 "uniform vec4 IvLightAmbient;\n"
 "uniform vec4 IvLightDiffuse;\n"
-"varying vec4 color;\n"
+"layout(location = COLOR) in vec4 IvColor;"
+"layout(location = NORMAL) in vec3 IvNormal;"
+"layout(location = POSITION) in vec3 IvPos;"
+"out vec4 color;\n"
 "void main()\n"
 "{\n"
-"    gl_Position = ftransform();\n"
-"    vec4 transNormal = normalize(IvNormalMatrix * vec4(gl_Normal,0.0));\n"
+"    gl_Position = IvModelViewProjectionMatrix*vec4(IvPos,1.0);\n"
+"    vec4 transNormal = normalize(IvNormalMatrix * vec4(IvNormal,0.0));\n"
 "    float ndotVP = clamp(dot(transNormal,IvLightDirection), 0.0, 1.0);\n"
 "    vec4 lightValue = IvLightAmbient + IvLightDiffuse*ndotVP;\n"
-"    color = gl_Color*lightValue;\n"
+"    color = IvColor*lightValue;\n"
 "}\n";
 
 static const char sShaderTCPFormat[] = 
-"varying vec2 uv;\n"
-"varying vec4 color;\n"
+"uniform mat4 IvModelViewProjectionMatrix;\n"
+"layout(location = TEXCOORD0) in vec2 IvTexCoord0;"
+"layout(location = COLOR) in vec4 IvColor;"
+"layout(location = POSITION) in vec3 IvPos;"
+"out vec2 uv;\n"
+"out vec4 color;\n"
 "void main()\n"
 "{\n"
-"    gl_Position = ftransform();\n"
-"    color = gl_Color;\n"
-"    uv = gl_MultiTexCoord0.xy;\n"
+"    gl_Position = IvModelViewProjectionMatrix*vec4(IvPos,1.0);\n"
+"    color = IvColor;\n"
+"    uv = IvTexCoord0.xy;\n"
 "}\n";
 
 static const char sShaderTNPFormat[] = 
+"uniform mat4 IvModelViewProjectionMatrix;\n"
 "uniform mat4 IvNormalMatrix;\n"
 "uniform vec4 IvLightDirection;\n"
 "uniform vec4 IvLightAmbient;\n"
 "uniform vec4 IvLightDiffuse;\n"
-"varying vec2 uv;\n"
-"varying vec4 color;\n"
-"void main()\n"\
+"layout(location = TEXCOORD0) in vec2 IvTexCoord0;"
+"layout(location = NORMAL) in vec3 IvNormal;"
+"layout(location = POSITION) in vec3 IvPos;"
+"out vec2 uv;\n"
+"out vec4 color;\n"
+"void main()\n"
 "{\n"
-"    gl_Position = ftransform();\n"
-"    vec4 transNormal = normalize(IvNormalMatrix * vec4(gl_Normal,0.0));\n"
+"    gl_Position = IvModelViewProjectionMatrix*vec4(IvPos,1.0);\n"
+"    vec4 transNormal = normalize(IvNormalMatrix * vec4(IvNormal,0.0));\n"
 "    float ndotVP = clamp(dot(transNormal,IvLightDirection), 0.0, 1.0);\n"
 "    vec4 lightValue = IvLightAmbient + IvLightDiffuse*ndotVP;\n"
 "    color = lightValue;\n"
-"    uv = gl_MultiTexCoord0.xy;\n"
+"    uv = IvTexCoord0.xy;\n"
 "}\n";
 
 //-------------------------------------------------------------------------------
@@ -150,8 +176,9 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
         return false;
     
     // load in the source
-    GLint shaderLength = strlen(shaderSrc);
-    glShaderSource( mShaderID, 1, (const GLchar**)&shaderSrc, &shaderLength );
+    const char* shaderSources[2] = {sShaderHeader, shaderSrc};
+    GLint shaderLengths[2] = {strlen(sShaderHeader), strlen(shaderSrc)};
+    glShaderSource( mShaderID, 2, (const GLchar**)shaderSources, shaderLengths );
     
     // compile it
     glCompileShader( mShaderID );
@@ -188,8 +215,9 @@ IvVertexShaderOGL::CreateFromString( const char* string )
         return false;
     
     // load in the source
-    GLint length = strlen(string);
-    glShaderSource( mShaderID, 1, &string, &length );
+    const char* shaderSources[2] = {sShaderHeader, string};
+    GLint shaderLengths[2] = {strlen(sShaderHeader), strlen(string)};
+    glShaderSource( mShaderID, 2, (const GLchar**)shaderSources, shaderLengths );
     
     // compile it
     glCompileShader( mShaderID );
