@@ -295,19 +295,17 @@ Player::DrawCylinderVertexArrays()
 void 
 Player::CreateCylinderVertexArrays()                                    
 {
+    size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+
     // Creates a grid of points, shaped into a cylinder.  In order to avoid a
     // texturing anomaly, we cannot simply share the vertical seam edge vertices
     // They must be duplicated; one copy must have a U-coord of 0.0, the other a
     // U-coord of 1.0f
     const unsigned int steps = 32;
-    mCylinderVerts[0] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, (steps + 1) * steps);
-    mCylinderVerts[1] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, (steps + 1) * steps);
-
-    IvTCPVertex* tempVerts0 = (IvTCPVertex*)(mCylinderVerts[0]->BeginLoadData());
-    IvTCPVertex* tempVerts1 = (IvTCPVertex*)(mCylinderVerts[1]->BeginLoadData());
-
+    const unsigned int numVerts = (steps + 1) * steps;
+    IvTCPVertex* tempVerts0 = (IvTCPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kTCPFormat] * numVerts);
+    IvTCPVertex* tempVerts1 = (IvTCPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kTCPFormat] * numVerts);
+    
     IvTCPVertex* tempVertsCopy0 = tempVerts0;
 
     // temporary pointers that can be stepped along the arrays
@@ -360,8 +358,12 @@ Player::CreateCylinderVertexArrays()
         tempVerts1++;
     }
 
-    mCylinderVerts[0]->EndLoadData();
-    mCylinderVerts[1]->EndLoadData();
+    mCylinderVerts[0] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTCPFormat,
+                                                                                        numVerts,
+                                                                                        tempVerts0);
+    mCylinderVerts[1] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTCPFormat,
+                                                                                        numVerts,
+                                                                                        tempVerts1);
 
     // Create index arrays - just a 32x31-quad mesh of triangles
     // Each of the 32 strips has 31 * 2 triangles plus two dummy indices
@@ -371,11 +373,7 @@ Player::CreateCylinderVertexArrays()
     // there is no previous strip to be ended in that case.  Thus,
     // 64 + 66 * 31 indices for the entire cylinder
     unsigned int cylinderIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
-
-    mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-        cylinderIndexCount);
-
-    unsigned int* tempIndices = (unsigned int*)mCylinderIndices->BeginLoadData();
+    UInt32* tempIndices = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * cylinderIndexCount);
 
     for (j = 0; j < steps; j++)
     {
@@ -400,7 +398,10 @@ Player::CreateCylinderVertexArrays()
         }
     }
 
-    mCylinderIndices->EndLoadData();
+    mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
+                                                                cylinderIndexCount, tempIndices);
+    
+    IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 
 }   // End of Player::CreateCylinderVertexArrays()
 

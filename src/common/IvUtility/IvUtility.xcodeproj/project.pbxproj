@@ -169,6 +169,7 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				INSTALL_PATH = /usr/local/lib;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = IvUtility;
 				SDKROOT = macosx10.8;
 				ZERO_LINK = YES;
@@ -183,6 +184,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INSTALL_PATH = /usr/local/lib;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = IvUtility;
 				SDKROOT = macosx10.8;
 			};

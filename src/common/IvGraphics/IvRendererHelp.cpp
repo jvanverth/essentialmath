@@ -481,14 +481,14 @@ IvDrawOBB( const IvVector3& extents, const IvVector3& center, const IvMatrix33& 
 
 
 //-------------------------------------------------------------------------------
-// @ IvDrawSphere()
+// @ CreateSphere()
 //-------------------------------------------------------------------------------
-// Draw sphere
+// Set up sphere vertices
 //-------------------------------------------------------------------------------
-void 
-IvDrawSphere( float radius, IvColor color )
+static void
+CreateSphere()
 {
-	// load data if not there
+    // load data if not there
 	if ( sphereVertices == 0 )
 	{
 		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
@@ -510,23 +510,23 @@ IvDrawSphere( float radius, IvColor color )
 		currentVertex++;
 		const float increment = kPI/(float)stacks;
 		const float thetaIncrement = kTwoPI/(float)slices;
-
+        
 		for (UInt32 latitude = 1; latitude < stacks; ++latitude)
 		{
 			for (UInt32 longitude = 0; longitude < slices; ++longitude)
 			{
 				float phi = -kHalfPI + float(latitude)*increment;
 				float theta = float(longitude)*thetaIncrement;
-
+                
 				float sinTheta, cosTheta;
 				IvSinCos(theta, sinTheta, cosTheta);
-
+                
 				float sinPhi, cosPhi;
 				IvSinCos(phi, sinPhi, cosPhi);
-
+                
 				vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
 				vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
-
+                
 				if ( longitude > 0 )
 				{
 					if ( currentVertex >= 1+slices )
@@ -563,10 +563,10 @@ IvDrawSphere( float radius, IvColor color )
 				indexPtr[currentIndex++] = currentVertex-1;
 			}
 		}
-
+        
 		vertexPtr[currentVertex].normal.Set(0.0, 0.0f, 1.0f);
 		vertexPtr[currentVertex].position.Set(0.0, 0.0f, 1.0f);
-
+        
 		for (UInt32 longitude = 0; longitude < slices-1; ++longitude)
 		{
 			indexPtr[currentIndex++] = currentVertex;
@@ -576,7 +576,7 @@ IvDrawSphere( float radius, IvColor color )
 		indexPtr[currentIndex++] = currentVertex;
 		indexPtr[currentIndex++] = currentVertex-1;
 		indexPtr[currentIndex++] = currentVertex-slices;
-
+        
 		sphereVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr);
 		sphereIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr);
         
@@ -596,7 +596,16 @@ IvDrawSphere( float radius, IvColor color )
         
         IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 	}
+}
 
+//-------------------------------------------------------------------------------
+// @ IvDrawSphere()
+//-------------------------------------------------------------------------------
+// Draw sphere
+//-------------------------------------------------------------------------------
+void 
+IvDrawSphere( float radius, IvColor color )
+{
 	// clear to default shader
 	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
 	IvRenderer::mRenderer->SetShaderProgram(0);
@@ -613,7 +622,7 @@ IvDrawSphere( float radius, IvColor color )
         
     // draw it
 	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
-    IvRenderer::mRenderer->Draw(kTriangleListPrim, sphereVertices, sphereIndices);
+    IvDrawUnitSphere();
 
 	// restore original state
 	IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -621,6 +630,22 @@ IvDrawSphere( float radius, IvColor color )
     IvRenderer::mRenderer->SetWorldMatrix(currentMat);
 
 }   // End of IvDrawSphere()
+
+//-------------------------------------------------------------------------------
+// @ IvDrawUnitSphere()
+//-------------------------------------------------------------------------------
+// Draw sphere
+//-------------------------------------------------------------------------------
+void
+IvDrawUnitSphere()
+{
+    CreateSphere();
+    
+   // draw it
+    IvRenderer::mRenderer->Draw(kTriangleListPrim, sphereVertices, sphereIndices);
+    
+}   // End of IvDrawUnitSphere()
+
 /*
 //-------------------------------------------------------------------------------
 // @ IvDrawCapsule()

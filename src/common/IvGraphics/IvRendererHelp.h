@@ -38,6 +38,7 @@ void IvCleanUpRendererHelpData();
 void IvDrawCube( IvColor color = kYellow );
 void IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color = kWhite );
 void IvDrawOBB( const IvVector3& extents, const IvVector3& center, const IvMatrix33& axes, IvColor color = kWhite );
+void IvDrawUnitSphere();
 void IvDrawSphere( float radius, IvColor color = kCyan );
 void IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color = kYellow );
 void IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color = kWhite );

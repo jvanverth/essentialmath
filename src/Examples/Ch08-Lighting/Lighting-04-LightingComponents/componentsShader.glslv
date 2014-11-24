@@ -1,4 +1,7 @@
-varying vec4 color;
+out vec4 color;
+
+uniform mat4 IvModelViewProjectionMatrix;
+uniform mat4 IvNormalMatrix;
 
 uniform vec4 viewPosition; 
 
@@ -13,6 +16,9 @@ uniform float materialSpecularExp;
 
 uniform vec4 lightAmbDiffSpec;
 uniform vec4 lightColor;
+
+layout(location = NORMAL) in vec3 IvNormal;
+layout(location = POSITION) in vec3 IvPos;
 
 struct lightSampleValues
 {
@@ -85,9 +91,11 @@ lightSampleValues computePointLightValues(in vec4 surfacePosition)
 
 void main()
 {
-	lightSampleValues lightValues = computePointLightValues(gl_Position);
+    vec4 pos4 = vec4(IvPos, 1.0);
+
+	lightSampleValues lightValues = computePointLightValues(pos4);
 	
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    gl_Position = IvModelViewProjectionMatrix * pos4;
     
-    color.rgb = computeLitColor(lightValues, gl_Vertex, gl_Normal);
+    color.rgb = computeLitColor(lightValues, pos4, IvNormal);
 }

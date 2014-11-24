@@ -40,15 +40,9 @@ public:
     void Render();
 
 private:
-    void CreateSphere();
-    void DrawSphere();
-
     IvVector4 mLightPos;
 
     float mRadius;
-
-    IvIndexBuffer* mSphereIndices;
-    IvVertexBuffer* mSphereVerts;
 
     IvShaderProgram* mShader;
     IvVector4 mLightComponents;

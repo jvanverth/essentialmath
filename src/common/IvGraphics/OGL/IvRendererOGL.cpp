@@ -552,6 +552,11 @@ void IvRendererOGL::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsi
 	// update any default uniforms
 	if ( mShader )
 	{
+		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+		if ( modelviewproj )
+		{
+			modelviewproj->SetValue(mWVPMat, 0);
+		}
 		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
 		if ( normalMat )
 		{

@@ -27,6 +27,8 @@
 #include <IvVertexBuffer.h>
 #include <IvVertexShader.h>
 
+#include <IvImage.h>
+
 
 #include "Player.h"
 #include "Game.h"
@@ -48,15 +50,14 @@ Player::Player()
 {
     mRadius = 2.0f;
 
-    mSphereIndices = NULL;
-
-    mSphereVerts = NULL;
-
     mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
         IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
         "componentsShader"),
         IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
         "componentsShader"));
+    
+    IvImage* image = IvImage::CreateFromFile("image.tga");
+
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
 
@@ -86,7 +87,6 @@ Player::Player()
     mLightPosUniform = mShader->GetUniform("pointLightPosition");
     mViewPosUniform = mShader->GetUniform("viewPosition");
 
-    CreateSphere();
 }   // End of Player::Player()
 
 
@@ -97,9 +97,6 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
-    IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereIndices);
-
-    IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereVerts);
 }   // End of Player::~Player()
 
 
@@ -212,6 +209,7 @@ Player::Render()
 {   
     // build 4x4 matrix
     IvMatrix44 transform;
+    transform.Scaling(IvVector3(mRadius, mRadius, mRadius));
 
     int i,j;
     for (j = -1; j <= 1; j++)
@@ -230,122 +228,11 @@ Player::Render()
             mViewPosUniform->SetValue(
                 inv * IvVector4(0.0f, -10.0f, 0.0f, 1.0f), 0);
 
-            ::IvSetWorldMatrix(transform);
+            IvSetWorldMatrix(transform);
 
             // draw geometry
-            DrawSphere();
+            IvDrawUnitSphere();
         }
     }
 
 }   // End of Player::Render()
-
-
-//-------------------------------------------------------------------------------
-// @ Player::DrawSphere()
-//-------------------------------------------------------------------------------
-// Draw vertex arrays for a sphere centered around the origin
-//-------------------------------------------------------------------------------
-void
-Player::DrawSphere()
-{
-    IvRenderer::mRenderer->Draw(kTriangleStripPrim, mSphereVerts, mSphereIndices);
-} // End of Player::DrawSphere()
-    
-//-------------------------------------------------------------------------------
-// @ Player::CreateSphere()
-//-------------------------------------------------------------------------------
-// Create vertex arrays for a sphere centered around the origin
-//-------------------------------------------------------------------------------
-void 
-Player::CreateSphere()                                    
-{
-    // Creates a grid of points, shaped into a sphere.  This is not an
-    // efficient way to create a sphere (the verts are not evenly distributed),
-    // but it shows how to set up arrays of vertices and normals
-    const unsigned int steps = 32;
-    const unsigned int verts = steps * steps;
-
-    mSphereVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kNPFormat, verts);
-
-    // temporary pointers that can be stepped along the arrays
-    IvNPVertex* tempVerts = (IvNPVertex*)(mSphereVerts->BeginLoadData());
-
-    // A double loop, walking around and down the sphere
-    const float phiIncrement = kPI / (steps - 1);
-    const float thetaIncrement = kTwoPI / steps;
-
-    unsigned int j;
-    for (j = 0; j < steps; j++)
-    {
-        float theta = thetaIncrement * j;
-
-        float sinTheta, cosTheta;
-        IvSinCos(theta, sinTheta, cosTheta);
-
-        float red = fmod(4.0f * j / (float)(steps - 1), 1.0f);
-
-        unsigned int i;
-        for (i = 0; i < steps; i++)
-        {
-            float phi = phiIncrement * i - kHalfPI;
-
-            float sinPhi, cosPhi;
-            IvSinCos(phi, sinPhi, cosPhi);
-
-            IvVector3 pos(mRadius * cosTheta * cosPhi, mRadius * sinTheta * cosPhi, mRadius * sinPhi);
-
-            tempVerts->position = pos;
-
-            pos.Normalize();
-
-            tempVerts->normal = pos;
-
-            tempVerts++;
-        }
-    }
-
-    mSphereVerts->EndLoadData();
-
-    // Create index arrays - just a 32x31-quad mesh of triangles
-    // Each of the 32 strips has 31 * 2 triangles plus two dummy indices
-    // This means that there are 31 * 2 + 2 + 2 (two extra to start the
-    // strip, and two extra to end the previous strip) indices in each
-    // strip, although we can avoid two indices in the first strip, as
-    // there is no previous strip to be ended in that case.  Thus,
-    // 64 + 66 * 31 indices for the entire sphere
-    const unsigned int sphereIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
-
-    mSphereIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(sphereIndexCount);
-
-    unsigned int* tempIndices = (unsigned int*)(mSphereIndices->BeginLoadData());
-
-    for (j = 0; j < steps; j++)
-    {
-        unsigned int baseIndex0 = steps * j;
-        unsigned int baseIndex1 = steps * ((j + 1) % steps);
-
-        // restart the strip by doubling the last and next indices
-        if (j != 0)
-        {
-            *(tempIndices++) = tempIndices[-1];
-            *(tempIndices++) = baseIndex0;
-        }
-
-        unsigned int i;
-        for (i = 0; i < steps; i++)
-        {
-            *(tempIndices++) = baseIndex0;
-            *(tempIndices++) = baseIndex1;
-
-            baseIndex0++;
-            baseIndex1++;
-        }
-    }
-
-    mSphereIndices->EndLoadData();
-}   // End of Player::CreateSphere()
-
-
-
