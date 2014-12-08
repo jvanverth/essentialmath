@@ -154,7 +154,7 @@ Player::~Player()
         IvRenderer::mRenderer->GetResourceManager()->Destroy(mCylinderVerts[i]);
     
     for (i = 0; i < NUM_UVS; i++)
-        IvRenderer::mRenderer->GetResourceManager()->Destroy(mTextures[i]); 
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mTextures[i]);
 }   // End of Player::~Player()
 
 
@@ -306,14 +306,13 @@ Player::CreateCylinderVertexArrays()
     IvTCPVertex* tempVerts0 = (IvTCPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kTCPFormat] * numVerts);
     IvTCPVertex* tempVerts1 = (IvTCPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kTCPFormat] * numVerts);
     
-    IvTCPVertex* tempVertsCopy0 = tempVerts0;
-
     // temporary pointers that can be stepped along the arrays
     const float phiIncrement = kPI / (steps - 1);
     const float thetaIncrement = kTwoPI / steps;
     unsigned int i,j;
 
     // A double loop, walking around and down the cylinder
+    IvTCPVertex* tempVertsPtr = tempVerts0;
     for (j = 0; j <= steps; j++)
     {
         float theta = thetaIncrement * j;
@@ -329,33 +328,34 @@ Player::CreateCylinderVertexArrays()
 
             if (i == 0)
             {
-                tempVerts0->position = IvVector3(0.0f, 0.0f, -mRadius);
+                tempVertsPtr->position = IvVector3(0.0f, 0.0f, -mRadius);
             }
             else if (i == (steps - 1))
             {
-                tempVerts0->position = IvVector3(0.0f, 0.0f, mRadius);
+                tempVertsPtr->position = IvVector3(0.0f, 0.0f, mRadius);
             }
             else
             {
-                tempVerts0->position = IvVector3(mRadius * cosTheta, mRadius * sinTheta, mRadius * IvSin(phi));
+                tempVertsPtr->position = IvVector3(mRadius * cosTheta, mRadius * sinTheta, mRadius * IvSin(phi));
             }
 
-            tempVerts0->texturecoord = IvVector2(u, v);
+            tempVertsPtr->texturecoord = IvVector2(u, v);
 
-            tempVerts0->color.mAlpha = 
-            tempVerts0->color.mRed = 
-            tempVerts0->color.mGreen = 
-            tempVerts0->color.mBlue = 255; 
+            tempVertsPtr->color.mAlpha =
+            tempVertsPtr->color.mRed =
+            tempVertsPtr->color.mGreen =
+            tempVertsPtr->color.mBlue = 255;
 
-            tempVerts0++;
+            tempVertsPtr++;
         }
     }
 
-    memcpy(tempVerts1, tempVertsCopy0, (steps + 1) * steps * sizeof(IvTCPVertex));
+    memcpy(tempVerts1, tempVerts0, (steps + 1) * steps * sizeof(IvTCPVertex));
+    tempVertsPtr = tempVerts1;
     for (i = 0; i < ((steps + 1) * steps); i++)
     {
-        tempVerts1->texturecoord *= 2.0f;
-        tempVerts1++;
+        tempVertsPtr->texturecoord *= 2.0f;
+        tempVertsPtr++;
     }
 
     mCylinderVerts[0] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTCPFormat,
@@ -364,6 +364,7 @@ Player::CreateCylinderVertexArrays()
     mCylinderVerts[1] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTCPFormat,
                                                                                         numVerts,
                                                                                         tempVerts1);
+    IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 
     // Create index arrays - just a 32x31-quad mesh of triangles
     // Each of the 32 strips has 31 * 2 triangles plus two dummy indices
@@ -375,24 +376,27 @@ Player::CreateCylinderVertexArrays()
     unsigned int cylinderIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
     UInt32* tempIndices = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * cylinderIndexCount);
 
+    UInt32* tempIndexPtr = tempIndices;
     for (j = 0; j < steps; j++)
     {
         unsigned int baseIndex0 = steps * j;
         unsigned int baseIndex1 = steps * (j + 1);
+        unsigned int lastBaseIndex1 = baseIndex1;
 
         // restart the strip by doubling the last and next indices
         if (j != 0)
         {
-            *(tempIndices++) = tempIndices[-1];
-            *(tempIndices++) = baseIndex0;
+            *(tempIndexPtr++) = lastBaseIndex1;
+            *(tempIndexPtr++) = baseIndex0;
         }
 
         unsigned int i;
         for (i = 0; i < steps; i++)
         {
-            *(tempIndices++) = baseIndex0;
-            *(tempIndices++) = baseIndex1;
-
+            *(tempIndexPtr++) = baseIndex0;
+            *(tempIndexPtr++) = baseIndex1;
+            lastBaseIndex1 = baseIndex1;
+            
             baseIndex0++;
             baseIndex1++;
         }
@@ -400,7 +404,7 @@ Player::CreateCylinderVertexArrays()
 
     mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
                                                                 cylinderIndexCount, tempIndices);
-    
+
     IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 
 }   // End of Player::CreateCylinderVertexArrays()

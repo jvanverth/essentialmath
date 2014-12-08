@@ -115,9 +115,13 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
 void
 IvTextureOGL::Destroy()
 {
-    glDeleteTextures(1, &mID);
-    delete[] (unsigned char*)(mLevels[0].mData);
-    delete[] mLevels;
+    if (mID != 0)
+    {
+        glDeleteTextures(1, &mID);
+        delete[] (unsigned char*)(mLevels[0].mData);
+        delete[] mLevels;
+        mID = 0;
+    }
 }
 
 //-------------------------------------------------------------------------------
@@ -165,6 +169,9 @@ bool  IvTextureOGL::EndLoadData(unsigned int level)
             glTexImage2D(GL_TEXTURE_2D, level, GL_RGB, 
                 mLevels[level].mWidth, mLevels[level].mHeight, 0, 
                 GL_RGB, GL_UNSIGNED_BYTE, mLevels[level].mData);
+            break;
+            
+        default:
             break;
     };
 
