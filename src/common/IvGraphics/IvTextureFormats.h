@@ -24,8 +24,10 @@ enum IvTextureFormat
 {
     kRGBA32TexFmt,
     kRGB24TexFmt,
-    kTexFmtCount
+    
+    kLastTexFmt = kRGB24TexFmt
 };
+static const int kTexFmtCount = kLastTexFmt+1;
 
 struct IvTexColorRGBA
 {

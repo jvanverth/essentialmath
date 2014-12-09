@@ -16,6 +16,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvTexture.h"
+#include "IvResourceManager.h"
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
@@ -49,7 +50,8 @@ protected:
     virtual ~IvTextureOGL();
 
     // creation
-    bool Create(unsigned int width, unsigned int height, IvTextureFormat format);
+    bool Create(unsigned int width, unsigned int height, IvTextureFormat format,
+                void** data, unsigned int levels, IvDataUsage usage);
 
 	// destruction
     void Destroy();
@@ -58,16 +60,10 @@ protected:
     void MakeActive(unsigned int unit = 0);
 
     unsigned int mID;
+    
+    // used for BeginLoadData/EndLoadData
+    unsigned char* mTempData;
 
-    struct Level
-    {
-        void* mData;
-        unsigned int mSize;
-        unsigned int mWidth;
-        unsigned int mHeight;
-    };
-
-    Level* mLevels;
     unsigned int mLevelCount;
 
 private:

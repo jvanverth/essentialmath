@@ -49,7 +49,8 @@ IvVertexBufferOGL::~IvVertexBufferOGL()
 // Create the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void* data, bool dynamic )
+IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void* data,
+                           IvDataUsage usage )
 {
     if ( numVertices == 0 || mBufferID != 0 )
         return false;
@@ -65,7 +66,7 @@ IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void
     // allocate the memory
     (void) glGetError();  // clear any previous errors (probably not safe)
     glBufferData( GL_ARRAY_BUFFER, numVertices*kIvVFSize[format], data,
-                 dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW );
+                  usage == kDynamicUsage ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW );
     if ( glGetError() != GL_NO_ERROR )
     {
         Destroy();

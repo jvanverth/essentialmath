@@ -18,6 +18,7 @@
 //-------------------------------------------------------------------------------
 
 #include "../IvIndexBuffer.h"
+#include "IvResourceManager.h"
 #ifdef PLATFORM_OSX
 #include <OpenGL/gl3.h>
 #else
@@ -45,7 +46,7 @@ private:
 	~IvIndexBufferOGL();
 
     // creation 
-    bool Create( unsigned int numVertices, void* data );
+    bool Create( unsigned int numVertices, void* data, IvDataUsage usage = kStaticUsage );
     
     // destruction
     void Destroy();

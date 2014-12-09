@@ -18,6 +18,8 @@
 //-------------------------------------------------------------------------------
 
 #include "../IvVertexBuffer.h"
+#include "IvResourceManager.h"
+
 #ifdef PLATFORM_OSX
 #include <OpenGL/gl3.h>
 #else
@@ -50,7 +52,7 @@ private:
     
     // creation 
     bool Create( IvVertexFormat format, unsigned int numVertices, void* data,
-                 bool dynamic = false );
+                 IvDataUsage usage = kStaticUsage );
     
     // destruction
     void Destroy();

@@ -25,7 +25,6 @@ static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 3};
 //-------------------------------------------------------------------------------
 IvTextureOGL::IvTextureOGL() : IvTexture()
     , mID(0)
-    , mLevels(0)
     , mLevelCount(0)
 {
 }
@@ -46,7 +45,8 @@ IvTextureOGL::~IvTextureOGL()
 // Texture initialization
 //-------------------------------------------------------------------------------
 bool
-IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat format)
+IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat format,
+                     void** data, unsigned int levels, IvDataUsage usage)
 {
     glGenTextures(1, &mID);
 
@@ -54,56 +54,76 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
     mHeight = height;
     mFormat = format;
 
-    unsigned int texelSize = sTextureFormatSize[mFormat];
-
-    mLevelCount = 1;
-
-    int size = texelSize * width * height;
-    while ((width != 1) || (height != 1))
+    if (levels == 0)
     {
-        width >>= 1;
-        height >>= 1;
+        mLevelCount = 1;
+        while ((width != 1) || (height != 1))
+        {
+            width >>= 1;
+            height >>= 1;
 
-        if (!width)
-            width = 1;
+            if (!width)
+                width = 1;
 
-        if (!height)
-            height = 1;
+            if (!height)
+                height = 1;
 
-        size += texelSize * width * height;
-        mLevelCount++;
+            mLevelCount++;
+        }
+    }
+    else
+    {
+        mLevelCount = levels;
     }
 
-    mLevels = new Level[mLevelCount];
-
-    mLevels[0].mData = (void*)(new unsigned char[size]);
-    mLevels[0].mWidth = mWidth;
-    mLevels[0].mHeight = mHeight;
-    mLevels[0].mSize = mWidth * mHeight * texelSize;
-
-    width = mWidth;
-    height = mHeight;
-
-    unsigned int i;
-    for (i = 1; i < mLevelCount; i++)
+    if (data)
     {
-        width >>= 1;
-        height >>= 1;
+        GLint currentTex;
+        glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex);
+        
+        glBindTexture(GL_TEXTURE_2D, mID);
 
-        if (!width)
-            width = 1;
+        width = mWidth;
+        height = mHeight;
+        
+        void** dataPtr = data;
+        
+        unsigned int level;
+        for (level = 0; level < mLevelCount; level++)
+        {
+            switch (mFormat)
+            {
+                case kRGBA32TexFmt:
+                    glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA,
+                                 width, height, 0,
+                                 GL_RGBA, GL_UNSIGNED_BYTE, *dataPtr);
+                    break;
+                    
+                case kRGB24TexFmt:
+                    glTexImage2D(GL_TEXTURE_2D, level, GL_RGB,
+                                 width, height, 0,
+                                 GL_RGB, GL_UNSIGNED_BYTE, *dataPtr);
+                    break;
+                    
+                default:
+                    break;
+            };
 
-        if (!height)
-            height = 1;
-
-        unsigned int size = texelSize * width * height;
-
-        mLevels[i].mData = (void*)(((unsigned char*)(mLevels[i-1].mData)) + size);
-        mLevels[i].mWidth = width;
-        mLevels[i].mHeight = height;
-        mLevels[i].mSize = size;
+            width >>= 1;
+            height >>= 1;
+            
+            if (!width)
+                width = 1;
+            
+            if (!height)
+                height = 1;
+            
+            ++dataPtr;
+        }
+        
+        glBindTexture(GL_TEXTURE_2D, currentTex);
     }
-
+    
 	return true;
 }
 
@@ -118,8 +138,6 @@ IvTextureOGL::Destroy()
     if (mID != 0)
     {
         glDeleteTextures(1, &mID);
-        delete[] (unsigned char*)(mLevels[0].mData);
-        delete[] mLevels;
         mID = 0;
     }
 }
@@ -142,7 +160,24 @@ void IvTextureOGL::MakeActive(unsigned int unit)
 //-------------------------------------------------------------------------------
 void* IvTextureOGL::BeginLoadData(unsigned int level)
 {
-    return mLevels[level].mData;
+    unsigned width = mWidth;
+    unsigned height = mHeight;
+    
+    width >>= level;
+    height >>= level;
+    
+    if (!width)
+        width = 1;
+    
+    if (!height)
+        height = 1;
+    
+    unsigned int texelSize = sTextureFormatSize[mFormat];
+    unsigned int size = texelSize * width * height;
+    
+    mTempData = new unsigned char[size];
+    
+    return mTempData;
 }
 
 //-------------------------------------------------------------------------------
@@ -157,18 +192,30 @@ bool  IvTextureOGL::EndLoadData(unsigned int level)
 
     glBindTexture(GL_TEXTURE_2D, mID);
 
+    unsigned width = mWidth;
+    unsigned height = mHeight;
+    
+    width >>= level;
+    height >>= level;
+    
+    if (!width)
+        width = 1;
+    
+    if (!height)
+        height = 1;
+    
     switch (mFormat)
     {
         case kRGBA32TexFmt:
             glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, 
-                mLevels[level].mWidth, mLevels[level].mHeight, 0, 
-                GL_RGBA, GL_UNSIGNED_BYTE, mLevels[level].mData);
+                width, height, 0,
+                GL_RGBA, GL_UNSIGNED_BYTE, mTempData);
             break;
 
         case kRGB24TexFmt:
             glTexImage2D(GL_TEXTURE_2D, level, GL_RGB, 
-                mLevels[level].mWidth, mLevels[level].mHeight, 0, 
-                GL_RGB, GL_UNSIGNED_BYTE, mLevels[level].mData);
+                width, height, 0,
+                GL_RGB, GL_UNSIGNED_BYTE, mTempData);
             break;
             
         default:
@@ -176,6 +223,9 @@ bool  IvTextureOGL::EndLoadData(unsigned int level)
     };
 
     glBindTexture(GL_TEXTURE_2D, currentTex);
+    
+    delete [] mTempData;
+    
     return true;
 }
 
@@ -277,26 +327,17 @@ void IvTextureOGL::SetMinFiltering(IvTextureMinFilter filter)
 //-------------------------------------------------------------------------------
 void IvTextureOGL::GenerateMipmapPyramid()
 {
+    // get the current texture
     GLint currentTex;
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex); 
 
+    // bind to our texture
     glBindTexture(GL_TEXTURE_2D, mID);
-/**** FIX THIS
-    switch (mFormat)
-    {
-        case kRGBA32TexFmt:
-            gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGBA, 
-                mLevels[0].mWidth, mLevels[0].mHeight, GL_RGBA, 
-                GL_UNSIGNED_BYTE, mLevels[0].mData);
-            break;
+    
+    // generate mipmap pyramid
+    glGenerateMipmap(GL_TEXTURE_2D);
 
-        case kRGB24TexFmt:
-            gluBuild2DMipmaps( GL_TEXTURE_2D, GL_RGB, 
-                mLevels[0].mWidth, mLevels[0].mHeight, GL_RGB, 
-                GL_UNSIGNED_BYTE, mLevels[0].mData);
-            break;
-    };
-*/
+    // reset back to current
     glBindTexture(GL_TEXTURE_2D, currentTex);
 }
 

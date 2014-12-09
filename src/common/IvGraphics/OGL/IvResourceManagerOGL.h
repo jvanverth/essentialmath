@@ -36,27 +36,30 @@ class IvResourceManagerOGL : public IvResourceManager
 { 
 public:
     IvVertexBuffer* CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices,
-                                       void* data, bool dynamic = false );
-    void Destroy( IvVertexBuffer* vb); 
+                                       void* data, IvDataUsage usage = kStaticUsage );
+    void Destroy( IvVertexBuffer* vb );
     
-	IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data );
-    void Destroy( IvIndexBuffer* ib); 
+	IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data,
+                                      IvDataUsage usage = kStaticUsage );
+    void Destroy( IvIndexBuffer* ib );
     
     IvVertexShader* CreateVertexShaderFromFile( const char* filename );
     IvVertexShader* CreateVertexShaderFromString( const char* string );
     IvVertexShader* CreateDefaultVertexShader( IvVertexFormat format );
-    void Destroy( IvVertexShader* vs); 
+    void Destroy( IvVertexShader* vs );
     
     IvFragmentShader* CreateFragmentShaderFromFile( const char* filename );
     IvFragmentShader* CreateFragmentShaderFromString( const char* string );
     IvFragmentShader* CreateDefaultFragmentShader( IvVertexFormat format );
-    void Destroy( IvFragmentShader* vs); 
+    void Destroy( IvFragmentShader* vs );
     
     IvShaderProgram* CreateShaderProgram( IvVertexShader* vs, IvFragmentShader* fs );
     void Destroy( IvShaderProgram* sp );
 
     virtual IvTexture* CreateTexture( IvTextureFormat format, 
-        unsigned int width, unsigned int height );
+                                      unsigned int width, unsigned int height,
+                                      void** data, unsigned int levels,
+                                      IvDataUsage usage = kStaticUsage );
     void Destroy( IvTexture* tex );
     
 private: 

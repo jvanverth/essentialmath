@@ -53,10 +53,10 @@ IvResourceManagerOGL::~IvResourceManagerOGL()
 //-------------------------------------------------------------------------------
 IvVertexBuffer* 
 IvResourceManagerOGL::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices,
-                                          void* data, bool dynamic )
+                                          void* data, IvDataUsage usage )
 {
     IvVertexBufferOGL* newBuffer = new IvVertexBufferOGL();
-    if ( !newBuffer->Create(  format, numVertices, data, dynamic ) )
+    if ( !newBuffer->Create( format, numVertices, data, usage ) )
     {
         delete newBuffer;
         newBuffer = 0;
@@ -83,7 +83,8 @@ IvResourceManagerOGL::Destroy( IvVertexBuffer* vb)
 // Create platform-dependent index buffer
 //-------------------------------------------------------------------------------
 IvIndexBuffer* 
-IvResourceManagerOGL::CreateIndexBuffer( unsigned int numIndices, void* data )
+IvResourceManagerOGL::CreateIndexBuffer( unsigned int numIndices, void* data,
+                                         IvDataUsage usage)
 {
     IvIndexBufferOGL* newBuffer = new IvIndexBufferOGL();
 	if (!newBuffer->Create( numIndices, data ))
@@ -283,10 +284,11 @@ IvResourceManagerOGL::Destroy( IvShaderProgram* sp )
 //-------------------------------------------------------------------------------
 IvTexture*
 IvResourceManagerOGL::CreateTexture( IvTextureFormat format, 
-    unsigned int width, unsigned int height )
+                                     unsigned int width, unsigned int height,
+                                     void** data, unsigned int levels, IvDataUsage usage )
 {
 	IvTextureOGL* newTexture = new IvTextureOGL();
-    if ( !newTexture->Create( width, height, format ) )
+    if ( !newTexture->Create( width, height, format, data, levels, usage ) )
     {
         delete newTexture;
         newTexture = 0;

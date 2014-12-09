@@ -70,17 +70,11 @@ Player::Player()
     IvImage* image = IvImage::CreateFromFile("image.tga");
     if (image)
     {
+        void* pixels = image->GetPixels();
         mTextures[0] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight());
-
-        unsigned char* pixels = (unsigned char*)(mTextures[0]->BeginLoadData(0));
-
-        memcpy(pixels, image->GetPixels(), 
-            image->GetBytesPerPixel() * image->GetWidth() * image->GetHeight());
-
-        mTextures[0]->EndLoadData(0);
-
+            image->GetWidth(), image->GetHeight(), &pixels, 1);
+        
         delete image;
         image = 0;
     }
@@ -90,19 +84,19 @@ Player::Player()
     mTextures[0]->SetAddressingU(kWrapTexAddr);
     mTextures[0]->SetAddressingV(kWrapTexAddr);
 
-
     const unsigned int size = 128;
-    mTextures[1] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, size, size);
+    mTextures[1] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(kRGB24TexFmt,
+                                                                              size, size,
+                                                                              NULL, 0);
     mTextures[1]->SetMagFiltering(kBilerpTexMagFilter);
     mTextures[1]->SetMinFiltering(kBilerpTexMinFilter);
     mTextures[1]->SetAddressingU(kWrapTexAddr);
     mTextures[1]->SetAddressingV(kWrapTexAddr);
-
+    
     unsigned char* pixels = (unsigned char*)(mTextures[1]->BeginLoadData(0));
-
+    
     unsigned char* tempPixels = pixels;
-
+    
     unsigned int j;
     for (i = 0; i < size; i++)
     {
@@ -123,7 +117,7 @@ Player::Player()
     }
 
     mTextures[1]->EndLoadData(0);
-
+    
     mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
         IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
         "textureShader"),

@@ -76,6 +76,8 @@ IvUniformOGL::~IvUniformOGL()
         case kFloatMatrix44Uniform:
             delete [] mValue.mMatrix44;
             break;
+        case kTextureUniform:
+            break;
     };
 }
 

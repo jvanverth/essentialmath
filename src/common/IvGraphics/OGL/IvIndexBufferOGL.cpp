@@ -50,7 +50,7 @@ IvIndexBufferOGL::~IvIndexBufferOGL()
 // Create the platform-specific data
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferOGL::Create( unsigned int numIndices, void* data )
+IvIndexBufferOGL::Create( unsigned int numIndices, void* data, IvDataUsage usage )
 {
     if ( numIndices == 0 || mBufferID != 0 )
         return false;
@@ -61,7 +61,8 @@ IvIndexBufferOGL::Create( unsigned int numIndices, void* data )
     
     // allocate the memory    
     (void) glGetError();  // clear any previous errors (probably not safe)
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, numIndices*sizeof(GL_UNSIGNED_INT), data, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, numIndices*sizeof(GL_UNSIGNED_INT), data,
+                  usage == kDynamicUsage ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW );
     if ( glGetError() != GL_NO_ERROR )
     {
         Destroy();
