@@ -188,7 +188,8 @@ IvDrawAxes()
 		dataPtr[5].color.Set(0, 0, 255, 255);
 		dataPtr[5].position.Set(0.0f, 0.0f, 2.5f);
 
-		axesVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6, dataPtr);
+		axesVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6, dataPtr,
+                                                                                    kImmutableUsage);
 
 		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 	}
@@ -251,8 +252,10 @@ IvDrawFloor()
 			}
 		}
 
-		floorVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 4 * 81, vertexPtr);
-		floorIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 81, indexPtr);
+		floorVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 4 * 81, vertexPtr,
+                                                                                     kImmutableUsage);
+		floorIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 81, indexPtr,
+                                                                                      kImmutableUsage);
 
 		if (!floorVerts || !floorIndices)
 		{
@@ -421,8 +424,10 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 		indexPtr[currentIndex++] = currentVertex+2;
 		currentVertex += 4;  
 
-		boxVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, 4 * 6, vertexPtr);
-		boxIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 6, indexPtr);
+		boxVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, 4 * 6, vertexPtr,
+                                                                                   kImmutableUsage);
+		boxIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 6, indexPtr,
+                                                                                    kImmutableUsage);
 
 		if (!boxVerts || !boxIndices)
 		{
@@ -577,8 +582,10 @@ CreateSphere()
 		indexPtr[currentIndex++] = currentVertex-1;
 		indexPtr[currentIndex++] = currentVertex-slices;
         
-		sphereVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr);
-		sphereIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr);
+		sphereVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr,
+                                                                                         kImmutableUsage);
+		sphereIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr,
+                                                                                       kImmutableUsage);
         
 		if (!sphereVertices || !sphereIndices)
 		{
@@ -1019,7 +1026,8 @@ IvDrawTeapot( IvColor color, bool useDefaultShader )
             dataPtr[i].position = vertices[i].position;
             dataPtr[i].normal = vertices[i].normal;
         }
-		teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numTeapotVerts, dataPtr);
+		teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numTeapotVerts, dataPtr,
+                                                                                             kImmutableUsage);
 
         unsigned int numTeapotIndices = indices.size();
 		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32)* numTeapotIndices);
@@ -1028,7 +1036,8 @@ IvDrawTeapot( IvColor color, bool useDefaultShader )
             indexPtr[i] = indices[i];
         }
 
-		teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices, indexPtr);
+		teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices, indexPtr,
+                                                                                           kImmutableUsage);
 
 		if (!teapotVertexBuffer || !teapotIndexBuffer)
 		{

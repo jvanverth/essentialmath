@@ -60,8 +60,6 @@ public:
     virtual void SetMagFiltering(IvTextureMagFilter filter) = 0;
     virtual void SetMinFiltering(IvTextureMinFilter filter) = 0;
 
-    virtual void GenerateMipmapPyramid() = 0;
-
     inline IvTextureFormat GetFormat() const { return mFormat; }
     inline unsigned int GetWidth() const { return mWidth; }
     inline unsigned int GetHeight() const { return mHeight; }

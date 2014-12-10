@@ -55,6 +55,11 @@ IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void
     if ( numVertices == 0 || mBufferID != 0 )
         return false;
     
+    if ( usage == kImmutableUsage && !data )
+    {
+        return false;
+    }
+    
     // create vertex array handle
     glGenVertexArrays(1, &mVertexArrayID);
     glBindVertexArray(mVertexArrayID);
@@ -133,6 +138,8 @@ IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void
     
     glBindVertexArray( 0 );
     
+    mUsage = usage;
+    
     return true;
 }
 
@@ -180,6 +187,11 @@ IvVertexBufferOGL::MakeActive()
 void *
 IvVertexBufferOGL::BeginLoadData()
 {
+    if (mUsage == kImmutableUsage)
+    {
+        return NULL;
+    }
+    
     glBindVertexArray(mVertexArrayID);
     glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
     return glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
@@ -194,6 +206,11 @@ IvVertexBufferOGL::BeginLoadData()
 bool
 IvVertexBufferOGL::EndLoadData()
 {
+    if (mUsage == kImmutableUsage)
+    {
+        return false;
+    }
+    
     bool ret = glUnmapBuffer(GL_ARRAY_BUFFER) != GL_FALSE;
     glBindVertexArray(0);
     return ret;

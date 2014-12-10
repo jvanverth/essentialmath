@@ -48,12 +48,22 @@ bool
 IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat format,
                      void** data, unsigned int levels, IvDataUsage usage)
 {
+    if ( width == 0 || height == 0 || mID != 0 )
+    {
+        return false;
+    }
+    
+    if ( usage == kImmutableUsage && !data )
+    {
+        return false;
+    }
+    
     glGenTextures(1, &mID);
 
     mWidth = width;
     mHeight = height;
     mFormat = format;
-
+    
     if (levels == 0)
     {
         mLevelCount = 1;
@@ -76,13 +86,14 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
         mLevelCount = levels;
     }
 
+    GLint currentTex;
+    glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex);
+    
+    glBindTexture(GL_TEXTURE_2D, mID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, mLevelCount-1);
+    
     if (data)
     {
-        GLint currentTex;
-        glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex);
-        
-        glBindTexture(GL_TEXTURE_2D, mID);
-
         width = mWidth;
         height = mHeight;
         
@@ -120,9 +131,12 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
             
             ++dataPtr;
         }
-        
-        glBindTexture(GL_TEXTURE_2D, currentTex);
     }
+    
+    glBindTexture(GL_TEXTURE_2D, currentTex);
+    
+    mUsage = usage;
+    mTempData = NULL;
     
 	return true;
 }
@@ -160,6 +174,11 @@ void IvTextureOGL::MakeActive(unsigned int unit)
 //-------------------------------------------------------------------------------
 void* IvTextureOGL::BeginLoadData(unsigned int level)
 {
+    if (mUsage == kImmutableUsage || mTempData)
+    {
+        return NULL;
+    }
+    
     unsigned width = mWidth;
     unsigned height = mHeight;
     
@@ -187,6 +206,11 @@ void* IvTextureOGL::BeginLoadData(unsigned int level)
 //-------------------------------------------------------------------------------
 bool  IvTextureOGL::EndLoadData(unsigned int level)
 {
+    if (mUsage == kImmutableUsage || !mTempData)
+    {
+        return false;
+    }
+    
     GLint currentTex;
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex); 
 
@@ -225,6 +249,7 @@ bool  IvTextureOGL::EndLoadData(unsigned int level)
     glBindTexture(GL_TEXTURE_2D, currentTex);
     
     delete [] mTempData;
+    mTempData = NULL;
     
     return true;
 }
@@ -317,27 +342,6 @@ void IvTextureOGL::SetMinFiltering(IvTextureMinFilter filter)
     glBindTexture(GL_TEXTURE_2D, mID);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode);
 
-    glBindTexture(GL_TEXTURE_2D, currentTex);
-}
-
-//-------------------------------------------------------------------------------
-// @ IvTextureOGL::GenerateMipmapPyramid()
-//-------------------------------------------------------------------------------
-// Fills the mipmap levels based on the finest level (0)
-//-------------------------------------------------------------------------------
-void IvTextureOGL::GenerateMipmapPyramid()
-{
-    // get the current texture
-    GLint currentTex;
-    glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex); 
-
-    // bind to our texture
-    glBindTexture(GL_TEXTURE_2D, mID);
-    
-    // generate mipmap pyramid
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-    // reset back to current
     glBindTexture(GL_TEXTURE_2D, currentTex);
 }
 

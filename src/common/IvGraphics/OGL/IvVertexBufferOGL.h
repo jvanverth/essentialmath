@@ -52,7 +52,7 @@ private:
     
     // creation 
     bool Create( IvVertexFormat format, unsigned int numVertices, void* data,
-                 IvDataUsage usage = kStaticUsage );
+                 IvDataUsage usage );
     
     // destruction
     void Destroy();
@@ -65,8 +65,9 @@ private:
     IvVertexBufferOGL(const IvVertexBufferOGL& other);
 	IvVertexBufferOGL& operator=(const IvVertexBufferOGL& other);
 
-	GLuint mBufferID;
-	GLuint mVertexArrayID;
+	GLuint      mBufferID;
+	GLuint      mVertexArrayID;
+    IvDataUsage mUsage;
 };
 
 

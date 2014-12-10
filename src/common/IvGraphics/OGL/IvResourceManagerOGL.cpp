@@ -87,7 +87,7 @@ IvResourceManagerOGL::CreateIndexBuffer( unsigned int numIndices, void* data,
                                          IvDataUsage usage)
 {
     IvIndexBufferOGL* newBuffer = new IvIndexBufferOGL();
-	if (!newBuffer->Create( numIndices, data ))
+	if (!newBuffer->Create( numIndices, data, usage ))
     {
         delete newBuffer;
         newBuffer = 0;

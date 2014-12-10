@@ -55,16 +55,10 @@ Player::Player()
     IvImage* image = IvImage::CreateFromFile("euro.tga");
     if (image)
     {
+        void* pixels = image->GetPixels();
         mTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight());
-
-        unsigned char* pixels = (unsigned char*)(mTexture->BeginLoadData(0));
-
-        memcpy(pixels, image->GetPixels(), 
-            image->GetBytesPerPixel() * image->GetWidth() * image->GetHeight());
-
-        mTexture->EndLoadData(0);
+            image->GetWidth(), image->GetHeight(), &pixels, 1);
 
         delete image;
         image = 0;
@@ -78,7 +72,7 @@ Player::Player()
 
     const unsigned int size = 128;
     mCheckerTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, size, size);
+        kRGB24TexFmt, size, size, NULL, 1, kDynamicUsage);
     mCheckerTexture->SetMagFiltering(kBilerpTexMagFilter);
     mCheckerTexture->SetMinFiltering(kBilerpTexMinFilter);
     mCheckerTexture->SetAddressingU(kWrapTexAddr);
@@ -275,7 +269,7 @@ Player::CreateQuad()
     const float size = 3.0f;
 
     mQuadVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4);
+        kTCPFormat, 4, NULL, kDynamicUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mQuadVerts->BeginLoadData());
@@ -299,7 +293,7 @@ Player::CreateQuad()
     mQuadVerts->EndLoadData();
 
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(4);
+        CreateIndexBuffer(4, NULL, kDynamicUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
 

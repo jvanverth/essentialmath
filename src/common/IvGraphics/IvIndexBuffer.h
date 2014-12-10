@@ -27,6 +27,9 @@ class IvIndexBuffer
 {
 public:
     // interface routines
+    virtual void* BeginLoadData() = 0;
+    virtual bool  EndLoadData() = 0;
+    
     // For now, all index buffers are unsigned int (32 bit)
 
     inline unsigned int GetNumIndices() { return mNumIndices; }

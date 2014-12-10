@@ -36,11 +36,11 @@ class IvResourceManagerOGL : public IvResourceManager
 { 
 public:
     IvVertexBuffer* CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices,
-                                       void* data, IvDataUsage usage = kStaticUsage );
+                                       void* data, IvDataUsage usage );
     void Destroy( IvVertexBuffer* vb );
     
 	IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data,
-                                      IvDataUsage usage = kStaticUsage );
+                                      IvDataUsage usage );
     void Destroy( IvIndexBuffer* ib );
     
     IvVertexShader* CreateVertexShaderFromFile( const char* filename );
@@ -59,7 +59,7 @@ public:
     virtual IvTexture* CreateTexture( IvTextureFormat format, 
                                       unsigned int width, unsigned int height,
                                       void** data, unsigned int levels,
-                                      IvDataUsage usage = kStaticUsage );
+                                      IvDataUsage usage );
     void Destroy( IvTexture* tex );
     
 private: 

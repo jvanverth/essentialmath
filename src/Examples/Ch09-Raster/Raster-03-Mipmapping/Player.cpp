@@ -61,7 +61,7 @@ Player::Player()
 
     // create a texture "name" to reference later
     mMipmapLevelBandsTex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, 256, 256);
+        kRGB24TexFmt, 256, 256, NULL, 9, kDefaultUsage);
 
     mMipmapLevelBandsTex->SetMagFiltering(kBilerpTexMagFilter);
     mMipmapLevelBandsTex->SetMinFiltering(kBilerpTexMinFilter);
@@ -97,40 +97,52 @@ Player::Player()
 
     // create a texture "name" to reference later
     mCheckerBoardTex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, 256, 256);
+        kRGB24TexFmt, 256, 256, NULL, 5, kDefaultUsage);
 
     mCheckerBoardTex->SetMagFiltering(kBilerpTexMagFilter);
     mCheckerBoardTex->SetMinFiltering(kBilerpTexMinFilter);
     mCheckerBoardTex->SetAddressingU(kWrapTexAddr);
     mCheckerBoardTex->SetAddressingV(kWrapTexAddr);
 
-    IvTexColorRGB* texels = (IvTexColorRGB*)mCheckerBoardTex->BeginLoadData(0);
-
-    unsigned int j;
-    for (j  = 0; j < 256; j++)
+    int size = 256;
+    int shift = 3;
+    for (unsigned int k = 0; k < 5; ++k)
     {
-        for (i  = 0; i < 256; i++)
+        IvTexColorRGB* texels = (IvTexColorRGB*)mCheckerBoardTex->BeginLoadData(k);
+        unsigned int j;
+        for (j  = 0; j < size; j++)
         {
-            unsigned int pixelIndex = j * 256 + i;
-
-            // 8x8 texel checkerboard patterns
-            if (((j >> 3) + (i >> 3)) & 0x1)
+            for (i  = 0; i < size; i++)
             {
-                texels[pixelIndex].r = texels[pixelIndex].g 
-                    = texels[pixelIndex].b = 255;
-            }
-            else
-            {
-                texels[pixelIndex].r = texels[pixelIndex].g 
-                    = texels[pixelIndex].b = 0;
+                unsigned int pixelIndex = j * size + i;
+                
+                if (k == 4)
+                {
+                    // medium gray
+                    texels[pixelIndex].r = texels[pixelIndex].g
+                    = texels[pixelIndex].b = 128;
+                }
+                else
+                {
+                    // checkerboard patterns
+                    if (((j >> shift) + (i >> shift)) & 0x1)
+                    {
+                        texels[pixelIndex].r = texels[pixelIndex].g 
+                            = texels[pixelIndex].b = 255;
+                    }
+                    else
+                    {
+                        texels[pixelIndex].r = texels[pixelIndex].g 
+                            = texels[pixelIndex].b = 0;
+                    }
+                }
             }
         }
+        mCheckerBoardTex->EndLoadData(k);
+        size >>= 1;
+        shift--;
     }
-
-    mCheckerBoardTex->EndLoadData(0);
-
-    mCheckerBoardTex->GenerateMipmapPyramid();
-
+    
     mFilter = FILTER_BILERP;
 
     mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
@@ -301,7 +313,7 @@ Player::CreateQuad()
     const float size = 1.0f;
 
     mQuadVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4);
+        kTCPFormat, 4, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mQuadVerts->BeginLoadData());
@@ -325,7 +337,7 @@ Player::CreateQuad()
     mQuadVerts->EndLoadData();
 
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(4);
+        CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
 

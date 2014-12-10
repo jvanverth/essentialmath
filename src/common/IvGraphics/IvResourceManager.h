@@ -31,7 +31,8 @@ class IvTexture;
 
 enum IvDataUsage
 {
-    kStaticUsage,
+    kImmutableUsage,
+    kDefaultUsage,
     kDynamicUsage
 };
 
@@ -43,11 +44,11 @@ class IvResourceManager
 { 
 public:
     virtual IvVertexBuffer* CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices,
-                                               void* data, IvDataUsage usage = kStaticUsage ) = 0;
+                                               void* data, IvDataUsage usage ) = 0;
     virtual void Destroy( IvVertexBuffer* vb ) = 0;
 
     virtual IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data,
-                                              IvDataUsage usage = kStaticUsage ) = 0;
+                                              IvDataUsage usage ) = 0;
     virtual void Destroy( IvIndexBuffer* ib ) = 0;
 
     virtual IvVertexShader* CreateVertexShaderFromFile( const char* filename ) = 0;
@@ -65,8 +66,7 @@ public:
 
     virtual IvTexture* CreateTexture( IvTextureFormat format,
                                       unsigned int width, unsigned int height,
-                                      void** data, unsigned int levels,
-                                      IvDataUsage usage = kStaticUsage ) = 0;
+                                      void** data, unsigned int levels, IvDataUsage usage ) = 0;
     virtual void Destroy( IvTexture* tex ) = 0;
 
 protected:

@@ -42,8 +42,6 @@ public:
     virtual void SetMagFiltering(IvTextureMagFilter filter);
     virtual void SetMinFiltering(IvTextureMinFilter filter);
 
-    virtual void GenerateMipmapPyramid();
-
 protected:
     // constructor/destructor
     IvTextureOGL();
@@ -60,11 +58,12 @@ protected:
     void MakeActive(unsigned int unit = 0);
 
     unsigned int mID;
+    unsigned int mLevelCount;
+    
+    IvDataUsage  mUsage;
     
     // used for BeginLoadData/EndLoadData
     unsigned char* mTempData;
-
-    unsigned int mLevelCount;
 
 private:
     // copy operations (unimplemented so we can't copy)
