@@ -60,11 +60,12 @@ Player::Player()
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
 
-    mShader->GetUniform("dirLightIntensity")->SetValue(1.0f, 0);
+    IvVector3 radiance(1.0f, 1.0f, 1.0f);
+    mShader->GetUniform("dirLightRadiance")->SetValue(radiance, 0);
 
     mRotate.Identity();
 
-    mLightPos = IvVector4(1.0f, 0.0f, 0.0f, 0.0f);
+    mLightDir = IvVector3(1.0f, 0.0f, 0.0f);
 
     CreateSphere();
 }   // End of Player::Player()
@@ -111,8 +112,8 @@ Player::Update( float dt )
         IvMatrix44 rotate;
         rotate.RotationZ(r);
        
-        mLightPos = rotate * mLightPos;
-        mLightPos.Normalize();
+        mLightDir = rotate.Transform(mLightDir);
+        mLightDir.Normalize();
 
         lightDirChanged = false;
     }
@@ -143,9 +144,10 @@ Player::Render()
         {
             transform(0, 3) = 5.0f * i;
             transform(2, 3) = 5.0f * j;
+            
+            IvVector3 lightDir = transform.AffineInverse().Transform(mLightDir);
 
-            mShader->GetUniform("dirLightPosition")->SetValue(
-                transform.AffineInverse() * mLightPos, 0);
+            mShader->GetUniform("dirLightPosition")->SetValue(lightDir, 0);
 
             ::IvSetWorldMatrix(transform);
 
@@ -183,7 +185,7 @@ Player::CreateSphere()
     const unsigned int verts = steps * steps;
 
     mSphereVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kNPFormat, verts);
+        kNPFormat, verts, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvNPVertex* tempVerts = (IvNPVertex*)(mSphereVerts->BeginLoadData());
@@ -234,7 +236,7 @@ Player::CreateSphere()
     const unsigned int sphereIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mSphereIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(sphereIndexCount);
+        CreateIndexBuffer(sphereIndexCount, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mSphereIndices->BeginLoadData());
 

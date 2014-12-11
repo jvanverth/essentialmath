@@ -40,12 +40,12 @@ public:
     void Render();
 
 private:
-    IvVector4 mLightPos;
+    IvVector3 mLightPos;
+    float     mSpecularPercentage;
 
     float mRadius;
 
     IvShaderProgram* mShader;
-    IvVector4 mLightComponents;
 
     IvUniform* mLightPosUniform;
     IvUniform* mViewPosUniform;

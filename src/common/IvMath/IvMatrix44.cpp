@@ -1145,16 +1145,16 @@ IvMatrix44 IvMatrix44::operator*( float scalar ) const
 //-------------------------------------------------------------------------------
 // @ IvMatrix44::Transform()
 //-------------------------------------------------------------------------------
-// Matrix-point multiplication
+// Matrix-vector multiplication
 //-------------------------------------------------------------------------------
 IvVector3   
 IvMatrix44::Transform( const IvVector3& other ) const
 {
     IvVector3 result;
 
-    result.x = mV[0]*other.x + mV[4]*other.y + mV[8]*other.z + mV[12];
-    result.y = mV[1]*other.x + mV[5]*other.y + mV[9]*other.z + mV[13];
-    result.z = mV[2]*other.x + mV[6]*other.y + mV[10]*other.z + mV[14];
+    result.x = mV[0]*other.x + mV[4]*other.y + mV[8]*other.z;
+    result.y = mV[1]*other.x + mV[5]*other.y + mV[9]*other.z;
+    result.z = mV[2]*other.x + mV[6]*other.y + mV[10]*other.z;
  
     return result;
 

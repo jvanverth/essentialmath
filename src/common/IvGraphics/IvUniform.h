@@ -21,6 +21,7 @@
 
 class IvMatrix44;
 class IvTexture;
+class IvVector3;
 class IvVector4;
 class IvTexture;
 
@@ -29,6 +30,7 @@ class IvTexture;
 enum IvUniformType 
 {
     kFloatUniform,
+    kFloat3Uniform,
     kFloat4Uniform,
     kFloatMatrix44Uniform,
     kTextureUniform
@@ -46,12 +48,14 @@ public:
     inline unsigned int GetCount() { return mCount; }
 
     virtual void SetValue( float value, unsigned int index) = 0;
+    virtual void SetValue( const IvVector3& value, unsigned int index ) = 0;
     virtual void SetValue( const IvVector4& value, unsigned int index ) = 0;
     virtual void SetValue( const IvMatrix44& value, unsigned int index ) = 0;
     virtual void SetValue( IvTexture* value ) = 0;
     
     // return false on type mismatch
     virtual bool GetValue( float& value, unsigned int index) const = 0;
+    virtual bool GetValue( IvVector3& value, unsigned int index ) const = 0;
     virtual bool GetValue( IvVector4& value, unsigned int index ) const = 0;
     virtual bool GetValue( IvMatrix44& value, unsigned int index ) const = 0;
     virtual bool GetValue( IvTexture*& value ) const = 0;

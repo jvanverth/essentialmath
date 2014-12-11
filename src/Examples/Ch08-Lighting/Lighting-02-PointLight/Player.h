@@ -43,7 +43,7 @@ private:
     void CreateSphere();
     void DrawSphere();
 
-    IvVector4 mLightPos;
+    IvVector3 mLightPos;
 
     float mRadius;
 

@@ -23,6 +23,7 @@
 
 class IvMatrix44;
 class IvTextureOGL;
+class IvVector3;
 class IvVector4;
 class IvShaderProgramOGL;
 class IvTexture;
@@ -37,12 +38,14 @@ public:
     friend class IvShaderProgramOGL;
 
     virtual void SetValue( float value, unsigned int index);
+    virtual void SetValue( const IvVector3& value, unsigned int index );
     virtual void SetValue( const IvVector4& value, unsigned int index );
     virtual void SetValue( const IvMatrix44& value, unsigned int index );
     virtual void SetValue( IvTexture* value );
     
     // return false on type mismatch
     virtual bool GetValue( float& value, unsigned int index) const;
+    virtual bool GetValue( IvVector3& value, unsigned int index ) const;
     virtual bool GetValue( IvVector4& value, unsigned int index ) const;
     virtual bool GetValue( IvMatrix44& value, unsigned int index ) const;
     virtual bool GetValue( IvTexture*& value ) const;
@@ -62,6 +65,7 @@ protected:
     union  
     {
         float* mFloat;
+        IvVector3* mVector3;
         IvVector4* mVector4;
         IvMatrix44* mMatrix44;
         IvTextureOGL* mTexture;

@@ -1,32 +1,13 @@
-varying vec4 color;
+layout(location = POSITION) in vec4 position;
+layout(location = NORMAL) in vec3 inNormal;
 
-uniform vec4 dirLightPosition; 
-uniform float dirLightIntensity;
+out vec3 normal;
 
-struct lightSampleValues
-{
-	vec3 L;
-	float iL;
-};
-
-lightSampleValues computeDirLightValues()
-{
-	lightSampleValues values;
-
-	values.L = dirLightPosition.xyz;
-
-	values.iL = dirLightIntensity;
-
-	return values;
-}
+uniform mat4 IvModelViewProjectionMatrix;
 
 void main()
 {
-	lightSampleValues lightValues = computeDirLightValues();
-	
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    gl_Position = IvModelViewProjectionMatrix * position;
     
-    float lighting = clamp(dot(gl_Normal, lightValues.L) * lightValues.iL, 0.0, 1.0);
-    
-    color = vec4(lighting, lighting, lighting, 1);
+    normal = inNormal;
 }

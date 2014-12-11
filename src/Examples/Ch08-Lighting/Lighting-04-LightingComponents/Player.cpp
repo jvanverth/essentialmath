@@ -56,33 +56,37 @@ Player::Player()
         IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
         "componentsShader"));
     
-    IvImage* image = IvImage::CreateFromFile("image.tga");
-
-
+    mSpecularPercentage = 0.25f;
+    
     IvRenderer::mRenderer->SetShaderProgram(mShader);
 
-    mShader->GetUniform("pointLightIntensity")->SetValue(1.0f, 0);
+    mShader->GetUniform("pointLightIntensity")->SetValue(IvVector3(1.0f, 1.0f, 1.0f), 0);
 
+    mShader->GetUniform("ambientLightColor")->SetValue(IvVector3(0.1f, 0.1f, 0.1f), 0);
+    
     mShader->GetUniform("pointLightAttenuation")->SetValue(
-        IvVector4(1.0f, 0.0f, 0.0f, 0.0f), 0);
+        IvVector3(1.0f, 0.0f, 0.0f), 0);
 
+    mShader->GetUniform("materialEmissiveColor")->SetValue(
+        IvVector3(0.0f, 0.0f, 0.0f), 0);
+    
     mShader->GetUniform("materialAmbientColor")->SetValue(
-        IvVector4(1.0f, 0.0f, 0.0f, 0.0f), 0);
+        IvVector3(0.0f, 0.0f, 1.0f), 0);
 
     mShader->GetUniform("materialDiffuseColor")->SetValue(
-        IvVector4(0.0f, 0.0f, 1.0f, 0.0f), 0);
+        (1.0f - mSpecularPercentage)*IvVector4(0.0f, 0.0f, 1.0f, 1.0f), 0);
 
-    mShader->GetUniform("materialSpecularColor")->SetValue(
-        IvVector4(1.0f, 1.0f, 1.0f, 0.0f), 0);
+    float specularExp = 8.0f;
+    IvVector3 specularColor(1.0f, 1.0f, 1.0f);
+    specularColor *= mSpecularPercentage;
+    specularColor *= (specularExp + 8.0f)/8.0f; // normalization factor
+    mShader->GetUniform("materialSpecularColorExp")->SetValue(
+        IvVector4(specularColor.GetX(),
+                  specularColor.GetY(),
+                  specularColor.GetZ(),
+                  specularExp), 0);
 
-    mShader->GetUniform("materialSpecularExp")->SetValue(8.0f, 0);
-
-    mLightComponents = IvVector4(0.5f, 0.5f, 0.5f, 0.0f);
-    mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
-
-    mShader->GetUniform("lightColor")->SetValue(IvVector4(1.0f, 1.0f, 1.0f, 0.0f), 0);
-
-    mLightPos = IvVector4(0.0f, -10.0f, 0.0f, 1.0f);
+    mLightPos = IvVector3(0.0f, -10.0f, 0.0f);
 
     mLightPosUniform = mShader->GetUniform("pointLightPosition");
     mViewPosUniform = mShader->GetUniform("viewPosition");
@@ -135,7 +139,7 @@ Player::Update( float dt )
 
     if (lightPosChanged)
     {       
-        mLightPos += IvVector4(x, y, z, 0.0f);
+        mLightPos += IvVector3(x, y, z);
 
         lightPosChanged = false;
     }
@@ -158,7 +162,7 @@ Player::Update( float dt )
             IvVector4(0.0f, 0.0f, 0.0125f, 0.0f), 0);
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('q'))
+/*    if (IvGame::mGame->mEventHandler->IsKeyDown('q'))
     {
         mLightComponents.SetX( mLightComponents.GetX() + dt);
         mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
@@ -189,12 +193,12 @@ Player::Update( float dt )
     {
         mLightComponents.SetZ( mLightComponents.GetZ() - dt);
         mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
-    }
+    }*/
 
     // clear transform
     if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
     {
-        mLightPos = IvVector4(0.0f, -10.0f, 0.0f, 1.0f);
+        mLightPos = IvVector3(0.0f, -10.0f, 0.0f);
     }
 }   // End of Player::Update()
 
@@ -219,16 +223,14 @@ Player::Render()
             transform(0, 3) = 5.0f * i;
             transform(2, 3) = 5.0f * j;
 
-            IvMatrix44 inv = transform;
-            inv.AffineInverse();
-
             mLightPosUniform->SetValue(
-                inv * mLightPos, 0);
+                mLightPos, 0);
 
             mViewPosUniform->SetValue(
-                inv * IvVector4(0.0f, -10.0f, 0.0f, 1.0f), 0);
+                IvVector3(0.0f, -10.0f, 0.0f), 0);
 
             IvSetWorldMatrix(transform);
+            mShader->GetUniform("modelMatrix")->SetValue(transform, 0);
 
             // draw geometry
             IvDrawUnitSphere();

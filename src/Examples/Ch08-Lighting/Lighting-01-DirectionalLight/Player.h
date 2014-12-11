@@ -45,7 +45,7 @@ private:
 
     IvMatrix33 mRotate;
 
-    IvVector4 mLightPos;
+    IvVector3 mLightDir;
 
     float mRadius;
 

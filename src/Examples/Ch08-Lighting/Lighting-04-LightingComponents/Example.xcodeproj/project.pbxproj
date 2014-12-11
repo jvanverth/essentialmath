@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE1D29441A0ED8A200F99B1D /* componentsShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CE1D29421A0ED8A200F99B1D /* componentsShader.glslf */; };
-		CE1D29451A0ED8A200F99B1D /* componentsShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CE1D29431A0ED8A200F99B1D /* componentsShader.glslv */; };
+		CE88553D1A39F9F1005C4B4E /* componentsShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CE88553B1A39F9F1005C4B4E /* componentsShader.glslf */; };
+		CE88553E1A39F9F1005C4B4E /* componentsShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CE88553C1A39F9F1005C4B4E /* componentsShader.glslv */; };
 		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
 		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
 		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
@@ -84,8 +84,8 @@
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE1D29421A0ED8A200F99B1D /* componentsShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = componentsShader.glslf; sourceTree = "<group>"; };
-		CE1D29431A0ED8A200F99B1D /* componentsShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = componentsShader.glslv; sourceTree = "<group>"; };
+		CE88553B1A39F9F1005C4B4E /* componentsShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = componentsShader.glslf; sourceTree = "<group>"; };
+		CE88553C1A39F9F1005C4B4E /* componentsShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = componentsShader.glslv; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.0.4/src/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -98,7 +98,6 @@
 		CE9C45630D74C88600FBB88B /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		CE9C45650D74C89400FBB88B /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
-		CEAB03561A22C58800ECD1B8 /* image.tga */ = {isa = PBXFileReference; lastKnownFileType = file; name = image.tga; path = "../../Ch07-GeometryColoring/Geometry-07-BasicTexturing/image.tga"; sourceTree = "<group>"; };
 		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -154,6 +153,8 @@
 				CE9C45660D74C89400FBB88B /* Game.h */,
 				CE9C45620D74C88600FBB88B /* Player.cpp */,
 				CE9C45630D74C88600FBB88B /* Player.h */,
+				CE88553B1A39F9F1005C4B4E /* componentsShader.glslf */,
+				CE88553C1A39F9F1005C4B4E /* componentsShader.glslv */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -161,12 +162,9 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CEAB03561A22C58800ECD1B8 /* image.tga */,
-				CE1D29421A0ED8A200F99B1D /* componentsShader.glslf */,
-				CE1D29431A0ED8A200F99B1D /* componentsShader.glslv */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
@@ -316,8 +314,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE1D29441A0ED8A200F99B1D /* componentsShader.glslf in Resources */,
-				CE1D29451A0ED8A200F99B1D /* componentsShader.glslv in Resources */,
+				CE88553D1A39F9F1005C4B4E /* componentsShader.glslf in Resources */,
+				CE88553E1A39F9F1005C4B4E /* componentsShader.glslv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -161,6 +161,9 @@ IvShaderProgramOGL::GetUniform(char const* name)
         case GL_FLOAT:
             ivType = kFloatUniform;
             break;
+        case GL_FLOAT_VEC3:
+            ivType = kFloat3Uniform;
+            break;
         case GL_FLOAT_VEC4:
             ivType = kFloat4Uniform;
             break;

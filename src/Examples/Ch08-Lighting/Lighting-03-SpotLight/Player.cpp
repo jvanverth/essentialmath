@@ -60,16 +60,15 @@ Player::Player()
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
 
-    mShader->GetUniform("spotLightIntensity")->SetValue(1.0f, 0);
+    mShader->GetUniform("spotLightIntensity")->SetValue(IvVector3(1.0f, 1.0f, 1.0f), 0);
 
     mShader->GetUniform("spotLightAttenuation")->SetValue(
-        IvVector4(1.0f, 0.0f, 0.0f, 0.0f), 0);
+        IvVector3(1.0f, 0.0f, 0.0f), 0);
 
-    mShader->GetUniform("spotLightAngleCos")->SetValue(0.125f, 0);
-    mShader->GetUniform("spotLightExponent")->SetValue(16.0f, 0);
+    mShader->GetUniform("spotLightCosOuterInner")->SetValue(IvVector3(0.75f, 0.8f, 0.0f), 0);
 
-    mLightPos = IvVector4(0.0f, -10.0f, 0.0f, 1.0f);
-    mLightDir = IvVector4(0.0f, 1.0f, 0.0f, 0.0f);
+    mLightPos = IvVector3(0.0f, -10.0f, 0.0f);
+    mLightDir = IvVector3(0.0f, 1.0f, 0.0f);
 
     CreateSphere();
 }   // End of Player::Player()
@@ -123,7 +122,7 @@ Player::Update( float dt )
 
     if (lightPosChanged)
     {       
-        mLightPos += IvVector4(x, y, z, 0.0f);
+        mLightPos += IvVector3(x, y, z);
 
         lightPosChanged = false;
     }
@@ -149,7 +148,7 @@ Player::Update( float dt )
     // clear transform
     if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
     {
-        mLightPos = IvVector4(0.0f, -10.0f, 0.0f, 1.0f);
+        mLightPos = IvVector3(0.0f, -10.0f, 0.0f);
     }
 }   // End of Player::Update()
 
@@ -173,15 +172,13 @@ Player::Render()
             transform(0, 3) = 5.0f * i;
             transform(2, 3) = 5.0f * j;
 
-            IvMatrix44 inv = transform;
-            inv.AffineInverse();
-
             mShader->GetUniform("spotLightPosition")->SetValue(
-                inv * mLightPos, 0);
+                mLightPos, 0);
             mShader->GetUniform("spotLightDir")->SetValue(
-                inv * mLightDir, 0);
+                mLightDir, 0);
 
             ::IvSetWorldMatrix(transform);
+            mShader->GetUniform("modelMatrix")->SetValue(transform, 0);
 
             // draw geometry
             DrawSphere();
@@ -217,7 +214,7 @@ Player::CreateSphere()
     const unsigned int verts = steps * steps;
 
     mSphereVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kNPFormat, verts);
+        kNPFormat, verts, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvNPVertex* tempVerts = (IvNPVertex*)(mSphereVerts->BeginLoadData());
@@ -268,7 +265,7 @@ Player::CreateSphere()
     const unsigned int sphereIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mSphereIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(sphereIndexCount);
+        CreateIndexBuffer(sphereIndexCount, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mSphereIndices->BeginLoadData());
 

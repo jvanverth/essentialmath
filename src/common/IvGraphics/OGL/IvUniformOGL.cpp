@@ -45,6 +45,9 @@ IvUniformOGL::IvUniformOGL(IvUniformType type, unsigned int count,
         case kFloatUniform:
             mValue.mFloat = new float[mCount];
             break;
+        case kFloat3Uniform:
+            mValue.mVector3 = new IvVector3[mCount];
+            break;
         case kFloat4Uniform:
             mValue.mVector4 = new IvVector4[mCount];
             break;
@@ -69,6 +72,9 @@ IvUniformOGL::~IvUniformOGL()
     {
         case kFloatUniform:
             delete [] mValue.mFloat;
+            break;
+        case kFloat3Uniform:
+            delete [] mValue.mVector3;
             break;
         case kFloat4Uniform:
             delete [] mValue.mVector4;
@@ -96,6 +102,29 @@ void IvUniformOGL::SetValue( float value, unsigned int index)
     if (mShader == IvRenderer::mRenderer->GetShaderProgram())
     {
         glUniform1fv(mShaderIndex, mCount, mValue.mFloat);
+        mNeedsUpdate = false;
+    }
+    else
+    {
+        mNeedsUpdate = true;
+    }
+}
+
+//-------------------------------------------------------------------------------
+// @ IvUniformOGL::SetValue()
+//-------------------------------------------------------------------------------
+// Float vec3 set
+//-------------------------------------------------------------------------------
+void IvUniformOGL::SetValue( const IvVector3& value, unsigned int index )
+{
+    if (mType != kFloat3Uniform)
+        return;
+    
+    mValue.mVector3[index] = value;
+    
+    if (mShader == IvRenderer::mRenderer->GetShaderProgram())
+    {
+        glUniform3fv(mShaderIndex, mCount, (GLfloat*)mValue.mVector3);
         mNeedsUpdate = false;
     }
     else
@@ -193,6 +222,20 @@ bool IvUniformOGL::GetValue( float& value, unsigned int index) const
 //-------------------------------------------------------------------------------
 // Float vec4 get
 //-------------------------------------------------------------------------------
+bool IvUniformOGL::GetValue( IvVector3& value, unsigned int index ) const
+{
+    if (mType != kFloat3Uniform)
+        return false;
+    
+    value = mValue.mVector3[index];
+    return true;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvUniformOGL::GetValue()
+//-------------------------------------------------------------------------------
+// Float vec4 get
+//-------------------------------------------------------------------------------
 bool IvUniformOGL::GetValue( IvVector4& value, unsigned int index ) const
 {
     if (mType != kFloat4Uniform)
@@ -247,6 +290,9 @@ void IvUniformOGL::Update()
     {
         case kFloatUniform:
             glUniform1fv(mShaderIndex, mCount, mValue.mFloat);
+            break;
+        case kFloat3Uniform:
+            glUniform3fv(mShaderIndex, mCount, (GLfloat*)mValue.mVector3);
             break;
         case kFloat4Uniform:
             glUniform4fv(mShaderIndex, mCount, (GLfloat*)mValue.mVector4);
