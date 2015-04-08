@@ -18,6 +18,7 @@
 //-------------------------------------------------------------------------------
 
 #include "../IvVertexBuffer.h"
+#include "IvResourceManager.h"
 #include <d3d11.h>
 
 //-------------------------------------------------------------------------------
@@ -32,6 +33,8 @@ class IvVertexBufferDX11 : private IvVertexBuffer
 {
 public:
     // interface routines
+	virtual void* BeginLoadData();
+	virtual bool  EndLoadData();
 
     friend class IvResourceManagerDX11;
     friend class IvRendererDX11;
@@ -42,7 +45,8 @@ private:
 	~IvVertexBufferDX11();
     
     // creation 
-	bool Create(IvVertexFormat format, unsigned int numVertices, void* data, ID3D11Device* device);
+	bool Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
+		        ID3D11Device* device);
     
     // destruction
     void Destroy();
@@ -57,6 +61,7 @@ private:
 
 	ID3D11Buffer* mBufferPtr;
 	void*		  mDataPtr;
+	IvDataUsage   mUsage;
 };
 
 

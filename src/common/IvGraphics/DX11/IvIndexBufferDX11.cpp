@@ -49,11 +49,24 @@ IvIndexBufferDX11::~IvIndexBufferDX11()
 // Create the platform-specific data
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferDX11::Create(unsigned int numIndices, void* data, ID3D11Device* device)
+IvIndexBufferDX11::Create(unsigned int numIndices, void* data, IvDataUsage usage, ID3D11Device* device)
 {
 	D3D11_BUFFER_DESC indexBufferDesc;
 	indexBufferDesc.ByteWidth = sizeof(unsigned int)*numIndices;
-	indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	switch (usage)
+	{
+	default:
+	case kDefaultUsage:
+		indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+		break;
+	case kDynamicUsage:
+		indexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		break;
+	case kImmutableUsage:
+		indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+		break;
+	}
+	mUsage = usage;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
@@ -109,4 +122,39 @@ IvIndexBufferDX11::MakeActive(ID3D11DeviceContext* context)
     return true;
 }
 
+//-------------------------------------------------------------------------------
+// @ IvIndexBufferDX11::BeginLoadData()
+//-------------------------------------------------------------------------------
+// Lock down the buffer and start loading
+// Returns pointer to client side data area
+//-------------------------------------------------------------------------------
+void *
+IvIndexBufferDX11::BeginLoadData()
+{
+	if (mUsage == kImmutableUsage)
+	{
+		return NULL;
+	}
+
+	//*** fix
+	return NULL;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvIndexBufferDX11::EndLoadData()
+//-------------------------------------------------------------------------------
+// Unlock the buffer, we're done loading
+// Returns true if all went well
+//-------------------------------------------------------------------------------
+bool
+IvIndexBufferDX11::EndLoadData()
+{
+	if (mUsage == kImmutableUsage)
+	{
+		return false;
+	}
+
+	//*** fix
+	return false;
+}
 

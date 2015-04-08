@@ -36,10 +36,11 @@ class IvTexture;
 class IvResourceManagerDX11 : public IvResourceManager
 { 
 public:
-    IvVertexBuffer* CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices, void* data ); 
+    IvVertexBuffer* CreateVertexBuffer(IvVertexFormat format, unsigned int numVertices, 
+		                               void* data, IvDataUsage usage);
     void Destroy( IvVertexBuffer* vb); 
     
-    IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data );
+	IvIndexBuffer* CreateIndexBuffer(unsigned int numIndices, void* data, IvDataUsage usage);
     void Destroy( IvIndexBuffer* ib); 
     
     IvVertexShader* CreateVertexShaderFromFile( const char* filename );
@@ -56,7 +57,8 @@ public:
     void Destroy( IvShaderProgram* sp );
 
     virtual IvTexture* CreateTexture( IvTextureFormat format, 
-        unsigned int width, unsigned int height );
+		unsigned int width, unsigned int height, 
+		void** data, unsigned int levels, IvDataUsage usage);
     void Destroy( IvTexture* tex );
     
 private: 

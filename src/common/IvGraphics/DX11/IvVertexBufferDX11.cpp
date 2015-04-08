@@ -147,11 +147,35 @@ IvVertexBufferDX11::~IvVertexBufferDX11()
 // Create the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void* data, ID3D11Device* device)
+IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
+                           ID3D11Device* device)
 {
+	if (numVertices == 0)
+	{
+		return false;
+	}
+
+	if (usage == kImmutableUsage && !data)
+	{
+		return false;
+	}
+
 	D3D11_BUFFER_DESC vertexBufferDesc;
 	vertexBufferDesc.ByteWidth = numVertices*kIvVFSize[format];
-	vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	switch (usage)
+	{
+	default:
+	case kDefaultUsage:
+		vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+		break;
+	case kDynamicUsage:
+		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		break;
+	case kImmutableUsage:
+		vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+		break;
+	}
+	mUsage = usage;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
@@ -291,5 +315,41 @@ IvVertexBufferDX11::MakeActive(ID3D11DeviceContext* context)
 	context->IASetInputLayout(sInputLayout[mVertexFormat]);
     
     return true;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvVertexBufferDX11::BeginLoadData()
+//-------------------------------------------------------------------------------
+// Lock down the buffer and start loading
+// Returns pointer to client side data area
+//-------------------------------------------------------------------------------
+void *
+IvVertexBufferDX11::BeginLoadData()
+{
+	if (mUsage == kImmutableUsage)
+	{
+		return NULL;
+	}
+	
+	//*** fix
+	return NULL;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvVertexBufferDX11::EndLoadData()
+//-------------------------------------------------------------------------------
+// Unlock the buffer, we're done loading
+// Returns true if all went well
+//-------------------------------------------------------------------------------
+bool
+IvVertexBufferDX11::EndLoadData()
+{
+	if (mUsage == kImmutableUsage)
+	{
+		return false;
+	}
+	
+	//*** fix
+	return false;
 }
 

@@ -46,7 +46,10 @@ IvUniformDX11::IvUniformDX11(IvUniformType type, void* offset, unsigned int coun
         case kFloatUniform:
             mValue.mFloat = new float[mCount];
             break;
-        case kFloat4Uniform:
+		case kFloat3Uniform:
+			mValue.mVector3 = new IvVector3[mCount];
+			break;
+		case kFloat4Uniform:
             mValue.mVector4 = new IvVector4[mCount];
             break;
         case kFloatMatrix44Uniform:
@@ -70,7 +73,10 @@ IvUniformDX11::~IvUniformDX11()
         case kFloatUniform:
             delete [] mValue.mFloat;
             break;
-        case kFloat4Uniform:
+		case kFloat3Uniform:
+			delete[] mValue.mVector3;
+			break;
+		case kFloat4Uniform:
             delete [] mValue.mVector4;
             break;
         case kFloatMatrix44Uniform:
@@ -94,6 +100,25 @@ void IvUniformDX11::SetValue( float value, unsigned int index)
 	if (mShader == IvRenderer::mRenderer->GetShaderProgram())
 	{
 		memcpy(mOffset, mValue.mFloat, mCount*sizeof(float));
+		mConstantTable->MarkDirty();
+	}
+}
+
+//-------------------------------------------------------------------------------
+// @ IvUniformDX11::SetValue()
+//-------------------------------------------------------------------------------
+// Float vec3 set
+//-------------------------------------------------------------------------------
+void IvUniformDX11::SetValue(const IvVector3& value, unsigned int index)
+{
+	if (mType != kFloat3Uniform)
+		return;
+
+	mValue.mVector3[index] = value;
+
+	if (mShader == IvRenderer::mRenderer->GetShaderProgram())
+	{
+		memcpy(mOffset, mValue.mVector3, mCount*sizeof(IvVector3));
 		mConstantTable->MarkDirty();
 	}
 }
@@ -172,6 +197,20 @@ bool IvUniformDX11::GetValue( float& value, unsigned int index) const
 
     value = mValue.mFloat[index];
     return true;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvUniformDX11::GetValue()
+//-------------------------------------------------------------------------------
+// Float vec3 get
+//-------------------------------------------------------------------------------
+bool IvUniformDX11::GetValue(IvVector3& value, unsigned int index) const
+{
+	if (mType != kFloat3Uniform)
+		return false;
+
+	value = mValue.mVector3[index];
+	return true;
 }
 
 //-------------------------------------------------------------------------------

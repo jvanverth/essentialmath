@@ -55,10 +55,11 @@ IvResourceManagerDX11::~IvResourceManagerDX11()
 // Create platform-dependent vertex buffer
 //-------------------------------------------------------------------------------
 IvVertexBuffer* 
-IvResourceManagerDX11::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices, void* data )
+IvResourceManagerDX11::CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices, 
+                                          void* data, IvDataUsage usage  )
 {
     IvVertexBufferDX11* newBuffer = new IvVertexBufferDX11();
-    if ( !newBuffer->Create( format, numVertices, data, mDevice ) )
+    if ( !newBuffer->Create( format, numVertices, data, usage, mDevice ) )
     {
         delete newBuffer;
         newBuffer = 0;
@@ -86,10 +87,10 @@ IvResourceManagerDX11::Destroy( IvVertexBuffer* vb)
 // Create platform-dependent index buffer
 //-------------------------------------------------------------------------------
 IvIndexBuffer* 
-IvResourceManagerDX11::CreateIndexBuffer( unsigned int numIndices, void* data )
+IvResourceManagerDX11::CreateIndexBuffer(unsigned int numIndices, void* data, IvDataUsage usage)
 {
     IvIndexBufferDX11* newBuffer = new IvIndexBufferDX11();
-    if ( !newBuffer->Create( numIndices, data, mDevice ) )
+    if ( !newBuffer->Create( numIndices, data, usage, mDevice ) )
     {
         delete newBuffer;
         newBuffer = 0;
@@ -285,8 +286,9 @@ IvResourceManagerDX11::Destroy( IvShaderProgram* sp )
 // Create platform-dependent texture
 //-------------------------------------------------------------------------------
 IvTexture*
-IvResourceManagerDX11::CreateTexture( IvTextureFormat format, 
-    unsigned int width, unsigned int height )
+IvResourceManagerDX11::CreateTexture(IvTextureFormat format, 
+                                     unsigned int width, unsigned int height, 
+									 void** data, unsigned int levels, IvDataUsage usage)
 {
 /***	IvTextureDX11* newTexture = new IvTextureDX11();
     if ( !newTexture->Create( width, height, format, mDevice ) )

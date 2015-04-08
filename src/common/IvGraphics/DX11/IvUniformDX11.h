@@ -41,13 +41,15 @@ public:
 
     virtual void SetValue( float value, unsigned int index);
     virtual void SetValue( const IvVector4& value, unsigned int index );
-    virtual void SetValue( const IvMatrix44& value, unsigned int index );
+	virtual void SetValue(const IvVector3& value, unsigned int index);
+	virtual void SetValue(const IvMatrix44& value, unsigned int index);
     virtual void SetValue( IvTexture* value );
     
     // return false on type mismatch
     virtual bool GetValue( float& value, unsigned int index) const;
     virtual bool GetValue( IvVector4& value, unsigned int index ) const;
-    virtual bool GetValue( IvMatrix44& value, unsigned int index ) const;
+	virtual bool GetValue(IvVector3& value, unsigned int index) const;
+	virtual bool GetValue(IvMatrix44& value, unsigned int index) const;
     virtual bool GetValue( IvTexture*& value ) const;
     
 protected:
@@ -66,8 +68,9 @@ protected:
     union  
     {
         float* mFloat;
-        IvVector4* mVector4;
-        IvMatrix44* mMatrix44;
+		IvVector3* mVector3;
+		IvVector4* mVector4;
+		IvMatrix44* mMatrix44;
         IvTextureDX11* mTexture;
     } mValue;
 

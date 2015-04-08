@@ -18,6 +18,8 @@
 //-------------------------------------------------------------------------------
 
 #include "../IvIndexBuffer.h"
+#include "IvResourceManager.h"
+
 #include <d3d11.h>
 
 //-------------------------------------------------------------------------------
@@ -32,6 +34,8 @@ class IvIndexBufferDX11 : private IvIndexBuffer
 {
 public:
     // interface routines
+	virtual void* BeginLoadData();
+	virtual bool  EndLoadData();
 
     friend class IvResourceManagerDX11;
     friend class IvRendererDX11;
@@ -42,7 +46,7 @@ private:
 	~IvIndexBufferDX11();
 
     // creation 
-	bool Create(unsigned int numVertices, void* data, ID3D11Device* device);
+	bool Create(unsigned int numVertices, void* data, IvDataUsage usage, ID3D11Device* device);
     
     // destruction
     void Destroy();
@@ -56,6 +60,7 @@ private:
 	IvIndexBufferDX11& operator=(const IvIndexBufferDX11& other);
 
 	ID3D11Buffer* mBufferPtr;
+	IvDataUsage   mUsage;
 };
 
 

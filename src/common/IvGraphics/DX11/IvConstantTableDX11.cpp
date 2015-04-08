@@ -94,6 +94,11 @@ IvConstantTableDX11::Create(ID3D11Device* device, ID3DBlob* code)
 			constantDesc.mType = IvUniformType::kFloatUniform;
 		}
 		else if (typeDesc.Class == D3D_SVC_VECTOR && typeDesc.Type == D3D_SVT_FLOAT
+			&& typeDesc.Columns == 3)  //*** this is a guess
+		{
+			constantDesc.mType = IvUniformType::kFloat3Uniform;
+		}
+		else if (typeDesc.Class == D3D_SVC_VECTOR && typeDesc.Type == D3D_SVT_FLOAT
 			&& typeDesc.Columns == 4)  //*** this is a guess
 		{
 			constantDesc.mType = IvUniformType::kFloat4Uniform;
