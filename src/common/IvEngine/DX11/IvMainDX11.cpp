@@ -16,6 +16,7 @@
 #include <d3d11.h>
 #include <dxgi1_3.h>
 #include <directxcolors.h>
+#include <VersionHelpers.h>
 
 #include <stdlib.h>
 #include <assert.h>
@@ -326,12 +327,8 @@ bool GetRefreshRate(unsigned int width, unsigned int height,
 	                int& numerator, int& denominator)
 {
 	IDXGIFactory* factory;
-#if _DEBUG
-	UINT flags = DXGI_CREATE_FACTORY_DEBUG;
-#else
-	UINT flags = 0;
-#endif
-	HRESULT result = CreateDXGIFactory2(flags, __uuidof(IDXGIFactory2), (void**)&factory);
+
+	HRESULT result = CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void**)&factory);
 	if (FAILED(result))
 	{
 		result = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
