@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvTextureD3D9.cpp
+// @ IvTextureDX11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -8,42 +8,43 @@
 // Usage notes
 //===============================================================================
 
-#include "IvTextureD3D9.h"
+#include "IvTextureDX11.h"
 #include "IvAssert.h"
-#include <d3dx9tex.h>
+//#include <d3dx9tex.h>
 
 static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 3};
 
 static D3DFORMAT	sD3DTextureFormat[kTexFmtCount] = {D3DFMT_A8R8G8B8, D3DFMT_X8B8G8R8};
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::IvTextureD3D9()
+// @ IvTextureDX11::IvTextureDX11()
 //-------------------------------------------------------------------------------
 // Constructor
 //-------------------------------------------------------------------------------
-IvTextureD3D9::IvTextureD3D9() : IvTexture()
+IvTextureDX11::IvTextureDX11() : IvTexture()
 	, mTexturePtr(0)
 {
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::~IvTextureD3D9()
+// @ IvTextureDX11::~IvTextureDX11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvTextureD3D9::~IvTextureD3D9()
+IvTextureDX11::~IvTextureDX11()
 {
 	Destroy();
 }
 
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::Create()
+// @ IvTextureDX11::Create()
 //-------------------------------------------------------------------------------
 // Texture initialization
 //-------------------------------------------------------------------------------
 bool
-IvTextureD3D9::Create(unsigned int width, unsigned int height, IvTextureFormat format, IDirect3DDevice9* device)
+IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat format, 
+                      void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device)
 {
     mWidth = width;
     mHeight = height;
@@ -116,12 +117,12 @@ IvTextureD3D9::Create(unsigned int width, unsigned int height, IvTextureFormat f
 
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::Destroy()
+// @ IvTextureDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Destroy!
 //-------------------------------------------------------------------------------
 void
-IvTextureD3D9::Destroy()
+IvTextureDX11::Destroy()
 {
 	if ( mTexturePtr )
 	{
@@ -131,11 +132,11 @@ IvTextureD3D9::Destroy()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::MakeActive()
+// @ IvTextureDX11::MakeActive()
 //-------------------------------------------------------------------------------
 // Binds the texture to the desired unit
 //-------------------------------------------------------------------------------
-void IvTextureD3D9::MakeActive(unsigned int unit, IDirect3DDevice9* device)
+void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 {
 	device->SetSamplerState(unit, D3DSAMP_ADDRESSU, mUAddrMode);
 	device->SetSamplerState(unit, D3DSAMP_ADDRESSV, mVAddrMode);
@@ -147,22 +148,22 @@ void IvTextureD3D9::MakeActive(unsigned int unit, IDirect3DDevice9* device)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::BeginLoadData()
+// @ IvTextureDX11::BeginLoadData()
 //-------------------------------------------------------------------------------
 // "Locks" and returns a pointer to the sysmem texture data for the given level
 //-------------------------------------------------------------------------------
-void* IvTextureD3D9::BeginLoadData(unsigned int level)
+void* IvTextureDX11::BeginLoadData(unsigned int level)
 {
 	mLevels[level].mData = (void*) new unsigned char[mLevels[level].mSize];
 	return mLevels[level].mData;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::EndLoadData()
+// @ IvTextureDX11::EndLoadData()
 //-------------------------------------------------------------------------------
 // Uploads the edited texture data to D3D
 //-------------------------------------------------------------------------------
-bool  IvTextureD3D9::EndLoadData(unsigned int level)
+bool  IvTextureDX11::EndLoadData(unsigned int level)
 {
 	D3DLOCKED_RECT lockedRect;
     if (FAILED(mTexturePtr->LockRect(level, &lockedRect, 0, 0)))
@@ -234,41 +235,41 @@ bool  IvTextureD3D9::EndLoadData(unsigned int level)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::SetAddressingU()
+// @ IvTextureDX11::SetAddressingU()
 //-------------------------------------------------------------------------------
 // Sets the texture wrapping in U
 //-------------------------------------------------------------------------------
-void IvTextureD3D9::SetAddressingU(IvTextureAddrMode mode)
+void IvTextureDX11::SetAddressingU(IvTextureAddrMode mode)
 {
 	mUAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::SetAddressingV()
+// @ IvTextureDX11::SetAddressingV()
 //-------------------------------------------------------------------------------
 // Sets the texture wrapping in V
 //-------------------------------------------------------------------------------
-void IvTextureD3D9::SetAddressingV(IvTextureAddrMode mode)
+void IvTextureDX11::SetAddressingV(IvTextureAddrMode mode)
 {
 	mVAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::SetMagFiltering()
+// @ IvTextureDX11::SetMagFiltering()
 //-------------------------------------------------------------------------------
 // Sets the texture magnification filter
 //-------------------------------------------------------------------------------
-void IvTextureD3D9::SetMagFiltering(IvTextureMagFilter filter)
+void IvTextureDX11::SetMagFiltering(IvTextureMagFilter filter)
 {
 	mMagFilter = (filter == kNearestTexMagFilter) ? D3DTEXF_POINT : D3DTEXF_LINEAR;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::SetMinFiltering()
+// @ IvTextureDX11::SetMinFiltering()
 //-------------------------------------------------------------------------------
 // Sets the texture minification filter
 //-------------------------------------------------------------------------------
-void IvTextureD3D9::SetMinFiltering(IvTextureMinFilter filter)
+void IvTextureDX11::SetMinFiltering(IvTextureMinFilter filter)
 {
     switch(filter)
     {
@@ -300,11 +301,11 @@ void IvTextureD3D9::SetMinFiltering(IvTextureMinFilter filter)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureD3D9::GenerateMipmapPyramid()
+// @ IvTextureDX11::GenerateMipmapPyramid()
 //-------------------------------------------------------------------------------
 // Fills the mipmap levels based on the finest level (0)
 //-------------------------------------------------------------------------------
-void IvTextureD3D9::GenerateMipmapPyramid()
+void IvTextureDX11::GenerateMipmapPyramid()
 {
     if (mTexturePtr)
 	{

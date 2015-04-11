@@ -16,6 +16,8 @@
 //-------------------------------------------------------------------------------
 
 #include "IvTexture.h"
+#include "IvResourceManager.h"
+
 #include <d3d11.h>
 
 //-------------------------------------------------------------------------------
@@ -50,7 +52,8 @@ protected:
     virtual ~IvTextureDX11();
 
     // creation
-	bool Create(unsigned int width, unsigned int height, IvTextureFormat format, ID3D11Device* device);
+	bool Create(unsigned int width, unsigned int height, IvTextureFormat format,
+		        void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device);
 
 	// destruction
 	void Destroy();

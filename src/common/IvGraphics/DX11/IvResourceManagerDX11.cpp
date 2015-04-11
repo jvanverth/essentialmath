@@ -290,15 +290,13 @@ IvResourceManagerDX11::CreateTexture(IvTextureFormat format,
                                      unsigned int width, unsigned int height, 
 									 void** data, unsigned int levels, IvDataUsage usage)
 {
-/***	IvTextureDX11* newTexture = new IvTextureDX11();
-    if ( !newTexture->Create( width, height, format, mDevice ) )
-    {
-        delete newTexture;
-        newTexture = 0;
-    }
-    return newTexture;
-	***/
-	return NULL;
+	IvTextureDX11* newTexture = new IvTextureDX11();
+	if (!newTexture->Create(width, height, format, data, levels, usage, mDevice))
+	{
+		delete newTexture;
+		newTexture = 0;
+	}
+	return newTexture;
 }
 
 //-------------------------------------------------------------------------------
@@ -309,7 +307,7 @@ IvResourceManagerDX11::CreateTexture(IvTextureFormat format,
 void 
 IvResourceManagerDX11::Destroy( IvTexture* tex )
 {
-/***    IvTextureDX11* texDX11 = static_cast<IvTextureDX11*>(tex);
-    texDX11->Destroy();
-    delete texDX11; ***/
+	IvTextureDX11* texOGL = static_cast<IvTextureDX11*>(tex);
+	texOGL->Destroy();
+	delete texOGL;
 }

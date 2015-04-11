@@ -258,10 +258,10 @@ copy .\DX11\Iv*.h ..\Includes\DX11
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="DX11\IvTextureDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="DX11\IvUniformDX11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>

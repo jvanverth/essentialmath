@@ -73,7 +73,7 @@ Player::Player()
         void* pixels = image->GetPixels();
         mTextures[0] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight(), &pixels, 1);
+            image->GetWidth(), image->GetHeight(), &pixels, 1, kDefaultUsage);
         
         delete image;
         image = 0;
@@ -87,7 +87,7 @@ Player::Player()
     const unsigned int size = 128;
     mTextures[1] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(kRGB24TexFmt,
                                                                               size, size,
-                                                                              NULL, 0);
+                                                                              NULL, 0, kDefaultUsage);
     mTextures[1]->SetMagFiltering(kBilerpTexMagFilter);
     mTextures[1]->SetMinFiltering(kBilerpTexMinFilter);
     mTextures[1]->SetAddressingU(kWrapTexAddr);
@@ -354,10 +354,10 @@ Player::CreateCylinderVertexArrays()
 
     mCylinderVerts[0] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTCPFormat,
                                                                                         numVerts,
-                                                                                        tempVerts0);
+                                                                                        tempVerts0, kDefaultUsage);
     mCylinderVerts[1] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTCPFormat,
                                                                                         numVerts,
-                                                                                        tempVerts1);
+                                                                                        tempVerts1, kDefaultUsage);
     IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 
     // Create index arrays - just a 32x31-quad mesh of triangles
@@ -397,7 +397,7 @@ Player::CreateCylinderVertexArrays()
     }
 
     mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-                                                                cylinderIndexCount, tempIndices);
+                                                                cylinderIndexCount, tempIndices, kDefaultUsage);
 
     IvStackAllocator::mScratchAllocator->Reset(currentOffset);
 
