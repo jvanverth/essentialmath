@@ -58,8 +58,11 @@ public:
 
     virtual IvTexture* CreateTexture( IvTextureFormat format, 
 		unsigned int width, unsigned int height, 
+		void* data, IvDataUsage usage);
+	virtual IvTexture* CreateMipmappedTexture(IvTextureFormat format,
+		unsigned int width, unsigned int height,
 		void** data, unsigned int levels, IvDataUsage usage);
-    void Destroy( IvTexture* tex );
+	void Destroy(IvTexture* tex);
     
 private: 
 	IvResourceManagerDX11(ID3D11Device* device);

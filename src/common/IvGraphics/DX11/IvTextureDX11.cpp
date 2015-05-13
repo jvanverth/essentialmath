@@ -10,11 +10,11 @@
 
 #include "IvTextureDX11.h"
 #include "IvAssert.h"
-//#include <d3dx9tex.h>
 
-static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 3};
-
-static D3DFORMAT	sD3DTextureFormat[kTexFmtCount] = {D3DFMT_A8R8G8B8, D3DFMT_X8B8G8R8};
+// 24-bit formats aren't supported in DX11
+// will need to convert before creating
+static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 4};
+static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_B8G8R8A8_UNORM };
 
 //-------------------------------------------------------------------------------
 // @ IvTextureDX11::IvTextureDX11()
@@ -23,6 +23,7 @@ static D3DFORMAT	sD3DTextureFormat[kTexFmtCount] = {D3DFMT_A8R8G8B8, D3DFMT_X8B8
 //-------------------------------------------------------------------------------
 IvTextureDX11::IvTextureDX11() : IvTexture()
 	, mTexturePtr(0)
+	, mShaderResourceView(0)
 {
 }
 
@@ -36,7 +37,6 @@ IvTextureDX11::~IvTextureDX11()
 	Destroy();
 }
 
-
 //-------------------------------------------------------------------------------
 // @ IvTextureDX11::Create()
 //-------------------------------------------------------------------------------
@@ -44,9 +44,19 @@ IvTextureDX11::~IvTextureDX11()
 //-------------------------------------------------------------------------------
 bool
 IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat format, 
-                      void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device)
+                      void* data, IvDataUsage usage, ID3D11Device* device)
 {
-    mWidth = width;
+	if (width == 0 || height == 0 || mTexturePtr)
+	{
+		return false;
+	}
+
+	if (usage == kImmutableUsage && !data)
+	{
+		return false;
+	}
+
+	mWidth = width;
     mHeight = height;
     mFormat = format;
 
@@ -54,54 +64,165 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 
     mLevelCount = 1;
 
-    int size = texelSize * width * height;
-    while ((width != 1) || (height != 1))
-    {
-        width >>= 1;
-        height >>= 1;
+	D3D11_SUBRESOURCE_DATA* subresourcePtr = NULL;
+	D3D11_SUBRESOURCE_DATA subresourceData;
+	void* pixelData = data;
+	if (data)
+	{
+		// if 24-bit color, we need to convert to 32-bit color
+		if (data && kRGB24TexFmt == format)
+		{
+			pixelData = new unsigned char[4 * width * height];
+			unsigned char* inComponent = (unsigned char*)data;
+			unsigned char* outComponent = (unsigned char*)pixelData;
+			for (unsigned int j = 0; j < height; ++j)
+			{
+				for (unsigned int i = 0; i < width; ++i)
+				{
+					// RGB
+					*outComponent++ = *inComponent++;
+					*outComponent++ = *inComponent++;
+					*outComponent++ = *inComponent++;
+					// A
+					*outComponent++ = 0xff;
+				}
+			}
+		}
 
-        if (!width)
-            width = 1;
+		memset(&subresourceData, 0, sizeof(D3D11_SUBRESOURCE_DATA));
+		subresourceData.pSysMem = pixelData;
+		subresourceData.SysMemPitch = width;
 
-        if (!height)
-            height = 1;
+		subresourcePtr = &subresourceData;
+	}
 
-        size += texelSize * width * height;
-        mLevelCount++;
-    }
+	D3D11_TEXTURE2D_DESC desc;
+	memset(&desc, 0, sizeof(D3D11_TEXTURE2D_DESC));
+	desc.Width = width;
+	desc.Height = height;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	desc.SampleDesc.Count = 1;
+	desc.SampleDesc.Quality = 0;
+	switch (usage)
+	{
+	default:
+	case kDefaultUsage:
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		break;
+	case kImmutableUsage:
+		desc.Usage = D3D11_USAGE_IMMUTABLE;
+		break;
+	case kDynamicUsage:
+		desc.Usage = D3D11_USAGE_DYNAMIC;
+		break;
+	}
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	if (kDynamicUsage == usage)
+	{
+		//*** not sure if needed
+		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	}
 
-    mLevels = new Level[mLevelCount];
+	if (FAILED(device->CreateTexture2D(&desc, subresourcePtr, &mTexturePtr)))
+	{
+		return false;
+	}
 
-    mLevels[0].mData = 0;
-    mLevels[0].mWidth = mWidth;
-    mLevels[0].mHeight = mHeight;
-    mLevels[0].mSize = mWidth * mHeight * texelSize;
+	if (kRGB24TexFmt == format)
+	{
+		delete [] pixelData;
+	}
 
-    width = mWidth;
-    height = mHeight;
+	mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM;
+	// verify formats
 
-    unsigned int i;
-    for (i = 1; i < mLevelCount; i++)
-    {
-        width >>= 1;
-        height >>= 1;
+	if (FAILED(device->CreateShaderResourceView(mTexturePtr, NULL, &mShaderResourceView)))
+	{
+		mTexturePtr->Release();
+		mTexturePtr = 0;
+		return false;
+	}
 
-        if (!width)
-            width = 1;
+	return true;
+}
 
-        if (!height)
-            height = 1;
+//-------------------------------------------------------------------------------
+// @ IvTextureDX11::CreateMipmapped()
+//-------------------------------------------------------------------------------
+// Texture initialization
+//-------------------------------------------------------------------------------
+bool
+IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
+                               void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device)
+{
+/*	if (width == 0 || height == 0 || mTexturePtr)
+	{
+		return false;
+	}
 
-        unsigned int size = texelSize * width * height;
+	if (usage == kImmutableUsage && !data)
+	{
+		return false;
+	}
 
-        mLevels[i].mData = 0;
-        mLevels[i].mWidth = width;
-        mLevels[i].mHeight = height;
-        mLevels[i].mSize = size;
-    }
+	mWidth = width;
+	mHeight = height;
+	mFormat = format;
 
-	if (FAILED(D3DXCreateTexture(device, mWidth, mHeight, mLevelCount, D3DUSAGE_AUTOGENMIPMAP, sD3DTextureFormat[format], 
-		                             D3DPOOL_MANAGED, &mTexturePtr)))
+	unsigned int texelSize = sTextureFormatSize[mFormat];
+
+	mLevelCount = 1;
+
+	int size = texelSize * width * height;
+	while ((width != 1) || (height != 1))
+	{
+		width >>= 1;
+		height >>= 1;
+
+		if (!width)
+			width = 1;
+
+		if (!height)
+			height = 1;
+
+		size += texelSize * width * height;
+		mLevelCount++;
+	}
+
+	mLevels = new Level[mLevelCount];
+
+	mLevels[0].mData = 0;
+	mLevels[0].mWidth = mWidth;
+	mLevels[0].mHeight = mHeight;
+	mLevels[0].mSize = mWidth * mHeight * texelSize;
+
+	width = mWidth;
+	height = mHeight;
+
+	unsigned int i;
+	for (i = 1; i < mLevelCount; i++)
+	{
+		width >>= 1;
+		height >>= 1;
+
+		if (!width)
+			width = 1;
+
+		if (!height)
+			height = 1;
+
+		unsigned int size = texelSize * width * height;
+
+		mLevels[i].mData = 0;
+		mLevels[i].mWidth = width;
+		mLevels[i].mHeight = height;
+		mLevels[i].mSize = size;
+	}
+#if 0
+	if (FAILED(D3DXCreateTexture(device, mWidth, mHeight, mLevelCount, D3DUSAGE_AUTOGENMIPMAP, sD3DTextureFormat[format],
+		D3DPOOL_MANAGED, &mTexturePtr)))
 	{
 		return false;
 	}
@@ -111,7 +232,8 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 	mD3DFormat = desc.Format;
 
 	// verify formats
-
+#endif
+*/
 	return true;
 }
 
@@ -124,6 +246,12 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 void
 IvTextureDX11::Destroy()
 {
+	if (mShaderResourceView)
+	{
+		mShaderResourceView->Release();
+		mShaderResourceView = 0;
+	}
+
 	if ( mTexturePtr )
 	{
 		mTexturePtr->Release();
@@ -138,6 +266,8 @@ IvTextureDX11::Destroy()
 //-------------------------------------------------------------------------------
 void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 {
+#if 0
+	// if state is different, delete old state and create new one
 	device->SetSamplerState(unit, D3DSAMP_ADDRESSU, mUAddrMode);
 	device->SetSamplerState(unit, D3DSAMP_ADDRESSV, mVAddrMode);
 	device->SetSamplerState(unit, D3DSAMP_MAGFILTER, mMagFilter);
@@ -145,6 +275,7 @@ void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 	device->SetSamplerState(unit, D3DSAMP_MIPFILTER, mMipFilter);
 
 	device->SetTexture(unit, mTexturePtr);
+#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -154,8 +285,9 @@ void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 //-------------------------------------------------------------------------------
 void* IvTextureDX11::BeginLoadData(unsigned int level)
 {
-	mLevels[level].mData = (void*) new unsigned char[mLevels[level].mSize];
-	return mLevels[level].mData;
+//	mLevels[level].mData = (void*) new unsigned char[mLevels[level].mSize];
+//	return mLevels[level].mData;
+	return NULL;
 }
 
 //-------------------------------------------------------------------------------
@@ -165,7 +297,7 @@ void* IvTextureDX11::BeginLoadData(unsigned int level)
 //-------------------------------------------------------------------------------
 bool  IvTextureDX11::EndLoadData(unsigned int level)
 {
-	D3DLOCKED_RECT lockedRect;
+/*	D3DLOCKED_RECT lockedRect;
     if (FAILED(mTexturePtr->LockRect(level, &lockedRect, 0, 0)))
 	{
 		delete mLevels[level].mData;
@@ -231,7 +363,8 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 
 	delete mLevels[level].mData;
 
-	return (D3D_OK == mTexturePtr->UnlockRect(level));
+	return (D3D_OK == mTexturePtr->UnlockRect(level));*/
+	return false;
 }
 
 //-------------------------------------------------------------------------------
@@ -241,7 +374,7 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetAddressingU(IvTextureAddrMode mode)
 {
-	mUAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
+//	mUAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
@@ -251,7 +384,7 @@ void IvTextureDX11::SetAddressingU(IvTextureAddrMode mode)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetAddressingV(IvTextureAddrMode mode)
 {
-	mVAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
+//	mVAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
@@ -261,7 +394,7 @@ void IvTextureDX11::SetAddressingV(IvTextureAddrMode mode)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetMagFiltering(IvTextureMagFilter filter)
 {
-	mMagFilter = (filter == kNearestTexMagFilter) ? D3DTEXF_POINT : D3DTEXF_LINEAR;
+//	mMagFilter = (filter == kNearestTexMagFilter) ? D3DTEXF_POINT : D3DTEXF_LINEAR;
 }
 
 //-------------------------------------------------------------------------------
@@ -271,6 +404,7 @@ void IvTextureDX11::SetMagFiltering(IvTextureMagFilter filter)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetMinFiltering(IvTextureMinFilter filter)
 {
+#if 0
     switch(filter)
     {
         case kNearestTexMinFilter:
@@ -298,19 +432,5 @@ void IvTextureDX11::SetMinFiltering(IvTextureMinFilter filter)
             mMipFilter = D3DTEXF_LINEAR;
             break;
     };
+#endif
 }
-
-//-------------------------------------------------------------------------------
-// @ IvTextureDX11::GenerateMipmapPyramid()
-//-------------------------------------------------------------------------------
-// Fills the mipmap levels based on the finest level (0)
-//-------------------------------------------------------------------------------
-void IvTextureDX11::GenerateMipmapPyramid()
-{
-    if (mTexturePtr)
-	{
-		mTexturePtr->SetAutoGenFilterType(D3DTEXF_GAUSSIANQUAD);
-		mTexturePtr->GenerateMipSubLevels();
-	}
-}
-

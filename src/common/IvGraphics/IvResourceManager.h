@@ -64,10 +64,13 @@ public:
     virtual IvShaderProgram* CreateShaderProgram( IvVertexShader* vs, IvFragmentShader* fs ) = 0;
     virtual void Destroy( IvShaderProgram* sp ) = 0;
 
-    virtual IvTexture* CreateTexture( IvTextureFormat format,
-                                      unsigned int width, unsigned int height,
-                                      void** data, unsigned int levels, IvDataUsage usage ) = 0;
-    virtual void Destroy( IvTexture* tex ) = 0;
+    virtual IvTexture* CreateTexture(IvTextureFormat format,
+                                     unsigned int width, unsigned int height,
+                                     void* data, IvDataUsage usage) = 0;
+	virtual IvTexture* CreateMipmappedTexture(IvTextureFormat format,
+		                             unsigned int width, unsigned int height,
+		                             void** data, unsigned int levels, IvDataUsage usage) = 0;
+	virtual void Destroy(IvTexture* tex) = 0;
 
 protected:
     IvResourceManager() {}

@@ -73,7 +73,7 @@ Player::Player()
         void* pixels = image->GetPixels();
         mTextures[0] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight(), &pixels, 1, kDefaultUsage);
+            image->GetWidth(), image->GetHeight(), pixels, kDefaultUsage);
         
         delete image;
         image = 0;
@@ -87,7 +87,7 @@ Player::Player()
     const unsigned int size = 128;
     mTextures[1] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(kRGB24TexFmt,
                                                                               size, size,
-                                                                              NULL, 0, kDefaultUsage);
+                                                                              NULL, kDefaultUsage);
     mTextures[1]->SetMagFiltering(kBilerpTexMagFilter);
     mTextures[1]->SetMinFiltering(kBilerpTexMinFilter);
     mTextures[1]->SetAddressingU(kWrapTexAddr);

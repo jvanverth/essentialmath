@@ -288,10 +288,29 @@ IvResourceManagerDX11::Destroy( IvShaderProgram* sp )
 IvTexture*
 IvResourceManagerDX11::CreateTexture(IvTextureFormat format, 
                                      unsigned int width, unsigned int height, 
-									 void** data, unsigned int levels, IvDataUsage usage)
+									 void* data, IvDataUsage usage)
 {
 	IvTextureDX11* newTexture = new IvTextureDX11();
-	if (!newTexture->Create(width, height, format, data, levels, usage, mDevice))
+	if (!newTexture->Create(width, height, format, data, usage, mDevice))
+	{
+		delete newTexture;
+		newTexture = 0;
+	}
+	return newTexture;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvResourceManagerDX11::CreateMipmappedTexture()
+//-------------------------------------------------------------------------------
+// Create platform-dependent texture
+//-------------------------------------------------------------------------------
+IvTexture*
+IvResourceManagerDX11::CreateMipmappedTexture(IvTextureFormat format,
+       unsigned int width, unsigned int height,
+       void** data, unsigned int levels, IvDataUsage usage)
+{
+	IvTextureDX11* newTexture = new IvTextureDX11();
+	if (!newTexture->CreateMipmapped(width, height, format, data, levels, usage, mDevice))
 	{
 		delete newTexture;
 		newTexture = 0;

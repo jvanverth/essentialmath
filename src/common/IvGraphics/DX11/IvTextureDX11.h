@@ -44,8 +44,6 @@ public:
     virtual void SetMagFiltering(IvTextureMagFilter filter);
     virtual void SetMinFiltering(IvTextureMinFilter filter);
 
-    virtual void GenerateMipmapPyramid();
-
 protected:
     // constructor/destructor
     IvTextureDX11();
@@ -53,6 +51,8 @@ protected:
 
     // creation
 	bool Create(unsigned int width, unsigned int height, IvTextureFormat format,
+		        void* data, IvDataUsage usage, ID3D11Device* device);
+	bool CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
 		        void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device);
 
 	// destruction
@@ -63,15 +63,7 @@ protected:
 
     unsigned int mLevelCount;
 
-    struct Level
-    {
-        void* mData;
-        unsigned int mSize;
-        unsigned int mWidth;
-        unsigned int mHeight;
-    };
-
-    Level* mLevels;
+	IvDataUsage  mUsage;
 
 private:
     // copy operations (unimplemented so we can't copy)
@@ -79,7 +71,8 @@ private:
 	IvTextureDX11& operator=(const IvTextureDX11& other);
 
 	// D3D objects
-	ID3D11ShaderResourceView* mTexturePtr;
+	ID3D11Texture2D*          mTexturePtr;
+	ID3D11ShaderResourceView* mShaderResourceView;
 
 	unsigned int		mUAddrMode;
 	unsigned int		mVAddrMode;
@@ -88,7 +81,6 @@ private:
 	unsigned int		mMipFilter;
 
 	DXGI_FORMAT			mD3DFormat;
-
 }; 
 
 #endif
