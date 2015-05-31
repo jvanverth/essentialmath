@@ -63,6 +63,16 @@ protected:
 
     unsigned int mLevelCount;
 
+	struct Level
+	{
+		void* mData;
+		size_t mSize;
+		unsigned int mWidth;
+		unsigned int mHeight;
+	};
+
+	Level* mLevels;
+
 	IvDataUsage  mUsage;
 
 private:

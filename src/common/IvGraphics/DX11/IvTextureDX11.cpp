@@ -9,11 +9,13 @@
 //===============================================================================
 
 #include "IvTextureDX11.h"
+#include "IvRendererDX11.h"
 #include "IvAssert.h"
 
 // 24-bit formats aren't supported in DX11
 // will need to convert before creating
-static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 4};
+static unsigned int sInternalTextureFormatSize[kTexFmtCount] = {4, 4};
+static unsigned int sExternalTextureFormatSize[kTexFmtCount] = {4, 3};
 static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_B8G8R8A8_UNORM };
 
 //-------------------------------------------------------------------------------
@@ -38,6 +40,29 @@ IvTextureDX11::~IvTextureDX11()
 }
 
 //-------------------------------------------------------------------------------
+// @ Convert24Bit()
+//-------------------------------------------------------------------------------
+// Utility function to convert 24-bit color data to 32-bit
+//-------------------------------------------------------------------------------
+static void Convert24Bit(void* outData, void* inData, unsigned int width, unsigned int height)
+{
+	unsigned char* inComponent = (unsigned char*)inData;
+	unsigned char* outComponent = (unsigned char*)outData;
+	for (unsigned int j = 0; j < height; ++j)
+	{
+		for (unsigned int i = 0; i < width; ++i)
+		{
+			// RGB
+			*outComponent++ = *inComponent++;
+			*outComponent++ = *inComponent++;
+			*outComponent++ = *inComponent++;
+			// A
+			*outComponent++ = 0xff;
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------
 // @ IvTextureDX11::Create()
 //-------------------------------------------------------------------------------
 // Texture initialization
@@ -59,10 +84,23 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 	mWidth = width;
     mHeight = height;
     mFormat = format;
+	mUsage = usage;
 
-    unsigned int texelSize = sTextureFormatSize[mFormat];
+    unsigned int texelSize = sInternalTextureFormatSize[mFormat];
+	unsigned int externalTexelSize = sExternalTextureFormatSize[mFormat];
 
     mLevelCount = 1;
+
+	// allocate level for BeginLoadData/EndLoadData
+	if (usage != kImmutableUsage)
+	{
+		mLevels = new Level[mLevelCount];
+
+		mLevels[0].mData = NULL;
+		mLevels[0].mWidth = mWidth;
+		mLevels[0].mHeight = mHeight;
+		mLevels[0].mSize = mWidth*mHeight*externalTexelSize;
+	}
 
 	D3D11_SUBRESOURCE_DATA* subresourcePtr = NULL;
 	D3D11_SUBRESOURCE_DATA subresourceData;
@@ -73,20 +111,7 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 		if (data && kRGB24TexFmt == format)
 		{
 			pixelData = new unsigned char[4 * width * height];
-			unsigned char* inComponent = (unsigned char*)data;
-			unsigned char* outComponent = (unsigned char*)pixelData;
-			for (unsigned int j = 0; j < height; ++j)
-			{
-				for (unsigned int i = 0; i < width; ++i)
-				{
-					// RGB
-					*outComponent++ = *inComponent++;
-					*outComponent++ = *inComponent++;
-					*outComponent++ = *inComponent++;
-					// A
-					*outComponent++ = 0xff;
-				}
-			}
+			Convert24Bit(pixelData, data, width, height);
 		}
 
 		memset(&subresourceData, 0, sizeof(D3D11_SUBRESOURCE_DATA));
@@ -281,13 +306,23 @@ void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 //-------------------------------------------------------------------------------
 // @ IvTextureDX11::BeginLoadData()
 //-------------------------------------------------------------------------------
-// "Locks" and returns a pointer to the sysmem texture data for the given level
+// "Locks" and returns a pointer to sysmem texture data for the given level
 //-------------------------------------------------------------------------------
 void* IvTextureDX11::BeginLoadData(unsigned int level)
 {
-//	mLevels[level].mData = (void*) new unsigned char[mLevels[level].mSize];
-//	return mLevels[level].mData;
-	return NULL;
+	if (kImmutableUsage == mUsage || level >= mLevelCount)
+	{
+		return NULL;
+	}
+
+	// already "locked"
+	if (mLevels[level].mData)
+	{
+		return NULL;
+	}
+
+	mLevels[level].mData = (void*) new unsigned char[mLevels[level].mSize];
+	return mLevels[level].mData;
 }
 
 //-------------------------------------------------------------------------------
@@ -297,74 +332,63 @@ void* IvTextureDX11::BeginLoadData(unsigned int level)
 //-------------------------------------------------------------------------------
 bool  IvTextureDX11::EndLoadData(unsigned int level)
 {
-/*	D3DLOCKED_RECT lockedRect;
-    if (FAILED(mTexturePtr->LockRect(level, &lockedRect, 0, 0)))
+	if (kImmutableUsage == mUsage || level >= mLevelCount)
 	{
-		delete mLevels[level].mData;
 		return false;
 	}
 
-	unsigned int height = mLevels[level].mHeight;
-	unsigned int width = mLevels[level].mWidth;
-	unsigned int srcPitch = sTextureFormatSize[mFormat]*width;
-	unsigned int dstPitch = (unsigned int) lockedRect.Pitch;
-
-	unsigned char* srcBits = static_cast<unsigned char*>(mLevels[level].mData);
-	unsigned int srcBytes = sTextureFormatSize[mFormat];
-	unsigned int srcRedIndex = 0;
-	unsigned int srcGreenIndex = 1;
-	unsigned int srcBlueIndex = 2;
-	unsigned int srcAlphaIndex = 3;
-
-	unsigned char* dstBits = static_cast<unsigned char*>(lockedRect.pBits);
-	unsigned int dstBytes;
-	unsigned int dstRedIndex;
-	unsigned int dstGreenIndex;
-	unsigned int dstBlueIndex;
-	unsigned int dstAlphaIndex = 0;
-	switch (mD3DFormat)
-	{ 
-	default:
-		ASSERT( false );
-		break;
-	case D3DFMT_A8R8G8B8:
-		dstBytes = 4;
-		dstRedIndex = 2;
-		dstGreenIndex = 1;
-		dstBlueIndex = 0;
-		dstAlphaIndex = 3;
-		break;
-	case D3DFMT_X8R8G8B8:
-		dstBytes = 4;
-		dstRedIndex = 2;
-		dstGreenIndex = 1;
-		dstBlueIndex = 0;
-		dstAlphaIndex = 3;
-		break;
-	case D3DFMT_R8G8B8:
-		dstBytes = 3;
-		dstRedIndex = 2;
-		dstGreenIndex = 1;
-		dstBlueIndex = 0;
-		break;
+	// not already "locked"
+	if (!mLevels[level].mData)
+	{
+		return false;
 	}
 
-	for (unsigned int i = 0; i < height; ++i)
+	// this is seriously ugly -- not clear how to easily get the context down here
+	ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+	if (kDefaultUsage == mUsage)
 	{
-		for (unsigned int j = 0; j < width; ++j)
+		// use UpdateSubresource()
+
+		void* pixelData = mLevels[level].mData;
+		if (kRGB24TexFmt == mFormat)
 		{
-			dstBits[dstBytes*j + dstRedIndex + i*dstPitch] = srcBits[srcBytes*j + srcRedIndex + i*srcPitch];
-			dstBits[dstBytes*j + dstGreenIndex + i*dstPitch] = srcBits[srcBytes*j + srcGreenIndex + i*srcPitch];
-			dstBits[dstBytes*j + dstBlueIndex + i*dstPitch] = srcBits[srcBytes*j + srcBlueIndex + i*srcPitch];
-			if ( srcBytes == 4 )
-				dstBits[dstBytes*j + dstAlphaIndex + i*dstPitch] = srcBits[srcBytes*j + srcAlphaIndex + i*srcPitch];
+			pixelData = new unsigned char[4 * mLevels[level].mWidth * mLevels[level].mHeight];
+			Convert24Bit(pixelData, mLevels[level].mData, mLevels[level].mWidth, mLevels[level].mHeight);
+		}
+
+		d3dContext->UpdateSubresource(mTexturePtr, level, NULL, pixelData, 4 * mLevels[level].mWidth, mLevels[level].mSize);
+
+		if (kRGB24TexFmt == mFormat)
+		{
+			delete [] pixelData;
 		}
 	}
+	else if (kDynamicUsage == mUsage)
+	{
+		// use Map/Unmap
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+		//	Disable GPU access to the vertex buffer data.
+		if (S_OK != d3dContext->Map(mTexturePtr, level, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource))
+		{
+			return false;
+		}
 
-	delete mLevels[level].mData;
+		void* pixelData = mappedResource.pData;
+		if (kRGB24TexFmt == mFormat)
+		{
+			Convert24Bit(pixelData, mLevels[level].mData, mLevels[level].mWidth, mLevels[level].mHeight);
+		}
+		else
+		{
+			memcpy(pixelData, mLevels[level].mData, mLevels[level].mSize);
+		}
 
-	return (D3D_OK == mTexturePtr->UnlockRect(level));*/
-	return false;
+		//	Reenable GPU access to the vertex buffer data.
+		d3dContext->Unmap(mTexturePtr, level);
+	}
+
+	return true;
 }
 
 //-------------------------------------------------------------------------------
