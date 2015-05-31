@@ -388,6 +388,9 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 		d3dContext->Unmap(mTexturePtr, level);
 	}
 
+	delete [] mLevels[level].mData;
+	mLevels[level].mData = NULL;
+
 	return true;
 }
 
