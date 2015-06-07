@@ -128,9 +128,9 @@ IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
     fullFilename = fullFilename + std::string(".hlslf");
 
 	// convert to LPCWSTR
-	int len = strlen(filename);
-	WCHAR* wfilename = new WCHAR(len + 1);  //*** use scratch allocator for this
-	MultiByteToWideChar(0, 0, filename, len, wfilename, len + 1);
+	int size_needed = MultiByteToWideChar(CP_UTF8, 0, &fullFilename[0], (int)fullFilename.size(), NULL, 0);
+	std::wstring wstrTo(size_needed, 0);
+	MultiByteToWideChar(CP_UTF8, 0, &fullFilename[0], (int)fullFilename.size(), &wstrTo[0], size_needed);
 
 	DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
 #ifdef _DEBUG
@@ -140,7 +140,7 @@ IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 	ID3DBlob* code;
 	ID3DBlob* errorMessages = NULL;
 
-	if (FAILED(D3DCompileFromFile(wfilename, NULL, NULL, "ps_main", "ps_4_0",
+	if (FAILED(D3DCompileFromFile(wstrTo.c_str(), NULL, NULL, "ps_main", "ps_4_0",
 		flags, 0, &code, &errorMessages)))
 	{
 		if (errorMessages)

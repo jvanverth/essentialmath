@@ -86,7 +86,7 @@ IvDebugger::Flush( void )
 
     // Dump to screen
 #ifdef WIN32
- //   OutputDebugString( cString );
+    OutputDebugStringA( cString );
 #endif
 
     // Write to output file, if open

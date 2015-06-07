@@ -37,14 +37,8 @@ IvConstantTableDX11::Create(ID3D11Device* device, ID3DBlob* code)
 	ID3D11ShaderReflection* pReflector = NULL;
 	D3DReflect(code->GetBufferPointer(), code->GetBufferSize(),
 		IID_ID3D11ShaderReflection, (void**)&pReflector);
-/*	D3D11_SHADER_DESC shaderDesc = { 0 };
-	HRESULT hr = pReflector->GetDesc(&shaderDesc);
-	if (FAILED(hr))
-	{
-		pReflector->Release();
-		return NULL;
-	}*/
 
+	// first get constant table
 	IvConstantTableDX11* table = new IvConstantTableDX11();
 
 	ID3D11ShaderReflectionConstantBuffer* globalConstants =
@@ -54,9 +48,7 @@ IvConstantTableDX11::Create(ID3D11Device* device, ID3DBlob* code)
 	if (FAILED(hr))
 	{
 		// no constants in this shader
-		pReflector->Release();
-
-		return table;
+		goto get_textures;
 	}
 
 	table->mBacking = new char[constantBufferDesc.Size];
@@ -94,24 +86,20 @@ IvConstantTableDX11::Create(ID3D11Device* device, ID3DBlob* code)
 			constantDesc.mType = IvUniformType::kFloatUniform;
 		}
 		else if (typeDesc.Class == D3D_SVC_VECTOR && typeDesc.Type == D3D_SVT_FLOAT
-			&& typeDesc.Columns == 3)  //*** this is a guess
+			&& typeDesc.Columns == 3)  
 		{
 			constantDesc.mType = IvUniformType::kFloat3Uniform;
 		}
 		else if (typeDesc.Class == D3D_SVC_VECTOR && typeDesc.Type == D3D_SVT_FLOAT
-			&& typeDesc.Columns == 4)  //*** this is a guess
+			&& typeDesc.Columns == 4)
 		{
 			constantDesc.mType = IvUniformType::kFloat4Uniform;
 		}
 		else if ((typeDesc.Class == D3D_SVC_MATRIX_ROWS || typeDesc.Class == D3D_SVC_MATRIX_COLUMNS)
 			&& typeDesc.Type == D3D_SVT_FLOAT
-			&& typeDesc.Rows == 4 && typeDesc.Columns == 4) //*** this is a guess
+			&& typeDesc.Rows == 4 && typeDesc.Columns == 4)
 		{
 			constantDesc.mType = IvUniformType::kFloatMatrix44Uniform;
-		}
-		else if (typeDesc.Type == D3D_SVT_TEXTURE2D) //*** this is a guess
-		{
-			constantDesc.mType = IvUniformType::kTextureUniform;
 		}
 		else
 		{
@@ -138,6 +126,48 @@ IvConstantTableDX11::Create(ID3D11Device* device, ID3DBlob* code)
 		delete table;
 		pReflector->Release();
 		return NULL;
+	}
+
+get_textures:
+	// now get any textures and samplers
+	D3D11_SHADER_DESC shaderDesc = { 0 };
+	hr = pReflector->GetDesc(&shaderDesc);
+	if (FAILED(hr))
+	{
+		pReflector->Release();
+		return table;
+	}
+	int resourceCount = shaderDesc.BoundResources;
+
+	for (int i = 0; i < resourceCount; ++i) 
+	{
+		D3D11_SHADER_INPUT_BIND_DESC bindingDesc = { 0 };
+		pReflector->GetResourceBindingDesc(i, &bindingDesc);
+		if (bindingDesc.Type == D3D_SIT_TEXTURE && bindingDesc.ReturnType == D3D_RETURN_TYPE_FLOAT
+			&& bindingDesc.Dimension == D3D_SRV_DIMENSION_TEXTURE2D && bindingDesc.NumSamples == -1
+			&& bindingDesc.BindCount == 1)
+		{
+			IvConstantDesc& constantDesc = table->mConstants[bindingDesc.Name];
+			constantDesc.mType = IvUniformType::kTextureUniform;
+			constantDesc.mTextureSlot = bindingDesc.BindPoint;
+		}
+		else if (bindingDesc.Type == D3D_SIT_SAMPLER && bindingDesc.BindCount == 1)
+		{
+			IvConstantDesc& constantDesc = table->mConstants[bindingDesc.Name];
+			constantDesc.mType = IvUniformType::kTextureUniform;
+			constantDesc.mSamplerSlot = bindingDesc.BindPoint;
+		}
+		else if (bindingDesc.Type == D3D_SIT_CBUFFER && !strnicmp(bindingDesc.Name, "$Globals", 8))
+		{
+			// ignore this, we handled it above
+		}
+		else
+		{
+			// unsupported resource type
+			delete table;
+			pReflector->Release();
+			return NULL;
+		}
 	}
 
 	pReflector->Release();

@@ -291,16 +291,30 @@ IvTextureDX11::Destroy()
 //-------------------------------------------------------------------------------
 void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 {
-#if 0
-	// if state is different, delete old state and create new one
-	device->SetSamplerState(unit, D3DSAMP_ADDRESSU, mUAddrMode);
-	device->SetSamplerState(unit, D3DSAMP_ADDRESSV, mVAddrMode);
-	device->SetSamplerState(unit, D3DSAMP_MAGFILTER, mMagFilter);
-	device->SetSamplerState(unit, D3DSAMP_MINFILTER, mMinFilter);
-	device->SetSamplerState(unit, D3DSAMP_MIPFILTER, mMipFilter);
+	// For now, just create sampler state every time
+	// DX11 should check for duplicates and return matching handle
+	D3D11_SAMPLER_DESC samplerDesc;
+	memset(&samplerDesc, 0, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.Filter = mFilter;
+	samplerDesc.AddressU = mUAddrMode;
+	samplerDesc.AddressV = mVAddrMode;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.MipLODBias = 0;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = mEnableMip ? mLevelCount : 0;
 
-	device->SetTexture(unit, mTexturePtr);
-#endif
+	ID3D11SamplerState* samplerState;
+	if (S_OK != device->CreateSamplerState(&samplerDesc, &samplerState))
+	{
+		//*** some error state here?
+		return;
+	}
+	ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+	d3dContext->PSSetSamplers(unit, 1, &samplerState);
+
+	d3dContext->PSSetShaderResources(unit, 1, &mShaderResourceView);
 }
 
 //-------------------------------------------------------------------------------
@@ -401,7 +415,8 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetAddressingU(IvTextureAddrMode mode)
 {
-//	mUAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
+	mUAddrMode = (mode == kClampTexAddr) ? D3D11_TEXTURE_ADDRESS_CLAMP 
+		                                 : D3D11_TEXTURE_ADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
@@ -411,7 +426,8 @@ void IvTextureDX11::SetAddressingU(IvTextureAddrMode mode)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetAddressingV(IvTextureAddrMode mode)
 {
-//	mVAddrMode = (mode == kClampTexAddr) ? D3DTADDRESS_CLAMP : D3DTADDRESS_WRAP;
+	mVAddrMode = (mode == kClampTexAddr) ? D3D11_TEXTURE_ADDRESS_CLAMP 
+		                                 : D3D11_TEXTURE_ADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
@@ -421,7 +437,46 @@ void IvTextureDX11::SetAddressingV(IvTextureAddrMode mode)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetMagFiltering(IvTextureMagFilter filter)
 {
-//	mMagFilter = (filter == kNearestTexMagFilter) ? D3DTEXF_POINT : D3DTEXF_LINEAR;
+	mMagFilter = filter;
+	switch (mMinFilter)
+	{
+	case kNearestTexMinFilter:
+		mFilter = (filter == kNearestTexMagFilter) 
+			? D3D11_FILTER_MIN_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
+		mEnableMip = false;
+		break;
+	case kBilerpTexMinFilter:
+		mFilter = (filter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
+		mEnableMip = false;
+		break;
+	case kNearestMipmapNearestTexMinFilter:
+		mFilter = (filter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
+		mEnableMip = true;
+		break;
+	case kBilerpMipmapNearestTexMinFilter:
+		mFilter = (filter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR
+			: D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
+		mEnableMip = true;
+		break;
+	case kNearestMipmapLerpTexMinFilter:
+		mFilter = (filter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
+		mEnableMip = true;
+		break;
+	case kBilerpMipmapLerpTexMinFilter:
+		mFilter = (filter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR
+			: D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		mEnableMip = true;
+		break;
+	};	
 }
 
 //-------------------------------------------------------------------------------
@@ -431,33 +486,44 @@ void IvTextureDX11::SetMagFiltering(IvTextureMagFilter filter)
 //-------------------------------------------------------------------------------
 void IvTextureDX11::SetMinFiltering(IvTextureMinFilter filter)
 {
-#if 0
-    switch(filter)
-    {
-        case kNearestTexMinFilter:
-			mMinFilter = D3DTEXF_POINT;
-            mMipFilter = D3DTEXF_NONE;
-            break;
-        case kBilerpTexMinFilter:
-			mMinFilter = D3DTEXF_LINEAR;
-            mMipFilter = D3DTEXF_NONE;
-            break;
-        case kNearestMipmapNearestTexMinFilter:
-			mMinFilter = D3DTEXF_POINT;
-            mMipFilter = D3DTEXF_POINT;
-            break;
-        case kBilerpMipmapNearestTexMinFilter:
-			mMinFilter = D3DTEXF_POINT;
-            mMipFilter = D3DTEXF_LINEAR;
-            break;
-        case kNearestMipmapLerpTexMinFilter:
-			mMinFilter = D3DTEXF_LINEAR;
-            mMipFilter = D3DTEXF_POINT;
-            break;
-        case kBilerpMipmapLerpTexMinFilter:
-			mMinFilter = D3DTEXF_LINEAR;
-            mMipFilter = D3DTEXF_LINEAR;
-            break;
-    };
-#endif
+	mMinFilter = filter;
+	switch (filter)
+	{
+	case kNearestTexMinFilter:
+		mFilter = (mMagFilter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
+		mEnableMip = false;
+		break;
+	case kBilerpTexMinFilter:
+		mFilter = (mMagFilter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
+		mEnableMip = false;
+		break;
+	case kNearestMipmapNearestTexMinFilter:
+		mFilter = (mMagFilter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT;
+		mEnableMip = true;
+		break;
+	case kBilerpMipmapNearestTexMinFilter:
+		mFilter = (mMagFilter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR
+			: D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
+		mEnableMip = true;
+		break;
+	case kNearestMipmapLerpTexMinFilter:
+		mFilter = (mMagFilter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
+			: D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
+		mEnableMip = true;
+		break;
+	case kBilerpMipmapLerpTexMinFilter:
+		mFilter = (mMagFilter == kNearestTexMagFilter)
+			? D3D11_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR
+			: D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		mEnableMip = true;
+		break;
+	};
 }

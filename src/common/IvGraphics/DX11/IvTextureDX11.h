@@ -84,13 +84,14 @@ private:
 	ID3D11Texture2D*          mTexturePtr;
 	ID3D11ShaderResourceView* mShaderResourceView;
 
-	unsigned int		mUAddrMode;
-	unsigned int		mVAddrMode;
-	unsigned int		mMagFilter;
-	unsigned int		mMinFilter;
-	unsigned int		mMipFilter;
+	IvTextureMagFilter         mMagFilter;
+	IvTextureMinFilter         mMinFilter;
+	bool					   mEnableMip;
+	D3D11_FILTER               mFilter;
+	D3D11_TEXTURE_ADDRESS_MODE mUAddrMode;
+	D3D11_TEXTURE_ADDRESS_MODE mVAddrMode;
 
-	DXGI_FORMAT			mD3DFormat;
+	DXGI_FORMAT			       mD3DFormat;
 }; 
 
 #endif

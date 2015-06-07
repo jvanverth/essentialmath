@@ -222,7 +222,7 @@ Player::Update( float dt )
     {
         mCurrentTexIndex = (mCurrentTexIndex + 1) % NUM_TEX;
 
-        mShader->GetUniform("Texture")->SetValue(mTextures[mCurrentTexIndex]);
+        mShader->GetUniform("shaderTexture")->SetValue(mTextures[mCurrentTexIndex]);
 
         IvGame::mGame->mEventHandler->KeyUp('t');
     }

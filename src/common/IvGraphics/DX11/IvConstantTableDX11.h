@@ -33,9 +33,20 @@ typedef int IvConstantHandle;
 
 struct IvConstantDesc
 {
-	void*         mOffset;
 	IvUniformType mType;
-	unsigned int  mCount;
+	union
+	{
+		struct
+		{
+			void*         mOffset;
+			unsigned int  mCount;
+		};
+		struct
+		{
+			int           mTextureSlot;
+			int           mSamplerSlot;
+		};
+	};
 };
 
 class IvConstantTableDX11
