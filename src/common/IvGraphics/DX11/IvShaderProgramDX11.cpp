@@ -195,7 +195,15 @@ IvShaderProgramDX11::GetUniform(char const* name)
 		return NULL;
 	}
 
-	IvUniformDX11* uniform = new IvUniformDX11(desc.mType, desc.mOffset, desc.mCount, constantTable, this);
+	IvUniformDX11* uniform;
+	if (desc.mType == kTextureUniform)
+	{
+		uniform = new IvUniformDX11(desc.mTextureSlot, desc.mSamplerSlot, this);
+	} 
+	else
+	{
+        uniform = new IvUniformDX11(desc.mType, desc.mCount, desc.mOffset, constantTable, this);
+	}
 
     mUniforms[name] = uniform;
 

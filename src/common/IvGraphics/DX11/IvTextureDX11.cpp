@@ -289,7 +289,8 @@ IvTextureDX11::Destroy()
 //-------------------------------------------------------------------------------
 // Binds the texture to the desired unit
 //-------------------------------------------------------------------------------
-void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
+void IvTextureDX11::MakeActive(unsigned int textureUnit, unsigned int samplerUnit, 
+                               ID3D11Device* device)
 {
 	// For now, just create sampler state every time
 	// DX11 should check for duplicates and return matching handle
@@ -303,7 +304,7 @@ void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 	samplerDesc.MaxAnisotropy = 1;
 	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	samplerDesc.MinLOD = 0;
-	samplerDesc.MaxLOD = mEnableMip ? mLevelCount : 0;
+	samplerDesc.MaxLOD = mEnableMip ? (FLOAT)mLevelCount : 0;
 
 	ID3D11SamplerState* samplerState;
 	if (S_OK != device->CreateSamplerState(&samplerDesc, &samplerState))
@@ -312,9 +313,9 @@ void IvTextureDX11::MakeActive(unsigned int unit, ID3D11Device* device)
 		return;
 	}
 	ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
-	d3dContext->PSSetSamplers(unit, 1, &samplerState);
+	d3dContext->PSSetSamplers(samplerUnit, 1, &samplerState);
 
-	d3dContext->PSSetShaderResources(unit, 1, &mShaderResourceView);
+	d3dContext->PSSetShaderResources(textureUnit, 1, &mShaderResourceView);
 }
 
 //-------------------------------------------------------------------------------

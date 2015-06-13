@@ -3,8 +3,15 @@
 
 SAMPLER_2D(Texture)
 
-float4 ps_main( float4 color : COLOR0, float2 uv : TEXCOORD0 ) : SV_TARGET
+struct VS_OUTPUT
 {
-	float4 test = TEXTURE(Texture, uv);
+	float4 pos : SV_POSITION;
+	float4 color : COLOR0;
+	float2 uv : TEXCOORD0;
+};
+
+float4 ps_main( VS_OUTPUT input ) : SV_TARGET
+{
+	float4 test = TEXTURE(Texture, input.uv);
 	return test;
 }

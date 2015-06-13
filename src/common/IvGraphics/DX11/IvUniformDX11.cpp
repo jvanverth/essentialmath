@@ -13,6 +13,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvUniformDX11.h"
+#include "IvAssert.h"
 #include "IvConstantTableDX11.h"
 #include "IvShaderProgramDX11.h"
 #include "IvRendererDX11.h"
@@ -33,7 +34,8 @@
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvUniformDX11::IvUniformDX11(IvUniformType type, void* offset, unsigned int count,
+IvUniformDX11::IvUniformDX11(IvUniformType type, unsigned int count, 
+                             void* offset,
 							 IvConstantTableDX11* constantTable,
 							 IvShaderProgramDX11* shader)
 	: IvUniform( type, count )
@@ -56,9 +58,25 @@ IvUniformDX11::IvUniformDX11(IvUniformType type, void* offset, unsigned int coun
             mValue.mMatrix44 = new IvMatrix44[mCount];
             break;
         case kTextureUniform:
+            ASSERT(false);
             mValue.mTexture = 0;
             break;
     };
+}
+
+//-------------------------------------------------------------------------------
+// @ IvUniformDX11::IvUniformDX11()
+//-------------------------------------------------------------------------------
+// Texture uniform constructor
+//-------------------------------------------------------------------------------
+IvUniformDX11::IvUniformDX11(int textureUnit, int samplerUnit,
+	                         IvShaderProgramDX11* shader)
+	: IvUniform(kTextureUniform, 1)
+	, mShader(shader)
+	, mTextureUnit(textureUnit)
+	, mSamplerUnit(samplerUnit)
+{
+    mValue.mTexture = 0;
 }
 
 //-------------------------------------------------------------------------------
@@ -168,21 +186,22 @@ void IvUniformDX11::SetValue( const IvMatrix44& value, unsigned int index )
 //-------------------------------------------------------------------------------
 void IvUniformDX11::SetValue( IvTexture* value )
 {
-/***   if (mType != kTextureUniform)
-        return;
+	if (mType != kTextureUniform)
+	{
+		return;
+	}
 
     mValue.mTexture = static_cast<IvTextureDX11*>(value);
 
     if (mShader == IvRenderer::mRenderer->GetShaderProgram())
     {
-        unsigned int stage = mConstantTable->GetSamplerIndex(mUniform);
-        mValue.mTexture->MakeActive(stage, static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice());
+        mValue.mTexture->MakeActive(mTextureUnit, mSamplerUnit, static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice());
         mNeedsUpdate = false;
     }
     else
     {
         mNeedsUpdate = true;
-    }***/
+    }
 }
     
 //-------------------------------------------------------------------------------
@@ -263,33 +282,18 @@ bool IvUniformDX11::GetValue( IvTexture*& value ) const
 //-------------------------------------------------------------------------------
 void IvUniformDX11::Update()
 {
-/***    if (mShader != IvRenderer::mRenderer->GetShaderProgram())
-        return;
+	if (mShader != IvRenderer::mRenderer->GetShaderProgram())
+	{
+		return;
+	}
 
 	if ( mType == kTextureUniform )
 	{
-        unsigned int stage = mConstantTable->GetSamplerIndex(mUniform);
-        mValue.mTexture->MakeActive(stage, static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice());
+        mValue.mTexture->MakeActive(mTextureUnit, mSamplerUnit, static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice());
 		return;
 	}
 
     if (!mNeedsUpdate)
         return;
 
-    switch (mType)
-    {
-        case kFloatUniform:
-            (void) mConstantTable->SetFloatArray( static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice(),
-											      mUniform, (const float*)mValue.mFloat, mCount );
-            break;
-        case kFloat4Uniform:
-            (void) mConstantTable->SetVectorArray( static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice(), 
-				                                   mUniform, (const D3DXVECTOR4*)mValue.mVector4, mCount );
-            break;
-        case kFloatMatrix44Uniform:
-            (void) mConstantTable->SetMatrixArray( static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice(), 
-				                                   mUniform, (const D3DXMATRIX*)mValue.mMatrix44, mCount );
-            break;
-    };
-***/
 }

@@ -16,6 +16,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvUniform.h"
+#include "IvTypes.h"
 #include <d3d11.h>
 
 //-------------------------------------------------------------------------------
@@ -31,8 +32,6 @@ class IvShaderProgramDX11;
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
-
-typedef int D3DXHANDLE;
 
 class IvUniformDX11 : public IvUniform
 {
@@ -53,18 +52,36 @@ public:
     virtual bool GetValue( IvTexture*& value ) const;
     
 protected:
-    // constructor/destructor
-	IvUniformDX11(IvUniformType type, void* offset, unsigned int count,
+    // constructor/destructor for most uniforms
+    IvUniformDX11(IvUniformType type, unsigned int count, void* offset,
 		          IvConstantTableDX11* constantTable, 
 				  IvShaderProgramDX11* shader);
-    virtual ~IvUniformDX11();
+	// constructor/destructor for texture uniforms
+	IvUniformDX11(int textureUnit, int samplerUnit,
+		          IvShaderProgramDX11* shader);
+	virtual ~IvUniformDX11();
     void Update();
 
-    IvShaderProgramDX11*	mShader;
-    void*				    mOffset;
-	IvConstantTableDX11*	mConstantTable;
+    IvShaderProgramDX11*	 mShader;
+	union
+	{
+        // we use an offset into the global constant buffer
+        // to update most uniforms
+        struct
+        {
+            void*				 mOffset;
+            IvConstantTableDX11* mConstantTable;
+        };
+        // we use the texture and sampler units for textures
+		struct
+		{
+			int                  mTextureUnit;
+			int                  mSamplerUnit;
+		};
+	};
 
-    // Could subclass for each type, but likely not worth it.
+    // Could subclass for each type (particularly textures), 
+    // but likely not worth it.
     union  
     {
         float* mFloat;

@@ -200,6 +200,10 @@ bool IvConstantTableDX11::GetConstantDesc(const char* name, IvConstantDesc* cons
 	if (mConstants.find(name) != mConstants.end())
 	{
 		memcpy(constantDesc, &mConstants[name], sizeof(IvConstantDesc));
+		if (constantDesc->mType == kTextureUniform)
+		{
+			ASSERT(constantDesc->mSamplerSlot == constantDesc->mTextureSlot);
+		}
 		return true;
 	}
 

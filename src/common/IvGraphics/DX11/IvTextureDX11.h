@@ -59,7 +59,7 @@ protected:
 	void Destroy();
 
 	// activation
-	void MakeActive(unsigned int unit, ID3D11Device* device);
+	void MakeActive(unsigned int textureUnit, unsigned int samplerUnit, ID3D11Device* device);
 
     unsigned int mLevelCount;
 

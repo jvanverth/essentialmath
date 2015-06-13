@@ -72,6 +72,7 @@ public:
                       IvIndexBuffer* indexBuffer, unsigned int numIndices);
     virtual void Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices);
 
+	ID3D11Device* GetDevice()         { return mDevice; }
 	ID3D11DeviceContext* GetContext() { return mContext; }
     
 protected:
