@@ -16,7 +16,7 @@
 // will need to convert before creating
 static unsigned int sInternalTextureFormatSize[kTexFmtCount] = {4, 4};
 static unsigned int sExternalTextureFormatSize[kTexFmtCount] = {4, 3};
-static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_B8G8R8A8_UNORM };
+static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_R8G8B8A8_UNORM };
 
 //-------------------------------------------------------------------------------
 // @ IvTextureDX11::IvTextureDX11()
@@ -99,7 +99,7 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 		mLevels[0].mData = NULL;
 		mLevels[0].mWidth = mWidth;
 		mLevels[0].mHeight = mHeight;
-		mLevels[0].mSize = mWidth*mHeight*externalTexelSize;
+        mLevels[0].mSize = mWidth*mHeight*texelSize;
 	}
 
 	D3D11_SUBRESOURCE_DATA* subresourcePtr = NULL;
@@ -110,13 +110,13 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 		// if 24-bit color, we need to convert to 32-bit color
 		if (data && kRGB24TexFmt == format)
 		{
-			pixelData = new unsigned char[4 * width * height];
+            pixelData = new unsigned char[texelSize * width * height];
 			Convert24Bit(pixelData, data, width, height);
 		}
 
 		memset(&subresourceData, 0, sizeof(D3D11_SUBRESOURCE_DATA));
 		subresourceData.pSysMem = pixelData;
-		subresourceData.SysMemPitch = width;
+        subresourceData.SysMemPitch = texelSize*width;
 
 		subresourcePtr = &subresourceData;
 	}
@@ -127,7 +127,7 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 	desc.Height = height;
 	desc.MipLevels = 1;
 	desc.ArraySize = 1;
-	desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	desc.SampleDesc.Count = 1;
 	desc.SampleDesc.Quality = 0;
 	switch (usage)
