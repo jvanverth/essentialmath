@@ -24,6 +24,8 @@ static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_R8G8B8A8_UNOR
 // Constructor
 //-------------------------------------------------------------------------------
 IvTextureDX11::IvTextureDX11() : IvTexture()
+    , mLevelCount(0)
+    , mLevels(0)
 	, mTexturePtr(0)
 	, mShaderResourceView(0)
 {
@@ -187,6 +189,12 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
 		return false;
 	}
 
+    if (usage == kDynamicUsage)
+    {
+        // DX11 doesn't allow creation of mipmapped dynamic textures
+        return false;
+    }
+
 	if (usage == kImmutableUsage && !data)
 	{
 		return false;
@@ -291,16 +299,8 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
     case kImmutableUsage:
         desc.Usage = D3D11_USAGE_IMMUTABLE;
         break;
-    case kDynamicUsage:
-        desc.Usage = D3D11_USAGE_DYNAMIC;
-        break;
     }
     desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-    if (kDynamicUsage == usage)
-    {
-        //*** not sure if needed
-        desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-    }
 
     if (FAILED(device->CreateTexture2D(&desc, subresourceData, &mTexturePtr)))
     {
@@ -457,6 +457,9 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 	}
 	else if (kDynamicUsage == mUsage)
 	{
+        // DX11 doesn't allow dynamic mipmapped textures
+        ASSERT(level == 0);
+
 		// use Map/Unmap
 		D3D11_MAPPED_SUBRESOURCE mappedResource;
 		ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
