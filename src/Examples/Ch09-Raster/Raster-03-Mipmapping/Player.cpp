@@ -60,7 +60,7 @@ Player::Player()
     // its own color.
 
     // create a texture "name" to reference later
-    mMipmapLevelBandsTex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+    mMipmapLevelBandsTex = IvRenderer::mRenderer->GetResourceManager()->CreateMipmappedTexture(
         kRGB24TexFmt, 256, 256, NULL, 9, kDefaultUsage);
 
     mMipmapLevelBandsTex->SetMagFiltering(kBilerpTexMagFilter);
@@ -96,7 +96,7 @@ Player::Player()
     // Create a classic checkerboard pattern to show off aliasing
 
     // create a texture "name" to reference later
-    mCheckerBoardTex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+    mCheckerBoardTex = IvRenderer::mRenderer->GetResourceManager()->CreateMipmappedTexture(
         kRGB24TexFmt, 256, 256, NULL, 5, kDefaultUsage);
 
     mCheckerBoardTex->SetMagFiltering(kBilerpTexMagFilter);

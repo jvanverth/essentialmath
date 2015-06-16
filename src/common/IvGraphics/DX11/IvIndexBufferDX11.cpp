@@ -13,6 +13,8 @@
 //-------------------------------------------------------------------------------
 
 #include "IvIndexBufferDX11.h"
+
+#include "IvRendererDX11.h"
 #include "IvTypes.h"
 #include <stdio.h>
 
@@ -29,7 +31,7 @@
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvIndexBufferDX11::IvIndexBufferDX11() : IvIndexBuffer(), mBufferPtr(0)
+IvIndexBufferDX11::IvIndexBufferDX11() : IvIndexBuffer(), mBufferPtr(0), mDataPtr(0)
 {
 }	// End of IvIndexBufferDX11::IvIndexBufferDX11()
 
@@ -57,7 +59,7 @@ IvIndexBufferDX11::Create(unsigned int numIndices, void* data, IvDataUsage usage
 	{
 	default:
 	case kDefaultUsage:
-		indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+		indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		break;
 	case kDynamicUsage:
 		indexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -72,12 +74,17 @@ IvIndexBufferDX11::Create(unsigned int numIndices, void* data, IvDataUsage usage
 	indexBufferDesc.MiscFlags = 0;
 	//*** replacement for D3DMANAGED?
 
-	D3D11_SUBRESOURCE_DATA initData;
-	initData.pSysMem = data;
-	initData.SysMemPitch = 0;
-	initData.SysMemSlicePitch = 0;
+    D3D11_SUBRESOURCE_DATA* initDataPtr = NULL;
+    D3D11_SUBRESOURCE_DATA initData;
+    if (data)
+    {
+        initDataPtr = &initData;
+        initData.pSysMem = data;
+        initData.SysMemPitch = 0;
+        initData.SysMemSlicePitch = 0;
+    }
 
-	if (FAILED(device->CreateBuffer(&indexBufferDesc, &initData, &mBufferPtr)))
+	if (FAILED(device->CreateBuffer(&indexBufferDesc, initDataPtr, &mBufferPtr)))
 	{
 		mBufferPtr = 0;
 		return false;
@@ -96,6 +103,9 @@ IvIndexBufferDX11::Create(unsigned int numIndices, void* data, IvDataUsage usage
 void
 IvIndexBufferDX11::Destroy()
 {
+    delete [] mDataPtr;
+    mDataPtr = 0;
+
 	if (mBufferPtr)
 	{
 		// clear the handle and any associated memory
@@ -136,8 +146,7 @@ IvIndexBufferDX11::BeginLoadData()
 		return NULL;
 	}
 
-	//*** fix
-	return NULL;
+    mDataPtr = (void*) new unsigned char[mNumIndices*sizeof(unsigned int)];
 }
 
 //-------------------------------------------------------------------------------
@@ -154,7 +163,40 @@ IvIndexBufferDX11::EndLoadData()
 		return false;
 	}
 
-	//*** fix
-	return false;
+    // not already "locked"
+    if (!mDataPtr)
+    {
+        return false;
+    }
+
+    // this is seriously ugly -- not clear how to easily get the context down here
+    ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+    if (kDefaultUsage == mUsage)
+    {
+        // use UpdateSubresource()
+        d3dContext->UpdateSubresource(mBufferPtr, 0, NULL, mDataPtr, mNumIndices*sizeof(unsigned int), mNumIndices*sizeof(unsigned int));
+    }
+    else if (kDynamicUsage == mUsage)
+    {
+        // use Map/Unmap
+        D3D11_MAPPED_SUBRESOURCE mappedResource;
+        ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+        //	Disable GPU access to the vertex buffer data.
+        if (S_OK != d3dContext->Map(mBufferPtr, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource))
+        {
+            return false;
+        }
+
+        void* bufferData = mappedResource.pData;
+        memcpy(bufferData, mDataPtr, mNumIndices*sizeof(unsigned int));
+
+        //	Reenable GPU access to the vertex buffer data.
+        d3dContext->Unmap(mBufferPtr, 0);
+    }
+
+    delete[] mDataPtr;
+    mDataPtr = NULL;
+
+    return true;
 }
 

@@ -15,6 +15,8 @@
 #include "IvVertexBufferDX11.h"
 
 #include "IvDebugger.h"
+#include "IvRendererDX11.h"
+
 #include <d3dcompiler.h>
 
 //-------------------------------------------------------------------------------
@@ -166,7 +168,7 @@ IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void
 	{
 	default:
 	case kDefaultUsage:
-		vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+		vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		break;
 	case kDynamicUsage:
 		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -181,12 +183,17 @@ IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void
 	vertexBufferDesc.MiscFlags = 0;
 	//*** replacement for D3DMANAGED?
 
+    D3D11_SUBRESOURCE_DATA* initDataPtr = NULL;
 	D3D11_SUBRESOURCE_DATA initData;
-	initData.pSysMem = data;
-	initData.SysMemPitch = 0;
-	initData.SysMemSlicePitch = 0;
+    if (data)
+    {
+        initDataPtr = &initData;
+        initData.pSysMem = data;
+        initData.SysMemPitch = 0;
+        initData.SysMemSlicePitch = 0;
+    }
 
-	if (FAILED(device->CreateBuffer(&vertexBufferDesc, &initData, &mBufferPtr)))
+    if (FAILED(device->CreateBuffer(&vertexBufferDesc, initDataPtr, &mBufferPtr)))
 	{
 		mBufferPtr = 0;
 		return false;
@@ -279,6 +286,9 @@ IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void
 void
 IvVertexBufferDX11::Destroy()
 {
+    delete[] mDataPtr;
+    mDataPtr = 0;
+
 	if ( mBufferPtr )
 	{
 		// clear the handle and any associated memory
@@ -331,8 +341,14 @@ IvVertexBufferDX11::BeginLoadData()
 		return NULL;
 	}
 	
-	//*** fix
-	return NULL;
+    // already "locked"
+    if (mDataPtr)
+    {
+        return NULL;
+    }
+
+    mDataPtr = (void*) new unsigned char[mNumVertices*kIvVFSize[mVertexFormat]];
+    return mDataPtr;
 }
 
 //-------------------------------------------------------------------------------
@@ -349,7 +365,40 @@ IvVertexBufferDX11::EndLoadData()
 		return false;
 	}
 	
-	//*** fix
-	return false;
+    // not already "locked"
+    if (!mDataPtr)
+    {
+        return false;
+    }
+
+    // this is seriously ugly -- not clear how to easily get the context down here
+    ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+    if (kDefaultUsage == mUsage)
+    {
+        // use UpdateSubresource()
+        d3dContext->UpdateSubresource(mBufferPtr, 0, NULL, mDataPtr, mNumVertices*kIvVFSize[mVertexFormat], mNumVertices*kIvVFSize[mVertexFormat]);
+    }
+    else if (kDynamicUsage == mUsage)
+    {
+        // use Map/Unmap
+        D3D11_MAPPED_SUBRESOURCE mappedResource;
+        ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+        //	Disable GPU access to the vertex buffer data.
+        if (S_OK != d3dContext->Map(mBufferPtr, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource))
+        {
+            return false;
+        }
+
+        void* bufferData = mappedResource.pData;
+        memcpy(bufferData, mDataPtr, mNumVertices*kIvVFSize[mVertexFormat]);
+
+        //	Reenable GPU access to the vertex buffer data.
+        d3dContext->Unmap(mBufferPtr, 0);
+    }
+
+    delete[] mDataPtr;
+    mDataPtr = NULL;
+
+    return true;
 }
 

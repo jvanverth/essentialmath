@@ -1,7 +1,17 @@
-sampler Texture;
+#define SAMPLER_2D(x) Texture2D x; SamplerState x##Sampler;
+#define TEXTURE(x, uv) x.Sample( x##Sampler, uv );
 
-float4 ps_main( float2 uv : TEXCOORD0 ) : COLOR
+SAMPLER_2D(Texture)
+
+struct VS_OUTPUT
 {
-	float4 test = tex2D( Texture, uv );
+	float4 pos : SV_POSITION;
+	float4 color : COLOR0;
+	float2 uv : TEXCOORD0;
+};
+
+float4 ps_main( VS_OUTPUT input ) : SV_TARGET
+{
+	float4 test = TEXTURE(Texture, input.uv);
 	return test;
 }

@@ -182,7 +182,7 @@ bool
 IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
                                void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device)
 {
-/*	if (width == 0 || height == 0 || mTexturePtr)
+	if (width == 0 || height == 0 || mTexturePtr)
 	{
 		return false;
 	}
@@ -192,11 +192,12 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
 		return false;
 	}
 
-	mWidth = width;
-	mHeight = height;
-	mFormat = format;
+    mWidth = width;
+    mHeight = height;
+    mFormat = format;
+    mUsage = usage;
 
-	unsigned int texelSize = sTextureFormatSize[mFormat];
+    unsigned int texelSize = sInternalTextureFormatSize[mFormat];
 
 	mLevelCount = 1;
 
@@ -245,23 +246,92 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
 		mLevels[i].mHeight = height;
 		mLevels[i].mSize = size;
 	}
-#if 0
-	if (FAILED(D3DXCreateTexture(device, mWidth, mHeight, mLevelCount, D3DUSAGE_AUTOGENMIPMAP, sD3DTextureFormat[format],
-		D3DPOOL_MANAGED, &mTexturePtr)))
-	{
-		return false;
-	}
 
-	D3DSURFACE_DESC desc;
-	mTexturePtr->GetLevelDesc(0, &desc);
-	mD3DFormat = desc.Format;
+    D3D11_SUBRESOURCE_DATA* subresourceData = NULL;
+    if (data)
+    {
+        subresourceData = new D3D11_SUBRESOURCE_DATA[mLevelCount];
 
-	// verify formats
-#endif
-*/
+        for (int level = 0; level < mLevelCount; ++level)
+        {
+            void* pixelData = data[level];
+
+            unsigned int levelWidth = mLevels[level].mWidth;
+            unsigned int levelHeight = mLevels[level].mHeight;
+
+            // if 24-bit color, we need to convert to 32-bit color
+            if (data && kRGB24TexFmt == format)
+            {
+                mLevels[level].mData = new unsigned char[texelSize * levelWidth * levelHeight];
+                Convert24Bit(mLevels[level].mData, data, width, height);
+                pixelData = mLevels[level].mData;
+            }
+
+            memset(&subresourceData[level], 0, sizeof(D3D11_SUBRESOURCE_DATA));
+            subresourceData[level].pSysMem = pixelData;
+            subresourceData[level].SysMemPitch = texelSize*levelWidth;
+        }
+    }
+
+    D3D11_TEXTURE2D_DESC desc;
+    memset(&desc, 0, sizeof(D3D11_TEXTURE2D_DESC));
+    desc.Width = mWidth;
+    desc.Height = mHeight;
+    desc.MipLevels = mLevelCount;
+    desc.ArraySize = 1;
+    desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    desc.SampleDesc.Count = 1;
+    desc.SampleDesc.Quality = 0;
+    switch (usage)
+    {
+    default:
+    case kDefaultUsage:
+        desc.Usage = D3D11_USAGE_DEFAULT;
+        break;
+    case kImmutableUsage:
+        desc.Usage = D3D11_USAGE_IMMUTABLE;
+        break;
+    case kDynamicUsage:
+        desc.Usage = D3D11_USAGE_DYNAMIC;
+        break;
+    }
+    desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    if (kDynamicUsage == usage)
+    {
+        //*** not sure if needed
+        desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    }
+
+    if (FAILED(device->CreateTexture2D(&desc, subresourceData, &mTexturePtr)))
+    {
+        return false;
+    }
+
+    if (data)
+    {
+        delete [] subresourceData;
+        if (kRGB24TexFmt == format)
+        {
+            for (int level = 0; level < mLevelCount; ++level)
+            {
+                delete[] mLevels[level].mData;
+                mLevels[level].mData = NULL;
+            }
+        }
+    }
+
+    mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM;
+    // verify formats
+
+    if (FAILED(device->CreateShaderResourceView(mTexturePtr, NULL, &mShaderResourceView)))
+    {
+        mTexturePtr->Release();
+        mTexturePtr = 0;
+        return false;
+    }
+
 	return true;
 }
-
 
 //-------------------------------------------------------------------------------
 // @ IvTextureDX11::Destroy()
@@ -271,6 +341,13 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
 void
 IvTextureDX11::Destroy()
 {
+    for (int i = 0; i < mLevelCount; i++)
+    {
+        delete [] mLevels[i].mData;
+    }
+    delete [] mLevels;
+    mLevels = 0;
+
 	if (mShaderResourceView)
 	{
 		mShaderResourceView->Release();

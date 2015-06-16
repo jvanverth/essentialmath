@@ -60,6 +60,7 @@ private:
 	IvIndexBufferDX11& operator=(const IvIndexBufferDX11& other);
 
 	ID3D11Buffer* mBufferPtr;
+    void*         mDataPtr;
 	IvDataUsage   mUsage;
 };
 
