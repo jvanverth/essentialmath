@@ -1,7 +1,9 @@
-#define SAMPLER_2D(x) Texture2D x; SamplerState x##Sampler;
-#define TEXTURE(x, uv) x.Sample( x##Sampler, uv );
+#include "IvShaderDefs.h"
 
-SAMPLER_2D(Texture)
+#define SAMPLER_2D(x) Texture2D x; SamplerState x##Sampler
+#define TEXTURE(x, uv) x.Sample( x##Sampler, uv )
+
+FOO_2D(Texture);
 
 struct VS_OUTPUT
 {

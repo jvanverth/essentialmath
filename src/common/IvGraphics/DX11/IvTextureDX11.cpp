@@ -347,6 +347,7 @@ IvTextureDX11::Destroy()
     }
     delete [] mLevels;
     mLevels = 0;
+	mLevelCount = 0;
 
 	if (mShaderResourceView)
 	{

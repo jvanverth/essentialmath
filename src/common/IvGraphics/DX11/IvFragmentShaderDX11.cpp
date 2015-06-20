@@ -84,6 +84,41 @@ static const char sShaderTNPFormat[] =
 "    return mul(input.color, tex2D( defaultTexture, input.uv ));\n"
 "}\n";
 
+LPCWSTR sShaderIncludeString = L"#define FOO_2D(x) Texture2D x; SamplerState x##Sampler";
+//"#define SAMPLER_2D(x) Texture2D x; SamplerState x##Sampler\n"
+//"#define TEXTURE(x, uv) x.Sample( x##Sampler, uv )\n";
+
+class IvShaderInclude : public ID3DInclude
+{
+public:
+	IvShaderInclude() {}
+
+	HRESULT __stdcall Open(
+		D3D_INCLUDE_TYPE IncludeType,
+		LPCSTR pFileName,
+		LPCVOID pParentData,
+		LPCVOID *ppData,
+		UINT *pBytes)
+	{
+		if (0 == strcmp("IvShaderDefs.h", pFileName))
+		{
+			*ppData = sShaderIncludeString;
+			*pBytes = sizeof(sShaderIncludeString);
+
+			return S_OK;
+		}
+
+		return E_FAIL;
+	}
+
+	HRESULT __stdcall Close(LPCVOID pData)
+	{
+		return S_OK;
+	}
+};
+
+IvShaderInclude sShaderInclude;
+
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
@@ -140,7 +175,7 @@ IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 	ID3DBlob* code;
 	ID3DBlob* errorMessages = NULL;
 
-	if (FAILED(D3DCompileFromFile(wstrTo.c_str(), NULL, NULL, "ps_main", "ps_4_0",
+	if (FAILED(D3DCompileFromFile(wstrTo.c_str(), NULL, &sShaderInclude, "ps_main", "ps_4_0",
 		flags, 0, &code, &errorMessages)))
 	{
 		if (errorMessages)
@@ -190,7 +225,7 @@ IvFragmentShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
 	ID3DBlob* errorMessages = NULL;
 
 	// compile the shader to assembly
-	if (FAILED(D3DCompile(string, strlen(string) + 1, NULL, NULL, NULL, "ps_main", "ps_4_0",
+	if (FAILED(D3DCompile(string, strlen(string) + 1, NULL, NULL, &sShaderInclude, "ps_main", "ps_4_0",
 		flags, 0, &code, &errorMessages)))
 	{
 		const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());

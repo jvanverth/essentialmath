@@ -326,7 +326,7 @@ IvResourceManagerDX11::CreateMipmappedTexture(IvTextureFormat format,
 void 
 IvResourceManagerDX11::Destroy( IvTexture* tex )
 {
-	IvTextureDX11* texOGL = static_cast<IvTextureDX11*>(tex);
-	texOGL->Destroy();
-	delete texOGL;
+	IvTextureDX11* texDX11 = static_cast<IvTextureDX11*>(tex);
+	texDX11->Destroy();
+	delete texDX11;
 }
