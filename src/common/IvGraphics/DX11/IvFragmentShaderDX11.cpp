@@ -25,6 +25,11 @@
 
 static char const* sDefaultFragmentShader[kVertexFormatCount] = {0};
 
+static const char sShaderHeader[] = 
+"#define SAMPLER_2D(x) Texture2D x; SamplerState x##Sampler\n"
+"#define TEXTURE(x, uv) x.Sample( x##Sampler, uv )\n"
+"\n";
+
 static const char sShaderCPFormat[] =
 "struct VS_OUTPUT\n"
 "{\n"
@@ -65,10 +70,10 @@ static const char sShaderTCPFormat[] =
 "    float4 color : COLOR0;\n"
 "	 float2 uv : TEXCOORD0;\n"
 "};\n"
-"sampler defaultTexture;\n"
+"SAMPLER_2D(defaultTexture);\n"
 "float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
 "{\n"
-"    return mul(input.color, tex2D( defaultTexture, input.uv ));\n"
+"    return mul(input.color, TEXTURE( defaultTexture, input.uv ));\n"
 "}\n";
 
 static const char sShaderTNPFormat[] = 
@@ -78,46 +83,11 @@ static const char sShaderTNPFormat[] =
 "    float4 color : COLOR0;\n"
 "	 float2 uv : TEXCOORD0;\n"
 "};\n"
-"sampler defaultTexture;\n"
+"SAMPLER_2D(defaultTexture);\n"
 "float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
 "{\n"
-"    return mul(input.color, tex2D( defaultTexture, input.uv ));\n"
+"    return mul(input.color, TEXTURE( defaultTexture, input.uv ));\n"
 "}\n";
-
-LPCWSTR sShaderIncludeString = L"#define FOO_2D(x) Texture2D x; SamplerState x##Sampler";
-//"#define SAMPLER_2D(x) Texture2D x; SamplerState x##Sampler\n"
-//"#define TEXTURE(x, uv) x.Sample( x##Sampler, uv )\n";
-
-class IvShaderInclude : public ID3DInclude
-{
-public:
-	IvShaderInclude() {}
-
-	HRESULT __stdcall Open(
-		D3D_INCLUDE_TYPE IncludeType,
-		LPCSTR pFileName,
-		LPCVOID pParentData,
-		LPCVOID *ppData,
-		UINT *pBytes)
-	{
-		if (0 == strcmp("IvShaderDefs.h", pFileName))
-		{
-			*ppData = sShaderIncludeString;
-			*pBytes = sizeof(sShaderIncludeString);
-
-			return S_OK;
-		}
-
-		return E_FAIL;
-	}
-
-	HRESULT __stdcall Close(LPCVOID pData)
-	{
-		return S_OK;
-	}
-};
-
-IvShaderInclude sShaderInclude;
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -162,10 +132,27 @@ IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 
     fullFilename = fullFilename + std::string(".hlslf");
 
-	// convert to LPCWSTR
-	int size_needed = MultiByteToWideChar(CP_UTF8, 0, &fullFilename[0], (int)fullFilename.size(), NULL, 0);
-	std::wstring wstrTo(size_needed, 0);
-	MultiByteToWideChar(CP_UTF8, 0, &fullFilename[0], (int)fullFilename.size(), &wstrTo[0], size_needed);
+    FILE* fp = fopen(fullFilename.c_str(), "r");
+
+    if (!fp)
+    {
+        return false;
+    }
+
+    fseek(fp, 0, SEEK_END);
+    unsigned int length = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    int headerLength = sizeof(sShaderHeader);
+
+    char* shaderSrc = new char[headerLength + length];
+
+    // prepend the header
+    memcpy(shaderSrc, sShaderHeader, headerLength - 1);
+
+    length = fread(shaderSrc + headerLength - 1, 1, length, fp);
+    shaderSrc[headerLength + length - 1] = 0;
+    fclose(fp);
 
 	DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
 #ifdef _DEBUG
@@ -175,23 +162,27 @@ IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 	ID3DBlob* code;
 	ID3DBlob* errorMessages = NULL;
 
-	if (FAILED(D3DCompileFromFile(wstrTo.c_str(), NULL, &sShaderInclude, "ps_main", "ps_4_0",
-		flags, 0, &code, &errorMessages)))
-	{
+    size_t foo = sizeof(shaderSrc);
+    if (FAILED(D3DCompile(shaderSrc, headerLength + length, NULL, NULL, NULL, "ps_main", "ps_4_0",
+        flags, 0, &code, &errorMessages)))
+    {
 		if (errorMessages)
 		{
 			const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
 
 			DEBUG_OUT("Pixel shader error: ");
 			DEBUG_OUT(errors << std::endl);
+            DEBUG_OUT(shaderSrc << std::endl);
 			errorMessages->Release();
 		}
+        delete [] shaderSrc;
 		return false;
 	}
 	if (errorMessages)
 	{
 		errorMessages->Release();
 	}
+    delete [] shaderSrc;
 
 	HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
 	if (SUCCEEDED(result))
@@ -224,20 +215,35 @@ IvFragmentShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
 	ID3DBlob* code;
 	ID3DBlob* errorMessages = NULL;
 
+    int length = strlen(string);
+    int headerLength = sizeof(sShaderHeader);
+    char* shaderSrc = new char[headerLength + length];
+
+    // prepend the header
+    memcpy(shaderSrc, sShaderHeader, headerLength - 1);
+    // now add the string
+    memcpy(shaderSrc + headerLength - 1, string, length+1);
+
 	// compile the shader to assembly
-	if (FAILED(D3DCompile(string, strlen(string) + 1, NULL, NULL, &sShaderInclude, "ps_main", "ps_4_0",
+    if (FAILED(D3DCompile(shaderSrc, headerLength + length, NULL, NULL, NULL, "ps_main", "ps_4_0",
 		flags, 0, &code, &errorMessages)))
 	{
-		const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
-		DEBUG_OUT("Pixel shader error: ");
-		DEBUG_OUT(errors << std::endl);
-		errorMessages->Release();
+        if (errorMessages)
+        {
+            const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
+            DEBUG_OUT("Pixel shader error: ");
+            DEBUG_OUT(errors << std::endl);
+            DEBUG_OUT(shaderSrc << std::endl);
+            errorMessages->Release();
+        }
+        delete [] shaderSrc;
 		return false;
 	}
 	if (errorMessages)
 	{
 		errorMessages->Release();
 	}
+    delete [] shaderSrc;
 
 	HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
 	if (SUCCEEDED(result))

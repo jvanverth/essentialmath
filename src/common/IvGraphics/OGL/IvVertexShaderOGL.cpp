@@ -158,7 +158,9 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
     FILE* fp = fopen(fullFilename.c_str(), "r");
 
     if (!fp)
+    {
         return false;
+    }
 
     fseek(fp, 0, SEEK_END);
     unsigned int length = ftell(fp);
@@ -172,8 +174,10 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
 
     // allocate the shader id
     mShaderID = glCreateShader( GL_VERTEX_SHADER );
-    if ( mShaderID == 0 )
+    if (mShaderID == 0)
+    {
         return false;
+    }
     
     // load in the source
     const char* shaderSources[2] = {sShaderHeader, shaderSrc};
@@ -194,10 +198,13 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
             glGetShaderInfoLog(mShaderID, len, NULL, str);
             ERROR_OUT("Vertex shader error: ");
             ERROR_OUT(str << std::endl);
+            delete [] str;
         }
+        delete [] shaderSrc;
         return false;
     }
 
+    delete [] shaderSrc;
     return true;
 }
 
