@@ -235,7 +235,7 @@
 				);
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = IvMath;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -253,7 +253,7 @@
 				);
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = IvMath;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};

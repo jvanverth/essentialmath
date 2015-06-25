@@ -26,6 +26,17 @@ static bool IvReadBinary(FILE* file, unsigned char& res)
 
 
 //-------------------------------------------------------------------------------
+// @ IvWriteBinary (unsigned char)
+//-------------------------------------------------------------------------------
+// Writes a byte to a file
+//-------------------------------------------------------------------------------
+static bool IvWriteBinary(FILE* file, unsigned char res)
+{
+    return (fwrite(&res, 1, 1, file) == 1) ? true : false;
+}  // End of IvWriteBinary
+
+
+//-------------------------------------------------------------------------------
 // @ IvReadBinary (unsigned short)
 //-------------------------------------------------------------------------------
 // Reads a byte from a file, handling the endian issues
@@ -298,3 +309,161 @@ IvImage* IvImage::CreateFromFile(const char* pcFilename)
 
     return image;
 }   // End of IvImage::CreateFromFile
+
+
+//-------------------------------------------------------------------------------
+// @ IvImage::WriteToFile
+//-------------------------------------------------------------------------------
+// Write out an image representing the given file, or false if failure
+//-------------------------------------------------------------------------------
+bool IvImage::WriteToFile(const char* pcFilename)
+{
+    FILE* file = fopen(pcFilename, "wb");
+    
+    if (!file)
+        return 0;
+    
+    unsigned char IDLength = 0;
+    if (!IvWriteBinary(file, IDLength))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    unsigned char colorMapType = 0;
+    if (!IvWriteBinary(file, colorMapType))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    unsigned char imageType = 2;
+    if (!IvWriteBinary(file, imageType))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    // skip 5 bytes of palette info
+    fseek(file, 5, SEEK_CUR);
+    
+    // only care that this is zero
+    unsigned short xOrigin;
+    if (!IvReadBinary(file, xOrigin))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    // only care that this is zero
+    unsigned short yOrigin;
+    if (!IvReadBinary(file, yOrigin))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    // MUST byte swap these as needed for the platform
+    unsigned short shortWidth;
+    if (!IvReadBinary(file, shortWidth))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    unsigned short shortHeight;
+    if (!IvReadBinary(file, shortHeight))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    unsigned char pixelSize;
+    if (!IvReadBinary(file, pixelSize))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    unsigned char imageAttributes;
+    if (!IvReadBinary(file, imageAttributes))
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    // skip ID field
+    if (IDLength != 0)
+        fseek(file, IDLength, SEEK_CUR);
+    
+    if (imageType != 2)
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    unsigned int bytesPerPixel = pixelSize >> 3;
+    unsigned int width = shortWidth;
+    unsigned int height = shortHeight;
+    
+    IvImage* image = 0;
+    
+    if (pixelSize == 32)
+    {
+        // RGBA
+        image = new IvImage(width, height, 4, 1);
+    }
+    else if (pixelSize == 24)
+    {
+        // RGB
+        image = new IvImage(width, height, 3, 1);
+    }
+    else
+    {
+        fclose(file);
+        return 0;
+    }
+    
+    unsigned char* pixels = image->GetPixels();
+    
+    unsigned int rowSize = bytesPerPixel * width;
+    int rowStep = (int)rowSize;
+    
+    // Do not load right-to-left images
+    if (imageAttributes & 0x10)
+    {
+        fclose(file);
+        delete image;
+        return 0;
+    }
+    
+    // Must flip top-to-bottom images
+    if (imageAttributes & 0x20)
+    {
+        pixels += rowSize * (height - 1);
+        rowStep = -rowStep;
+    }
+    
+    for (unsigned int row = 0; row < height; row++)
+    {
+        // Load a row of raw pixels into the image directly
+        // from the image file
+        fread(pixels, rowSize, 1, file);
+        
+        unsigned char* tempRow = pixels;
+        
+        // Pixels are read in as BGR(A), and we transpose to RGB(A)
+        for (unsigned int i = 0; i < width; i++)
+        {
+            unsigned char temp = tempRow[2];
+            tempRow[2] = tempRow[0];
+            tempRow[0] = temp;
+            
+            tempRow += bytesPerPixel;
+        }
+        
+        pixels += rowStep;
+    }
+    
+    return image;
+}   // End of IvImage::WriteToFile

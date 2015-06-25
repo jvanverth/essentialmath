@@ -463,6 +463,165 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 
 }   // End of IvDrawBox()
 
+//-------------------------------------------------------------------------------
+// @ IvDrawBox()
+//-------------------------------------------------------------------------------
+// Draw box
+//-------------------------------------------------------------------------------
+void
+IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor color )
+{
+    // load data if not there
+    if ( boxVerts == 0 )
+    {
+        size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+        IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * 4 * 6);
+        UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * 6 * 6);
+        
+        int currentVertex = 0;
+        int currentIndex = 0;
+        
+        // set geometry
+        // top
+        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].normal = IvVector3::zAxis;
+        vertexPtr[currentVertex+1].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+1].normal = IvVector3::zAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+2].normal = IvVector3::zAxis;
+        vertexPtr[currentVertex+3].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+3].normal = IvVector3::zAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+3;
+        currentVertex += 4;
+        
+        // bottom
+        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex].normal = -IvVector3::zAxis;
+        vertexPtr[currentVertex+1].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+1].normal = -IvVector3::zAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].normal = -IvVector3::zAxis;
+        vertexPtr[currentVertex+3].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+3].normal = -IvVector3::zAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+3;
+        indexPtr[currentIndex++] = currentVertex+2;
+        currentVertex += 4;
+        
+        // left
+        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].normal = IvVector3::yAxis;
+        vertexPtr[currentVertex+1].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+1].normal = IvVector3::yAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].normal = IvVector3::yAxis;
+        vertexPtr[currentVertex+3].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+3].normal = IvVector3::yAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+3;
+        currentVertex += 4;
+        
+        // right
+        vertexPtr[currentVertex].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].normal = -IvVector3::yAxis;
+        vertexPtr[currentVertex+1].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+1].normal = -IvVector3::yAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].normal = -IvVector3::yAxis;
+        vertexPtr[currentVertex+3].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+3].normal = -IvVector3::yAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+3;
+        indexPtr[currentIndex++] = currentVertex+2;
+        currentVertex += 4;
+        
+        // front
+        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].normal = IvVector3::xAxis;
+        vertexPtr[currentVertex+1].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].normal = IvVector3::xAxis;
+        vertexPtr[currentVertex+2].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].normal = IvVector3::xAxis;
+        vertexPtr[currentVertex+3].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+3].normal = IvVector3::xAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+3;
+        currentVertex += 4;
+        
+        // back
+        vertexPtr[currentVertex].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].normal = -IvVector3::xAxis;
+        vertexPtr[currentVertex+1].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+1].normal = -IvVector3::xAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].normal = -IvVector3::xAxis;
+        vertexPtr[currentVertex+3].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+3].normal = -IvVector3::xAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+3;
+        indexPtr[currentIndex++] = currentVertex+2;
+        currentVertex += 4;
+        
+        boxVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, 4 * 6, vertexPtr,
+                                                                                   kImmutableUsage);
+        boxIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 6, indexPtr,
+                                                                                    kImmutableUsage);
+        
+        if (!boxVerts || !boxIndices)
+        {
+            if (boxVerts)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(boxVerts);
+                boxVerts = 0;
+            }
+            if (boxIndices)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(boxIndices);
+                boxIndices = 0;
+            }
+        }
+        
+        IvStackAllocator::mScratchAllocator->Reset(currentOffset);
+    }
+    
+//    // clear to default shader
+//    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+//    IvRenderer::mRenderer->SetShaderProgram(0);
+//    
+//    // draw it
+//    IvShadeMode oldShadeMode = IvRenderer::mRenderer->GetShadeMode();
+//    IvRenderer::mRenderer->SetShadeMode( kFlatShaded );
+//    IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
+    IvRenderer::mRenderer->Draw(kTriangleListPrim, boxVerts, boxIndices);
+    
+//    // restore original state
+//    IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+//    IvRenderer::mRenderer->SetShaderProgram( oldShader );
+//    IvRenderer::mRenderer->SetShadeMode( oldShadeMode );
+    
+}   // End of IvDrawBox()
 
 //-------------------------------------------------------------------------------
 // @ IvDrawOBB()

@@ -94,7 +94,49 @@ Player::Player()
     }
 
     // Create a classic checkerboard pattern to show off aliasing
+    IvImage* image = IvImage::CreateFromFile("image.tga");
+    if (image)
+    {
+        void* pixels = image->GetPixels();
+        
+        mCheckerBoardTex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(kRGB24TexFmt,
+                                                                                  image->GetWidth(), image->GetHeight(), NULL, 5, kDefaultUsage);
+        IvTexColorRGB* texels = (IvTexColorRGB*)mCheckerBoardTex->BeginLoadData(0);
+        memcpy(texels, pixels, 256*256*sizeof(IvTexColorRGB));
+        mCheckerBoardTex->EndLoadData(0);
+        
+        IvTexColorRGB* mipdata = new IvTexColorRGB[256*256];
+        memcpy(mipdata, pixels, 256*256*sizeof(IvTexColorRGB));
+        int size = 128;
+        for (int k = 1; k < 5; ++k) {
+            for (int j  = 0; j < size; j++)
+            {
+                for (int i  = 0; i < size; i++)
+                {
+                    IvTexColorRGB color;
+                    color.r = mipdata[(size*2)*(2*j) + 2*i].r/4 + mipdata[(size*2)*(2*j) + 2*i + 1].r/4 +
+                              mipdata[(size*2)*(2*j + 1) + 2*i].r/4 + mipdata[(size*2)*(2*j + 1) + 2*i + 1].r/4;
+                    color.g = mipdata[(size*2)*(2*j) + 2*i].g/4 + mipdata[(size*2)*(2*j) + 2*i + 1].g/4 +
+                                mipdata[(size*2)*(2*j + 1) + 2*i].g/4 + mipdata[(size*2)*(2*j + 1) + 2*i + 1].g/4;
+                    color.b = mipdata[(size*2)*(2*j) + 2*i].b/4 + mipdata[(size*2)*(2*j) + 2*i + 1].b/4 +
+                                mipdata[(size*2)*(2*j + 1) + 2*i].b/4 + mipdata[(size*2)*(2*j + 1) + 2*i + 1].b/4;
+                    mipdata[size*j + i] = color;
+                }
+            }
+            
+            IvTexColorRGB* texels = (IvTexColorRGB*)mCheckerBoardTex->BeginLoadData(k);
+            memcpy(texels, mipdata, size*size*sizeof(IvTexColorRGB));
+            mCheckerBoardTex->EndLoadData(k);
+            
+            size /= 2;
+        }
+        
+        delete image;
+        image = 0;
+    }
 
+/*
+    
     // create a texture "name" to reference later
     mCheckerBoardTex = IvRenderer::mRenderer->GetResourceManager()->CreateMipmappedTexture(
         kRGB24TexFmt, 256, 256, NULL, 5, kDefaultUsage);
@@ -120,7 +162,7 @@ Player::Player()
                 {
                     // medium gray
                     texels[pixelIndex].r = texels[pixelIndex].g
-                    = texels[pixelIndex].b = 128;
+                    = texels[pixelIndex].b = 180;
                 }
                 else
                 {
@@ -142,7 +184,7 @@ Player::Player()
         size >>= 1;
         shift--;
     }
-    
+*/
     mFilter = FILTER_BILERP;
 
     mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(

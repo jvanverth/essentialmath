@@ -31,4 +31,5 @@ void main()
     vec3 lighting = clamp(dot(normal, lightValues.dir), 0.0, 1.0) * lightValues.L;
     
     fragColor = vec4(lighting.r, lighting.g, lighting.b, 1.0);
+fragColor = sqrt(fragColor);
 }

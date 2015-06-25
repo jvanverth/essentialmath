@@ -51,7 +51,7 @@ IvTexture* CreateTextureFromFile(const char* file)
     {
         tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight());
+            image->GetWidth(), image->GetHeight(), NULL, 1, kDefaultUsage);
 
         unsigned char* pixels = (unsigned char*)(tex->BeginLoadData(0));
 
@@ -305,7 +305,7 @@ Player::CreateCylinder()
     // U-coord of 1.0f
     const unsigned int steps = 32;
     mCylinderVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, (steps + 1) * steps);
+        kTCPFormat, (steps + 1) * steps, NULL, kDefaultUsage);
 
     IvTCPVertex* tempVerts0 = (IvTCPVertex*)(mCylinderVerts->BeginLoadData());
 
@@ -364,7 +364,7 @@ Player::CreateCylinder()
     unsigned int cylinderIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-        cylinderIndexCount);
+        cylinderIndexCount, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mCylinderIndices->BeginLoadData();
 

@@ -37,6 +37,7 @@ void IvCleanUpRendererHelpData();
 // draw standard shapes
 void IvDrawCube( IvColor color = kYellow );
 void IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color = kWhite );
+void IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor color = kWhite );
 void IvDrawOBB( const IvVector3& extents, const IvVector3& center, const IvMatrix33& axes, IvColor color = kWhite );
 void IvDrawUnitSphere();
 void IvDrawSphere( float radius, IvColor color = kCyan );

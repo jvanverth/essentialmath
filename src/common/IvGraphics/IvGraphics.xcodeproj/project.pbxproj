@@ -283,7 +283,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = IvGraphics;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -296,7 +296,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = IvGraphics;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};

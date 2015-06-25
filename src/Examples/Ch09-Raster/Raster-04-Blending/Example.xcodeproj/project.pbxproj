@@ -153,6 +153,8 @@
 				CE9C45660D74C89400FBB88B /* Game.h */,
 				CE9C45620D74C88600FBB88B /* Player.cpp */,
 				CE9C45630D74C88600FBB88B /* Player.h */,
+				CEF01E0A1A3532300074BE84 /* textureShader.glslf */,
+				CEF01E0C1A35323A0074BE84 /* textureShader.glslv */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -160,8 +162,6 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CEF01E0A1A3532300074BE84 /* textureShader.glslf */,
-				CEF01E0C1A35323A0074BE84 /* textureShader.glslv */,
 			);
 			name = Resources;
 			sourceTree = SOURCE_ROOT;
@@ -381,7 +381,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -407,7 +407,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};

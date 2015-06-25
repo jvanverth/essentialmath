@@ -285,10 +285,10 @@ IvResourceManagerOGL::Destroy( IvShaderProgram* sp )
 IvTexture*
 IvResourceManagerOGL::CreateTexture( IvTextureFormat format, 
                                      unsigned int width, unsigned int height,
-                                     void** data, unsigned int levels, IvDataUsage usage )
+                                     void* data, IvDataUsage usage )
 {
 	IvTextureOGL* newTexture = new IvTextureOGL();
-    if ( !newTexture->Create( width, height, format, data, levels, usage ) )
+    if ( !newTexture->Create( width, height, format, data, usage ) )
     {
         delete newTexture;
         newTexture = 0;
@@ -296,6 +296,24 @@ IvResourceManagerOGL::CreateTexture( IvTextureFormat format,
     return newTexture;
 }
 
+//-------------------------------------------------------------------------------
+// @ IvResourceManagerOGL::CreateMipmappedTexture()
+//-------------------------------------------------------------------------------
+// Create platform-dependent texture
+//-------------------------------------------------------------------------------
+IvTexture*
+IvResourceManagerOGL::CreateMipmappedTexture(IvTextureFormat format,
+                                             unsigned int width, unsigned int height,
+                                             void** data, unsigned int levels, IvDataUsage usage )
+{
+    IvTextureOGL* newTexture = new IvTextureOGL();
+    if ( !newTexture->CreateMipmapped( width, height, format, data, levels, usage ) )
+    {
+        delete newTexture;
+        newTexture = 0;
+    }
+    return newTexture;
+}
 //-------------------------------------------------------------------------------
 // @ IvResourceManagerOGL::Destroy()
 //-------------------------------------------------------------------------------

@@ -304,5 +304,7 @@ void IvUniformOGL::Update()
 			glUniform1iv(mShaderIndex, 1, &mTextureStage);
             break;
     };
+    
+    mNeedsUpdate = false;
 
 }

@@ -371,9 +371,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -397,9 +398,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};

@@ -46,7 +46,7 @@
 //-------------------------------------------------------------------------------
 Player::Player()
 {
-    mRadius = 2.0f;
+    mRadius = 7.0f;
 
     mSphereIndices = NULL;
 
@@ -165,9 +165,9 @@ Player::Render()
     IvMatrix44 transform;
 
     int i,j;
-    for (j = -1; j <= 1; j++)
+    for (j = 0; j <= 0; j++)
     {
-        for (i = -1; i <= 1; i++)
+        for (i = 0; i <= 0; i++)
         {
             transform(0, 3) = 5.0f * i;
             transform(2, 3) = 5.0f * j;
@@ -184,7 +184,7 @@ Player::Render()
             DrawSphere();
         }
     }
-
+    
 }   // End of Player::Render()
 
 

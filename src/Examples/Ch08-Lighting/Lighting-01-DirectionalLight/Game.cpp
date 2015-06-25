@@ -111,7 +111,7 @@ Game::Render() // Here's Where We Do All The Drawing
     IvSetDefaultViewer(0.0f, -20.0f, 0.0f);
     
     // draw axes
-    IvDrawAxes();
+//    IvDrawAxes();
     
     // draw the main object
     mPlayer->Render();

@@ -75,9 +75,9 @@ Player::Player()
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
             image->GetWidth(), image->GetHeight(), pixels, kDefaultUsage);
         
-        //unsigned char* pixels = (unsigned char*)(mTextures[0]->BeginLoadData(0));
-        //memcpy(pixels, image->GetPixels(), image->GetBytesPerPixel()*image->GetWidth()*image->GetHeight());
-        //mTextures[0]->EndLoadData(0);
+//        unsigned char* pixels = (unsigned char*)(mTextures[0]->BeginLoadData(0));
+//        memcpy(pixels, image->GetPixels(), image->GetBytesPerPixel()*image->GetWidth()*image->GetHeight());
+//        mTextures[0]->EndLoadData(0);
 
 
         delete image;

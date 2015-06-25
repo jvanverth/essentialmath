@@ -64,7 +64,7 @@ Player::Player()
 
     mShader->GetUniform("pointLightAttenuation")->SetValue(IvVector3(1.0f, 0.0f, 0.0f), 0);
     
-    mLightPos = IvVector3(0.0f, -10.0f, 0.0f);
+    mLightPos = IvVector3(1000.0f, 0.0f, 0.0f);
 
     CreateSphere();
 }   // End of Player::Player()

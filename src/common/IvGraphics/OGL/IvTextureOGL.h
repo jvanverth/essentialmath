@@ -49,6 +49,8 @@ protected:
 
     // creation
     bool Create(unsigned int width, unsigned int height, IvTextureFormat format,
+                void* data, IvDataUsage usage);
+    bool CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
                 void** data, unsigned int levels, IvDataUsage usage);
 
 	// destruction

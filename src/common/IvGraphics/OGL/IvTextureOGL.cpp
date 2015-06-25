@@ -46,7 +46,7 @@ IvTextureOGL::~IvTextureOGL()
 //-------------------------------------------------------------------------------
 bool
 IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat format,
-                     void** data, unsigned int levels, IvDataUsage usage)
+                     void* data, IvDataUsage usage)
 {
     if ( width == 0 || height == 0 || mID != 0 )
     {
@@ -64,6 +64,72 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
     mHeight = height;
     mFormat = format;
     
+    mLevelCount = 1;
+
+    GLint currentTex;
+    glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex);
+    
+    glBindTexture(GL_TEXTURE_2D, mID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, mLevelCount-1);
+    
+    if (data)
+    {
+        width = mWidth;
+        height = mHeight;
+        
+        switch (mFormat)
+        {
+            case kRGBA32TexFmt:
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                             width, height, 0,
+                             GL_RGBA, GL_UNSIGNED_BYTE, data);
+                break;
+                
+            case kRGB24TexFmt:
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                             width, height, 0,
+                             GL_RGB, GL_UNSIGNED_BYTE, data);
+                break;
+                
+            default:
+                break;
+        };
+    }
+    
+    glBindTexture(GL_TEXTURE_2D, currentTex);
+    
+    mUsage = usage;
+    mTempData = NULL;
+    
+	return true;
+}
+
+//-------------------------------------------------------------------------------
+// @ IvTextureOGL::IvTextureOGL()
+//-------------------------------------------------------------------------------
+// Texture initialization
+//-------------------------------------------------------------------------------
+bool
+IvTextureOGL::CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
+                              void** data, unsigned int levels, IvDataUsage usage)
+{
+    if ( width == 0 || height == 0 || mID != 0 )
+    {
+        return false;
+    }
+    
+    if ( usage == kImmutableUsage && !data )
+    {
+        return false;
+    }
+    
+    glGenTextures(1, &mID);
+    
+    mWidth = width;
+    mHeight = height;
+    mFormat = format;
+    
+    //*** TODO: should we specify levels?
     if (levels == 0)
     {
         mLevelCount = 1;
@@ -71,13 +137,13 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
         {
             width >>= 1;
             height >>= 1;
-
+            
             if (!width)
                 width = 1;
-
+            
             if (!height)
                 height = 1;
-
+            
             mLevelCount++;
         }
     }
@@ -85,7 +151,7 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
     {
         mLevelCount = levels;
     }
-
+    
     GLint currentTex;
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTex);
     
@@ -119,7 +185,7 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
                 default:
                     break;
             };
-
+            
             width >>= 1;
             height >>= 1;
             
@@ -138,7 +204,7 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
     mUsage = usage;
     mTempData = NULL;
     
-	return true;
+    return true;
 }
 
 //-------------------------------------------------------------------------------
