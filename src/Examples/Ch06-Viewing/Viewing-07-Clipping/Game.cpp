@@ -150,25 +150,26 @@ Game::Render()
     // draw plane
     if ( !mPlaneBuffer )
     {
-        mPlaneBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 44);
+        mPlaneBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 44,
+                                                                                       NULL, kDefaultUsage);
         IvCPVertex* dataPtr = (IvCPVertex*) mPlaneBuffer->BeginLoadData();
         for ( float x = -10.0f; x <= 10.0f; x += 2.0f )
         {
-            dataPtr->color = kWhite;
+            dataPtr->color = kYellow;
             dataPtr->position.Set(  x, 1.0f, 10.0f );
             ++dataPtr;
 
-            dataPtr->color = kWhite;
+            dataPtr->color = kYellow;
             dataPtr->position.Set( x, 1.0f, -10.0f );
             ++dataPtr;
         }
         for ( float z = -10.0f; z <= 10.0f; z += 2.0f )
         {
-            dataPtr->color = kWhite;
+            dataPtr->color = kYellow;
             dataPtr->position.Set( -10.0f, 1.0f, z );
             ++dataPtr;
 
-            dataPtr->color = kWhite;
+            dataPtr->color = kYellow;
             dataPtr->position.Set( 10.0f, 1.0f, z );
             ++dataPtr;
         }

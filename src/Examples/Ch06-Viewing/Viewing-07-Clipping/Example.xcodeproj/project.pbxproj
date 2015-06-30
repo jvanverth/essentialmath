@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE9C45290D74C78900FBB88B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45280D74C78900FBB88B /* GLUT.framework */; };
+		CE48B27A1B402A0400043459 /* IvClipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE48B2781B402A0400043459 /* IvClipper.cpp */; };
+		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
 		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
 		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
 		CE9C45440D74C7B700FBB88B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45430D74C7B700FBB88B /* AppKit.framework */; };
@@ -16,7 +17,8 @@
 		CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45580D74C82D00FBB88B /* libIvEngine.a */; };
 		CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C454C0D74C80100FBB88B /* libIvUtility.a */; };
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
-		CED272B10D7BCA1700D0E51E /* IvClipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CED272AF0D7BCA1700D0E51E /* IvClipper.cpp */; };
+		CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4D19B2B65C008870FC /* IOKit.framework */; };
+		CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,39 +50,13 @@
 			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = IvGraphics;
 		};
-		CE9C45730D74CA3300FBB88B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IvEngine;
-		};
-		CE9C45750D74CA3300FBB88B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IvUtility;
-		};
-		CE9C45770D74CA3300FBB88B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IvMath;
-		};
-		CE9C45790D74CA3300FBB88B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
-			remoteInfo = IvGraphics;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9C45280D74C78900FBB88B /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		CE48B2781B402A0400043459 /* IvClipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvClipper.cpp; sourceTree = "<group>"; };
+		CE48B2791B402A0400043459 /* IvClipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvClipper.h; sourceTree = "<group>"; };
+		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.0.4/src/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		CE9C45430D74C7B700FBB88B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -90,8 +66,8 @@
 		CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvGraphics.xcodeproj; path = ../../../common/IvGraphics/IvGraphics.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE9C45650D74C89400FBB88B /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
-		CED272AF0D7BCA1700D0E51E /* IvClipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvClipper.cpp; sourceTree = "<group>"; };
-		CED272B00D7BCA1700D0E51E /* IvClipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvClipper.h; sourceTree = "<group>"; };
+		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
+		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +79,12 @@
 				CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */,
 				CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */,
 				CE9C45830D74CBD900FBB88B /* libIvMath.a in Frameworks */,
-				CE9C45290D74C78900FBB88B /* GLUT.framework in Frameworks */,
 				CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */,
 				CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */,
 				CE9C45440D74C7B700FBB88B /* AppKit.framework in Frameworks */,
+				CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */,
+				CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */,
+				CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,8 +117,8 @@
 		20286C2AFDCF999611CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				CED272AF0D7BCA1700D0E51E /* IvClipper.cpp */,
-				CED272B00D7BCA1700D0E51E /* IvClipper.h */,
+				CE48B2781B402A0400043459 /* IvClipper.cpp */,
+				CE48B2791B402A0400043459 /* IvClipper.h */,
 				CE9C45650D74C89400FBB88B /* Game.cpp */,
 				CE9C45660D74C89400FBB88B /* Game.h */,
 			);
@@ -157,10 +135,12 @@
 		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */,
+				CE92666219B2A0940051D56D /* libglfw3.a */,
 				CE9C45430D74C7B700FBB88B /* AppKit.framework */,
 				CE9C453F0D74C7AD00FBB88B /* Foundation.framework */,
+				CEAB1F4D19B2B65C008870FC /* IOKit.framework */,
 				CE9C453D0D74C79D00FBB88B /* OpenGL.framework */,
-				CE9C45280D74C78900FBB88B /* GLUT.framework */,
 			);
 			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -211,10 +191,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CE9C45740D74CA3300FBB88B /* PBXTargetDependency */,
-				CE9C45760D74CA3300FBB88B /* PBXTargetDependency */,
-				CE9C45780D74CA3300FBB88B /* PBXTargetDependency */,
-				CE9C457A0D74CA3300FBB88B /* PBXTargetDependency */,
 			);
 			name = Example;
 			productInstallPath = "$(HOME)/Applications";
@@ -227,9 +203,16 @@
 /* Begin PBXProject section */
 		20286C28FDCF999611CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
 			buildConfigurationList = C0E91AC908A95435008D54AB /* Build configuration list for PBXProject "Example" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 20286C29FDCF999611CA2CEA /* Example */;
 			projectDirPath = "";
 			projectReferences = (
@@ -303,53 +286,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE48B27A1B402A0400043459 /* IvClipper.cpp in Sources */,
 				CE9C45670D74C89400FBB88B /* Game.cpp in Sources */,
-				CED272B10D7BCA1700D0E51E /* IvClipper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		CE9C45740D74CA3300FBB88B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IvEngine;
-			targetProxy = CE9C45730D74CA3300FBB88B /* PBXContainerItemProxy */;
-		};
-		CE9C45760D74CA3300FBB88B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IvUtility;
-			targetProxy = CE9C45750D74CA3300FBB88B /* PBXContainerItemProxy */;
-		};
-		CE9C45780D74CA3300FBB88B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IvMath;
-			targetProxy = CE9C45770D74CA3300FBB88B /* PBXContainerItemProxy */;
-		};
-		CE9C457A0D74CA3300FBB88B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IvGraphics;
-			targetProxy = CE9C45790D74CA3300FBB88B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
 		C0E91AC608A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/Users/jvsquare/Projects/Ivy3/src/common/Libs/OSXDebug,
+					/Users/jvsquare/Projects/Ivy3/src/gl,
+					/Users/jvsquare/Projects/Ivy3/src/glew/lib,
+					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.0.4/src",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
+				SDKROOT = macosx10.9;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -359,15 +333,28 @@
 		C0E91AC708A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/Users/jvsquare/Projects/Ivy3/src/common/Libs/OSXDebug,
+					/Users/jvsquare/Projects/Ivy3/src/gl,
+					/Users/jvsquare/Projects/Ivy3/src/glew/lib,
+					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.0.4/src",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
+				SDKROOT = macosx10.9;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};
@@ -384,6 +371,7 @@
 					../../../common/IvEngine,
 					../../../common/IvGraphics,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 			};
 			name = Debug;
@@ -391,10 +379,6 @@
 		C0E91ACB08A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

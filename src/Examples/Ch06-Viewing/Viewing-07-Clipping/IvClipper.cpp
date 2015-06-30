@@ -142,17 +142,33 @@ IvClipper::FinishClip()
 {
     if ( !mBuffer )
     {
-        mBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6);
+        mBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6,
+                                                                                  NULL, kDefaultUsage);
     }
 
     IvCPVertex* dataPtr = (IvCPVertex*) mBuffer->BeginLoadData();
+    
+    // stripify the convex polygon
     for (unsigned int i = 0; i < mNumVertices; ++i)
     {
         dataPtr[i].color = kRed;
-        dataPtr[i].position = mClipVertices[i];
+        if (i == 0)
+        {
+            dataPtr[i].position = mClipVertices[0];
+        }
+        // odd vertices
+        else if (i & 0x1)
+        {
+            dataPtr[i].position = mClipVertices[i/2+1];
+        }
+        // even vertices
+        else
+        {
+            dataPtr[i].position = mClipVertices[mNumVertices - (i/2)];
+        }
     }
     mBuffer->EndLoadData();
 
-    IvRenderer::mRenderer->Draw(kTriangleFanPrim, mBuffer, mNumVertices);
+    IvRenderer::mRenderer->Draw(kTriangleStripPrim, mBuffer, mNumVertices);
         
 }  // End of IvClipper::FinishClip()

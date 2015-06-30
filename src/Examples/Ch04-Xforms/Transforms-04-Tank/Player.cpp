@@ -101,7 +101,8 @@ Player::ReadData()
     if ( !in.good() )
         return false;
 
-	mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts);
+	mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
+                                                                                NULL, kDefaultUsage);
 	IvCNPVertex* dataPtr = (IvCNPVertex*) mVertices->BeginLoadData();
 
     // read positions
@@ -160,7 +161,8 @@ Player::ReadData()
         return false;
 
     // read indices
-	mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTankBodyIndices);
+    mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTankBodyIndices,
+                                                                              NULL, kDefaultUsage);
 	UInt32* indexPtr = static_cast<UInt32*>(mIndices->BeginLoadData());
     for ( UInt32 i = 0; i < numTankBodyIndices; ++i )
     {
