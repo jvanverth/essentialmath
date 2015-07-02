@@ -1,7 +1,12 @@
-varying vec4 color;
+uniform mat4 IvModelViewProjectionMatrix;
+
+layout(location = POSITION) in vec3 position;
+layout(location = COLOR) in vec4 inColor;
+
+out vec4 color;
 
 void main()
 {
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-    color = gl_Color;
+    gl_Position = IvModelViewProjectionMatrix*vec4(position,1.0);
+    color = inColor;
 }

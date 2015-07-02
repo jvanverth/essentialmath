@@ -1,10 +1,15 @@
-varying vec2 uv;
-varying vec4 color;
+#version 150
+
 uniform sampler2D Texture;
 uniform float scale;
 
+in vec2 uv;
+in vec4 color;
+
+out vec4 fragColor;
+
 void main()
 {
-    gl_FragColor = clamp(texture2D(Texture, uv) * scale, 
+    fragColor = clamp(texture(Texture, uv) * scale,
 		vec4(0.0, 0.0, 0.0, 0.0), vec4(1.0, 1.0, 1.0, 1.0));
 }

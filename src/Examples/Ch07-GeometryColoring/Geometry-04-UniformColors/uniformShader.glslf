@@ -1,6 +1,10 @@
+#version 150
+
 uniform vec4 constColor;
+
+out vec4 fragColor;
 
 void main()
 {
-    gl_FragColor = constColor;
+    fragColor = constColor;
 }

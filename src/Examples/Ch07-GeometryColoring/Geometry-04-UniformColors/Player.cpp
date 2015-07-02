@@ -221,7 +221,7 @@ Player::CreateSphere()
     const unsigned int verts = steps * steps;
 
     mSphereVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kCPFormat, verts);
+        kCPFormat, verts, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvCPVertex* tempVerts = (IvCPVertex*)(mSphereVerts->BeginLoadData());
@@ -237,8 +237,6 @@ Player::CreateSphere()
 
         float sinTheta, cosTheta;
         IvSinCos(theta, sinTheta, cosTheta);
-
-        float red = fmod(4.0f * j / (float)(steps - 1), 1.0f);
 
         unsigned int i;
         for (i = 0; i < steps; i++)
@@ -273,7 +271,7 @@ Player::CreateSphere()
     const unsigned int sphereIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mSphereIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(sphereIndexCount);
+        CreateIndexBuffer(sphereIndexCount, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mSphereIndices->BeginLoadData());
 
