@@ -168,7 +168,7 @@
 				OTHER_CFLAGS = "";
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx10.8;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -185,7 +185,7 @@
 				OTHER_CFLAGS = "";
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};

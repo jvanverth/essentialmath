@@ -171,7 +171,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = IvUtility;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx10.8;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -186,7 +186,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = IvUtility;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};
