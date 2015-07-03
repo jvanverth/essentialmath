@@ -80,13 +80,13 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
         switch (mFormat)
         {
             case kRGBA32TexFmt:
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB8_ALPHA8,
                              width, height, 0,
                              GL_RGBA, GL_UNSIGNED_BYTE, data);
                 break;
                 
             case kRGB24TexFmt:
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB8,
                              width, height, 0,
                              GL_RGB, GL_UNSIGNED_BYTE, data);
                 break;

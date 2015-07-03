@@ -40,9 +40,6 @@ public:
     void Render();
 
 private:
-    void CreateSphere();
-    void DrawSphere();
-
     IvVector3 mLightPos;
     IvVector3 mLightDir;
 

@@ -43,14 +43,9 @@ lightSampleValues computeSpotLightValues(in vec3 surfacePosition)
 
 void main()
 {
-	lightSampleValues lightValues = computeSpotLightValues(worldPos + vec3(0.0, 0.0, 1.0));
+	lightSampleValues lightValues = computeSpotLightValues(worldPos);
 
     vec3 lighting = clamp(dot(normalize(normal), lightValues.dir), 0.0, 1.0) * lightValues.L;
-
-    lightValues = computeSpotLightValues(worldPos + vec3(0.0, 0.0, -1.0));
-
-    lighting += clamp(dot(normalize(normal), lightValues.dir), 0.0, 1.0) * lightValues.L;
-
+    
     fragColor = vec4(lighting, 1.0);
-//fragColor = sqrt(fragColor);
 }

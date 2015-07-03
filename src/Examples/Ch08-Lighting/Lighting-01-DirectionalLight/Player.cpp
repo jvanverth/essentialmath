@@ -202,8 +202,6 @@ Player::CreateSphere()
         float sinTheta, cosTheta;
         IvSinCos(theta, sinTheta, cosTheta);
 
-        float red = fmod(4.0f * j / (float)(steps - 1), 1.0f);
-
         unsigned int i;
         for (i = 0; i < steps; i++)
         {

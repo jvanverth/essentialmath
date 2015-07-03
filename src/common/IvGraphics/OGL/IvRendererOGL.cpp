@@ -82,7 +82,6 @@ IvRendererOGL::IvRendererOGL() : IvRenderer()
     sPrimTypeMap[kLineStripPrim] = GL_LINE_STRIP;
     sPrimTypeMap[kTriangleListPrim] = GL_TRIANGLES;
     sPrimTypeMap[kTriangleStripPrim] = GL_TRIANGLE_STRIP;
-//    sPrimTypeMap[kTriangleFanPrim] = GL_TRIANGLE_FAN;
 
     sBlendSrcFunc[kNoBlendFunc] = GL_ONE;
     sBlendDestFunc[kNoBlendFunc] = GL_ZERO;
@@ -203,7 +202,7 @@ IvRendererOGL::InitGL()
 //****    glShadeModel(GL_SMOOTH);
     
     // set clear color and depth
-    SetClearColor(0.0f, 0.0f, 0.35f, 1.0f);
+    SetClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     SetClearDepth(1.0f); 
     
     // set up depth buffer
@@ -213,6 +212,9 @@ IvRendererOGL::InitGL()
     // set up perspective correct textures
 //****    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+    // use sRGB gamma
+    glEnable(GL_FRAMEBUFFER_SRGB);
+    
     // turn on culling
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);

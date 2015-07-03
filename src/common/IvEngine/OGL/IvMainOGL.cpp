@@ -121,8 +121,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // Set the background black 
-	IvRenderer::mRenderer->SetClearColor( 0.0f, 0.0f, 0.35f, 1.0f );
+    // Set the background dark blue
+	IvRenderer::mRenderer->SetClearColor( 0.0f, 0.0f, 0.10f, 1.0f );
 
     // Do post-renderer creation initialization
     if (!IvGame::mGame->PostRendererInitialize())
