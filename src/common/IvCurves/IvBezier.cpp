@@ -590,7 +590,8 @@ IvBezier::RebuildVertexBuffers()
 
     if ( mCurveVertices == 0 )
     {
-        mCurveVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, numverts);
+        mCurveVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, numverts,
+                                                                                         NULL, kDefaultUsage);
     }
 
 	IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
@@ -618,7 +619,8 @@ IvBezier::RebuildVertexBuffers()
 
     if ( mPointVertices == 0 )
     {
-        mPointVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, mCount);
+        mPointVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, mCount,
+                                                                                         NULL, kDefaultUsage);
     }
 
 	IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
@@ -641,7 +643,8 @@ IvBezier::RebuildVertexBuffers()
 
     if ( mControlVertices == 0 )
     {
-        mControlVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2*(mCount-1));
+        mControlVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2*(mCount-1),
+                                                                                           NULL, kDefaultUsage);
     }
 
 	IvCPVertex *controlDataPtr = (IvCPVertex*) mControlVertices->BeginLoadData();
@@ -670,8 +673,8 @@ IvBezier::CountSubdivideVerts( const IvVector3& P0, const IvVector3& P1,
     // check to see if straight
     IvLineSegment3 segment( P0, P3 );
     float t;
-    if ( ::DistanceSquared( segment, P1, t ) < 1.0e-6f &&
-         ::DistanceSquared( segment, P2, t ) < 1.0e-6f )
+    if ( DistanceSquared( segment, P1, t ) < 1.0e-6f &&
+         DistanceSquared( segment, P2, t ) < 1.0e-6f )
          return 1;
 
     // otherwise get control points for subdivision
@@ -705,8 +708,8 @@ IvBezier::SubdivideCurve( IvCPVertex* currentVertex, const IvVector3& P0, const 
     // check to see if straight
     IvLineSegment3 segment( P0, P3 );
     float t;
-    if ( ::DistanceSquared( segment, P1, t ) < 1.0e-6f &&
-         ::DistanceSquared( segment, P2, t ) < 1.0e-6f )
+    if ( DistanceSquared( segment, P1, t ) < 1.0e-6f &&
+         DistanceSquared( segment, P2, t ) < 1.0e-6f )
          return currentVertex;
 
     // otherwise get control points for subdivision
