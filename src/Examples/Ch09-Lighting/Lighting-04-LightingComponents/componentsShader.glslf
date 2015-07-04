@@ -8,7 +8,6 @@ out vec4 fragColor;
 
 uniform vec3 pointLightPosition; // in world space
 uniform vec3 pointLightIntensity;
-uniform vec3 pointLightAttenuation;
 
 uniform vec3 ambientLightColor;
 
@@ -65,15 +64,10 @@ lightSampleValues computePointLightValues(in vec3 surfacePosition)
     lightSampleValues values;
 
     vec3 lightVec = pointLightPosition - surfacePosition;
-	float dist = length(lightVec);
 
     values.dir = normalize(lightVec);
 
-	// Dot computes the 3-term attenuation in one operation
-	// k_c * 1.0 + k_l * dist + k_q * dist * dist
-
-	float distAtten = dot(pointLightAttenuation,
-		vec3(1.0, dist, dist*dist));
+	float distAtten = 1.0 + dot(lightVec, lightVec);
 
     values.L = pointLightIntensity / distAtten;
 
@@ -86,7 +80,7 @@ void main()
 
     fragColor.rgb = materialEmissiveColor
                    + computeAmbientComponent()
-                   + computeLitColor(lightValues, worldPos, normalize(normal), 
+                   + computeLitColor(lightValues, worldPos, normalize(normal),
                                      normalize(viewDir));
     fragColor.a = materialDiffuseColor.a;
 }

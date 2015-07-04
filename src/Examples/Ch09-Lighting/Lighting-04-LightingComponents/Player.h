@@ -40,8 +40,12 @@ public:
     void Render();
 
 private:
+    void ComputeMaterialComponents();
+    
     IvVector3 mLightPos;
     float     mSpecularPercentage;
+    float     mAmbientFactor;
+    float     mEmissiveFactor;
 
     float mRadius;
 

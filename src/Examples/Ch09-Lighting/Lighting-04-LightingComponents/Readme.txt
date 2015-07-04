@@ -10,7 +10,6 @@ The key commands are:
 i, k - translate in x
 j, l - translate in y
 Space - reset transforms
-0, 1, 2 - set the distance attenuation (constant, linear, quadratic)
 a, q - decrease/increase ambient component
-s, w - decrease/increase diffuse component
-d, e - decrease/increase specular component
+s, w - decrease/increase proportion of diffuse to specular components
+d, e - decrease/increase emissive component
