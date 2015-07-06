@@ -51,7 +51,7 @@ IvTexture* CreateTextureFromFile(const char* file)
     {
         tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight(), NULL, 1, kDefaultUsage);
+            image->GetWidth(), image->GetHeight(), NULL, kDefaultUsage);
 
         unsigned char* pixels = (unsigned char*)(tex->BeginLoadData(0));
 

@@ -47,9 +47,6 @@ private:
 
     IvVertexBuffer* mQuadVerts;
     IvIndexBuffer* mQuadIndices;
-
-    IvShaderProgram* mShader;
-    IvUniform* mColor;
 };
 
 #endif

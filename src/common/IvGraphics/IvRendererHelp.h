@@ -30,6 +30,7 @@ extern IvColor kCyan;
 extern IvColor kOrange;
 extern IvColor kWhite;
 extern IvColor kBlack;
+extern IvColor kGrey;
 
 // build/destroy the vertex buffers
 void IvCleanUpRendererHelpData();

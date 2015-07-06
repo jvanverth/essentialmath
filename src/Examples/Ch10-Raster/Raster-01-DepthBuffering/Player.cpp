@@ -47,18 +47,6 @@ Player::Player()
     mTranslate.Set(0.0f, 0.0f, 0.0f);
     mScale = 3.0f;
 
-    mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
-        IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
-        "uniformShader"),
-        IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
-        "uniformShader"));
-
-    mColor = mShader->GetUniform("constColor");
-
-    mColor->SetValue(IvVector4(1.0f, 0.0f, 0.0f, 1.0f), 0);
-
-    IvRenderer::mRenderer->SetShaderProgram(mShader);
-
     CreateQuad();
 }   // End of Player::Player()
 
@@ -150,7 +138,6 @@ void
 Player::Render()                                    
 {   
     // Draw backdrop quad, which must also write the depth buffer
-    mColor->SetValue(IvVector4(0.5f, 0.5f, 0.5f, 1.0f), 0);
     IvRenderer::mRenderer->SetDepthWrite(true);
     IvRenderer::mRenderer->SetDepthTest(kLessEqualDepthTest);
 
@@ -172,27 +159,24 @@ Player::Render()
     transform(1,3) = mTranslate.GetY() + 4.0f;
     transform(2,3) = mTranslate.GetZ();
     
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
 
     // draw non-depth-buffered teapot
-    mColor->SetValue(IvVector4(1.0f, 0.0f, 0.0f, 1.0f), 0);
     IvRenderer::mRenderer->SetDepthWrite(false);
     IvRenderer::mRenderer->SetDepthTest(kDisableDepthTest);
     
-    IvColor white = {255, 255, 255};
-    IvDrawTeapot(white, false);
+    IvDrawTeapot(kRed);
     
     // same as other teapot, but on the right side
     transform(1,3) = mTranslate.GetY() - 4.0f;
 
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
     
     // draw depth-buffered teapot
-    mColor->SetValue(IvVector4(0.0f, 0.0f, 1.0f, 1.0f), 0);
     IvRenderer::mRenderer->SetDepthWrite(true);
     IvRenderer::mRenderer->SetDepthTest(kLessEqualDepthTest);
 
-    IvDrawTeapot(white, false);
+    IvDrawTeapot(kBlue);
     
 }   // End of Player::Render()
 
@@ -220,31 +204,31 @@ Player::CreateQuad()
     const float size = 7.0f;
 
     mQuadVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kNPFormat, 4);
+        kCPFormat, 4, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
-    IvNPVertex* tempVerts = (IvNPVertex*)(mQuadVerts->BeginLoadData());
+    IvCPVertex* tempVerts = (IvCPVertex*)(mQuadVerts->BeginLoadData());
 
-    tempVerts->normal = IvVector3(-1.0f, 0.0f, 0.0f);
+    tempVerts->color = kGrey;
     tempVerts->position = IvVector3(0.0f, -size, size);
     tempVerts++;
 
-    tempVerts->normal = IvVector3(-1.0f, 0.0f, 0.0f);
+    tempVerts->color = kGrey;
     tempVerts->position = IvVector3(0.0f, size, size);
     tempVerts++;
 
-    tempVerts->normal = IvVector3(-1.0f, 0.0f, 0.0f);
+    tempVerts->color = kGrey;
     tempVerts->position = IvVector3(0.0f, -size, -size);
     tempVerts++;
 
-    tempVerts->normal = IvVector3(-1.0f, 0.0f, 0.0f);
+    tempVerts->color = kGrey;
     tempVerts->position = IvVector3(0.0f, size, -size);
     tempVerts++;
 
     mQuadVerts->EndLoadData();
 
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(4);
+        CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
 

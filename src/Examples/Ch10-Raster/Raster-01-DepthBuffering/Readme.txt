@@ -11,6 +11,6 @@ The key commands are:
 
 i, k - translate in x
 j, l - translate in y
-u, o - rotate around z axis
+u, o - rotate around x axis
 p, ; - uniformly scale
 Space - reset transforms

@@ -19,8 +19,6 @@
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
 		CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4D19B2B65C008870FC /* IOKit.framework */; };
 		CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */; };
-		CEF01E0B1A3532300074BE84 /* textureShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CEF01E0A1A3532300074BE84 /* textureShader.glslf */; };
-		CEF01E0D1A35323A0074BE84 /* textureShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CEF01E0C1A35323A0074BE84 /* textureShader.glslv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,8 +96,6 @@
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
-		CEF01E0A1A3532300074BE84 /* textureShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslf; sourceTree = "<group>"; };
-		CEF01E0C1A35323A0074BE84 /* textureShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,8 +149,6 @@
 				CE9C45660D74C89400FBB88B /* Game.h */,
 				CE9C45620D74C88600FBB88B /* Player.cpp */,
 				CE9C45630D74C88600FBB88B /* Player.h */,
-				CEF01E0A1A3532300074BE84 /* textureShader.glslf */,
-				CEF01E0C1A35323A0074BE84 /* textureShader.glslv */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -164,7 +158,7 @@
 			children = (
 			);
 			name = Resources;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
@@ -314,8 +308,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEF01E0B1A3532300074BE84 /* textureShader.glslf in Resources */,
-				CEF01E0D1A35323A0074BE84 /* textureShader.glslv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +371,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
 				SDKROOT = macosx;
@@ -405,6 +398,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
 				SDKROOT = macosx;

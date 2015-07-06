@@ -82,6 +82,13 @@ Game::PostRendererInitialize()
     if (!mPlayer)
         return false;
 
+    // Set some lights
+    IvVector3 dir(-1.0f, 0.5f, 0.25f);
+    dir.Normalize();
+    IvRenderer::mRenderer->SetDefaultLightDirection(dir);
+    IvRenderer::mRenderer->SetDefaultLightAmbient(0.1f, 0.1f, 0.1f, 1.0f);
+    IvRenderer::mRenderer->SetDefaultLightDiffuse(0.75f, 0.75f, 0.75f, 1.0f);
+    
     return true;
 }   // End of Game::Initialize()
 

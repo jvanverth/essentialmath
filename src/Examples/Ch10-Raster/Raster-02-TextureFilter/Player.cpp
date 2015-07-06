@@ -55,10 +55,10 @@ Player::Player()
     IvImage* image = IvImage::CreateFromFile("euro.tga");
     if (image)
     {
-        void* pixels = image->GetPixels();
         mTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight(), &pixels, 1);
+            image->GetWidth(), image->GetHeight(), image->GetPixels(),
+            kImmutableUsage);
 
         delete image;
         image = 0;
@@ -66,17 +66,16 @@ Player::Player()
 
     mTexture->SetMagFiltering(kBilerpTexMagFilter);
     mTexture->SetMinFiltering(kBilerpTexMinFilter);
-    mTexture->SetAddressingU(kWrapTexAddr);
-    mTexture->SetAddressingV(kWrapTexAddr);
-
+    mTexture->SetAddressingU(kClampTexAddr);
+    mTexture->SetAddressingV(kClampTexAddr);
 
     const unsigned int size = 128;
     mCheckerTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, size, size, NULL, 1, kDynamicUsage);
+        kRGB24TexFmt, size, size, NULL, kDynamicUsage);
     mCheckerTexture->SetMagFiltering(kBilerpTexMagFilter);
     mCheckerTexture->SetMinFiltering(kBilerpTexMinFilter);
-    mCheckerTexture->SetAddressingU(kWrapTexAddr);
-    mCheckerTexture->SetAddressingV(kWrapTexAddr);
+    mCheckerTexture->SetAddressingU(kClampTexAddr);
+    mCheckerTexture->SetAddressingV(kClampTexAddr);
 
     unsigned char* pixels = (unsigned char*)(mCheckerTexture->BeginLoadData(0));
 
