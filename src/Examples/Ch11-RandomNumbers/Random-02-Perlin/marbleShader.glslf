@@ -1,5 +1,9 @@
-varying vec3 localPos;
-varying vec4 color;
+#version 150
+
+in vec3 localPos;
+in vec4 color;
+
+out vec4 fragColor;
 
 void main()
 {
@@ -9,5 +13,5 @@ void main()
                  + noise1(4.0*localPos)*0.25 + noise1(8.0*localPos)*0.125);
     float interp = sin(6.0*localPos.y + 8.0*turb)*0.65;
     vec3 texColor = mix(light, dark, interp);
-    gl_FragColor = color*vec4(texColor, 1.0);
+    fragColor = color*vec4(texColor, 1.0);
 }

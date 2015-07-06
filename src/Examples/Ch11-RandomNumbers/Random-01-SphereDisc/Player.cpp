@@ -67,7 +67,7 @@ Player::Player()
     
 
 	mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1500,
-                                                                                NULL, true);
+                                                                                NULL, kDefaultUsage);
     IvCPVertex* dataPtr = (IvCPVertex*) mVertices->BeginLoadData();
     for (unsigned int i = 0; i < 1500; ++i)
     {
