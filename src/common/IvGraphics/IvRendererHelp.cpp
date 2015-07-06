@@ -813,7 +813,7 @@ IvDrawUnitSphere()
     
 }   // End of IvDrawUnitSphere()
 
-/*
+
 //-------------------------------------------------------------------------------
 // @ IvDrawCapsule()
 //-------------------------------------------------------------------------------
@@ -827,9 +827,11 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 	const int slices = 24;
 	if ( capsuleBottomVertices == 0 )
 	{
-		capsuleBottomVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, slices*stacks/2+1);
+		capsuleBottomVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
+                                            kNPFormat, slices*stacks/2+1, NULL, kDefaultUsage);
 		IvNPVertex* vertexPtr = (IvNPVertex*) capsuleBottomVertices->BeginLoadData();
-		capsuleBottomIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(3*slices*stacks);
+		capsuleBottomIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
+                                            3*slices*stacks, NULL, kDefaultUsage);
 		UInt32* indexPtr = (UInt32*) capsuleBottomIndices->BeginLoadData();
 		int currentVertex = 0;
 		int currentIndex = 0;
@@ -905,9 +907,11 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 
 	if ( capsuleTopVertices == 0 )
 	{
-		capsuleTopVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, slices*stacks/2+1);
+		capsuleTopVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
+                                                  kNPFormat, slices*stacks/2+1, NULL, kDefaultUsage);
 		IvNPVertex* vertexPtr = (IvNPVertex*) capsuleTopVertices->BeginLoadData();
-		capsuleTopIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(3*slices*stacks);
+		capsuleTopIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
+                                                  3*slices*stacks, NULL, kDefaultUsage);
 		UInt32* indexPtr = (UInt32*) capsuleTopIndices->BeginLoadData();
 		int currentVertex = 0;
 		int currentIndex = 0;
@@ -987,9 +991,11 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     
 	if ( capsuleMidVertices == 0 )
 	{
-		capsuleMidVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, slices*2);
+		capsuleMidVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
+                                                            kNPFormat, slices*2, NULL, kDefaultUsage);
 		IvNPVertex* vertexPtr = (IvNPVertex*) capsuleMidVertices->BeginLoadData();
-		capsuleMidIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6*slices);
+		capsuleMidIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
+                                                            6*slices, NULL, kDefaultUsage);
 		UInt32* indexPtr = (UInt32*) capsuleMidIndices->BeginLoadData();
 		int currentVertex = 0;
 		int currentIndex = 0;
@@ -1122,7 +1128,7 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 	IvRenderer::mRenderer->SetShaderProgram(oldShader);
 
 }   // End of IvDrawCapsule()
-*/
+
 
 //-------------------------------------------------------------------------------
 // @ IvDrawLine()
@@ -1135,10 +1141,11 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 void 
 IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
 {
-/*	// create vertex buffer if not there
+	// create vertex buffer if not there
 	if ( lineVertexBuffer == 0 )
 	{
-		lineVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2);
+		lineVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2,
+                                                                                           NULL, kDynamicUsage);
 	}
     
 	IvCPVertex* dataPtr = (IvCPVertex*) lineVertexBuffer->BeginLoadData();
@@ -1157,7 +1164,6 @@ IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
 
     // restore data
 	IvRenderer::mRenderer->SetShaderProgram(oldShader);
-*/
 
 }   // End of IvDrawLine()
 

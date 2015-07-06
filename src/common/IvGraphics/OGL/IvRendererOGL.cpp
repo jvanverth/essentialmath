@@ -353,12 +353,8 @@ void IvRendererOGL::SetFillMode( IvFillMode fill )
 {
     if (fill == kWireframeFill)
     {
-#ifndef PLATFORM_OSX
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDisable( GL_CULL_FACE );
-#else
-        glPolygonMode(GL_FRONT, GL_LINE);
-#endif        
     }
     else if (fill == kSolidFill)
     {

@@ -95,7 +95,8 @@ IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
         goto error_exit;
 
     // read verts
-    geom->mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts);
+    geom->mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
+                                                                                      NULL, kDefaultUsage);
     dataPtr = (IvCNPVertex*) geom->mVertices->BeginLoadData();
     tempPosition = new IvVector3[numVerts];	// save for capsule creation
     for ( UInt32 i = 0; i < numVerts; ++i )
@@ -146,7 +147,8 @@ IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
         goto error_exit;
 
     // read indices
-    geom->mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices);
+    geom->mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices,
+                                                                                    NULL, kDefaultUsage);
     indexPtr = static_cast<UInt32*>(geom->mIndices->BeginLoadData());
     for ( UInt32 i = 0; i < numIndices; ++i )
     {
