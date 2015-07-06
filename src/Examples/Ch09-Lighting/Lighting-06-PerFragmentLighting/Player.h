@@ -17,9 +17,7 @@
 //-------------------------------------------------------------------------------
 
 #include <IvMatrix33.h>
-#include <IvVector2.h>
 #include <IvVector3.h>
-#include <IvVector4.h>
 
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
@@ -50,7 +48,7 @@ private:
     IvIndexBuffer* mPlaneIndices;
     IvVertexBuffer* mPlaneVerts;
 
-    IvVector4 mLightPos;
+    IvVector3 mLightPos;
 
     IvShaderProgram* mFraglitShader;
     IvShaderProgram* mVertlitShader;

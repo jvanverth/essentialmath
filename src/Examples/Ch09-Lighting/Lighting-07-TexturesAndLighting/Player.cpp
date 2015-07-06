@@ -62,29 +62,18 @@ Player::Player()
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
 
-    mShader->GetUniform("pointLightIntensity")->SetValue(1.0f, 0);
-
-    mShader->GetUniform("pointLightAttenuation")->SetValue(
-        IvVector4(1.0f, 0.0f, 0.0f, 0.0f), 0);
-
-    mShader->GetUniform("materialAmbientColor")->SetValue(
-        IvVector4(1.0f, 0.0f, 0.0f, 0.0f), 0);
-
-    mShader->GetUniform("materialDiffuseColor")->SetValue(
-        IvVector4(0.0f, 0.0f, 1.0f, 0.0f), 0);
-
-    mShader->GetUniform("materialSpecularColor")->SetValue(
-        IvVector4(1.0f, 1.0f, 1.0f, 0.0f), 0);
-
-    mShader->GetUniform("materialSpecularExp")->SetValue(8.0f, 0);
-
-    mLightComponents = IvVector4(0.5f, 0.5f, 0.5f, 0.0f);
-    mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
-
-    mShader->GetUniform("lightColor")->SetValue(IvVector4(1.0f, 1.0f, 1.0f, 0.0f), 0);
-
-    mLightPos = IvVector4(0.0f, -10.0f, 0.0f, 1.0f);
-
+    mShader->GetUniform("pointLightIntensity")->SetValue(IvVector3(50.f, 50.f, 50.0f), 0);
+    
+    mShader->GetUniform("ambientLightColor")->SetValue(IvVector3(0.0f, 0.0f, 0.2f), 0);
+    
+    mLightPos = IvVector3(0.0f, -10.0f, 0.0f);
+    
+    mSpecularPercentage = 0.25f;
+    mAmbientFactor = 0.1f;
+    mEmissiveFactor = 0.0f;
+    
+    ComputeMaterialComponents();
+    
     mColorUniform = mShader->GetUniform("splitColor");
     mColorUniform->SetValue(0.0f, 0);
     mLightPosUniform = mShader->GetUniform("pointLightPosition");
@@ -96,14 +85,7 @@ Player::Player()
     {
         mTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight());
-
-        unsigned char* pixels = (unsigned char*)(mTexture->BeginLoadData(0));
-
-        memcpy(pixels, image->GetPixels(), 
-            image->GetBytesPerPixel() * image->GetWidth() * image->GetHeight());
-
-        mTexture->EndLoadData(0);
+            image->GetWidth(), image->GetHeight(), image->GetPixels(), kImmutableUsage);
 
         delete image;
         image = 0;
@@ -132,6 +114,58 @@ Player::~Player()
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereVerts);
 }   // End of Player::~Player()
 
+
+//-------------------------------------------------------------------------------
+// @ Player::ComputeMaterialComponents()
+//-------------------------------------------------------------------------------
+// Update material values
+//-------------------------------------------------------------------------------
+void
+Player::ComputeMaterialComponents()
+{
+    IvVector3 albedo3(0.7f, 0.0f, 1.0f);
+    IvVector4 albedo4(0.7f, 0.0f, 1.0f, 1.0f);
+    
+    if (mEmissiveFactor > 1.0f)
+    {
+        mEmissiveFactor = 1.0f;
+    }
+    else if (mEmissiveFactor < 0.0f)
+    {
+        mEmissiveFactor = 0.0f;
+    }
+    mShader->GetUniform("materialEmissiveColor")->SetValue(mEmissiveFactor*albedo3, 0);
+    
+    if (mAmbientFactor > 1.0f)
+    {
+        mAmbientFactor = 1.0f;
+    }
+    else if (mAmbientFactor < 0.0f)
+    {
+        mAmbientFactor = 0.0f;
+    }
+    mShader->GetUniform("materialAmbientColor")->SetValue(mAmbientFactor*albedo3, 0);
+    
+    if (mSpecularPercentage > 1.0f)
+    {
+        mSpecularPercentage = 1.0f;
+    }
+    else if (mSpecularPercentage < 0.0f)
+    {
+        mSpecularPercentage = 0.0f;
+    }
+    mShader->GetUniform("materialDiffuseColor")->SetValue(
+                                                          (1.0f - mSpecularPercentage)*albedo4, 0);
+    
+    float specularExp = 16.0f;
+    IvVector3 specularColor(1.0f, 1.0f, 1.0f);
+    specularColor *= mSpecularPercentage;
+    specularColor *= (specularExp + 8.0f)/8.0f; // normalization factor
+    mShader->GetUniform("materialSpecularColorExp")->SetValue(IvVector4(specularColor.GetX(),
+                                                                        specularColor.GetY(),
+                                                                        specularColor.GetZ(),
+                                                                        specularExp), 0);
+}
 
 //-------------------------------------------------------------------------------
 // @ Player::Update()
@@ -168,62 +202,45 @@ Player::Update( float dt )
 
     if (lightPosChanged)
     {       
-        mLightPos += IvVector4(x, y, z, 0.0f);
+        mLightPos += IvVector3(x, y, z);
 
         lightPosChanged = false;
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('0'))
-    {
-        mShader->GetUniform("pointLightAttenuation")->SetValue(
-            IvVector4(1.0f, 0.0f, 0.0f, 0.0f), 0);
-    }
-
-    if (IvGame::mGame->mEventHandler->IsKeyDown('1'))
-    {
-        mShader->GetUniform("pointLightAttenuation")->SetValue(
-            IvVector4(0.0f, 0.25f, 0.0f, 0.0f), 0);
-    }
-
-    if (IvGame::mGame->mEventHandler->IsKeyDown('2'))
-    {
-        mShader->GetUniform("pointLightAttenuation")->SetValue(
-            IvVector4(0.0f, 0.0f, 0.0125f, 0.0f), 0);
-    }
-
+    bool materialChanged;
     if (IvGame::mGame->mEventHandler->IsKeyDown('q'))
     {
-        mLightComponents.SetX( mLightComponents.GetX() + dt);
-        mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
+        mAmbientFactor += dt;
+        materialChanged = true;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('a'))
     {
-        mLightComponents.SetX( mLightComponents.GetX() - dt);
-        mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
+        mAmbientFactor -= dt;
+        materialChanged = true;
     }
-
+    
     if (IvGame::mGame->mEventHandler->IsKeyDown('w'))
     {
-        mLightComponents.SetY( mLightComponents.GetY() + dt);
-        mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
+        mSpecularPercentage += dt;
+        materialChanged = true;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('s'))
     {
-        mLightComponents.SetY( mLightComponents.GetY() - dt);
-        mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
+        mSpecularPercentage -= dt;
+        materialChanged = true;
     }
-
+    
     if (IvGame::mGame->mEventHandler->IsKeyDown('e'))
     {
-        mLightComponents.SetZ( mLightComponents.GetZ() + dt);
-        mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
+        mEmissiveFactor += dt;
+        materialChanged = true;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('d'))
     {
-        mLightComponents.SetZ( mLightComponents.GetZ() - dt);
-        mShader->GetUniform("lightAmbDiffSpec")->SetValue(mLightComponents, 0);
+        mEmissiveFactor -= dt;
+        materialChanged = true;
     }
-
+    
     if (IvGame::mGame->mEventHandler->IsKeyDown('x'))
     {
         mColorUniform->SetValue(1.0f, 0);
@@ -233,11 +250,20 @@ Player::Update( float dt )
         mColorUniform->SetValue(0.0f, 0);
     }
 
-    // clear transform
     if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
     {
-        mLightPos = IvVector4(0.0f, -10.0f, 0.0f, 1.0f);
+        mLightPos = IvVector3(0.0f, -10.0f, 0.0f);
+        mEmissiveFactor = 0.0f;
+        mAmbientFactor = 0.1f;
+        mSpecularPercentage = 0.25f;
+        materialChanged = true;
     }
+    
+    if (materialChanged)
+    {
+        ComputeMaterialComponents();
+    }
+    
 }   // End of Player::Update()
 
 
@@ -251,7 +277,7 @@ Player::Render()
 {   
     // build 4x4 matrix
     IvMatrix44 transform;
-
+    
     int i,j;
     for (j = -1; j <= 1; j++)
     {
@@ -259,18 +285,16 @@ Player::Render()
         {
             transform(0, 3) = 5.0f * i;
             transform(2, 3) = 5.0f * j;
-
-            IvMatrix44 inv = transform;
-            inv.AffineInverse();
-
+            
             mLightPosUniform->SetValue(
-                inv * mLightPos, 0);
-
+                                       mLightPos, 0);
+            
             mViewPosUniform->SetValue(
-                inv * IvVector4(0.0f, -10.0f, 0.0f, 1.0f), 0);
-
-            ::IvSetWorldMatrix(transform);
-
+                                      IvVector3(0.0f, -10.0f, 0.0f), 0);
+            
+            IvSetWorldMatrix(transform);
+            mShader->GetUniform("modelMatrix")->SetValue(transform, 0);
+            
             // draw geometry
             DrawSphere();
         }
@@ -305,7 +329,7 @@ Player::CreateSphere()
     const unsigned int verts = steps * steps;
 
     mSphereVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTNPFormat, verts);
+        kTNPFormat, verts, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvTNPVertex* tempVerts = (IvTNPVertex*)(mSphereVerts->BeginLoadData());
@@ -360,7 +384,7 @@ Player::CreateSphere()
     const unsigned int sphereIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mSphereIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(sphereIndexCount);
+        CreateIndexBuffer(sphereIndexCount, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mSphereIndices->BeginLoadData());
 

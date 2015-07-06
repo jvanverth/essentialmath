@@ -1,7 +1,13 @@
-varying vec2 uv;
+layout(location = POSITION) in vec4 position;
+layout(location = TEXCOORD0) in vec2 texCoords;
+
+out vec2 uv;
+
+uniform mat4 IvModelViewProjectionMatrix;
 
 void main()
 {
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-    uv = gl_MultiTexCoord0.xy;
+    gl_Position = IvModelViewProjectionMatrix * position;
+
+    uv = texCoords;
 }

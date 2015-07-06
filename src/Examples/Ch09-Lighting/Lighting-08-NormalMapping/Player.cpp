@@ -64,14 +64,7 @@ Player::Player()
     {
         mTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight());
-
-        unsigned char* pixels = (unsigned char*)(mTexture->BeginLoadData(0));
-
-        memcpy(pixels, image->GetPixels(), 
-            image->GetBytesPerPixel() * image->GetWidth() * image->GetHeight());
-
-        mTexture->EndLoadData(0);
+            image->GetWidth(), image->GetHeight(), image->GetPixels(), kImmutableUsage);
 
         delete image;
         image = 0;
@@ -90,7 +83,8 @@ Player::Player()
 
     mShader->GetUniform("Texture")->SetValue(mTexture);
  
-    mLightPos = IvVector4(0.7f, 0.7f, 0.0f, 0.0f);
+    mLightPos = IvVector3(0.0f, 0.8f, 0.2f);
+    mLightPos.Normalize();
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
 
@@ -195,7 +189,7 @@ Player::Update( float dt )
 
     if (lightDirChanged)
     {
-        IvMatrix44 rotate;
+        IvMatrix33 rotate;
         rotate.RotationX(r);
        
         mLightPos = rotate * mLightPos;
@@ -231,10 +225,9 @@ Player::Render()
     transform(1,3) = mTranslate.GetY();
     transform(2,3) = mTranslate.GetZ();
 
-    mShader->GetUniform("dirLightPosition")->SetValue(
-        transform.AffineInverse() * mLightPos, 0);
+    mShader->GetUniform("dirLightPosition")->SetValue(mLightPos, 0);
 
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
 
     // draw geometry
     DrawPlane();
@@ -262,7 +255,7 @@ void
 Player::CreatePlane()                                    
 {
     mPlaneVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4);
+        kTCPFormat, 4, NULL, kDefaultUsage);
 
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mPlaneVerts->BeginLoadData());
 
@@ -302,7 +295,7 @@ Player::CreatePlane()
 
     mPlaneVerts->EndLoadData();
 
-    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4);
+    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mPlaneIndices->BeginLoadData();
 

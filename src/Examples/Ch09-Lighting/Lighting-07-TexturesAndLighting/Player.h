@@ -41,10 +41,11 @@ public:
     void Render();
 
 private:
+    void ComputeMaterialComponents();
     void CreateSphere();
     void DrawSphere();
-
-    IvVector4 mLightPos;
+    
+    IvVector3 mLightPos;
 
     float mRadius;
 
@@ -52,7 +53,9 @@ private:
     IvVertexBuffer* mSphereVerts;
 
     IvShaderProgram* mShader;
-    IvVector4 mLightComponents;
+    float            mSpecularPercentage;
+    float            mAmbientFactor;
+    float            mEmissiveFactor;
 
     IvTexture* mTexture;
 

@@ -1,9 +1,15 @@
-varying vec2 uv;
-uniform vec4 dirLightPosition;
+#version 150
+
+in vec2 uv;
+out vec4 fragColor;
+
+uniform vec3 dirLightPosition;
 uniform sampler2D Texture;
 
 void main()
 {
-	float lighting = clamp(dot(2.0 * (texture2D(Texture, uv).rgb - 0.5), dirLightPosition.xyz), 0.0, 1.0);
-    gl_FragColor = vec4(lighting, lighting, lighting, 1);
+    vec3 normal = 2.0 * (texture(Texture, uv).rgb - vec3(0.5));
+    float lighting = clamp(dot(normal, dirLightPosition), 0.0, 1.0);
+
+    fragColor = vec4(lighting, lighting, lighting, 1.0);
 }

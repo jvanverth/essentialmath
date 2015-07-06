@@ -68,7 +68,7 @@ Player::Player()
         IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
         "fraglitShader"));
 
-    mLightPos = IvVector4(0.0f, 0.0f, 1.0f, 0.0f);
+    mLightPos = IvVector3(0.0f, 0.0f, 1.0f);
 
     mShader = mFraglitShader;
 
@@ -171,7 +171,7 @@ Player::Update( float dt )
 
     if (lightDirChanged)
     {
-        IvMatrix44 rotate;
+        IvMatrix33 rotate;
         rotate.RotationX(r);
        
         mLightPos = rotate * mLightPos;
@@ -217,7 +217,7 @@ Player::Render()
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
     mShader->GetUniform("dirLightPosition")->SetValue(
-        transform.AffineInverse() * mLightPos, 0);
+        mLightPos, 0);
 
     IvSetWorldMatrix(transform);
 

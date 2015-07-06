@@ -52,7 +52,7 @@ private:
 
     IvTexture* mTexture;
 
-    IvVector4 mLightPos;
+    IvVector3 mLightPos;
 
     IvShaderProgram* mShader;
 };

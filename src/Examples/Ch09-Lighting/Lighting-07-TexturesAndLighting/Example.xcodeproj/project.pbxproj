@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE2E6B6C1A392B5600E2C2B8 /* pointShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CE2E6B6A1A392B5600E2C2B8 /* pointShader.glslf */; };
-		CE2E6B6D1A392B5600E2C2B8 /* pointShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CE2E6B6B1A392B5600E2C2B8 /* pointShader.glslv */; };
+		CE5588191B4A14DD0017EB8A /* texlitShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CE5588171B4A14DD0017EB8A /* texlitShader.glslf */; };
+		CE55881A1B4A14DD0017EB8A /* texlitShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CE5588181B4A14DD0017EB8A /* texlitShader.glslv */; };
 		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
 		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
 		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
@@ -84,8 +84,8 @@
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE2E6B6A1A392B5600E2C2B8 /* pointShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pointShader.glslf; sourceTree = "<group>"; };
-		CE2E6B6B1A392B5600E2C2B8 /* pointShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pointShader.glslv; sourceTree = "<group>"; };
+		CE5588171B4A14DD0017EB8A /* texlitShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = texlitShader.glslf; sourceTree = "<group>"; };
+		CE5588181B4A14DD0017EB8A /* texlitShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = texlitShader.glslv; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.0.4/src/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -153,8 +153,8 @@
 				CE9C45660D74C89400FBB88B /* Game.h */,
 				CE9C45620D74C88600FBB88B /* Player.cpp */,
 				CE9C45630D74C88600FBB88B /* Player.h */,
-				CE2E6B6A1A392B5600E2C2B8 /* pointShader.glslf */,
-				CE2E6B6B1A392B5600E2C2B8 /* pointShader.glslv */,
+				CE5588171B4A14DD0017EB8A /* texlitShader.glslf */,
+				CE5588181B4A14DD0017EB8A /* texlitShader.glslv */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -164,7 +164,7 @@
 			children = (
 			);
 			name = Resources;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
@@ -314,8 +314,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE2E6B6D1A392B5600E2C2B8 /* pointShader.glslv in Resources */,
-				CE2E6B6C1A392B5600E2C2B8 /* pointShader.glslf in Resources */,
+				CE5588191B4A14DD0017EB8A /* texlitShader.glslf in Resources */,
+				CE55881A1B4A14DD0017EB8A /* texlitShader.glslv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,9 +379,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -405,9 +406,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};
