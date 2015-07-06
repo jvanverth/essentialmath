@@ -1,10 +1,16 @@
-varying vec4 color;
+uniform vec3 dirLightPosition;
 
-uniform vec4 dirLightPosition;
+layout(location = POSITION) in vec4 position;
+layout(location = NORMAL) in vec3 inNormal;
+
+out vec4 color;
+
+uniform mat4 IvModelViewProjectionMatrix;
 
 void main()
 {
-	float lighting = clamp(dot(gl_Normal, dirLightPosition.xyz), 0.0, 1.0);
-	color.rgb = vec3(lighting, lighting, lighting);    
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    float lighting = clamp(dot(normalize(inNormal), dirLightPosition), 0.0, 1.0);
+    color = vec4(lighting, lighting, lighting, 1.0);
+    
+    gl_Position = IvModelViewProjectionMatrix * position;
 }

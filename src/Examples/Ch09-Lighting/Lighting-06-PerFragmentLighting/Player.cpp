@@ -219,7 +219,7 @@ Player::Render()
     mShader->GetUniform("dirLightPosition")->SetValue(
         transform.AffineInverse() * mLightPos, 0);
 
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
 
     // draw geometry
     DrawPlane();
@@ -247,7 +247,7 @@ void
 Player::CreatePlane()                                    
 {
     mPlaneVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kNPFormat, 4);
+        kNPFormat, 4, NULL, kDefaultUsage);
 
     IvNPVertex* tempVerts = (IvNPVertex*)(mPlaneVerts->BeginLoadData());
 
@@ -275,7 +275,8 @@ Player::CreatePlane()
 
     mPlaneVerts->EndLoadData();
 
-    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4);
+    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, NULL,
+                                                                                   kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mPlaneIndices->BeginLoadData();
 

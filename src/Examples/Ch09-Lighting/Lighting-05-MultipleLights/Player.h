@@ -40,22 +40,19 @@ public:
     void Render();
 
 private:
-    void CreateSphere();
-    void DrawSphere();
-
+    void ComputeMaterialComponents();
+    
     float mRadius;
-
-    IvIndexBuffer* mSphereIndices;
-    IvVertexBuffer* mSphereVerts;
 
     IvShaderProgram* mShader;
 
     enum { NUM_LIGHTS = 2 };
-
-    IvVector4 mLightComponents;
-
     unsigned int mCurrentLight;
-    IvVector4 mLightPos[NUM_LIGHTS];
+    IvVector3 mLightPos[NUM_LIGHTS];
+    
+    float mSpecularPercentage;
+    float mAmbientFactor;
+    float mEmissiveFactor;
 
     IvUniform* mLightPosUniform;
     IvUniform* mViewPosUniform;

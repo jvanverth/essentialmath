@@ -165,10 +165,11 @@
 					_DEBUG,
 				);
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "";
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -182,10 +183,11 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_OSX;
 				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "";
 				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
 				PRODUCT_NAME = IvEngine;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

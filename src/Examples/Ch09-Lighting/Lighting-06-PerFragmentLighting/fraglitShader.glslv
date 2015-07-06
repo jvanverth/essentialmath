@@ -1,9 +1,13 @@
-varying vec3 normal;
+layout(location = POSITION) in vec4 position;
+layout(location = NORMAL) in vec3 inNormal;
 
-uniform vec4 dirLightPosition;
+out vec3 normal;
+
+uniform mat4 IvModelViewProjectionMatrix;
 
 void main()
 {
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-	normal = gl_Normal;    
+    gl_Position = IvModelViewProjectionMatrix * position;
+    
+    normal = inNormal;
 }
