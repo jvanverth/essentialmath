@@ -382,7 +382,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -409,7 +409,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};

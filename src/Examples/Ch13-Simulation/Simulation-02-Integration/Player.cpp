@@ -53,7 +53,7 @@ bool firstStep = true;
 
 std::vector<IvVector3> positions;
 
-char* modeStrings[] = 
+const char* modeStrings[] =
 {
 	"Euler", "Midpoint", 
 	"RK4", "NaiveImplicit", "PredictorCorrector", 
@@ -300,7 +300,8 @@ Player::Render()
 	// draw expected orbit
     if ( !mOrbit )
     {
-        mOrbit = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 33);
+        mOrbit = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 33,
+                                                                                 NULL, kDefaultUsage);
 	    IvCPVertex* dataPtr = (IvCPVertex*) mOrbit->BeginLoadData();
         for (UInt32 i = 0; i <= 32; ++i)
         {
@@ -316,7 +317,8 @@ Player::Render()
     // draw the actual path
     if ( !mPath )
     {
-        mPath = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1280);
+        mPath = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1280,
+                                                                                NULL, kDynamicUsage);
     }
 
 	IvCPVertex* dataPtr = (IvCPVertex*) mPath->BeginLoadData();

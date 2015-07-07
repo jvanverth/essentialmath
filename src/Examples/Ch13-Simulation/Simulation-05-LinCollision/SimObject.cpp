@@ -191,7 +191,6 @@ SimObject::CurrentForce( const IvVector3& position, const IvVector3& velocity,
 {   
     IvVector3 totalForce = mConstantForce;
     // add some drag
-    float speed = velocity.Length();
     totalForce -= 0.25f*mMass*velocity;
 
     return totalForce;
@@ -210,8 +209,7 @@ SimObject::CurrentTorque( const IvVector3& position, const IvVector3& velocity,
 {   
     IvVector3 totalTorque = mConstantTorque;
     // fake some angular friction -- should use moments of inertia, really
-    float speed = angularVelocity.Length();
-    totalTorque -= 0.25f*mMass*angularVelocity; 
+    totalTorque -= 0.25f*mMass*angularVelocity;
 
     return totalTorque;
 

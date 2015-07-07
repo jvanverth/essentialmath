@@ -84,9 +84,7 @@ Player::~Player()
 //-------------------------------------------------------------------------------
 void
 Player::Update( float dt )
-{
-    float x = 0.0f, y = 0.0f, z = 0.0f; 
-    
+{    
     // where the force is applied
     IvVector3 offset = mRotate.Rotate( kForceOffset );
     IvVector3 force;
@@ -233,7 +231,7 @@ Player::Render()
     IvDrawCube( kYellow );
                     
     // need to rotate force vector into local space and add to offset to get end
-    IvVector3 forceEnd = kForceOffset + ::Conjugate(mRotate).Rotate(mConstantForce);
+    IvVector3 forceEnd = kForceOffset + Conjugate(mRotate).Rotate(mConstantForce);
     IvDrawLine( kForceOffset, forceEnd, kOrange );
 }
 

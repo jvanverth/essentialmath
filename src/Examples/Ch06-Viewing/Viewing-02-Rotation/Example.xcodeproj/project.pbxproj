@@ -314,10 +314,10 @@
 					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.0.4/src",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -345,10 +345,10 @@
 					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.0.4/src",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 				SYMROOT = .;
 				WRAPPER_EXTENSION = app;
 			};

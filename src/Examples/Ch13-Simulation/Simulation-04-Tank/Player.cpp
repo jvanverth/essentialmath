@@ -140,8 +140,6 @@ Player::~Player()
 void
 Player::Update( float dt )
 {
-    float x = 0.0f, y = 0.0f, z = 0.0f; 
-    
     // add up forces
     mForce1.Zero();
     mForce2.Zero();

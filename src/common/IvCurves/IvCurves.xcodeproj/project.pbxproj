@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -127,9 +127,10 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "IvCurves" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -170,7 +171,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = IvCurves;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -178,16 +179,12 @@
 		1DEB91ED08733DB70010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = IvCurves;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -204,8 +201,11 @@
 					../IvUtility,
 					../IvGraphics,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
+				SDKROOT = macosx;
 				SYMROOT = ../Libs;
 			};
 			name = Debug;
@@ -225,8 +225,10 @@
 					../IvGraphics,
 					../..,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PREBINDING = NO;
+				SDKROOT = macosx;
 				SYMROOT = ../Libs;
 				USER_HEADER_SEARCH_PATHS = "";
 			};

@@ -18,13 +18,7 @@
 #include <IvVector4.h>
 #include <IvMatrix44.h>
 #include <IvEventHandler.h>
-#include <GLUT/glut.h>
-#include <OpenGL/CGLCurrent.h>
 #include <OpenGL/OpenGL.h>
-
-//*** delete this
-#include <IvAABB.h>
-#include <IvRay3.h>
 
 #include "Game.h"
 #include "Player.h"
@@ -125,12 +119,6 @@ Game::PostRendererInitialize()
     
     ::IvSetDefaultLighting();
     
-    //*** delete this
-    IvAABB box(IvVector3(-1.0f, -1.0f, -1.0f), IvVector3(1.0f, 1.0f, 1.0f));
-    IvRay3 ray(IvVector3(1.0, 0.0f, 0.0), IvVector3(-0.0f, -1.0f, -0.0f));
-    
-    return box.Intersect(ray);
-
     return true;
 }   // End of Game::PostRendererInitialize()
 
@@ -271,7 +259,7 @@ Game::Render()                                  // Here's Where We Do All The Dr
     }
     
     // draw the collision state
-    IvSetWorldIdentity();
+/*    IvSetWorldIdentity();
     glRasterPos3f(-37, 27, 0);
     char outString[256];
     strncpy(outString, "Collision: ", 255);
@@ -303,5 +291,5 @@ Game::Render()                                  // Here's Where We Do All The Dr
     {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
     }
-    
+    */
 }

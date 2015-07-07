@@ -452,8 +452,8 @@ SimObject::Render()
 		indexPtr[currentIndex++] = currentVertex-1;
 		indexPtr[currentIndex++] = currentVertex-slices;
 
-  		stoneVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr);
-		stoneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr);
+  		stoneVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr, kImmutableUsage);
+		stoneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr, kImmutableUsage);
        
 		if (!stoneVertices || !stoneIndices)
 		{
