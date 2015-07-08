@@ -164,10 +164,10 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;opengl32.lib;glew32s.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;opengl32.lib;glew32s.lib;glfw3.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>ExampleOGL_d.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\..\common\Libs\OGLDebug;..\..\..\common\Libs\Win32Debug;..\..\..\gl;..\..\..\glew-1.12.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\common\Libs\OGLDebug;..\..\..\common\Libs\Win32Debug;..\..\..\gl;..\..\..\glew-1.12.0\lib\Release\Win32;..\..\..\glfw-3.1.1\lib-vc2012;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(Configuration)/ExampleOGL_d.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>

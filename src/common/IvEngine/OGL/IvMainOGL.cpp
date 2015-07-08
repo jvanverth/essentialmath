@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
     glfwMakeContextCurrent(window);
     
 #ifndef PLATFORM_OSX
+	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
     if ( GLEW_OK != err )
     {
@@ -92,13 +93,6 @@ int main(int argc, char *argv[])
         ERROR_OUT("Error: OpenGL version 3.2 is not supported." << std::endl);
         glfwDestroyWindow(window);
         glfwTerminate();
-        return 1;
-    }
-
-    // check for ARB compatibility
-    if ( !GLEW_ARB_shader_objects || !GLEW_ARB_fragment_shader || !GLEW_ARB_vertex_shader )
-    {
-        ERROR_OUT("Error: GLSL is not supported." << std::endl);
         return 1;
     }
 
