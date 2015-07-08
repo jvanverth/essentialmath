@@ -13,6 +13,9 @@
 
 #include <stdlib.h>
 
+#ifndef PLATFORM_OSX
+#include <GL/glew.h>
+#endif
 #include <GLFW/glfw3.h>
 
 #include <IvGame.h>
@@ -84,9 +87,9 @@ int main(int argc, char *argv[])
     }
 
     // check for version compatibility
-    if ( !GLEW_VERSION_2_0 )
+    if ( !GLEW_VERSION_3_2 )
     {
-        ERROR_OUT("Error: OpenGL version 2.0 is not supported." << std::endl);
+        ERROR_OUT("Error: OpenGL version 3.2 is not supported." << std::endl);
         glfwDestroyWindow(window);
         glfwTerminate();
         return 1;
@@ -225,7 +228,7 @@ mouseCallback(GLFWwindow* window, int button, int action, int mods)
 unsigned int
 GetTime()
 {
-    return glfwGetTime()*1000.0f;
+    return static_cast<unsigned int>(glfwGetTime()*1000.0f);
 }
 
 

@@ -260,7 +260,7 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
     {
         subresourceData = new D3D11_SUBRESOURCE_DATA[mLevelCount];
 
-        for (int level = 0; level < mLevelCount; ++level)
+        for (unsigned int level = 0; level < mLevelCount; ++level)
         {
             void* pixelData = data[level];
 
@@ -312,7 +312,7 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
         delete [] subresourceData;
         if (kRGB24TexFmt == format)
         {
-            for (int level = 0; level < mLevelCount; ++level)
+            for (unsigned int level = 0; level < mLevelCount; ++level)
             {
                 delete[] mLevels[level].mData;
                 mLevels[level].mData = NULL;
@@ -341,7 +341,7 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
 void
 IvTextureDX11::Destroy()
 {
-    for (int i = 0; i < mLevelCount; i++)
+    for (unsigned int i = 0; i < mLevelCount; i++)
     {
         delete [] mLevels[i].mData;
     }

@@ -27,7 +27,8 @@
 #ifdef PLATFORM_OSX
 #include <OpenGL/gl3.h>
 #else
-#include <GL/gl3.h>
+#include <GL/glew.h>
+#include <GL/gl.h>
 #endif
 
 

@@ -157,7 +157,7 @@ get_textures:
 			constantDesc.mType = IvUniformType::kTextureUniform;
 			constantDesc.mSamplerSlot = bindingDesc.BindPoint;
 		}
-		else if (bindingDesc.Type == D3D_SIT_CBUFFER && !strnicmp(bindingDesc.Name, "$Globals", 8))
+		else if (bindingDesc.Type == D3D_SIT_CBUFFER && !_strnicmp(bindingDesc.Name, "$Globals", 8))
 		{
 			// ignore this, we handled it above
 		}

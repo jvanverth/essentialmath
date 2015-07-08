@@ -23,7 +23,7 @@
 #include <OpenGL/gl3.h>
 #else
 #include <GL/glew.h>
-#include <GL/gl3.h>
+#include <GL/gl.h>
 #endif
 
 //-------------------------------------------------------------------------------

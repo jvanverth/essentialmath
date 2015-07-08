@@ -54,9 +54,6 @@ public:
     // Currently, supports only 24- and 32-bit uncompressed RGB(A) TARGA files
     static IvImage* CreateFromFile(const char* pcFilename);
 
-    // Currently, supports only 24- and 32-bit uncompressed RGB(A) TARGA files
-    bool WriteToFile(const char* pcFilename);
-
 private:
     unsigned int mWidth;
     unsigned int mHeight;
