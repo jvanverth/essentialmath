@@ -33,7 +33,7 @@ class IvTexture;
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvResourceManagerDX11 : public IvResourceManager
+class IvResourceManagerD3D11 : public IvResourceManager
 { 
 public:
     IvVertexBuffer* CreateVertexBuffer(IvVertexFormat format, unsigned int numVertices, 
@@ -65,10 +65,10 @@ public:
 	void Destroy(IvTexture* tex);
     
 private: 
-	IvResourceManagerDX11(ID3D11Device* device);
-    ~IvResourceManagerDX11();
+	IvResourceManagerD3D11(ID3D11Device* device);
+    ~IvResourceManagerD3D11();
     
-    friend class IvRendererDX11;
+    friend class IvRendererD3D11;
     
 private: 
     // private D3D9 things 

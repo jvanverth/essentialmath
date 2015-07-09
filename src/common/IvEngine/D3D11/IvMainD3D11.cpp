@@ -1,7 +1,7 @@
 //===============================================================================
-// @ IvMainDX11.cpp
+// @ IvMainD3D11.cpp
 // 
-// Start up and main event loop for DX11
+// Start up and main event loop for D3D11
 // ------------------------------------------------------------------------------
 // Copyright (C) 2014 by James M. Van Verth. All rights reserved.
 //
@@ -24,7 +24,7 @@
 #include <IvGame.h>
 #include <IvDebugger.h>
 #include <IvEventHandler.h>
-#include <DX11/IvRendererDX11.h>
+#include <D3D11/IvRendererD3D11.h>
 
 HINSTANCE               gHInstance = NULL;
 HWND                    gHwnd = NULL;
@@ -102,8 +102,8 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 	}
 
 	// set up renderer
-	if (!IvRendererDX11::Create(gDevice, gContext, gRenderTargetView, gDepthStencilView)
-		|| !IvRendererDX11::mRenderer->Initialize(width, height))
+	if (!IvRendererD3D11::Create(gDevice, gContext, gRenderTargetView, gDepthStencilView)
+		|| !IvRendererD3D11::mRenderer->Initialize(width, height))
 	{
 		IvRenderer::Destroy();
 		DestroyDevice();

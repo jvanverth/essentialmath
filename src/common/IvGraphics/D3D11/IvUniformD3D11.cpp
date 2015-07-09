@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvUniformDX11.cpp
+// @ IvUniformD3D11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,12 +12,12 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvUniformDX11.h"
+#include "IvUniformD3D11.h"
 #include "IvAssert.h"
-#include "IvConstantTableDX11.h"
-#include "IvShaderProgramDX11.h"
-#include "IvRendererDX11.h"
-#include "IvTextureDX11.h"
+#include "IvConstantTableD3D11.h"
+#include "IvShaderProgramD3D11.h"
+#include "IvRendererD3D11.h"
+#include "IvTextureD3D11.h"
 #include <IvVector4.h>
 #include <IvMatrix44.h>
 
@@ -30,14 +30,14 @@
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::IvUniformDX11()
+// @ IvUniformD3D11::IvUniformD3D11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvUniformDX11::IvUniformDX11(IvUniformType type, unsigned int count, 
+IvUniformD3D11::IvUniformD3D11(IvUniformType type, unsigned int count, 
                              void* offset,
-							 IvConstantTableDX11* constantTable,
-							 IvShaderProgramDX11* shader)
+							 IvConstantTableD3D11* constantTable,
+							 IvShaderProgramD3D11* shader)
 	: IvUniform( type, count )
 	, mShader( shader )
 	, mOffset( offset )
@@ -65,12 +65,12 @@ IvUniformDX11::IvUniformDX11(IvUniformType type, unsigned int count,
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::IvUniformDX11()
+// @ IvUniformD3D11::IvUniformD3D11()
 //-------------------------------------------------------------------------------
 // Texture uniform constructor
 //-------------------------------------------------------------------------------
-IvUniformDX11::IvUniformDX11(int textureUnit, int samplerUnit,
-	                         IvShaderProgramDX11* shader)
+IvUniformD3D11::IvUniformD3D11(int textureUnit, int samplerUnit,
+	                         IvShaderProgramD3D11* shader)
 	: IvUniform(kTextureUniform, 1)
 	, mShader(shader)
 	, mTextureUnit(textureUnit)
@@ -80,11 +80,11 @@ IvUniformDX11::IvUniformDX11(int textureUnit, int samplerUnit,
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::~IvUniformDX11()
+// @ IvUniformD3D11::~IvUniformD3D11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvUniformDX11::~IvUniformDX11()
+IvUniformD3D11::~IvUniformD3D11()
 {
     switch (mType)
     {
@@ -104,11 +104,11 @@ IvUniformDX11::~IvUniformDX11()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::SetValue()
+// @ IvUniformD3D11::SetValue()
 //-------------------------------------------------------------------------------
 // Float set
 //-------------------------------------------------------------------------------
-void IvUniformDX11::SetValue( float value, unsigned int index)
+void IvUniformD3D11::SetValue( float value, unsigned int index)
 {
     if (mType != kFloatUniform)
         return;
@@ -123,11 +123,11 @@ void IvUniformDX11::SetValue( float value, unsigned int index)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::SetValue()
+// @ IvUniformD3D11::SetValue()
 //-------------------------------------------------------------------------------
 // Float vec3 set
 //-------------------------------------------------------------------------------
-void IvUniformDX11::SetValue(const IvVector3& value, unsigned int index)
+void IvUniformD3D11::SetValue(const IvVector3& value, unsigned int index)
 {
 	if (mType != kFloat3Uniform)
 		return;
@@ -142,11 +142,11 @@ void IvUniformDX11::SetValue(const IvVector3& value, unsigned int index)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::SetValue()
+// @ IvUniformD3D11::SetValue()
 //-------------------------------------------------------------------------------
 // Float vec4 set
 //-------------------------------------------------------------------------------
-void IvUniformDX11::SetValue( const IvVector4& value, unsigned int index )
+void IvUniformD3D11::SetValue( const IvVector4& value, unsigned int index )
 {
     if (mType != kFloat4Uniform)
         return;
@@ -161,11 +161,11 @@ void IvUniformDX11::SetValue( const IvVector4& value, unsigned int index )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::SetValue()
+// @ IvUniformD3D11::SetValue()
 //-------------------------------------------------------------------------------
 // Float matrix 4x4 set
 //-------------------------------------------------------------------------------
-void IvUniformDX11::SetValue( const IvMatrix44& value, unsigned int index )
+void IvUniformD3D11::SetValue( const IvMatrix44& value, unsigned int index )
 {
     if (mType != kFloatMatrix44Uniform)
         return;
@@ -180,22 +180,22 @@ void IvUniformDX11::SetValue( const IvMatrix44& value, unsigned int index )
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::SetValue()
+// @ IvUniformD3D11::SetValue()
 //-------------------------------------------------------------------------------
 // Texture set
 //-------------------------------------------------------------------------------
-void IvUniformDX11::SetValue( IvTexture* value )
+void IvUniformD3D11::SetValue( IvTexture* value )
 {
 	if (mType != kTextureUniform)
 	{
 		return;
 	}
 
-    mValue.mTexture = static_cast<IvTextureDX11*>(value);
+    mValue.mTexture = static_cast<IvTextureD3D11*>(value);
 
     if (mShader == IvRenderer::mRenderer->GetShaderProgram())
     {
-        mValue.mTexture->MakeActive(mTextureUnit, mSamplerUnit, static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice());
+        mValue.mTexture->MakeActive(mTextureUnit, mSamplerUnit, static_cast<IvRendererD3D11*>(IvRenderer::mRenderer)->GetDevice());
         mNeedsUpdate = false;
     }
     else
@@ -205,11 +205,11 @@ void IvUniformDX11::SetValue( IvTexture* value )
 }
     
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::GetValue()
+// @ IvUniformD3D11::GetValue()
 //-------------------------------------------------------------------------------
 // Float get
 //-------------------------------------------------------------------------------
-bool IvUniformDX11::GetValue( float& value, unsigned int index) const
+bool IvUniformD3D11::GetValue( float& value, unsigned int index) const
 {
     if (mType != kFloatUniform)
         return false;
@@ -219,11 +219,11 @@ bool IvUniformDX11::GetValue( float& value, unsigned int index) const
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::GetValue()
+// @ IvUniformD3D11::GetValue()
 //-------------------------------------------------------------------------------
 // Float vec3 get
 //-------------------------------------------------------------------------------
-bool IvUniformDX11::GetValue(IvVector3& value, unsigned int index) const
+bool IvUniformD3D11::GetValue(IvVector3& value, unsigned int index) const
 {
 	if (mType != kFloat3Uniform)
 		return false;
@@ -233,11 +233,11 @@ bool IvUniformDX11::GetValue(IvVector3& value, unsigned int index) const
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::GetValue()
+// @ IvUniformD3D11::GetValue()
 //-------------------------------------------------------------------------------
 // Float vec4 get
 //-------------------------------------------------------------------------------
-bool IvUniformDX11::GetValue( IvVector4& value, unsigned int index ) const
+bool IvUniformD3D11::GetValue( IvVector4& value, unsigned int index ) const
 {
     if (mType != kFloat4Uniform)
         return false;
@@ -247,11 +247,11 @@ bool IvUniformDX11::GetValue( IvVector4& value, unsigned int index ) const
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::GetValue()
+// @ IvUniformD3D11::GetValue()
 //-------------------------------------------------------------------------------
 // Float matrix 4x4 get
 //-------------------------------------------------------------------------------
-bool IvUniformDX11::GetValue( IvMatrix44& value, unsigned int index ) const
+bool IvUniformD3D11::GetValue( IvMatrix44& value, unsigned int index ) const
 {
     if (mType != kFloatMatrix44Uniform)
         return false;
@@ -261,11 +261,11 @@ bool IvUniformDX11::GetValue( IvMatrix44& value, unsigned int index ) const
 }
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::GetValue()
+// @ IvUniformD3D11::GetValue()
 //-------------------------------------------------------------------------------
 // Texture get
 //-------------------------------------------------------------------------------
-bool IvUniformDX11::GetValue( IvTexture*& value ) const
+bool IvUniformD3D11::GetValue( IvTexture*& value ) const
 {
 	if (mType != kTextureUniform)
         return false;
@@ -276,11 +276,11 @@ bool IvUniformDX11::GetValue( IvTexture*& value ) const
 
 
 //-------------------------------------------------------------------------------
-// @ IvUniformDX11::Update()
+// @ IvUniformD3D11::Update()
 //-------------------------------------------------------------------------------
 // Update current uniform values if needed
 //-------------------------------------------------------------------------------
-void IvUniformDX11::Update()
+void IvUniformD3D11::Update()
 {
 	if (mShader != IvRenderer::mRenderer->GetShaderProgram())
 	{
@@ -289,7 +289,7 @@ void IvUniformDX11::Update()
 
 	if ( mType == kTextureUniform )
 	{
-        mValue.mTexture->MakeActive(mTextureUnit, mSamplerUnit, static_cast<IvRendererDX11*>(IvRenderer::mRenderer)->GetDevice());
+        mValue.mTexture->MakeActive(mTextureUnit, mSamplerUnit, static_cast<IvRendererD3D11*>(IvRenderer::mRenderer)->GetDevice());
 		return;
 	}
 

@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvVertexBufferDX11.cpp
+// @ IvVertexBufferD3D11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,10 +12,10 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvVertexBufferDX11.h"
+#include "IvVertexBufferD3D11.h"
 
 #include "IvDebugger.h"
-#include "IvRendererDX11.h"
+#include "IvRendererD3D11.h"
 
 #include <d3dcompiler.h>
 
@@ -125,31 +125,31 @@ static const char sDummyShaderTNPFormat[] =
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferDX11::IvVertexBufferDX11()
+// @ IvVertexBufferD3D11::IvVertexBufferD3D11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvVertexBufferDX11::IvVertexBufferDX11() : IvVertexBuffer(), mBufferPtr(0), mDataPtr(0)
+IvVertexBufferD3D11::IvVertexBufferD3D11() : IvVertexBuffer(), mBufferPtr(0), mDataPtr(0)
 {
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferDX11::~IvVertexBufferDX11()
+// @ IvVertexBufferD3D11::~IvVertexBufferD3D11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvVertexBufferDX11::~IvVertexBufferDX11()
+IvVertexBufferD3D11::~IvVertexBufferD3D11()
 {
     Destroy();
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferDX11::Create()
+// @ IvVertexBufferD3D11::Create()
 //-------------------------------------------------------------------------------
 // Create the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
+IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
                            ID3D11Device* device)
 {
 	if (numVertices == 0)
@@ -279,12 +279,12 @@ IvVertexBufferDX11::Create(IvVertexFormat format, unsigned int numVertices, void
 }	
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferDX11::Destroy()
+// @ IvVertexBufferD3D11::Destroy()
 //-------------------------------------------------------------------------------
 // Destroy the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 void
-IvVertexBufferDX11::Destroy()
+IvVertexBufferD3D11::Destroy()
 {
     delete[] mDataPtr;
     mDataPtr = 0;
@@ -308,12 +308,12 @@ IvVertexBufferDX11::Destroy()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferDX11::MakeActive()
+// @ IvVertexBufferD3D11::MakeActive()
 //-------------------------------------------------------------------------------
 // Make this the active vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferDX11::MakeActive(ID3D11DeviceContext* context)
+IvVertexBufferD3D11::MakeActive(ID3D11DeviceContext* context)
 {
     if ( mBufferPtr == 0 || mNumVertices == 0 )
         return false;
@@ -328,13 +328,13 @@ IvVertexBufferDX11::MakeActive(ID3D11DeviceContext* context)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferDX11::BeginLoadData()
+// @ IvVertexBufferD3D11::BeginLoadData()
 //-------------------------------------------------------------------------------
 // Lock down the buffer and start loading
 // Returns pointer to client side data area
 //-------------------------------------------------------------------------------
 void *
-IvVertexBufferDX11::BeginLoadData()
+IvVertexBufferD3D11::BeginLoadData()
 {
 	if (mUsage == kImmutableUsage)
 	{
@@ -352,13 +352,13 @@ IvVertexBufferDX11::BeginLoadData()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexBufferDX11::EndLoadData()
+// @ IvVertexBufferD3D11::EndLoadData()
 //-------------------------------------------------------------------------------
 // Unlock the buffer, we're done loading
 // Returns true if all went well
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferDX11::EndLoadData()
+IvVertexBufferD3D11::EndLoadData()
 {
 	if (mUsage == kImmutableUsage)
 	{
@@ -372,7 +372,7 @@ IvVertexBufferDX11::EndLoadData()
     }
 
     // this is seriously ugly -- not clear how to easily get the context down here
-    ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+    ID3D11DeviceContext* d3dContext = ((IvRendererD3D11*)IvRenderer::mRenderer)->GetContext();
     if (kDefaultUsage == mUsage)
     {
         // use UpdateSubresource()

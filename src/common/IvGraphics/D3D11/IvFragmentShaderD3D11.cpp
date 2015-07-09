@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvFragmentShaderDX11.cpp
+// @ IvFragmentShaderD3D11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,8 +12,8 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvFragmentShaderDX11.h"
-#include "IvConstantTableDX11.h"
+#include "IvFragmentShaderD3D11.h"
+#include "IvConstantTableD3D11.h"
 
 #include "IvDebugger.h"
 #include <d3dcompiler.h>
@@ -94,11 +94,11 @@ static const char sShaderTNPFormat[] =
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvFragmentShaderDX11::IvFragmentShaderDX11()
+// @ IvFragmentShaderD3D11::IvFragmentShaderD3D11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvFragmentShaderDX11::IvFragmentShaderDX11() : IvFragmentShader()
+IvFragmentShaderD3D11::IvFragmentShaderD3D11() : IvFragmentShader()
     , mShaderPtr(0)
     , mConstantTable(0)
 {
@@ -110,22 +110,22 @@ IvFragmentShaderDX11::IvFragmentShaderDX11() : IvFragmentShader()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvFragmentShaderDX11::~IvFragmentShaderDX11()
+// @ IvFragmentShaderD3D11::~IvFragmentShaderD3D11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvFragmentShaderDX11::~IvFragmentShaderDX11()
+IvFragmentShaderD3D11::~IvFragmentShaderD3D11()
 {
     Destroy();
 }
 
 //-------------------------------------------------------------------------------
-// @ IvFragmentShaderDX11::CreateFromFile()
+// @ IvFragmentShaderD3D11::CreateFromFile()
 //-------------------------------------------------------------------------------
 // Load shader from a textfile
 //-------------------------------------------------------------------------------
 bool
-IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
+IvFragmentShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device)
 {
     // Add the expected extension:
     std::string fullFilename = filename;
@@ -187,7 +187,7 @@ IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 	HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
 	if (SUCCEEDED(result))
 	{
-		mConstantTable = IvConstantTableDX11::Create(device, code);
+		mConstantTable = IvConstantTableD3D11::Create(device, code);
 	}
 	if (FAILED(result) || NULL == mConstantTable)
 	{
@@ -200,12 +200,12 @@ IvFragmentShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvFragmentShaderDX11::CreateFromString()
+// @ IvFragmentShaderD3D11::CreateFromString()
 //-------------------------------------------------------------------------------
 // Create a shader from a string
 //-------------------------------------------------------------------------------
 bool
-IvFragmentShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
+IvFragmentShaderD3D11::CreateFromString(const char* string, ID3D11Device* device)
 {
 	DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
 #ifdef _DEBUG
@@ -248,7 +248,7 @@ IvFragmentShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
 	HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
 	if (SUCCEEDED(result))
 	{
-		mConstantTable = IvConstantTableDX11::Create(device, code);
+		mConstantTable = IvConstantTableD3D11::Create(device, code);
 	}
 	if (FAILED(result) || NULL == mConstantTable)
 	{
@@ -261,23 +261,23 @@ IvFragmentShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvFragmentShaderDX11::CreateDefault()
+// @ IvFragmentShaderD3D11::CreateDefault()
 //-------------------------------------------------------------------------------
 // Create default shader
 //-------------------------------------------------------------------------------
 bool 
-IvFragmentShaderDX11::CreateDefault(IvVertexFormat format, ID3D11Device* device)
+IvFragmentShaderD3D11::CreateDefault(IvVertexFormat format, ID3D11Device* device)
 {
     return CreateFromString(sDefaultFragmentShader[format], device);
 }
 
 //-------------------------------------------------------------------------------
-// @ IvFragmentShaderDX11::Destroy()
+// @ IvFragmentShaderD3D11::Destroy()
 //-------------------------------------------------------------------------------
 // Clean up before destructor
 //-------------------------------------------------------------------------------
 void
-IvFragmentShaderDX11::Destroy()
+IvFragmentShaderD3D11::Destroy()
 {
 	if ( mShaderPtr )
 	{

@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvTextureDX11.cpp
+// @ IvTextureD3D11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -8,22 +8,22 @@
 // Usage notes
 //===============================================================================
 
-#include "IvTextureDX11.h"
-#include "IvRendererDX11.h"
+#include "IvTextureD3D11.h"
+#include "IvRendererD3D11.h"
 #include "IvAssert.h"
 
-// 24-bit formats aren't supported in DX11
+// 24-bit formats aren't supported in D3D11
 // will need to convert before creating
 static unsigned int sInternalTextureFormatSize[kTexFmtCount] = {4, 4};
 static unsigned int sExternalTextureFormatSize[kTexFmtCount] = {4, 3};
 static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_R8G8B8A8_UNORM };
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::IvTextureDX11()
+// @ IvTextureD3D11::IvTextureD3D11()
 //-------------------------------------------------------------------------------
 // Constructor
 //-------------------------------------------------------------------------------
-IvTextureDX11::IvTextureDX11() : IvTexture()
+IvTextureD3D11::IvTextureD3D11() : IvTexture()
     , mLevelCount(0)
     , mLevels(0)
 	, mTexturePtr(0)
@@ -32,11 +32,11 @@ IvTextureDX11::IvTextureDX11() : IvTexture()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::~IvTextureDX11()
+// @ IvTextureD3D11::~IvTextureD3D11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvTextureDX11::~IvTextureDX11()
+IvTextureD3D11::~IvTextureD3D11()
 {
 	Destroy();
 }
@@ -65,12 +65,12 @@ static void Convert24Bit(void* outData, void* inData, unsigned int width, unsign
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::Create()
+// @ IvTextureD3D11::Create()
 //-------------------------------------------------------------------------------
 // Texture initialization
 //-------------------------------------------------------------------------------
 bool
-IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat format, 
+IvTextureD3D11::Create(unsigned int width, unsigned int height, IvTextureFormat format, 
                       void* data, IvDataUsage usage, ID3D11Device* device)
 {
 	if (width == 0 || height == 0 || mTexturePtr)
@@ -176,12 +176,12 @@ IvTextureDX11::Create(unsigned int width, unsigned int height, IvTextureFormat f
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::CreateMipmapped()
+// @ IvTextureD3D11::CreateMipmapped()
 //-------------------------------------------------------------------------------
 // Texture initialization
 //-------------------------------------------------------------------------------
 bool
-IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
+IvTextureD3D11::CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
                                void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device)
 {
 	if (width == 0 || height == 0 || mTexturePtr)
@@ -191,7 +191,7 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
 
     if (usage == kDynamicUsage)
     {
-        // DX11 doesn't allow creation of mipmapped dynamic textures
+        // D3D11 doesn't allow creation of mipmapped dynamic textures
         return false;
     }
 
@@ -334,12 +334,12 @@ IvTextureDX11::CreateMipmapped(unsigned int width, unsigned int height, IvTextur
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::Destroy()
+// @ IvTextureD3D11::Destroy()
 //-------------------------------------------------------------------------------
 // Destroy!
 //-------------------------------------------------------------------------------
 void
-IvTextureDX11::Destroy()
+IvTextureD3D11::Destroy()
 {
     for (unsigned int i = 0; i < mLevelCount; i++)
     {
@@ -363,15 +363,15 @@ IvTextureDX11::Destroy()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::MakeActive()
+// @ IvTextureD3D11::MakeActive()
 //-------------------------------------------------------------------------------
 // Binds the texture to the desired unit
 //-------------------------------------------------------------------------------
-void IvTextureDX11::MakeActive(unsigned int textureUnit, unsigned int samplerUnit, 
+void IvTextureD3D11::MakeActive(unsigned int textureUnit, unsigned int samplerUnit, 
                                ID3D11Device* device)
 {
 	// For now, just create sampler state every time
-	// DX11 should check for duplicates and return matching handle
+	// D3D11 should check for duplicates and return matching handle
 	D3D11_SAMPLER_DESC samplerDesc;
 	memset(&samplerDesc, 0, sizeof(D3D11_SAMPLER_DESC));
 	samplerDesc.Filter = mFilter;
@@ -390,18 +390,18 @@ void IvTextureDX11::MakeActive(unsigned int textureUnit, unsigned int samplerUni
 		//*** some error state here?
 		return;
 	}
-	ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+	ID3D11DeviceContext* d3dContext = ((IvRendererD3D11*)IvRenderer::mRenderer)->GetContext();
 	d3dContext->PSSetSamplers(samplerUnit, 1, &samplerState);
 
 	d3dContext->PSSetShaderResources(textureUnit, 1, &mShaderResourceView);
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::BeginLoadData()
+// @ IvTextureD3D11::BeginLoadData()
 //-------------------------------------------------------------------------------
 // "Locks" and returns a pointer to sysmem texture data for the given level
 //-------------------------------------------------------------------------------
-void* IvTextureDX11::BeginLoadData(unsigned int level)
+void* IvTextureD3D11::BeginLoadData(unsigned int level)
 {
 	if (kImmutableUsage == mUsage || level >= mLevelCount)
 	{
@@ -419,11 +419,11 @@ void* IvTextureDX11::BeginLoadData(unsigned int level)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::EndLoadData()
+// @ IvTextureD3D11::EndLoadData()
 //-------------------------------------------------------------------------------
 // Uploads the edited texture data to D3D
 //-------------------------------------------------------------------------------
-bool  IvTextureDX11::EndLoadData(unsigned int level)
+bool  IvTextureD3D11::EndLoadData(unsigned int level)
 {
 	if (kImmutableUsage == mUsage || level >= mLevelCount)
 	{
@@ -437,7 +437,7 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 	}
 
 	// this is seriously ugly -- not clear how to easily get the context down here
-	ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+	ID3D11DeviceContext* d3dContext = ((IvRendererD3D11*)IvRenderer::mRenderer)->GetContext();
 	if (kDefaultUsage == mUsage)
 	{
 		// use UpdateSubresource()
@@ -458,7 +458,7 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 	}
 	else if (kDynamicUsage == mUsage)
 	{
-        // DX11 doesn't allow dynamic mipmapped textures
+        // D3D11 doesn't allow dynamic mipmapped textures
         ASSERT(level == 0);
 
 		// use Map/Unmap
@@ -491,33 +491,33 @@ bool  IvTextureDX11::EndLoadData(unsigned int level)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::SetAddressingU()
+// @ IvTextureD3D11::SetAddressingU()
 //-------------------------------------------------------------------------------
 // Sets the texture wrapping in U
 //-------------------------------------------------------------------------------
-void IvTextureDX11::SetAddressingU(IvTextureAddrMode mode)
+void IvTextureD3D11::SetAddressingU(IvTextureAddrMode mode)
 {
 	mUAddrMode = (mode == kClampTexAddr) ? D3D11_TEXTURE_ADDRESS_CLAMP 
 		                                 : D3D11_TEXTURE_ADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::SetAddressingV()
+// @ IvTextureD3D11::SetAddressingV()
 //-------------------------------------------------------------------------------
 // Sets the texture wrapping in V
 //-------------------------------------------------------------------------------
-void IvTextureDX11::SetAddressingV(IvTextureAddrMode mode)
+void IvTextureD3D11::SetAddressingV(IvTextureAddrMode mode)
 {
 	mVAddrMode = (mode == kClampTexAddr) ? D3D11_TEXTURE_ADDRESS_CLAMP 
 		                                 : D3D11_TEXTURE_ADDRESS_WRAP;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::SetMagFiltering()
+// @ IvTextureD3D11::SetMagFiltering()
 //-------------------------------------------------------------------------------
 // Sets the texture magnification filter
 //-------------------------------------------------------------------------------
-void IvTextureDX11::SetMagFiltering(IvTextureMagFilter filter)
+void IvTextureD3D11::SetMagFiltering(IvTextureMagFilter filter)
 {
 	mMagFilter = filter;
 	switch (mMinFilter)
@@ -562,11 +562,11 @@ void IvTextureDX11::SetMagFiltering(IvTextureMagFilter filter)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvTextureDX11::SetMinFiltering()
+// @ IvTextureD3D11::SetMinFiltering()
 //-------------------------------------------------------------------------------
 // Sets the texture minification filter
 //-------------------------------------------------------------------------------
-void IvTextureDX11::SetMinFiltering(IvTextureMinFilter filter)
+void IvTextureD3D11::SetMinFiltering(IvTextureMinFilter filter)
 {
 	mMinFilter = filter;
 	switch (filter)

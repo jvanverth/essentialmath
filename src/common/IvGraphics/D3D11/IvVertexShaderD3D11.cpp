@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvVertexShaderDX11.cpp
+// @ IvVertexShaderD3D11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,8 +12,8 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvVertexShaderDX11.h"
-#include "IvConstantTableDX11.h"
+#include "IvVertexShaderD3D11.h"
+#include "IvConstantTableD3D11.h"
 
 #include "IvDebugger.h"
 #include <d3dcompiler.h>
@@ -132,11 +132,11 @@ static const char sShaderTNPFormat[] =
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvVertexShaderDX11::IvVertexShaderDX11()
+// @ IvVertexShaderD3D11::IvVertexShaderD3D11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvVertexShaderDX11::IvVertexShaderDX11() : IvVertexShader()
+IvVertexShaderD3D11::IvVertexShaderD3D11() : IvVertexShader()
     , mShaderPtr(0)
     , mConstantTable(0)
 {
@@ -148,22 +148,22 @@ IvVertexShaderDX11::IvVertexShaderDX11() : IvVertexShader()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexShaderDX11::~IvVertexShaderDX11()
+// @ IvVertexShaderD3D11::~IvVertexShaderD3D11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvVertexShaderDX11::~IvVertexShaderDX11()
+IvVertexShaderD3D11::~IvVertexShaderD3D11()
 {
     Destroy();
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexShaderDX11::CreateFromFile()
+// @ IvVertexShaderD3D11::CreateFromFile()
 //-------------------------------------------------------------------------------
 // Create a shader from a file
 //-------------------------------------------------------------------------------
 bool
-IvVertexShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
+IvVertexShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device)
 {
 	// Add the expected extension:
 	std::string fullFilename = filename;
@@ -204,7 +204,7 @@ IvVertexShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 	HRESULT result = device->CreateVertexShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
 	if (SUCCEEDED(result))
 	{
-		mConstantTable = IvConstantTableDX11::Create(device, code);
+		mConstantTable = IvConstantTableD3D11::Create(device, code);
 	}
 	if (FAILED(result) || NULL == mConstantTable)
 	{
@@ -217,12 +217,12 @@ IvVertexShaderDX11::CreateFromFile(const char* filename, ID3D11Device* device)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexShaderDX11::CreateFromString()
+// @ IvVertexShaderD3D11::CreateFromString()
 //-------------------------------------------------------------------------------
 // Create a shader from a file
 //-------------------------------------------------------------------------------
 bool
-IvVertexShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
+IvVertexShaderD3D11::CreateFromString(const char* string, ID3D11Device* device)
 {
 	DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
 #ifdef _DEBUG
@@ -250,7 +250,7 @@ IvVertexShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
 	HRESULT result = device->CreateVertexShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
 	if (SUCCEEDED(result))
 	{
-		mConstantTable = IvConstantTableDX11::Create(device, code);
+		mConstantTable = IvConstantTableD3D11::Create(device, code);
 	}
 	if (FAILED(result) || NULL == mConstantTable)
 	{
@@ -263,23 +263,23 @@ IvVertexShaderDX11::CreateFromString(const char* string, ID3D11Device* device)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexShaderDX11::CreateDefault()
+// @ IvVertexShaderD3D11::CreateDefault()
 //-------------------------------------------------------------------------------
 // Create a default shader
 //-------------------------------------------------------------------------------
 bool
-IvVertexShaderDX11::CreateDefault(IvVertexFormat format, ID3D11Device* device)
+IvVertexShaderD3D11::CreateDefault(IvVertexFormat format, ID3D11Device* device)
 {
     return CreateFromString(sDefaultVertexShader[format], device);
 }
 
 //-------------------------------------------------------------------------------
-// @ IvVertexShaderDX11::Destroy()
+// @ IvVertexShaderD3D11::Destroy()
 //-------------------------------------------------------------------------------
 // Clean up before destructor
 //-------------------------------------------------------------------------------
 void
-IvVertexShaderDX11::Destroy()
+IvVertexShaderD3D11::Destroy()
 {
 	if ( mShaderPtr )
 	{

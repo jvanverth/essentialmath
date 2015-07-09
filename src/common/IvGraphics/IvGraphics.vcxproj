@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug DX11|Win32">
-      <Configuration>Debug DX11</Configuration>
+    <ProjectConfiguration Include="Debug D3D11|Win32">
+      <Configuration>Debug D3D11</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug OGL|Win32">
       <Configuration>Debug OGL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release DX11|Win32">
-      <Configuration>Release DX11</Configuration>
+    <ProjectConfiguration Include="Release D3D11|Win32">
+      <Configuration>Release D3D11</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release OGL|Win32">
@@ -23,13 +23,13 @@
     <RootNamespace>IvGraphics</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
@@ -50,11 +50,11 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
   </ImportGroup>
@@ -78,12 +78,12 @@
     <OutDir>$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">
-    <OutDir>..\Libs\DX11Debug\</OutDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">
+    <OutDir>..\Libs\D3D11Debug\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">
-    <OutDir>..\Libs\DX11Release\</OutDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">
+    <OutDir>..\Libs\D3D11Release\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">
@@ -158,7 +158,7 @@ copy .\OGL\Iv*.h ..\Includes\OGL
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;../IvUtility;../IvMath;../../;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -179,7 +179,7 @@ copy .\OGL\Iv*.h ..\Includes\OGL
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>..\Libs\DX11Debug\IvGraphics.lib</OutputFile>
+      <OutputFile>..\Libs\D3D11Debug\IvGraphics.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Bscmake>
@@ -188,14 +188,14 @@ copy .\OGL\Iv*.h ..\Includes\OGL
     </Bscmake>
     <PostBuildEvent>
       <Command>if not exist ..\Includes mkdir ..\Includes
-if not exist ..\Includes\DX11 mkdir ..\Includes\DX11
+if not exist ..\Includes\D3D11 mkdir ..\Includes\D3D11
 copy .\Iv*.h ..\Includes
-copy .\DX11\Iv*.h ..\Includes\DX11
+copy .\D3D11\Iv*.h ..\Includes\D3D11
 
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -216,7 +216,7 @@ copy .\DX11\Iv*.h ..\Includes\DX11
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>..\Libs\DX11Release\IvGraphics.lib</OutputFile>
+      <OutputFile>..\Libs\D3D11Release\IvGraphics.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Bscmake>
@@ -225,112 +225,76 @@ copy .\DX11\Iv*.h ..\Includes\DX11
     </Bscmake>
     <PostBuildEvent>
       <Command>if not exist ..\Includes mkdir ..\Includes
-if not exist ..\Includes\DX11 mkdir ..\Includes\DX11
+if not exist ..\Includes\D3D11 mkdir ..\Includes\D3D11
 copy .\Iv*.h ..\Includes
-copy .\DX11\Iv*.h ..\Includes\DX11
+copy .\D3D11\Iv*.h ..\Includes\D3D11
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DX11\IvConstantTableDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvFragmentShaderDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvIndexBufferDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvRendererDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvRendererHelpDX11.cpp" />
-    <ClCompile Include="DX11\IvResourceManagerDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvShaderProgramDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvTextureDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvUniformDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvVertexBufferDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="DX11\IvVertexShaderDX11.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="D3D11\IvConstantTableD3D11.cpp" />
+    <ClCompile Include="D3D11\IvFragmentShaderD3D11.cpp" />
+    <ClCompile Include="D3D11\IvIndexBufferD3D11.cpp" />
+    <ClCompile Include="D3D11\IvRendererD3D11.cpp" />
+    <ClCompile Include="D3D11\IvRendererHelpD3D11.cpp" />
+    <ClCompile Include="D3D11\IvResourceManagerD3D11.cpp" />
+    <ClCompile Include="D3D11\IvShaderProgramD3D11.cpp" />
+    <ClCompile Include="D3D11\IvTextureD3D11.cpp" />
+    <ClCompile Include="D3D11\IvUniformD3D11.cpp" />
+    <ClCompile Include="D3D11\IvVertexBufferD3D11.cpp" />
+    <ClCompile Include="D3D11\IvVertexShaderD3D11.cpp" />
     <ClCompile Include="IvRenderer.cpp" />
     <ClCompile Include="IvRendererHelp.cpp" />
     <ClCompile Include="IvTeapot.cpp" />
     <ClCompile Include="OGL\IvFragmentShaderOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvIndexBufferOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvRendererHelpOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvRendererOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvResourceManagerOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvShaderProgramOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="OGL\IvTextureOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvUniformOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvVertexBufferOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="OGL\IvVertexShaderOGL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DX11|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DX11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug D3D11|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release D3D11|Win32'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DX11\IvConstantTableDX11.h" />
-    <ClInclude Include="DX11\IvFragmentShaderDX11.h" />
-    <ClInclude Include="DX11\IvIndexBufferDX11.h" />
-    <ClInclude Include="DX11\IvRendererDX11.h" />
-    <ClInclude Include="DX11\IvRendererHelpDX11.h" />
-    <ClInclude Include="DX11\IvResourceManagerDX11.h" />
-    <ClInclude Include="DX11\IvShaderProgramDX11.h" />
-    <ClInclude Include="DX11\IvTextureDX11.h" />
-    <ClInclude Include="DX11\IvUniformDX11.h" />
-    <ClInclude Include="DX11\IvVertexBufferDX11.h" />
-    <ClInclude Include="DX11\IvVertexShaderDX11.h" />
+    <ClInclude Include="D3D11\IvConstantTableD3D11.h" />
+    <ClInclude Include="D3D11\IvFragmentShaderD3D11.h" />
+    <ClInclude Include="D3D11\IvIndexBufferD3D11.h" />
+    <ClInclude Include="D3D11\IvRendererD3D11.h" />
+    <ClInclude Include="D3D11\IvRendererHelpD3D11.h" />
+    <ClInclude Include="D3D11\IvResourceManagerD3D11.h" />
+    <ClInclude Include="D3D11\IvShaderProgramD3D11.h" />
+    <ClInclude Include="D3D11\IvTextureD3D11.h" />
+    <ClInclude Include="D3D11\IvUniformD3D11.h" />
+    <ClInclude Include="D3D11\IvVertexBufferD3D11.h" />
+    <ClInclude Include="D3D11\IvVertexShaderD3D11.h" />
     <ClInclude Include="IvColor.h">
       <SubType>Designer</SubType>
     </ClInclude>
@@ -353,7 +317,6 @@ copy .\DX11\Iv*.h ..\Includes\DX11
     <ClInclude Include="OGL\IvRendererOGL.h" />
     <ClInclude Include="OGL\IvResourceManagerOGL.h" />
     <ClInclude Include="OGL\IvShaderProgramOGL.h" />
-    <ClInclude Include="OGL\IvTextureOGL.h" />
     <ClInclude Include="OGL\IvUniformOGL.h" />
     <ClInclude Include="OGL\IvVertexBufferOGL.h" />
     <ClInclude Include="OGL\IvVertexShaderOGL.h" />

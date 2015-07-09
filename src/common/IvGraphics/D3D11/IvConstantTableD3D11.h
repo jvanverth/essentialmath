@@ -1,25 +1,25 @@
 //===============================================================================
-// @ IvVertexBufferDX11.h
+// @ IvConstantTableD3D11.h
 // 
-// Description
+// Replacement for D3D9 constant table
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008   Elsevier, Inc.
+// Copyright (C) 2014   James M. Van Verth & Lars M. Bishop
 //
 // Change history:
 //
 // Usage notes
 //===============================================================================
 
-#ifndef __IvVertexBufferDX11__h__
-#define __IvVertexBufferDX11__h__
+#ifndef __IvConstantTableD3D11__h__
+#define __IvConstantTableD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
-
-#include "../IvVertexBuffer.h"
-#include "IvResourceManager.h"
 #include <d3d11.h>
+#include <map>
+
+#include "IvUniform.h"
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
@@ -29,39 +29,67 @@
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvVertexBufferDX11 : private IvVertexBuffer
+typedef int IvConstantHandle;
+
+struct IvConstantDesc
+{
+	IvUniformType mType;
+	union
+	{
+		struct
+		{
+			void*         mOffset;
+			unsigned int  mCount;
+		};
+		struct
+		{
+			int           mTextureSlot;
+			int           mSamplerSlot;
+		};
+	};
+};
+
+class IvConstantTableD3D11
 {
 public:
-    // interface routines
-	virtual void* BeginLoadData();
-	virtual bool  EndLoadData();
+	static IvConstantTableD3D11* Create(ID3D11Device* device, ID3DBlob* code);
 
-    friend class IvResourceManagerDX11;
-    friend class IvRendererDX11;
-    
-private:
-    // constructor/destructor
-    IvVertexBufferDX11();
-	~IvVertexBufferDX11();
-    
-    // creation 
-	bool Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
-		        ID3D11Device* device);
-    
-    // destruction
-    void Destroy();
+	void AddRef() { ++mRefCount; }
+	void Release() { Destroy(this); }
 
-    // activate
-	bool MakeActive(ID3D11DeviceContext* device);
+	bool GetConstantDesc(const char* name, IvConstantDesc* constantDesc);
+	void MarkDirty() { mDirty = true;  }
+
+	bool MakeActiveVS(ID3D11DeviceContext* context);
+	bool MakeActivePS(ID3D11DeviceContext* context);
 
 private:
-    // copy operations
-    IvVertexBufferDX11(const IvVertexBufferDX11& other);
-	IvVertexBufferDX11& operator=(const IvVertexBufferDX11& other);
+	static void Destroy(IvConstantTableD3D11* table);
 
-	ID3D11Buffer* mBufferPtr;
-	void*		  mDataPtr;
-	IvDataUsage   mUsage;
+	// constructor/destructor
+	IvConstantTableD3D11() : mRefCount(1), mBuffer(NULL), mBacking(NULL), 
+		                    mDirty(false) {}
+	~IvConstantTableD3D11()
+	{
+		if (mBuffer)
+		{
+			mBuffer->Release();
+			mBuffer = NULL;
+		}
+		delete mBacking;
+	}
+
+private:
+	// copy operations
+	IvConstantTableD3D11(const IvConstantTableD3D11& other);
+	IvConstantTableD3D11& operator=(const IvConstantTableD3D11& other);
+
+	int									  mRefCount;
+	std::map<std::string, IvConstantDesc> mConstants;
+	ID3D11Buffer*						  mBuffer;
+	char*                                 mBacking;
+	size_t								  mBackingSize;
+	bool								  mDirty;
 };
 
 

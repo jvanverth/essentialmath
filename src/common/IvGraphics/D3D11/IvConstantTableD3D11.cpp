@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvConstantTableDX11.cpp
+// @ IvConstantTableD3D11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -15,7 +15,7 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
-#include "IvConstantTableDX11.h"
+#include "IvConstantTableD3D11.h"
 #include "IvAssert.h"
 
 //-------------------------------------------------------------------------------
@@ -27,19 +27,19 @@
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvConstantTableDX11::Create()
+// @ IvConstantTableD3D11::Create()
 //-------------------------------------------------------------------------------
 // Get the constant table for this shader
 //-------------------------------------------------------------------------------
-IvConstantTableDX11*
-IvConstantTableDX11::Create(ID3D11Device* device, ID3DBlob* code)
+IvConstantTableD3D11*
+IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
 {
 	ID3D11ShaderReflection* pReflector = NULL;
 	D3DReflect(code->GetBufferPointer(), code->GetBufferSize(),
 		IID_ID3D11ShaderReflection, (void**)&pReflector);
 
 	// first get constant table
-	IvConstantTableDX11* table = new IvConstantTableDX11();
+	IvConstantTableD3D11* table = new IvConstantTableD3D11();
 
 	ID3D11ShaderReflectionConstantBuffer* globalConstants =
 		pReflector->GetConstantBufferByName("$Globals");
@@ -176,11 +176,11 @@ get_textures:
 }
 
 //-------------------------------------------------------------------------------
-// @ IvConstantTableDX11::Destroy()
+// @ IvConstantTableD3D11::Destroy()
 //-------------------------------------------------------------------------------
 // Destroy the constant table
 //-------------------------------------------------------------------------------
-void IvConstantTableDX11::Destroy(IvConstantTableDX11* table)
+void IvConstantTableD3D11::Destroy(IvConstantTableD3D11* table)
 {
 	ASSERT(table->mRefCount >= 0);
 	--table->mRefCount;
@@ -191,11 +191,11 @@ void IvConstantTableDX11::Destroy(IvConstantTableDX11* table)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvConstantTableDX11::GetConstantDesc()
+// @ IvConstantTableD3D11::GetConstantDesc()
 //-------------------------------------------------------------------------------
 // Get the constant descriptor that matches this name
 //-------------------------------------------------------------------------------
-bool IvConstantTableDX11::GetConstantDesc(const char* name, IvConstantDesc* constantDesc)
+bool IvConstantTableD3D11::GetConstantDesc(const char* name, IvConstantDesc* constantDesc)
 {
 	if (mConstants.find(name) != mConstants.end())
 	{
@@ -211,11 +211,11 @@ bool IvConstantTableDX11::GetConstantDesc(const char* name, IvConstantDesc* cons
 }
 
 //-------------------------------------------------------------------------------
-// @ IvConstantTableDX11::MakeActiveVS()
+// @ IvConstantTableD3D11::MakeActiveVS()
 //-------------------------------------------------------------------------------
 // Make this constant buffer active for vertex shader
 //-------------------------------------------------------------------------------
-bool IvConstantTableDX11::MakeActiveVS(ID3D11DeviceContext* context)
+bool IvConstantTableD3D11::MakeActiveVS(ID3D11DeviceContext* context)
 {
 	if (mBuffer == 0 || NULL == mBacking)
 		return false;
@@ -244,11 +244,11 @@ bool IvConstantTableDX11::MakeActiveVS(ID3D11DeviceContext* context)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvConstantTableDX11::MakeActivePS()
+// @ IvConstantTableD3D11::MakeActivePS()
 //-------------------------------------------------------------------------------
 // Make this constant buffer active for pixel shader
 //-------------------------------------------------------------------------------
-bool IvConstantTableDX11::MakeActivePS(ID3D11DeviceContext* context)
+bool IvConstantTableD3D11::MakeActivePS(ID3D11DeviceContext* context)
 {
 	if (mBuffer == 0 || NULL == mBacking)
 		return false;

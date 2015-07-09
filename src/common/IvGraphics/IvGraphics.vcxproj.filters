@@ -4,42 +4,6 @@
     <ClCompile Include="IvRenderer.cpp" />
     <ClCompile Include="IvRendererHelp.cpp" />
     <ClCompile Include="IvTeapot.cpp" />
-    <ClCompile Include="DX11\IvConstantTableDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvFragmentShaderDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvIndexBufferDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvRendererDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvRendererHelpDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvResourceManagerDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvShaderProgramDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvTextureDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="OGL\IvTextureOGL.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvUniformDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvVertexBufferDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11\IvVertexShaderDX11.cpp">
-      <Filter>D3D11</Filter>
-    </ClCompile>
     <ClCompile Include="OGL\IvFragmentShaderOGL.cpp">
       <Filter>OGL</Filter>
     </ClCompile>
@@ -67,6 +31,39 @@
     <ClCompile Include="OGL\IvVertexShaderOGL.cpp">
       <Filter>OGL</Filter>
     </ClCompile>
+    <ClCompile Include="D3D11\IvConstantTableD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvFragmentShaderD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvIndexBufferD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvRendererD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvRendererHelpD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvResourceManagerD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvShaderProgramD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvTextureD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvUniformD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvVertexBufferD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D11\IvVertexShaderD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IvColor.h" />
@@ -84,42 +81,6 @@
     <ClInclude Include="IvVertexBuffer.h" />
     <ClInclude Include="IvVertexFormats.h" />
     <ClInclude Include="IvVertexShader.h" />
-    <ClInclude Include="DX11\IvConstantTableDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvFragmentShaderDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvIndexBufferDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvRendererDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvRendererHelpDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvResourceManagerDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvShaderProgramDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvTextureDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="OGL\IvTextureOGL.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvUniformDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvVertexBufferDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11\IvVertexShaderDX11.h">
-      <Filter>D3D11</Filter>
-    </ClInclude>
     <ClInclude Include="OGL\IvFragmentShaderOGL.h">
       <Filter>OGL</Filter>
     </ClInclude>
@@ -143,6 +104,39 @@
     </ClInclude>
     <ClInclude Include="OGL\IvVertexShaderOGL.h">
       <Filter>OGL</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvConstantTableD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvFragmentShaderD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvIndexBufferD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvRendererD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvRendererHelpD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvResourceManagerD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvShaderProgramD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvTextureD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvUniformD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvVertexBufferD3D11.h">
+      <Filter>D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvVertexShaderD3D11.h">
+      <Filter>D3D11</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

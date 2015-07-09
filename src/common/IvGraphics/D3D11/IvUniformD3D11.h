@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvUniformDX11.h
+// @ IvUniformD3D11.h
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -8,8 +8,8 @@
 // Usage notes
 //===============================================================================
 
-#ifndef __IvUniformDX11__h__
-#define __IvUniformDX11__h__
+#ifndef __IvUniformD3D11__h__
+#define __IvUniformD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
@@ -23,20 +23,20 @@
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvConstantTableDX11;
+class IvConstantTableD3D11;
 class IvMatrix44;
-class IvTextureDX11;
+class IvTextureD3D11;
 class IvVector4;
-class IvShaderProgramDX11;
+class IvShaderProgramD3D11;
 
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvUniformDX11 : public IvUniform
+class IvUniformD3D11 : public IvUniform
 {
 public:
-    friend class IvShaderProgramDX11;
+    friend class IvShaderProgramD3D11;
 
     virtual void SetValue( float value, unsigned int index);
     virtual void SetValue( const IvVector4& value, unsigned int index );
@@ -53,16 +53,16 @@ public:
     
 protected:
     // constructor/destructor for most uniforms
-    IvUniformDX11(IvUniformType type, unsigned int count, void* offset,
-		          IvConstantTableDX11* constantTable, 
-				  IvShaderProgramDX11* shader);
+    IvUniformD3D11(IvUniformType type, unsigned int count, void* offset,
+		          IvConstantTableD3D11* constantTable, 
+				  IvShaderProgramD3D11* shader);
 	// constructor/destructor for texture uniforms
-	IvUniformDX11(int textureUnit, int samplerUnit,
-		          IvShaderProgramDX11* shader);
-	virtual ~IvUniformDX11();
+	IvUniformD3D11(int textureUnit, int samplerUnit,
+		          IvShaderProgramD3D11* shader);
+	virtual ~IvUniformD3D11();
     void Update();
 
-    IvShaderProgramDX11*	 mShader;
+    IvShaderProgramD3D11*	 mShader;
 	union
 	{
         // we use an offset into the global constant buffer
@@ -70,7 +70,7 @@ protected:
         struct
         {
             void*				 mOffset;
-            IvConstantTableDX11* mConstantTable;
+            IvConstantTableD3D11* mConstantTable;
         };
         // we use the texture and sampler units for textures
 		struct
@@ -88,13 +88,13 @@ protected:
 		IvVector3* mVector3;
 		IvVector4* mVector4;
 		IvMatrix44* mMatrix44;
-        IvTextureDX11* mTexture;
+        IvTextureD3D11* mTexture;
     } mValue;
 
 private:
     // copy operations (unimplemented so we can't copy)
-    IvUniformDX11(const IvUniformDX11& other);
-	IvUniformDX11& operator=(const IvUniformDX11& other);
+    IvUniformD3D11(const IvUniformD3D11& other);
+	IvUniformD3D11& operator=(const IvUniformD3D11& other);
 }; 
 
 //-------------------------------------------------------------------------------

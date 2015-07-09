@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvRendererDX11.cpp
+// @ IvRendererD3D11.cpp
 // 
 // Windowing and display setup routines
 // ------------------------------------------------------------------------------
@@ -15,13 +15,13 @@
 
 #include "IvDebugger.h"
 #include "IvAssert.h"
-#include "IvIndexBufferDX11.h"
+#include "IvIndexBufferD3D11.h"
 #include <IvMath.h>
 #include "IvMatrix44.h"
-#include "IvRendererDX11.h"
-#include "IvResourceManagerDX11.h"
-#include "IvShaderProgramDX11.h"
-#include "IvVertexBufferDX11.h"
+#include "IvRendererD3D11.h"
+#include "IvResourceManagerD3D11.h"
+#include "IvShaderProgramD3D11.h"
+#include "IvVertexBufferD3D11.h"
 #include "IvUniform.h"
 
 #include <d3d11.h>
@@ -32,7 +32,7 @@
 
 static D3D_PRIMITIVE_TOPOLOGY sPrimTypeMap[kPrimTypeCount];
 
-static IvShaderProgramDX11* sDefaultShaders[kVertexFormatCount];
+static IvShaderProgramD3D11* sDefaultShaders[kVertexFormatCount];
 
 static Int32 sBlendSrcFunc[kBlendFuncCount];
 static Int32 sBlendDestFunc[kBlendFuncCount];
@@ -49,13 +49,13 @@ static Int32 sDepthFunc[kDepthTestCount];
 // Static constructor
 //-------------------------------------------------------------------------------
 bool 
-IvRendererDX11::Create(ID3D11Device* device, ID3D11DeviceContext* context,
+IvRendererD3D11::Create(ID3D11Device* device, ID3D11DeviceContext* context,
                        ID3D11RenderTargetView* renderTarget, 
 					   ID3D11DepthStencilView* depthStencilTarget)
 {
 	if (!mRenderer)
 	{
-		mRenderer = new IvRendererDX11(device, context, renderTarget, depthStencilTarget);
+		mRenderer = new IvRendererD3D11(device, context, renderTarget, depthStencilTarget);
 	}
     return ( mRenderer != 0 );
 
@@ -63,11 +63,11 @@ IvRendererDX11::Create(ID3D11Device* device, ID3D11DeviceContext* context,
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::IvRendererDX11()
+// @ IvRendererD3D11::IvRendererD3D11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvRendererDX11::IvRendererDX11(ID3D11Device* device, ID3D11DeviceContext* context,
+IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* context,
 	                           ID3D11RenderTargetView* renderTarget,
 	                           ID3D11DepthStencilView* depthStencilTarget) :
 	IvRenderer()
@@ -92,7 +92,7 @@ IvRendererDX11::IvRendererDX11(ID3D11Device* device, ID3D11DeviceContext* contex
 	mClearColor[3] = 1.0f;
 	mClearDepth = 1.0f;
 
-	mAPI = kDX11;
+	mAPI = kD3D11;
 
 	sPrimTypeMap[kPointListPrim] = D3D_PRIMITIVE_TOPOLOGY_POINTLIST;
 	sPrimTypeMap[kLineListPrim] = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
@@ -115,15 +115,15 @@ IvRendererDX11::IvRendererDX11(ID3D11Device* device, ID3D11DeviceContext* contex
 	sDepthFunc[kLessDepthTest] = D3D11_COMPARISON_LESS;
 	sDepthFunc[kLessEqualDepthTest] = D3D11_COMPARISON_LESS_EQUAL;
 
-}   // End of IvRendererDX11::IvRendererDX11()
+}   // End of IvRendererD3D11::IvRendererD3D11()
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::~IvRendererDX11()
+// @ IvRendererD3D11::~IvRendererD3D11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvRendererDX11::~IvRendererDX11()
+IvRendererD3D11::~IvRendererD3D11()
 {
 	// delete shader program?
     for ( unsigned int i = 0; i < kVertexFormatCount; ++i )
@@ -137,7 +137,7 @@ IvRendererDX11::~IvRendererDX11()
 
     if (mResourceManager)
     {
-        delete (IvResourceManagerDX11*)(mResourceManager);
+        delete (IvResourceManagerD3D11*)(mResourceManager);
         mResourceManager = 0;
     }
 
@@ -153,38 +153,38 @@ IvRendererDX11::~IvRendererDX11()
 	mDevice->Release();
 	mDevice = 0;
 
-}   // End of IvRendererDX11::~IvRendererDX11()
+}   // End of IvRendererD3D11::~IvRendererD3D11()
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::Initialize()
+// @ IvRendererD3D11::Initialize()
 //-------------------------------------------------------------------------------
 // Initialize display
 //-------------------------------------------------------------------------------
 bool
-IvRendererDX11::Initialize( unsigned int width, unsigned int height )
+IvRendererD3D11::Initialize( unsigned int width, unsigned int height )
 {
-    if (!InitDX11())
+    if (!InitD3D11())
         return false;
 
     // set parameters for window size
     Resize( width, height );
     
     // create resource manager
-    mResourceManager = new IvResourceManagerDX11( mDevice );
+    mResourceManager = new IvResourceManagerD3D11( mDevice );
 
     return true;
     
-}   // End of IvRendererDX11::Initialize()
+}   // End of IvRendererD3D11::Initialize()
     
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::Resize()
+// @ IvRendererD3D11::Resize()
 //-------------------------------------------------------------------------------
 // Set up parameters for window size
 //-------------------------------------------------------------------------------
 void 
-IvRendererDX11::Resize(unsigned int width, unsigned int height ) 
+IvRendererD3D11::Resize(unsigned int width, unsigned int height ) 
 {
 	// prevent divide by zero
     if (height == 0)                                    
@@ -222,16 +222,16 @@ IvRendererDX11::Resize(unsigned int width, unsigned int height )
     SetViewMatrix(ident);
     SetWorldMatrix(ident);
 
-}   // End of IvRendererDX11::Resize()
+}   // End of IvRendererD3D11::Resize()
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::InitGL()
+// @ IvRendererD3D11::InitGL()
 //-------------------------------------------------------------------------------
 // Set up base GL parameters
 //-------------------------------------------------------------------------------
 bool 
-IvRendererDX11::InitDX11()                                   
+IvRendererD3D11::InitD3D11()                                   
 {
 	/*
     // turn on smooth shading
@@ -297,16 +297,16 @@ IvRendererDX11::InitDX11()
 	*/
     return true;                                        
 
-}   // End of IvRendererDX11::InitGL()
+}   // End of IvRendererD3D11::InitGL()
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetClearColor()
+// @ IvRendererD3D11::SetClearColor()
 //-------------------------------------------------------------------------------
 // Set background color
 //-------------------------------------------------------------------------------
 void 
-IvRendererDX11::SetClearColor( float red, float green, float blue, float alpha )  
+IvRendererD3D11::SetClearColor( float red, float green, float blue, float alpha )  
 {
     // set clear color
 	mClearColor[0] = red;
@@ -317,12 +317,12 @@ IvRendererDX11::SetClearColor( float red, float green, float blue, float alpha )
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetClearDepth()
+// @ IvRendererD3D11::SetClearDepth()
 //-------------------------------------------------------------------------------
 // Set base depth value
 //-------------------------------------------------------------------------------
 void 
-IvRendererDX11::SetClearDepth( float depth )  
+IvRendererD3D11::SetClearDepth( float depth )  
 {
     // set clear depth
     mClearDepth = depth; 
@@ -330,12 +330,12 @@ IvRendererDX11::SetClearDepth( float depth )
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::ClearBuffers()
+// @ IvRendererD3D11::ClearBuffers()
 //-------------------------------------------------------------------------------
 // Clear necessary buffers
 //-------------------------------------------------------------------------------
 void 
-IvRendererDX11::ClearBuffers(IvClearBuffer buffer)
+IvRendererD3D11::ClearBuffers(IvClearBuffer buffer)
 {
     switch (buffer)
     {
@@ -354,12 +354,12 @@ IvRendererDX11::ClearBuffers(IvClearBuffer buffer)
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetBlendFunc()
+// @ IvRendererD3D11::SetBlendFunc()
 //-------------------------------------------------------------------------------
 // Set the pixel-blending function
 //-------------------------------------------------------------------------------
 void 
-IvRendererDX11::SetBlendFunc(IvBlendFunc blend)
+IvRendererD3D11::SetBlendFunc(IvBlendFunc blend)
 {
 	/*
     if (blend == kNoBlendFunc)
@@ -374,11 +374,11 @@ IvRendererDX11::SetBlendFunc(IvBlendFunc blend)
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetColorMask()
+// @ IvRendererD3D11::SetColorMask()
 //-------------------------------------------------------------------------------
 // Set which colors will actually be written to the color buffer
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetColorMask( bool red, bool green, bool blue, bool alpha )
+void IvRendererD3D11::SetColorMask( bool red, bool green, bool blue, bool alpha )
 {
 	/*
 	unsigned int mask = 0;
@@ -397,11 +397,11 @@ void IvRendererDX11::SetColorMask( bool red, bool green, bool blue, bool alpha )
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetFillMode()
+// @ IvRendererD3D11::SetFillMode()
 //-------------------------------------------------------------------------------
 // Set whether we're in solid or wireframe drawing mode
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetFillMode( IvFillMode fill )
+void IvRendererD3D11::SetFillMode( IvFillMode fill )
 {
 	/*
     if (fill == kWireframeFill)
@@ -419,11 +419,11 @@ void IvRendererDX11::SetFillMode( IvFillMode fill )
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetShadeMode()
+// @ IvRendererD3D11::SetShadeMode()
 //-------------------------------------------------------------------------------
 // Set whether we're in flat or Gouraud shading mode
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetShadeMode(IvShadeMode shade)
+void IvRendererD3D11::SetShadeMode(IvShadeMode shade)
 {
 	/*
     if (shade == kFlatShaded)
@@ -435,12 +435,12 @@ void IvRendererDX11::SetShadeMode(IvShadeMode shade)
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::GetShadeMode()
+// @ IvRendererD3D11::GetShadeMode()
 //-------------------------------------------------------------------------------
 // Set whether we're in flat or Gouraud shading mode
 //-------------------------------------------------------------------------------
 IvShadeMode 
-IvRendererDX11::GetShadeMode()
+IvRendererD3D11::GetShadeMode()
 {
 	/*
 	DWORD mode;
@@ -463,11 +463,11 @@ IvRendererDX11::GetShadeMode()
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetDepthTest()
+// @ IvRendererD3D11::SetDepthTest()
 //-------------------------------------------------------------------------------
 // Set the depth-testing function
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetDepthTest(IvDepthTestFunc func)
+void IvRendererD3D11::SetDepthTest(IvDepthTestFunc func)
 {
 	/*
     if (func == kDisableDepthTest)
@@ -481,11 +481,11 @@ void IvRendererDX11::SetDepthTest(IvDepthTestFunc func)
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::GetDepthTest()
+// @ IvRendererD3D11::GetDepthTest()
 //-------------------------------------------------------------------------------
 // Get the depth-testing function
 //-------------------------------------------------------------------------------
-IvDepthTestFunc IvRendererDX11::GetDepthTest()
+IvDepthTestFunc IvRendererD3D11::GetDepthTest()
 {
 	/*
 	DWORD mode;
@@ -509,21 +509,21 @@ IvDepthTestFunc IvRendererDX11::GetDepthTest()
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetDepthWrite()
+// @ IvRendererD3D11::SetDepthWrite()
 //-------------------------------------------------------------------------------
 // Enable/Disable the writing of depths to the depth buffer
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetDepthWrite(bool write)
+void IvRendererD3D11::SetDepthWrite(bool write)
 {
 //	mDevice->SetRenderState( D3DRS_ZWRITEENABLE, write ? TRUE : FALSE );
 }
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetWorldMatrix()
+// @ IvRendererD3D11::SetWorldMatrix()
 //-------------------------------------------------------------------------------
 // Sets the world matrix for the renderer
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetWorldMatrix(const IvMatrix44& matrix)
+void IvRendererD3D11::SetWorldMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetWorldMatrix(matrix);
 
@@ -531,11 +531,11 @@ void IvRendererDX11::SetWorldMatrix(const IvMatrix44& matrix)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetViewMatrix()
+// @ IvRendererD3D11::SetViewMatrix()
 //-------------------------------------------------------------------------------
 // Sets the camera matrix for the renderer
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetViewMatrix(const IvMatrix44& matrix)
+void IvRendererD3D11::SetViewMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetViewMatrix(matrix);
 
@@ -543,11 +543,11 @@ void IvRendererDX11::SetViewMatrix(const IvMatrix44& matrix)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetProjectionMatrix()
+// @ IvRendererD3D11::SetProjectionMatrix()
 //-------------------------------------------------------------------------------
 // Sets the projection matrix for the renderer
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetProjectionMatrix(const IvMatrix44& matrix)
+void IvRendererD3D11::SetProjectionMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetProjectionMatrix(matrix);
 
@@ -555,26 +555,26 @@ void IvRendererDX11::SetProjectionMatrix(const IvMatrix44& matrix)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::GetShaderProgram()
+// @ IvRendererD3D11::GetShaderProgram()
 //-------------------------------------------------------------------------------
 // Returns the currently-active shader program
 //-------------------------------------------------------------------------------
-IvShaderProgram* IvRendererDX11::GetShaderProgram()
+IvShaderProgram* IvRendererD3D11::GetShaderProgram()
 {
     return mShader;
 }
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::SetShaderProgram()
+// @ IvRendererD3D11::SetShaderProgram()
 //-------------------------------------------------------------------------------
 // Applies a shader program
 //-------------------------------------------------------------------------------
-void IvRendererDX11::SetShaderProgram(IvShaderProgram* program)
+void IvRendererD3D11::SetShaderProgram(IvShaderProgram* program)
 {
-    // This is a safe cast, since we will only link IvShaderProgramDX11 with the
-    // DX11 renderer.
-    mShader = static_cast<IvShaderProgramDX11*>(program);
+    // This is a safe cast, since we will only link IvShaderProgramD3D11 with the
+    // D3D11 renderer.
+    mShader = static_cast<IvShaderProgramD3D11*>(program);
     if (mShader)
     {
         mShader->MakeActive( mContext );
@@ -589,11 +589,11 @@ void IvRendererDX11::SetShaderProgram(IvShaderProgram* program)
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::Draw()
+// @ IvRendererD3D11::Draw()
 //-------------------------------------------------------------------------------
 // Draws the given buffers
 //-------------------------------------------------------------------------------
-void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, 
+void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, 
                   IvIndexBuffer* indexBuffer, unsigned int numIndices)
 {
     BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
@@ -636,12 +636,12 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 	mShader->BindUniforms( mContext );
 
 	if (vertexBuffer)
-        static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
+        static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive( mContext );
     else
         return;
 
     if (indexBuffer)
-		static_cast<IvIndexBufferDX11*>(indexBuffer)->MakeActive( mContext );
+		static_cast<IvIndexBufferD3D11*>(indexBuffer)->MakeActive( mContext );
     else
         return;
 
@@ -650,11 +650,11 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 }
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::Draw()
+// @ IvRendererD3D11::Draw()
 //-------------------------------------------------------------------------------
 // Draws the given buffers
 //-------------------------------------------------------------------------------
-void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices)
+void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices)
 {
     BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
@@ -696,7 +696,7 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, uns
 	mShader->BindUniforms(mContext);
 
     if (vertexBuffer)
-        static_cast<IvVertexBufferDX11*>(vertexBuffer)->MakeActive( mContext );
+        static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive( mContext );
     else
         return;
 
@@ -706,11 +706,11 @@ void IvRendererDX11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, uns
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererDX11::BindDefaultShaderIfNeeded()
+// @ IvRendererD3D11::BindDefaultShaderIfNeeded()
 //-------------------------------------------------------------------------------
 // Selects a default shader for the given vertex format if none is bound
 //-------------------------------------------------------------------------------
-void IvRendererDX11::BindDefaultShaderIfNeeded(IvVertexFormat format)
+void IvRendererD3D11::BindDefaultShaderIfNeeded(IvVertexFormat format)
 {
     if (mShader)
         return;
@@ -720,7 +720,7 @@ void IvRendererDX11::BindDefaultShaderIfNeeded(IvVertexFormat format)
         IvVertexShader* vs = mResourceManager->CreateDefaultVertexShader(format); 
         IvFragmentShader* fs = mResourceManager->CreateDefaultFragmentShader(format);
 
-        sDefaultShaders[format] = static_cast<IvShaderProgramDX11*>(
+        sDefaultShaders[format] = static_cast<IvShaderProgramD3D11*>(
             mResourceManager->CreateShaderProgram( vs, fs ));
         mResourceManager->Destroy( vs );
         mResourceManager->Destroy( fs );

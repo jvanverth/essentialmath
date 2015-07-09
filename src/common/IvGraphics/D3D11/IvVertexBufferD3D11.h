@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvIndexBufferDX11.h
+// @ IvVertexBufferD3D11.h
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -10,16 +10,15 @@
 // Usage notes
 //===============================================================================
 
-#ifndef __IvIndexBufferDX11__h__
-#define __IvIndexBufferDX11__h__
+#ifndef __IvVertexBufferD3D11__h__
+#define __IvVertexBufferD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "../IvIndexBuffer.h"
+#include "../IvVertexBuffer.h"
 #include "IvResourceManager.h"
-
 #include <d3d11.h>
 
 //-------------------------------------------------------------------------------
@@ -30,37 +29,38 @@
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvIndexBufferDX11 : private IvIndexBuffer
+class IvVertexBufferD3D11 : private IvVertexBuffer
 {
 public:
     // interface routines
 	virtual void* BeginLoadData();
 	virtual bool  EndLoadData();
 
-    friend class IvResourceManagerDX11;
-    friend class IvRendererDX11;
+    friend class IvResourceManagerD3D11;
+    friend class IvRendererD3D11;
     
 private:
     // constructor/destructor
-    IvIndexBufferDX11(); 
-	~IvIndexBufferDX11();
-
+    IvVertexBufferD3D11();
+	~IvVertexBufferD3D11();
+    
     // creation 
-	bool Create(unsigned int numVertices, void* data, IvDataUsage usage, ID3D11Device* device);
+	bool Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
+		        ID3D11Device* device);
     
     // destruction
     void Destroy();
-    
+
     // activate
 	bool MakeActive(ID3D11DeviceContext* device);
 
 private:
     // copy operations
-    IvIndexBufferDX11(const IvIndexBufferDX11& other);
-	IvIndexBufferDX11& operator=(const IvIndexBufferDX11& other);
+    IvVertexBufferD3D11(const IvVertexBufferD3D11& other);
+	IvVertexBufferD3D11& operator=(const IvVertexBufferD3D11& other);
 
 	ID3D11Buffer* mBufferPtr;
-    void*         mDataPtr;
+	void*		  mDataPtr;
 	IvDataUsage   mUsage;
 };
 

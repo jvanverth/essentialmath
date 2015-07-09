@@ -1,95 +1,65 @@
 //===============================================================================
-// @ IvConstantTableDX11.h
+// @ IvFragmentShaderD3D11.h
 // 
-// Replacement for D3D9 constant table
+// Description
 // ------------------------------------------------------------------------------
-// Copyright (C) 2014   James M. Van Verth & Lars M. Bishop
+// Copyright (C) 2008   Elsevier, Inc.
 //
 // Change history:
 //
 // Usage notes
 //===============================================================================
 
-#ifndef __IvConstantTableDX11__h__
-#define __IvConstantTableDX11__h__
+#ifndef __IvFragmentShaderD3D11__h__
+#define __IvFragmentShaderD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
-#include <d3d11.h>
-#include <map>
 
-#include "IvUniform.h"
+#include "../IvFragmentShader.h"
+#include "../IvVertexFormats.h"
+#include <d3d11.h>
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+class IvConstantTableD3D11;
+class IvResourceManagerD3D11;
+class IvShaderProgramD3D11;
+
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-typedef int IvConstantHandle;
-
-struct IvConstantDesc
-{
-	IvUniformType mType;
-	union
-	{
-		struct
-		{
-			void*         mOffset;
-			unsigned int  mCount;
-		};
-		struct
-		{
-			int           mTextureSlot;
-			int           mSamplerSlot;
-		};
-	};
-};
-
-class IvConstantTableDX11
+class IvFragmentShaderD3D11 : private IvFragmentShader
 {
 public:
-	static IvConstantTableDX11* Create(ID3D11Device* device, ID3DBlob* code);
+    // interface routines
 
-	void AddRef() { ++mRefCount; }
-	void Release() { Destroy(this); }
-
-	bool GetConstantDesc(const char* name, IvConstantDesc* constantDesc);
-	void MarkDirty() { mDirty = true;  }
-
-	bool MakeActiveVS(ID3D11DeviceContext* context);
-	bool MakeActivePS(ID3D11DeviceContext* context);
+    friend class IvResourceManagerD3D11;
+    friend class IvShaderProgramD3D11;
 
 private:
-	static void Destroy(IvConstantTableDX11* table);
-
-	// constructor/destructor
-	IvConstantTableDX11() : mRefCount(1), mBuffer(NULL), mBacking(NULL), 
-		                    mDirty(false) {}
-	~IvConstantTableDX11()
-	{
-		if (mBuffer)
-		{
-			mBuffer->Release();
-			mBuffer = NULL;
-		}
-		delete mBacking;
-	}
-
+    // constructor/destructor
+    IvFragmentShaderD3D11();
+	~IvFragmentShaderD3D11();
+    
+    // initialization
+	bool CreateFromFile(const char* filename, ID3D11Device* device);
+	bool CreateFromString(const char* filename, ID3D11Device* device);
+	bool CreateDefault(IvVertexFormat format, ID3D11Device* device);
+    
+    void Destroy();
+    
 private:
-	// copy operations
-	IvConstantTableDX11(const IvConstantTableDX11& other);
-	IvConstantTableDX11& operator=(const IvConstantTableDX11& other);
+    // copy operations
+    IvFragmentShaderD3D11(const IvFragmentShaderD3D11& other);
+	IvFragmentShaderD3D11& operator=(const IvFragmentShaderD3D11& other);
 
-	int									  mRefCount;
-	std::map<std::string, IvConstantDesc> mConstants;
-	ID3D11Buffer*						  mBuffer;
-	char*                                 mBacking;
-	size_t								  mBackingSize;
-	bool								  mDirty;
+	ID3D11PixelShader*   mShaderPtr;
+	IvConstantTableD3D11* mConstantTable;
 };
 
 

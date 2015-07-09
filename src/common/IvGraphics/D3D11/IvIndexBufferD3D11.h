@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvVertexShaderDX11.h
+// @ IvIndexBufferD3D11.h
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -10,56 +10,58 @@
 // Usage notes
 //===============================================================================
 
-#ifndef __IvVertexShaderDX11__h__
-#define __IvVertexShaderDX11__h__
+#ifndef __IvIndexBufferD3D11__h__
+#define __IvIndexBufferD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "../IvVertexShader.h"
-#include "../IvVertexFormats.h"
+#include "../IvIndexBuffer.h"
+#include "IvResourceManager.h"
+
 #include <d3d11.h>
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvResourceManagerDX11;
-class IvShaderProgramDX11;
-class IvConstantTableDX11;
-
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvVertexShaderDX11 : private IvVertexShader
+class IvIndexBufferD3D11 : private IvIndexBuffer
 {
 public:
     // interface routines
+	virtual void* BeginLoadData();
+	virtual bool  EndLoadData();
 
-    friend class IvResourceManagerDX11;
-    friend class IvShaderProgramDX11;
+    friend class IvResourceManagerD3D11;
+    friend class IvRendererD3D11;
     
 private:
     // constructor/destructor
-    IvVertexShaderDX11();
-	~IvVertexShaderDX11();
+    IvIndexBufferD3D11(); 
+	~IvIndexBufferD3D11();
+
+    // creation 
+	bool Create(unsigned int numVertices, void* data, IvDataUsage usage, ID3D11Device* device);
     
-    // initialization
-	bool CreateFromFile(const char* filename, ID3D11Device* device);
-	bool CreateFromString(const char* filename, ID3D11Device* device);
-	bool CreateDefault(IvVertexFormat format, ID3D11Device* device);
-    
+    // destruction
     void Destroy();
     
+    // activate
+	bool MakeActive(ID3D11DeviceContext* device);
+
 private:
     // copy operations
-    IvVertexShaderDX11(const IvVertexShaderDX11& other);
-	IvVertexShaderDX11& operator=(const IvVertexShaderDX11& other);
+    IvIndexBufferD3D11(const IvIndexBufferD3D11& other);
+	IvIndexBufferD3D11& operator=(const IvIndexBufferD3D11& other);
 
-	ID3D11VertexShader*  mShaderPtr;
-	IvConstantTableDX11* mConstantTable;
+	ID3D11Buffer* mBufferPtr;
+    void*         mDataPtr;
+	IvDataUsage   mUsage;
 };
 
 

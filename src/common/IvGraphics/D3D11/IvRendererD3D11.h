@@ -10,8 +10,8 @@
 // Virtual base class for platform-dependant windowing
 //===============================================================================
 
-#ifndef __IvRendererDX11__h__
-#define __IvRendererDX11__h__
+#ifndef __IvRendererD3D11__h__
+#define __IvRendererD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
-class IvShaderProgramDX11;
+class IvShaderProgramD3D11;
 
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvRendererDX11 : public IvRenderer
+class IvRendererD3D11 : public IvRenderer
 {
 friend class IvRenderer;
 
@@ -76,23 +76,23 @@ public:
 	ID3D11DeviceContext* GetContext() { return mContext; }
     
 protected:
-    bool InitDX11();
+    bool InitD3D11();
     void BindDefaultShaderIfNeeded(IvVertexFormat format);
 
-    IvShaderProgramDX11* mShader;
+    IvShaderProgramD3D11* mShader;
 
 private:
     // constructor/destructor
-	IvRendererDX11(ID3D11Device* device, ID3D11DeviceContext* context, 
+	IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* context, 
 		           ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStencilTarget);
-    ~IvRendererDX11();
+    ~IvRendererD3D11();
 
     // copy operations
-    IvRendererDX11(const IvRendererDX11& other);
-    IvRendererDX11& operator=(const IvRendererDX11& other);
+    IvRendererD3D11(const IvRendererD3D11& other);
+    IvRendererD3D11& operator=(const IvRendererD3D11& other);
 
 private: 
-    // private DX11 things 
+    // private D3D11 things 
 	ID3D11Device*        mDevice;
 	ID3D11DeviceContext* mContext;
 	ID3D11RenderTargetView* mRenderTarget;

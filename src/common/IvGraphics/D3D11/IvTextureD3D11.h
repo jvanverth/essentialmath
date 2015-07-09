@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvTextureDX11.h
+// @ IvTextureD3D11.h
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -8,8 +8,8 @@
 // Usage notes
 //===============================================================================
 
-#ifndef __IvTextureDX11__h__
-#define __IvTextureDX11__h__
+#ifndef __IvTextureD3D11__h__
+#define __IvTextureD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
@@ -28,11 +28,11 @@
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvTextureDX11: public IvTexture
+class IvTextureD3D11: public IvTexture
 {
 public:
-    friend class IvResourceManagerDX11;
-    friend class IvUniformDX11;
+    friend class IvResourceManagerD3D11;
+    friend class IvUniformD3D11;
 
     // interface routines
     virtual void* BeginLoadData(unsigned int level = 0);
@@ -46,8 +46,8 @@ public:
 
 protected:
     // constructor/destructor
-    IvTextureDX11();
-    virtual ~IvTextureDX11();
+    IvTextureD3D11();
+    virtual ~IvTextureD3D11();
 
     // creation
 	bool Create(unsigned int width, unsigned int height, IvTextureFormat format,
@@ -77,8 +77,8 @@ protected:
 
 private:
     // copy operations (unimplemented so we can't copy)
-    IvTextureDX11(const IvTextureDX11& other);
-	IvTextureDX11& operator=(const IvTextureDX11& other);
+    IvTextureD3D11(const IvTextureD3D11& other);
+	IvTextureD3D11& operator=(const IvTextureD3D11& other);
 
 	// D3D objects
 	ID3D11Texture2D*          mTexturePtr;

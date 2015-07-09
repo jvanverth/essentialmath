@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvIndexBufferDX11.cpp
+// @ IvIndexBufferD3D11.cpp
 // 
 // Description
 // ------------------------------------------------------------------------------
@@ -12,9 +12,9 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "IvIndexBufferDX11.h"
+#include "IvIndexBufferD3D11.h"
 
-#include "IvRendererDX11.h"
+#include "IvRendererD3D11.h"
 #include "IvTypes.h"
 #include <stdio.h>
 
@@ -27,31 +27,31 @@
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferDX11::IvIndexBufferDX11()
+// @ IvIndexBufferD3D11::IvIndexBufferD3D11()
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvIndexBufferDX11::IvIndexBufferDX11() : IvIndexBuffer(), mBufferPtr(0), mDataPtr(0)
+IvIndexBufferD3D11::IvIndexBufferD3D11() : IvIndexBuffer(), mBufferPtr(0), mDataPtr(0)
 {
-}	// End of IvIndexBufferDX11::IvIndexBufferDX11()
+}	// End of IvIndexBufferD3D11::IvIndexBufferD3D11()
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferDX11::~IvIndexBufferDX11()
+// @ IvIndexBufferD3D11::~IvIndexBufferD3D11()
 //-------------------------------------------------------------------------------
 // Destructor
 //-------------------------------------------------------------------------------
-IvIndexBufferDX11::~IvIndexBufferDX11()
+IvIndexBufferD3D11::~IvIndexBufferD3D11()
 {
     Destroy();
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferDX11::Create()
+// @ IvIndexBufferD3D11::Create()
 //-------------------------------------------------------------------------------
 // Create the platform-specific data
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferDX11::Create(unsigned int numIndices, void* data, IvDataUsage usage, ID3D11Device* device)
+IvIndexBufferD3D11::Create(unsigned int numIndices, void* data, IvDataUsage usage, ID3D11Device* device)
 {
 	D3D11_BUFFER_DESC indexBufferDesc;
 	indexBufferDesc.ByteWidth = sizeof(unsigned int)*numIndices;
@@ -96,12 +96,12 @@ IvIndexBufferDX11::Create(unsigned int numIndices, void* data, IvDataUsage usage
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferDX11::Destroy()
+// @ IvIndexBufferD3D11::Destroy()
 //-------------------------------------------------------------------------------
 // Destroy the platform-specific data
 //-------------------------------------------------------------------------------
 void
-IvIndexBufferDX11::Destroy()
+IvIndexBufferD3D11::Destroy()
 {
     delete [] mDataPtr;
     mDataPtr = 0;
@@ -117,12 +117,12 @@ IvIndexBufferDX11::Destroy()
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferDX11::MakeActive()
+// @ IvIndexBufferD3D11::MakeActive()
 //-------------------------------------------------------------------------------
 // Make this the active index buffer
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferDX11::MakeActive(ID3D11DeviceContext* context)
+IvIndexBufferD3D11::MakeActive(ID3D11DeviceContext* context)
 {
     if ( mBufferPtr == 0 || mNumIndices == 0 )
         return false;
@@ -133,13 +133,13 @@ IvIndexBufferDX11::MakeActive(ID3D11DeviceContext* context)
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferDX11::BeginLoadData()
+// @ IvIndexBufferD3D11::BeginLoadData()
 //-------------------------------------------------------------------------------
 // Lock down the buffer and start loading
 // Returns pointer to client side data area
 //-------------------------------------------------------------------------------
 void *
-IvIndexBufferDX11::BeginLoadData()
+IvIndexBufferD3D11::BeginLoadData()
 {
 	if (mUsage == kImmutableUsage)
 	{
@@ -147,16 +147,18 @@ IvIndexBufferDX11::BeginLoadData()
 	}
 
     mDataPtr = (void*) new unsigned char[mNumIndices*sizeof(unsigned int)];
+
+	return mDataPtr;
 }
 
 //-------------------------------------------------------------------------------
-// @ IvIndexBufferDX11::EndLoadData()
+// @ IvIndexBufferD3D11::EndLoadData()
 //-------------------------------------------------------------------------------
 // Unlock the buffer, we're done loading
 // Returns true if all went well
 //-------------------------------------------------------------------------------
 bool
-IvIndexBufferDX11::EndLoadData()
+IvIndexBufferD3D11::EndLoadData()
 {
 	if (mUsage == kImmutableUsage)
 	{
@@ -170,7 +172,7 @@ IvIndexBufferDX11::EndLoadData()
     }
 
     // this is seriously ugly -- not clear how to easily get the context down here
-    ID3D11DeviceContext* d3dContext = ((IvRendererDX11*)IvRenderer::mRenderer)->GetContext();
+    ID3D11DeviceContext* d3dContext = ((IvRendererD3D11*)IvRenderer::mRenderer)->GetContext();
     if (kDefaultUsage == mUsage)
     {
         // use UpdateSubresource()
