@@ -225,7 +225,10 @@ copy .\Iv*.h ..\Includes
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="D3D11\IvMainD3D11.cpp" />
+    <ClCompile Include="D3D11\IvMainD3D11.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release OGL|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug OGL|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="IvClock.cpp" />
     <ClCompile Include="IvEventHandler.cpp" />
     <ClCompile Include="IvGame.cpp" />

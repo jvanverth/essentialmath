@@ -240,7 +240,7 @@ bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool v
 	swapChainDesc.BufferCount = 1;                                  // one backbuffer
 	swapChainDesc.BufferDesc.Width = width;
 	swapChainDesc.BufferDesc.Height = height;
-	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = numerator;
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = denominator;
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
@@ -353,16 +353,16 @@ bool GetRefreshRate(unsigned int width, unsigned int height,
 		return false;
 	}
 
-	// Now we enumerate all the display modes that match 32-bit RGBA
+	// Now we enumerate all the display modes that match 32-bit RGBA w/sRGB gamma
 	unsigned int numModes;
 	DXGI_MODE_DESC* displayModeList = NULL;
-	result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL);
+	result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL);
 	if (SUCCEEDED(result))
 	{
 		displayModeList = new DXGI_MODE_DESC[numModes];
 		if (NULL != displayModeList)
 		{
-			result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList);
+			result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList);
 		}
 	}
 	if (NULL == displayModeList || FAILED(result))

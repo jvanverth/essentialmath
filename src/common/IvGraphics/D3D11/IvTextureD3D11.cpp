@@ -16,7 +16,7 @@
 // will need to convert before creating
 static unsigned int sInternalTextureFormatSize[kTexFmtCount] = {4, 4};
 static unsigned int sExternalTextureFormatSize[kTexFmtCount] = {4, 3};
-static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_R8G8B8A8_UNORM };
+static DXGI_FORMAT	sD3DTextureFormat[kTexFmtCount] = { DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB };
 
 //-------------------------------------------------------------------------------
 // @ IvTextureD3D11::IvTextureD3D11()
@@ -129,7 +129,7 @@ IvTextureD3D11::Create(unsigned int width, unsigned int height, IvTextureFormat 
 	desc.Height = height;
 	desc.MipLevels = 1;
 	desc.ArraySize = 1;
-	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	desc.SampleDesc.Count = 1;
 	desc.SampleDesc.Quality = 0;
 	switch (usage)
@@ -162,7 +162,7 @@ IvTextureD3D11::Create(unsigned int width, unsigned int height, IvTextureFormat 
 		delete [] pixelData;
 	}
 
-	mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM;
+	mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
 	// verify formats
 
 	if (FAILED(device->CreateShaderResourceView(mTexturePtr, NULL, &mShaderResourceView)))
@@ -287,7 +287,7 @@ IvTextureD3D11::CreateMipmapped(unsigned int width, unsigned int height, IvTextu
     desc.Height = mHeight;
     desc.MipLevels = mLevelCount;
     desc.ArraySize = 1;
-    desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
     desc.SampleDesc.Count = 1;
     desc.SampleDesc.Quality = 0;
     switch (usage)
@@ -320,7 +320,7 @@ IvTextureD3D11::CreateMipmapped(unsigned int width, unsigned int height, IvTextu
         }
     }
 
-    mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM;
+    mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
     // verify formats
 
     if (FAILED(device->CreateShaderResourceView(mTexturePtr, NULL, &mShaderResourceView)))
