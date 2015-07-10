@@ -1318,8 +1318,8 @@ IvSetDefaultLighting()
     IvVector3 dir(-1.0f, 0.5f, 0.25f);
     dir.Normalize();
 	IvRenderer::mRenderer->SetDefaultLightDirection(dir);
-	IvRenderer::mRenderer->SetDefaultLightAmbient(0.4f, 0.4f, 0.4f, 1.0f);
-	IvRenderer::mRenderer->SetDefaultLightDiffuse(0.25f, 0.25f, 0.25f, 1.0f);
+	IvRenderer::mRenderer->SetDefaultLightAmbient(0.15f, 0.15f, 0.15f, 1.0f);
+	IvRenderer::mRenderer->SetDefaultLightDiffuse(0.35f, 0.35f, 0.35f, 1.0f);
 
 }   // End of IvSetDefaultLighting()
 

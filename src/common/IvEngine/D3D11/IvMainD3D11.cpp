@@ -13,6 +13,7 @@
 
 //#pragma warning( disable : 4995 )
 #include <windows.h>
+#include <windowsx.h>
 #include <d3d11.h>
 #include <dxgi1_3.h>
 #include <directxcolors.h>
@@ -36,6 +37,7 @@ ID3D11Texture2D*        gDepthStencilBuffer = NULL;
 ID3D11DepthStencilView* gDepthStencilView = NULL;
 UINT					gSyncInterval = 0;
 ID3D11Debug*            gD3dDebug;
+bool                    gIsFullscreen = false;
 
 PCHAR*  CommandLineWToArgvA( PWCHAR CmdLine, int* _argc );
 
@@ -202,10 +204,11 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
 
 		posX = posY = CW_USEDEFAULT;
 	}
+	gIsFullscreen = fullscreen;
 
 	// Create window
 	gHwnd = CreateWindow(L"ExampleWindowClass", name, WS_OVERLAPPEDWINDOW,
-		posX, posY, width, height, NULL, NULL, gHInstance, NULL);
+		                 posX, posY, width, height, NULL, NULL, gHInstance, NULL);
 	if (!gHwnd)
 	{
 		return false;
@@ -511,9 +514,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			bool bAltDown = ((lParam & dwMask) != 0);
 
 			OnKeyboard((UINT)wParam, false, bAltDown);
-		}
+		} 
 		break;
 
+	case WM_LBUTTONDOWN:
+	case WM_RBUTTONDOWN:
+	case WM_MBUTTONDOWN:
+		{
+			bool bLeftDown = ((wParam & MK_LBUTTON) != 0);
+			bool bRightDown = ((wParam & MK_RBUTTON) != 0);
+			bool bMiddleDown = ((wParam & MK_MBUTTON) != 0);
+
+			int xPos = GET_X_LPARAM(lParam);
+			int yPos = GET_Y_LPARAM(lParam);
+			if (!gIsFullscreen)
+			{
+				RECT rc = { 0, 0, 640, 480 };
+				AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+				xPos -= rc.left;
+				yPos -= rc.top;
+			}
+
+			OnMouse(bLeftDown, bRightDown, bMiddleDown, false, false, 0, xPos, yPos);
+		}
+		break;
 
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
