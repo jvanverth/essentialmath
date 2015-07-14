@@ -36,14 +36,33 @@
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-static GLint sPrimTypeMap[kPrimTypeCount];
+static GLenum sPrimTypeMap[kPrimTypeCount];
 
 static IvShaderProgramOGL* sDefaultShaders[kVertexFormatCount];
 
-static GLint sBlendSrcFunc[kBlendFuncCount];
-static GLint sBlendDestFunc[kBlendFuncCount];
+static GLenum sBlendFunc[kBlendFuncCount] =
+{
+	GL_ZERO,
+	GL_ONE,
+	GL_SRC_COLOR,
+	GL_ONE_MINUS_SRC_COLOR,
+	GL_SRC_ALPHA,
+	GL_ONE_MINUS_SRC_ALPHA,
+	GL_DST_COLOR,
+	GL_ONE_MINUS_DST_COLOR,
+	GL_DST_ALPHA,
+	GL_ONE_MINUS_DST_ALPHA,
+};
 
-static GLint sDepthFunc[kDepthTestCount];
+static GLenum sBlendOp[kBlendOpCount] =
+{
+	GL_FUNC_ADD,
+	GL_FUNC_SUBTRACT,
+	GL_MIN,
+	GL_MAX,
+};
+
+static GLenum sDepthFunc[kDepthTestCount];
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -84,14 +103,6 @@ IvRendererOGL::IvRendererOGL() : IvRenderer()
     sPrimTypeMap[kTriangleListPrim] = GL_TRIANGLES;
     sPrimTypeMap[kTriangleStripPrim] = GL_TRIANGLE_STRIP;
 
-    sBlendSrcFunc[kNoBlendFunc] = GL_ONE;
-    sBlendDestFunc[kNoBlendFunc] = GL_ZERO;
-    sBlendSrcFunc[kOpacityBlendFunc] = GL_SRC_ALPHA;
-    sBlendDestFunc[kOpacityBlendFunc] = GL_ONE_MINUS_SRC_ALPHA;
-    sBlendSrcFunc[kAddBlendFunc] = GL_ONE;
-    sBlendDestFunc[kAddBlendFunc] = GL_ONE;
-    sBlendSrcFunc[kMultiplyBlendFunc] = GL_ZERO;
-    sBlendDestFunc[kMultiplyBlendFunc] = GL_SRC_COLOR;
 
     sDepthFunc[kDisableDepthTest] = GL_ALWAYS;
     sDepthFunc[kGreaterDepthTest] = GL_GREATER;
@@ -281,14 +292,19 @@ void IvRendererOGL::ClearBuffers(IvClearBuffer buffer)
 //-------------------------------------------------------------------------------
 // Set the pixel-blending function
 //-------------------------------------------------------------------------------
-void IvRendererOGL::SetBlendFunc(IvBlendFunc blend)
+void IvRendererOGL::SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc destBlend, IvBlendOp op)
 {
-    if (blend == kNoBlendFunc)
-        glDisable(GL_BLEND);
-    else
-        glEnable(GL_BLEND);
+	if (kOneBlendFunc == srcBlend && kZeroBlendFunc == destBlend && kAddBlendOp == op)
+	{
+		glDisable(GL_BLEND);
+	}
+	else
+	{
+		glEnable(GL_BLEND);
+	}
 
-    glBlendFunc(sBlendSrcFunc[blend], sBlendDestFunc[blend]);
+	glBlendFunc(sBlendFunc[srcBlend], sBlendFunc[destBlend]);
+	glBlendEquation(sBlendOp[op]);
 }
 
 

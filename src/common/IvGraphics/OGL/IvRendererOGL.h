@@ -42,7 +42,7 @@ public:
     virtual void  SetClearDepth( float depth );
     virtual void  ClearBuffers(IvClearBuffer buffer);
 
-    virtual void SetBlendFunc(IvBlendFunc blend);
+	virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op);
 	virtual void SetColorMask( bool red, bool green, bool blue, bool alpha );
 	virtual void SetFillMode(IvFillMode fill);
 	virtual void SetShadeMode(IvShadeMode shade);

@@ -44,8 +44,9 @@ public:
 	virtual void  SetClearDepth( float depth );
     virtual void  ClearBuffers(IvClearBuffer buffer);
 
-    virtual void SetBlendFunc(IvBlendFunc blend);
+	virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op);
 	virtual void SetColorMask( bool red, bool green, bool blue, bool alpha );
+
 	virtual void SetFillMode(IvFillMode fill);
 	virtual void SetShadeMode(IvShadeMode shade);
 	virtual IvShadeMode GetShadeMode();
@@ -91,7 +92,8 @@ private:
     IvRendererD3D11(const IvRendererD3D11& other);
     IvRendererD3D11& operator=(const IvRendererD3D11& other);
 
-private: 
+	void UpdateBlendState();
+
     // private D3D11 things 
 	ID3D11Device*        mDevice;
 	ID3D11DeviceContext* mContext;
@@ -100,8 +102,12 @@ private:
 
 	float 	             mClearColor[4];
 	float			     mClearDepth;
-};
 
+	D3D11_BLEND          mSrcBlend;
+	D3D11_BLEND          mDestBlend;
+	D3D11_BLEND_OP       mBlendOp;
+	UINT8                mWriteMask;
+};
 
 
 //-------------------------------------------------------------------------------

@@ -30,14 +30,47 @@
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-static D3D_PRIMITIVE_TOPOLOGY sPrimTypeMap[kPrimTypeCount];
+static D3D_PRIMITIVE_TOPOLOGY sPrimTypeMap[kPrimTypeCount] =
+{
+	D3D_PRIMITIVE_TOPOLOGY_POINTLIST,
+	D3D_PRIMITIVE_TOPOLOGY_LINELIST,
+	D3D_PRIMITIVE_TOPOLOGY_LINESTRIP,
+	D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+	D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
+};
 
 static IvShaderProgramD3D11* sDefaultShaders[kVertexFormatCount];
 
-static Int32 sBlendSrcFunc[kBlendFuncCount];
-static Int32 sBlendDestFunc[kBlendFuncCount];
+static D3D11_BLEND sBlendFunc[kBlendFuncCount] =
+{
+	D3D11_BLEND_ZERO,
+	D3D11_BLEND_ONE,
+	D3D11_BLEND_SRC_COLOR,
+	D3D11_BLEND_INV_SRC_COLOR,
+	D3D11_BLEND_SRC_ALPHA,
+	D3D11_BLEND_INV_SRC_ALPHA,
+	D3D11_BLEND_DEST_COLOR,
+	D3D11_BLEND_INV_DEST_COLOR,
+	D3D11_BLEND_DEST_ALPHA,
+	D3D11_BLEND_INV_DEST_ALPHA,
+};
 
-static Int32 sDepthFunc[kDepthTestCount];
+static D3D11_BLEND_OP sBlendOp[kBlendOpCount] =
+{
+	D3D11_BLEND_OP_ADD,
+	D3D11_BLEND_OP_SUBTRACT,
+	D3D11_BLEND_OP_MIN,
+	D3D11_BLEND_OP_MAX,
+};
+
+static Int32 sDepthFunc[kDepthTestCount] =
+{
+	D3D11_COMPARISON_ALWAYS,
+	D3D11_COMPARISON_GREATER,
+	D3D11_COMPARISON_GREATER_EQUAL,
+	D3D11_COMPARISON_LESS,
+	D3D11_COMPARISON_LESS_EQUAL
+};
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -92,28 +125,12 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
 	mClearColor[3] = 1.0f;
 	mClearDepth = 1.0f;
 
+	mSrcBlend = D3D11_BLEND_ONE;
+	mDestBlend = D3D11_BLEND_ZERO;
+	mBlendOp = D3D11_BLEND_OP_ADD;
+	mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
 	mAPI = kD3D11;
-
-	sPrimTypeMap[kPointListPrim] = D3D_PRIMITIVE_TOPOLOGY_POINTLIST;
-	sPrimTypeMap[kLineListPrim] = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
-	sPrimTypeMap[kLineStripPrim] = D3D_PRIMITIVE_TOPOLOGY_LINESTRIP;
-	sPrimTypeMap[kTriangleListPrim] = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	sPrimTypeMap[kTriangleStripPrim] = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
-
-	sBlendSrcFunc[kNoBlendFunc] = D3D11_BLEND_ONE;
-	sBlendDestFunc[kNoBlendFunc] = D3D11_BLEND_ZERO;
-	sBlendSrcFunc[kOpacityBlendFunc] = D3D11_BLEND_SRC_ALPHA;
-	sBlendDestFunc[kOpacityBlendFunc] = D3D11_BLEND_INV_SRC_ALPHA;
-	sBlendSrcFunc[kAddBlendFunc] = D3D11_BLEND_ONE;
-	sBlendDestFunc[kAddBlendFunc] = D3D11_BLEND_ONE;
-	sBlendSrcFunc[kMultiplyBlendFunc] = D3D11_BLEND_ZERO;
-	sBlendDestFunc[kMultiplyBlendFunc] = D3D11_BLEND_SRC_COLOR;
-
-	sDepthFunc[kDisableDepthTest] = D3D11_COMPARISON_ALWAYS;
-	sDepthFunc[kGreaterDepthTest] = D3D11_COMPARISON_GREATER;
-	sDepthFunc[kGreaterEqualDepthTest] = D3D11_COMPARISON_GREATER_EQUAL;
-	sDepthFunc[kLessDepthTest] = D3D11_COMPARISON_LESS;
-	sDepthFunc[kLessEqualDepthTest] = D3D11_COMPARISON_LESS_EQUAL;
 
 }   // End of IvRendererD3D11::IvRendererD3D11()
 
@@ -226,9 +243,9 @@ IvRendererD3D11::Resize(unsigned int width, unsigned int height )
 
 
 //-------------------------------------------------------------------------------
-// @ IvRendererD3D11::InitGL()
+// @ IvRendererD3D11::InitD3D11()
 //-------------------------------------------------------------------------------
-// Set up base GL parameters
+// Set up base D3D parameters
 //-------------------------------------------------------------------------------
 bool 
 IvRendererD3D11::InitD3D11()                                   
@@ -289,6 +306,12 @@ IvRendererD3D11::InitD3D11()
 	// Set the depth stencil state.
 	mContext->OMSetDepthStencilState(depthState, 1);
 	depthState->Release();
+
+	mSrcBlend = D3D11_BLEND_ONE;
+	mDestBlend = D3D11_BLEND_ZERO;
+	mBlendOp = D3D11_BLEND_OP_ADD;
+	mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	UpdateBlendState();
 
 	/*
     // set point size
@@ -359,17 +382,13 @@ IvRendererD3D11::ClearBuffers(IvClearBuffer buffer)
 // Set the pixel-blending function
 //-------------------------------------------------------------------------------
 void 
-IvRendererD3D11::SetBlendFunc(IvBlendFunc blend)
+IvRendererD3D11::SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc destBlend, IvBlendOp op)
 {
-	/*
-    if (blend == kNoBlendFunc)
-        mDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, FALSE );
-    else
-        mDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
+	mSrcBlend = sBlendFunc[srcBlend];
+	mDestBlend = sBlendFunc[srcBlend];
+	mBlendOp = sBlendOp[op];
 
-	mDevice->SetRenderState( D3DRS_SRCBLEND, sBlendSrcFunc[blend] );
-	mDevice->SetRenderState( D3DRS_DESTBLEND, sBlendDestFunc[blend] );
-	*/
+	UpdateBlendState();
 }
 
 
@@ -380,21 +399,55 @@ IvRendererD3D11::SetBlendFunc(IvBlendFunc blend)
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetColorMask( bool red, bool green, bool blue, bool alpha )
 {
-	/*
-	unsigned int mask = 0;
-	if ( red )
-		mask |= D3DCOLORWRITEENABLE_RED;
-	if ( green )
-		mask |= D3DCOLORWRITEENABLE_GREEN;
-	if ( blue )
-		mask |= D3DCOLORWRITEENABLE_BLUE;
-	if ( alpha )
-		mask |= D3DCOLORWRITEENABLE_ALPHA;
-	
-    mDevice->SetRenderState( D3DRS_COLORWRITEENABLE, mask );
-	*/
+	unsigned char mask = 0;
+	if (red)
+		mask |= D3D11_COLOR_WRITE_ENABLE_RED;
+	if (green)
+		mask |= D3D11_COLOR_WRITE_ENABLE_GREEN;
+	if (blue)
+		mask |= D3D11_COLOR_WRITE_ENABLE_BLUE;
+	if (alpha)
+		mask |= D3D11_COLOR_WRITE_ENABLE_ALPHA;
+	mWriteMask = mask;
+
+	UpdateBlendState();
 }
 
+//-------------------------------------------------------------------------------
+// @ IvRendererD3D11::UpdateBlendState()
+//-------------------------------------------------------------------------------
+// Update the blend state
+//-------------------------------------------------------------------------------
+void IvRendererD3D11::UpdateBlendState()
+{
+	D3D11_BLEND_DESC blendDesc;
+	ID3D11BlendState* blendState;
+
+	// ideally we'd only call this at most once per draw
+	// the assumption is that the client will only be either setting blend funcs
+	// or the write mask
+	ZeroMemory(&blendDesc, sizeof(blendDesc));
+	blendDesc.RenderTarget[0].BlendEnable =
+		!(D3D11_BLEND_ONE == mSrcBlend && D3D11_BLEND_ZERO == mDestBlend && D3D11_BLEND_OP_ADD == mBlendOp);
+	blendDesc.RenderTarget[0].SrcBlend = mSrcBlend;
+	blendDesc.RenderTarget[0].DestBlend = mDestBlend;
+	blendDesc.RenderTarget[0].BlendOp = mBlendOp;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = mSrcBlend;
+	blendDesc.RenderTarget[0].DestBlendAlpha = mDestBlend;
+	blendDesc.RenderTarget[0].BlendOpAlpha = mBlendOp;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = mWriteMask;
+
+	// Create the blend state from the description we just filled out.
+	HRESULT result = mDevice->CreateBlendState(&blendDesc, &blendState);
+	if (FAILED(result))
+	{
+		ASSERT(false);
+		return;
+	}
+	// Now set the blend state.
+	mContext->OMSetBlendState(blendState, NULL, 0xffffffff);
+	blendState->Release();
+}
 
 //-------------------------------------------------------------------------------
 // @ IvRendererD3D11::SetFillMode()

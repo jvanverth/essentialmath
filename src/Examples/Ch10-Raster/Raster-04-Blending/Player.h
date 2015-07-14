@@ -58,7 +58,18 @@ private:
     IvTexture* mBlendTextures[NUM_BLEND_TEX];
     unsigned int mCurrentBlendTexIndex;
 
-    IvBlendFunc mBlendMode;
+	enum BlendMode {
+		kNoneBlendMode,
+		kOpacityBlendMode,
+		kAddBlendMode,
+		kModulateBlendMode,
+
+		kLastBlendMode = kModulateBlendMode
+	}; 
+	const int kBlendModeCount = kLastBlendMode + 1;
+    BlendMode mBlendMode;
+
+	void SetBlendFuncs(BlendMode mode);
 
     IvShaderProgram* mShader;
     IvUniform* mTextureUniform;

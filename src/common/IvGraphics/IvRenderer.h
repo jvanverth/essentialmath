@@ -31,34 +31,59 @@ class IvShaderProgram;
 
 enum IvBlendFunc
 {
-    kNoBlendFunc,
-    kOpacityBlendFunc,
-    kAddBlendFunc,
-    kMultiplyBlendFunc,
-    kBlendFuncCount
+    kZeroBlendFunc,
+    kOneBlendFunc,
+	kSrcColorBlendFunc,
+	kOneMinusSrcColorBlendFunc,
+	kSrcAlphaBlendFunc,
+    kOneMinusSrcAlphaBlendFunc,
+	kDestColorBlendFunc,
+	kOneMinusDestColorBlendFunc,
+	kDestAlphaBlendFunc,
+	kOneMinusDestAlphaBlendFunc,
+
+	kLastBlendFunc = kOneMinusDestAlphaBlendFunc
 };
+const int kBlendFuncCount = kLastBlendFunc+1;
+
+enum IvBlendOp
+{
+	kAddBlendOp,
+	kSubtractBlendOp,
+	kMinBlendOp,
+	kMaxBlendOp,
+
+	kLastBlendOp = kMaxBlendOp
+};
+const int kBlendOpCount = kLastBlendOp+1;
 
 enum IvFillMode
 {
-    kWireframeFill,
-    kSolidFill,
-    kFillModeCount
+	kWireframeFill,
+	kSolidFill,
+
+	kLastFillMode = kSolidFill
 };
+const int kFillModeCount = kLastFillMode+1;
 
 enum IvShadeMode
 {
     kFlatShaded,
     kGouraudShaded,
-    IvShadeModeCount
+
+	kLastShadeMode = kGouraudShaded
 };
+const int kShadeModeCount = kLastShadeMode+1;
 
 enum IvClearBuffer
 {
     kColorClear,
     kDepthClear,
     kColorDepthClear,
-    kClearCount
+
+	kLastClear = kColorDepthClear
 };
+const int kClearCount = kLastClear+1;
 
 enum IvDepthTestFunc
 {
@@ -67,8 +92,10 @@ enum IvDepthTestFunc
     kGreaterEqualDepthTest,
     kLessDepthTest,
     kLessEqualDepthTest,
-    kDepthTestCount
+
+	kLastDepthTest = kLessEqualDepthTest
 };
+const int kDepthTestCount = kLastDepthTest+1;
 
 enum IvPrimType 
 {
@@ -77,8 +104,10 @@ enum IvPrimType
     kLineStripPrim,
     kTriangleListPrim,
     kTriangleStripPrim,
-    kPrimTypeCount
+
+	kLastPrim = kTriangleStripPrim
 };
+const int kPrimTypeCount = kLastPrim + 1;
 
 enum IvAPI
 {
@@ -116,7 +145,7 @@ public:
 	virtual void  SetClearDepth( float depth ) = 0;
     virtual void  ClearBuffers(IvClearBuffer buffer) = 0;
 
-    virtual void SetBlendFunc(IvBlendFunc blend) = 0;
+    virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op) = 0;
 	virtual void SetColorMask( bool red, bool green, bool blue, bool alpha ) = 0;
 	virtual void SetFillMode(IvFillMode fill) = 0;
 	virtual void SetShadeMode(IvShadeMode shade) = 0;

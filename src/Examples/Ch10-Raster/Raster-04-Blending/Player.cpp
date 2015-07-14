@@ -88,7 +88,7 @@ Player::Player()
     mCylinderVerts = 0;
     mCylinderIndices = 0;
 
-    mBlendMode = kOpacityBlendFunc;
+    mBlendMode = kOpacityBlendMode;
 
     unsigned int i;
 
@@ -205,7 +205,7 @@ Player::Update( float dt )
     // change blending mode
     if (IvGame::mGame->mEventHandler->IsKeyDown('b'))
     {
-        mBlendMode = (IvBlendFunc)((mBlendMode + 1) % kBlendFuncCount);
+        mBlendMode = (BlendMode)((mBlendMode + 1) % kBlendModeCount);
 
         IvGame::mGame->mEventHandler->KeyUp('b');
     }
@@ -239,7 +239,7 @@ Player::Render()
     ::IvSetWorldMatrix(transform);
 
     // disable blending
-    IvRenderer::mRenderer->SetBlendFunc(kNoBlendFunc);
+	SetBlendFuncs(kNoneBlendMode);
 
     // set base texture
     mTextureUniform->SetValue(mBaseTexture);
@@ -265,9 +265,9 @@ Player::Render()
     transformOutside(1,3) = mTranslate.GetY();
     transformOutside(2,3) = mTranslate.GetZ();
     
-    ::IvSetWorldMatrix(transformOutside);
+    IvSetWorldMatrix(transformOutside);
 
-    IvRenderer::mRenderer->SetBlendFunc(mBlendMode);
+	SetBlendFuncs(mBlendMode);
 
     // set blending texture
     mTextureUniform->SetValue(mBlendTextures[mCurrentBlendTexIndex]);
@@ -277,7 +277,32 @@ Player::Render()
 
 }   // End of Player::Render()
 
+//-------------------------------------------------------------------------------
+// @ Player::SetBlendFuncs()
+//-------------------------------------------------------------------------------
+// Set up the blend funcs for the current blend mode
+//-------------------------------------------------------------------------------
+void Player::SetBlendFuncs(BlendMode mode)
+{
+	switch (mode)
+	{
+	case kNoneBlendMode:
+		IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kZeroBlendFunc, kAddBlendOp);
+		break;
 
+	case kOpacityBlendMode:
+		IvRenderer::mRenderer->SetBlendFunc(kSrcAlphaBlendFunc, kOneMinusSrcAlphaBlendFunc, kAddBlendOp);
+		break;
+
+	case kAddBlendMode:
+		IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kOneBlendFunc, kAddBlendOp);
+		break;
+
+	case kModulateBlendMode:
+		IvRenderer::mRenderer->SetBlendFunc(kZeroBlendFunc, kSrcColorBlendFunc, kAddBlendOp);
+		break;
+	};
+}
 
 //-------------------------------------------------------------------------------
 // @ Player::DrawCylinder()
