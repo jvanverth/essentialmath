@@ -41,24 +41,72 @@
 //-- Methods --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-IvTexture* CreateTextureFromFile(const char* file)
+//-------------------------------------------------------------------------------
+// Utility function to convert to pre-multiplied alpha
+//-------------------------------------------------------------------------------
+static void CopyAndPremulAlpha(void* outData, void* inData, unsigned int width, unsigned int height)
+{
+	unsigned char* inComponent = (unsigned char*)inData;
+	unsigned char* outComponent = (unsigned char*)outData;
+	for (unsigned int j = 0; j < height; ++j)
+	{
+		for (unsigned int i = 0; i < width; ++i)
+		{
+			// sRGB input
+			float r = *inComponent++/255.f;
+			float g = *inComponent++/255.f;
+			float b = *inComponent++/255.f;
+			unsigned char a = *inComponent++;
+			float aFloat = (float)a/255.f;
+
+			// convert to approximately linear
+			r *= r;
+			g *= g;
+			b *= b;
+
+			// premultiply alpha
+			r *= aFloat;
+			g *= aFloat;
+			b *= aFloat;
+
+			// convert back to approximately sRGB gamma
+			r = IvSqrt(r);
+			g = IvSqrt(g);
+			b = IvSqrt(b);
+
+			*outComponent++ = (unsigned char) (r*255.f);
+			*outComponent++ = (unsigned char) (g*255.f);
+			*outComponent++ = (unsigned char) (b*255.f);
+			*outComponent++ = a;
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------
+// Utility function to load texture
+//-------------------------------------------------------------------------------
+static IvTexture* CreateTextureFromFile(const char* file)
 {
     IvTexture* tex = NULL;
 
-    // Load the soup can image into this texture
+    // Load the image into this texture
     IvImage* image = IvImage::CreateFromFile(file);
     if (image)
     {
-        tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-            (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
-            image->GetWidth(), image->GetHeight(), NULL, kDefaultUsage);
+		if (image->GetBytesPerPixel() == 4)
+		{
+			tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+				kRGBA32TexFmt, image->GetWidth(), image->GetHeight(), NULL, kDefaultUsage);
 
-        unsigned char* pixels = (unsigned char*)(tex->BeginLoadData(0));
-
-        memcpy(pixels, image->GetPixels(), 
-            image->GetBytesPerPixel() * image->GetWidth() * image->GetHeight());
-
-        tex->EndLoadData(0);
+			unsigned char* pixels = (unsigned char*)(tex->BeginLoadData(0));
+			CopyAndPremulAlpha(pixels, image->GetPixels(), image->GetWidth(), image->GetHeight());
+			tex->EndLoadData(0);
+		}
+		else
+		{
+			tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+				kRGB24TexFmt, image->GetWidth(), image->GetHeight(), image->GetPixels(), kImmutableUsage);
+		}
 
         delete image;
         image = 0;
@@ -236,7 +284,7 @@ Player::Render()
     transform(1,3) = mTranslate.GetY();
     transform(2,3) = mTranslate.GetZ();
     
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
 
     // disable blending
 	SetBlendFuncs(kNoneBlendMode);
@@ -291,7 +339,7 @@ void Player::SetBlendFuncs(BlendMode mode)
 		break;
 
 	case kOpacityBlendMode:
-		IvRenderer::mRenderer->SetBlendFunc(kSrcAlphaBlendFunc, kOneMinusSrcAlphaBlendFunc, kAddBlendOp);
+		IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kOneMinusSrcAlphaBlendFunc, kAddBlendOp);
 		break;
 
 	case kAddBlendMode:

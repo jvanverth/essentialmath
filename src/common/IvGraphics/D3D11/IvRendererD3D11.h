@@ -105,6 +105,8 @@ private:
 
 	D3D11_BLEND          mSrcBlend;
 	D3D11_BLEND          mDestBlend;
+	D3D11_BLEND          mSrcBlendAlpha;
+	D3D11_BLEND          mDestBlendAlpha;
 	D3D11_BLEND_OP       mBlendOp;
 	UINT8                mWriteMask;
 };

@@ -55,6 +55,20 @@ static D3D11_BLEND sBlendFunc[kBlendFuncCount] =
 	D3D11_BLEND_INV_DEST_ALPHA,
 };
 
+static D3D11_BLEND sBlendAlphaFunc[kBlendFuncCount] =
+{
+	D3D11_BLEND_ZERO,
+	D3D11_BLEND_ONE,
+	D3D11_BLEND_SRC_ALPHA,
+	D3D11_BLEND_INV_SRC_ALPHA,
+	D3D11_BLEND_SRC_ALPHA,
+	D3D11_BLEND_INV_SRC_ALPHA,
+	D3D11_BLEND_DEST_ALPHA,
+	D3D11_BLEND_INV_DEST_ALPHA,
+	D3D11_BLEND_DEST_ALPHA,
+	D3D11_BLEND_INV_DEST_ALPHA,
+};
+
 static D3D11_BLEND_OP sBlendOp[kBlendOpCount] =
 {
 	D3D11_BLEND_OP_ADD,
@@ -125,8 +139,8 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
 	mClearColor[3] = 1.0f;
 	mClearDepth = 1.0f;
 
-	mSrcBlend = D3D11_BLEND_ONE;
-	mDestBlend = D3D11_BLEND_ZERO;
+	mSrcBlend = mSrcBlendAlpha = D3D11_BLEND_ONE;
+	mDestBlend = mDestBlendAlpha = D3D11_BLEND_ZERO;
 	mBlendOp = D3D11_BLEND_OP_ADD;
 	mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
@@ -255,7 +269,7 @@ IvRendererD3D11::InitD3D11()
     mDevice->SetRenderState( D3DRS_SHADEMODE, D3DSHADE_GOURAUD );    
     */
     // set clear color and depth
-    SetClearColor(0.0f, 0.0f, 0.2f, 1.0f);          
+    SetClearColor(0.0f, 0.0f, 0.1f, 1.0f);          
     SetClearDepth(1.0f); 
     
     // set up depth buffer
@@ -385,7 +399,9 @@ void
 IvRendererD3D11::SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc destBlend, IvBlendOp op)
 {
 	mSrcBlend = sBlendFunc[srcBlend];
-	mDestBlend = sBlendFunc[srcBlend];
+	mDestBlend = sBlendFunc[destBlend];
+	mSrcBlendAlpha = sBlendAlphaFunc[srcBlend];
+	mDestBlendAlpha = sBlendAlphaFunc[destBlend];
 	mBlendOp = sBlendOp[op];
 
 	UpdateBlendState();
@@ -432,8 +448,8 @@ void IvRendererD3D11::UpdateBlendState()
 	blendDesc.RenderTarget[0].SrcBlend = mSrcBlend;
 	blendDesc.RenderTarget[0].DestBlend = mDestBlend;
 	blendDesc.RenderTarget[0].BlendOp = mBlendOp;
-	blendDesc.RenderTarget[0].SrcBlendAlpha = mSrcBlend;
-	blendDesc.RenderTarget[0].DestBlendAlpha = mDestBlend;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = mSrcBlendAlpha;
+	blendDesc.RenderTarget[0].DestBlendAlpha = mDestBlendAlpha;
 	blendDesc.RenderTarget[0].BlendOpAlpha = mBlendOp;
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = mWriteMask;
 
