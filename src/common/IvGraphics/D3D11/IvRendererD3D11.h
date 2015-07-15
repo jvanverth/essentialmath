@@ -92,6 +92,7 @@ private:
     IvRendererD3D11(const IvRendererD3D11& other);
     IvRendererD3D11& operator=(const IvRendererD3D11& other);
 
+	void UpdateDepthStencilState();
 	void UpdateBlendState();
 
     // private D3D11 things 
@@ -99,6 +100,9 @@ private:
 	ID3D11DeviceContext* mContext;
 	ID3D11RenderTargetView* mRenderTarget;
 	ID3D11DepthStencilView* mDepthStencilTarget;
+
+	IvDepthTestFunc      mDepthTestFunc;
+	BOOL                 mDepthWrite;
 
 	float 	             mClearColor[4];
 	float			     mClearDepth;

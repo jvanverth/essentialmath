@@ -77,7 +77,7 @@ static D3D11_BLEND_OP sBlendOp[kBlendOpCount] =
 	D3D11_BLEND_OP_MAX,
 };
 
-static Int32 sDepthFunc[kDepthTestCount] =
+static D3D11_COMPARISON_FUNC sDepthFunc[kDepthTestCount] =
 {
 	D3D11_COMPARISON_ALWAYS,
 	D3D11_COMPARISON_GREATER,
@@ -302,25 +302,12 @@ IvRendererD3D11::InitD3D11()
 	mContext->RSSetState(rasterState);
 	rasterState->Release();
 
-	// Initialize the description of the stencil state.
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	ID3D11DepthStencilState* depthState;
-	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
-	// Set up the description of the stencil state.
-	depthStencilDesc.DepthEnable = true;
-	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
-	depthStencilDesc.StencilEnable = false;
-	// Create the depth stencil state.
-	result = mDevice->CreateDepthStencilState(&depthStencilDesc, &depthState);
-	if (FAILED(result))
-	{
-		return false;
-	}
-	// Set the depth stencil state.
-	mContext->OMSetDepthStencilState(depthState, 1);
-	depthState->Release();
+	// Initialize the depth-stencil state.
+	mDepthTestFunc = kLessEqualDepthTest;
+	mDepthWrite = TRUE;
+	UpdateDepthStencilState();
 
+	// Initialize the blend state
 	mSrcBlend = D3D11_BLEND_ONE;
 	mDestBlend = D3D11_BLEND_ZERO;
 	mBlendOp = D3D11_BLEND_OP_ADD;
@@ -538,14 +525,9 @@ IvRendererD3D11::GetShadeMode()
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetDepthTest(IvDepthTestFunc func)
 {
-	/*
-    if (func == kDisableDepthTest)
-        mDevice->SetRenderState( D3DRS_ZENABLE, D3DZB_FALSE );
-    else
-        mDevice->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
-
-	mDevice->SetRenderState( D3DRS_ZFUNC, sDepthFunc[func] );
-	*/
+	mDepthTestFunc = func;
+	mDepthWrite = (func != kDisableDepthTest);
+	UpdateDepthStencilState();
 }
 
 
@@ -556,24 +538,7 @@ void IvRendererD3D11::SetDepthTest(IvDepthTestFunc func)
 //-------------------------------------------------------------------------------
 IvDepthTestFunc IvRendererD3D11::GetDepthTest()
 {
-	/*
-	DWORD mode;
-	mDevice->GetRenderState( D3DRS_ZENABLE, &mode );
-    if (mode == D3DZB_FALSE)
-	{
-        return kDisableDepthTest;
-	}
-
-	mDevice->GetRenderState( D3DRS_ZFUNC, &mode );
-    for (unsigned int func = 0; func < kDepthTestCount; ++func)
-    {
-        if ( mode == sDepthFunc[func] )
-            return (IvDepthTestFunc)(func);
-    }
-	*/
-    ASSERT(false);
-    return kLessEqualDepthTest;
-	
+    return mDepthTestFunc;
 }
 
 
@@ -584,8 +549,39 @@ IvDepthTestFunc IvRendererD3D11::GetDepthTest()
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetDepthWrite(bool write)
 {
-//	mDevice->SetRenderState( D3DRS_ZWRITEENABLE, write ? TRUE : FALSE );
+	mDepthWrite = write;
+	UpdateDepthStencilState();
 }
+
+
+//-------------------------------------------------------------------------------
+// @ IvRendererD3D11::UpdateDepthStencilState()
+//-------------------------------------------------------------------------------
+// Internal function to update depth stencil params
+//-------------------------------------------------------------------------------
+void IvRendererD3D11::UpdateDepthStencilState()
+{
+	// Initialize the description of the stencil state.
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
+	ID3D11DepthStencilState* depthState;
+	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
+	// Set up the description of the stencil state.
+	depthStencilDesc.DepthEnable = mDepthWrite;
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = sDepthFunc[mDepthTestFunc];
+	depthStencilDesc.StencilEnable = false;
+	// Create the depth stencil state.
+	HRESULT result = mDevice->CreateDepthStencilState(&depthStencilDesc, &depthState);
+	if (FAILED(result))
+	{
+		ASSERT(false);
+		return;
+	}
+	// Set the depth stencil state.
+	mContext->OMSetDepthStencilState(depthState, 1);
+	depthState->Release();
+}
+
 
 //-------------------------------------------------------------------------------
 // @ IvRendererD3D11::SetWorldMatrix()
@@ -595,8 +591,6 @@ void IvRendererD3D11::SetDepthWrite(bool write)
 void IvRendererD3D11::SetWorldMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetWorldMatrix(matrix);
-
-	//mDevice->SetTransform( D3DTS_WORLDMATRIX(0), (const D3DMATRIX *)&mWorldMat );
 }
 
 //-------------------------------------------------------------------------------
@@ -607,8 +601,6 @@ void IvRendererD3D11::SetWorldMatrix(const IvMatrix44& matrix)
 void IvRendererD3D11::SetViewMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetViewMatrix(matrix);
-
-	//mDevice->SetTransform( D3DTS_VIEW, (const D3DMATRIX *)&mViewMat );
 }
 
 //-------------------------------------------------------------------------------
@@ -619,8 +611,6 @@ void IvRendererD3D11::SetViewMatrix(const IvMatrix44& matrix)
 void IvRendererD3D11::SetProjectionMatrix(const IvMatrix44& matrix)
 {
     IvRenderer::SetProjectionMatrix(matrix);
-
-	//mDevice->SetTransform( D3DTS_PROJECTION, (const D3DMATRIX *)&mProjectionMat );
 }
 
 //-------------------------------------------------------------------------------
