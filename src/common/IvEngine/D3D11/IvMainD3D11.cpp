@@ -90,13 +90,14 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
     //DXUTSetCursorSettings( true, true ); // Show the cursor and clip it when in full screen
 	int width = 640;
 	int height = 480;
-	if (!InitWindow(L"Example", width, height))
+	bool fullscreen = false;
+	if (!InitWindow(L"Example", width, height, fullscreen))
 	{
 		IvGame::Destroy();
 		return 1;
 	}
 
-	if (!InitDevice(width, height))
+	if (!InitDevice(width, height, fullscreen, fullscreen))
 	{
 		DestroyDevice();
 		IvGame::Destroy();
@@ -139,7 +140,10 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 			IvRenderer::mRenderer->ClearBuffers(kColorDepthClear);
 
 			// Render the scene
-			IvGame::mGame->Display();
+			if (IvRenderer::mRenderer->IsActive())
+			{
+				IvGame::mGame->Display();
+			}
 
 			// swap buffers
 			gSwapChain->Present(gSyncInterval, 0);
@@ -490,11 +494,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_ACTIVATE:
-		//*** IvRenderer::mRenderer->Activate(wParam != WA_INACTIVE);
+		if (IvRenderer::mRenderer)
+		{
+			IvRenderer::mRenderer->Activate(wParam != WA_INACTIVE);
+		}
 		break;
 
 	case WM_SIZE:
-		//*** IvRenderer::mRenderer->Resize(LOWORD(lParam), HIWORD(lParam));
+		if (IvRenderer::mRenderer)
+		{
+			IvRenderer::mRenderer->Resize(LOWORD(lParam), HIWORD(lParam));
+		}
 		break;
 
 	case WM_KEYDOWN:
