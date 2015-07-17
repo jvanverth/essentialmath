@@ -104,6 +104,8 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 		return 1;
 	}
 
+    ShowWindow(gHwnd, SW_SHOW);
+
 	// set up renderer
 	if (!IvRendererD3D11::Create(gDevice, gContext, gRenderTargetView, gDepthStencilView)
 		|| !IvRendererD3D11::mRenderer->Initialize(width, height))
@@ -218,8 +220,6 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
 		return false;
 	}
 
-	ShowWindow(gHwnd, SW_SHOW);
-
 	return true;
 }
 
@@ -277,55 +277,6 @@ bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool v
 		return false;
 	}
 #endif
-
-	// Create a render target view
-	ID3D11Texture2D* backBuffer = NULL;
-	HRESULT hr = gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
-	if (FAILED(hr))
-	{
-		return false;
-	}
-	hr = gDevice->CreateRenderTargetView(backBuffer, NULL, &gRenderTargetView);
-	backBuffer->Release();
-	if (FAILED(hr))
-	{
-		return false;
-	}
-	
-	// Create depth/stencil buffer
-	D3D11_TEXTURE2D_DESC depthBufferDesc;
-	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
-	depthBufferDesc.Width = width;
-	depthBufferDesc.Height = height;
-	depthBufferDesc.MipLevels = 1;
-	depthBufferDesc.ArraySize = 1;
-	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthBufferDesc.SampleDesc.Count = 1;
-	depthBufferDesc.SampleDesc.Quality = 0;
-	depthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	depthBufferDesc.CPUAccessFlags = 0;
-	depthBufferDesc.MiscFlags = 0;
-	result = gDevice->CreateTexture2D(&depthBufferDesc, NULL, &gDepthStencilBuffer);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
-	// And now create the depth stencil view
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
-	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
-	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	depthStencilViewDesc.Texture2D.MipSlice = 0;
-	result = gDevice->CreateDepthStencilView(gDepthStencilBuffer, &depthStencilViewDesc, &gDepthStencilView);
-	if (FAILED(result))
-	{
-		return false;
-	}
-	
-	// Bind the render target view and depth stencil buffer to the output render pipeline.
-	gContext->OMSetRenderTargets(1, &gRenderTargetView, gDepthStencilView);
 	
 	return true;
 }
@@ -501,10 +452,97 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_SIZE:
+        if (gSwapChain)
+        {
+            int width = LOWORD(lParam);
+            int height = HIWORD(lParam);
+
+            gContext->OMSetRenderTargets(0, 0, 0);
+
+            // Release all outstanding references to the swap chain's buffers.
+            if (IvRenderer::mRenderer)
+            {
+                reinterpret_cast<IvRendererD3D11*>(IvRenderer::mRenderer)->ReleaseTargets();
+            }
+            if (gRenderTargetView)
+            {
+                gRenderTargetView->Release();
+                gRenderTargetView = NULL;
+            }
+            if (gDepthStencilView)
+            {
+                gDepthStencilView->Release();
+                gDepthStencilView = NULL;
+            }
+            if (gDepthStencilBuffer)
+            {
+                gDepthStencilBuffer->Release();
+                gDepthStencilBuffer = NULL;
+            }
+
+            HRESULT hr;
+            // Preserve the existing buffer count and format.
+            // Automatically choose the width and height to match the client rect for HWNDs.
+            hr = gSwapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
+
+            // Create a render target view
+            ID3D11Texture2D* backBuffer = NULL;
+            hr = gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
+            if (FAILED(hr))
+            {
+                return E_FAIL;
+            }
+            hr = gDevice->CreateRenderTargetView(backBuffer, NULL, &gRenderTargetView);
+            backBuffer->Release();
+            if (FAILED(hr))
+            {
+                return E_FAIL;
+            }
+
+            // Create depth/stencil buffer
+            D3D11_TEXTURE2D_DESC depthBufferDesc;
+            ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
+            depthBufferDesc.Width = width;
+            depthBufferDesc.Height = height;
+            depthBufferDesc.MipLevels = 1;
+            depthBufferDesc.ArraySize = 1;
+            depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+            depthBufferDesc.SampleDesc.Count = 1;
+            depthBufferDesc.SampleDesc.Quality = 0;
+            depthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+            depthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+            depthBufferDesc.CPUAccessFlags = 0;
+            depthBufferDesc.MiscFlags = 0;
+            hr = gDevice->CreateTexture2D(&depthBufferDesc, NULL, &gDepthStencilBuffer);
+            if (FAILED(hr))
+            {
+                gRenderTargetView->Release();
+                return E_FAIL;
+            }
+
+            // And now create the depth stencil view
+            D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+            ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
+            depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+            depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+            depthStencilViewDesc.Texture2D.MipSlice = 0;
+            hr = gDevice->CreateDepthStencilView(gDepthStencilBuffer, &depthStencilViewDesc, &gDepthStencilView);
+            if (FAILED(hr))
+            {
+                gDepthStencilBuffer->Release();
+                gRenderTargetView->Release();
+                return E_FAIL;
+            }
+
+            // Bind the render target view and depth stencil buffer to the output render pipeline.
+            gContext->OMSetRenderTargets(1, &gRenderTargetView, gDepthStencilView);
+        }
+
 		if (IvRenderer::mRenderer)
 		{
-			IvRenderer::mRenderer->Resize(LOWORD(lParam), HIWORD(lParam));
-		}
+            reinterpret_cast<IvRendererD3D11*>(IvRenderer::mRenderer)->SetTargets(gRenderTargetView, gDepthStencilView);
+            IvRenderer::mRenderer->Resize(LOWORD(lParam), HIWORD(lParam));
+        }
 		break;
 
 	case WM_KEYDOWN:

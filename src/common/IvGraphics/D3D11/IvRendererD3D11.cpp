@@ -96,13 +96,13 @@ static D3D11_COMPARISON_FUNC sDepthFunc[kDepthTestCount] =
 // Static constructor
 //-------------------------------------------------------------------------------
 bool 
-IvRendererD3D11::Create(ID3D11Device* device, ID3D11DeviceContext* context,
-                       ID3D11RenderTargetView* renderTarget, 
-					   ID3D11DepthStencilView* depthStencilTarget)
+IvRendererD3D11::Create(ID3D11Device* device, ID3D11DeviceContext* context, 
+                        ID3D11RenderTargetView* renderTarget, 
+                        ID3D11DepthStencilView* depthStencilTarget)
 {
 	if (!mRenderer)
 	{
-		mRenderer = new IvRendererD3D11(device, context, renderTarget, depthStencilTarget);
+        mRenderer = new IvRendererD3D11(device, context, renderTarget, depthStencilTarget);
 	}
     return ( mRenderer != 0 );
 
@@ -115,9 +115,11 @@ IvRendererD3D11::Create(ID3D11Device* device, ID3D11DeviceContext* context,
 // Default constructor
 //-------------------------------------------------------------------------------
 IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* context,
-	                           ID3D11RenderTargetView* renderTarget,
-	                           ID3D11DepthStencilView* depthStencilTarget) :
-	IvRenderer()
+                                 ID3D11RenderTargetView* renderTarget, 
+                                 ID3D11DepthStencilView* depthStencilTarget)
+    : IvRenderer()
+    , mRenderTarget(NULL)
+    , mDepthStencilTarget(NULL)
 {
 	mDevice = device;
 	mDevice->AddRef();
@@ -125,11 +127,7 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
 	mContext = context;
 	mContext->AddRef();
 
-	mRenderTarget = renderTarget;
-	mRenderTarget->AddRef();
-
-	mDepthStencilTarget = depthStencilTarget;
-	mDepthStencilTarget->AddRef();
+    SetTargets(renderTarget, depthStencilTarget);
 
     mShader = NULL;
 
@@ -172,11 +170,7 @@ IvRendererD3D11::~IvRendererD3D11()
         mResourceManager = 0;
     }
 
-	mDepthStencilTarget->Release();
-	mDepthStencilTarget = 0;
-
-	mRenderTarget->Release();
-	mRenderTarget = 0;
+    ReleaseTargets();
 
 	mContext->Release();
 	mContext = 0;
@@ -254,6 +248,43 @@ IvRendererD3D11::Resize(unsigned int width, unsigned int height )
     SetWorldMatrix(ident);
 
 }   // End of IvRendererD3D11::Resize()
+
+
+//-------------------------------------------------------------------------------
+// @ IvRendererD3D11::SetTargets()
+//-------------------------------------------------------------------------------
+// Set and add refs to render and depth stencil targets
+//-------------------------------------------------------------------------------
+void IvRendererD3D11::SetTargets(ID3D11RenderTargetView* renderTarget,
+    ID3D11DepthStencilView* depthStencilTarget)
+{
+    mRenderTarget = renderTarget;
+    mRenderTarget->AddRef();
+
+    mDepthStencilTarget = depthStencilTarget;
+    mDepthStencilTarget->AddRef();
+}
+
+
+//-------------------------------------------------------------------------------
+// @ IvRendererD3D11::ReleaseTargets()
+//-------------------------------------------------------------------------------
+// Release refs to render and depth stencil targets
+//-------------------------------------------------------------------------------
+void IvRendererD3D11::ReleaseTargets()
+{
+    if (mDepthStencilTarget)
+    {
+        mDepthStencilTarget->Release();
+        mDepthStencilTarget = 0;
+    }
+
+    if (mRenderTarget)
+    {
+        mRenderTarget->Release();
+        mRenderTarget = 0;
+    }
+}
 
 
 //-------------------------------------------------------------------------------
@@ -361,6 +392,11 @@ IvRendererD3D11::SetClearDepth( float depth )
 void 
 IvRendererD3D11::ClearBuffers(IvClearBuffer buffer)
 {
+    if (!mRenderTarget || !mDepthStencilTarget)
+    {
+        return;
+    }
+
     switch (buffer)
     {
         case kColorClear:

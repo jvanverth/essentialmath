@@ -34,12 +34,14 @@ friend class IvRenderer;
 
 public:
 	bool static Create(ID3D11Device* device, ID3D11DeviceContext* context,
-		               ID3D11RenderTargetView* renderTarget, 
-					   ID3D11DepthStencilView* depthStencilTarget);
+                       ID3D11RenderTargetView* renderTarget, 
+                       ID3D11DepthStencilView* depthStencilTarget);
 
     virtual bool Initialize( unsigned int  width, unsigned int  height );
     virtual void Resize( unsigned int width, unsigned int height );
-        
+    void SetTargets(ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStencilTarget);
+    void ReleaseTargets();
+
     virtual void  SetClearColor( float red, float green, float blue, float alpha );
 	virtual void  SetClearDepth( float depth );
     virtual void  ClearBuffers(IvClearBuffer buffer);
@@ -85,7 +87,8 @@ protected:
 private:
     // constructor/destructor
 	IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* context, 
-		           ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStencilTarget);
+		            ID3D11RenderTargetView* renderTarget, 
+                    ID3D11DepthStencilView* depthStencilTarget);
     ~IvRendererD3D11();
 
     // copy operations
