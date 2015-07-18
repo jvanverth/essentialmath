@@ -174,7 +174,7 @@ Player::Render()
     transform(1,3) = mTranslate.GetY();
     transform(2,3) = mTranslate.GetZ();
 
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
 
     // draw geometry
     DrawStrips();

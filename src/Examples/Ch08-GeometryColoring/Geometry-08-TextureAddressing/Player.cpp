@@ -149,6 +149,9 @@ Player::~Player()
     
     for (i = 0; i < NUM_UVS; i++)
         IvRenderer::mRenderer->GetResourceManager()->Destroy(mTextures[i]); 
+
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
+
 }   // End of Player::~Player()
 
 

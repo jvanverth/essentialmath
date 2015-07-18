@@ -341,12 +341,15 @@ IvTextureD3D11::CreateMipmapped(unsigned int width, unsigned int height, IvTextu
 void
 IvTextureD3D11::Destroy()
 {
-    for (unsigned int i = 0; i < mLevelCount; i++)
+    if (mLevels)
     {
-        delete [] mLevels[i].mData;
+        for (unsigned int i = 0; i < mLevelCount; i++)
+        {
+            delete[] mLevels[i].mData;
+        }
+        delete[] mLevels;
+        mLevels = 0;
     }
-    delete [] mLevels;
-    mLevels = 0;
 	mLevelCount = 0;
 
 	if (mShaderResourceView)

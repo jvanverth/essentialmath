@@ -1,5 +1,11 @@
 float4 constColor;
-float4 ps_main( ) : COLOR
+
+struct VS_OUTPUT
+{
+	float4 pos : SV_POSITION;
+};
+
+float4 ps_main( VS_OUTPUT input ) : SV_TARGET
 {
 	return constColor;
 }
