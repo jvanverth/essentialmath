@@ -100,6 +100,11 @@ IvRendererD3D11::Create(ID3D11Device* device, ID3D11DeviceContext* context,
                         ID3D11RenderTargetView* renderTarget, 
                         ID3D11DepthStencilView* depthStencilTarget)
 {
+    if (!device || !context || !renderTarget || !depthStencilTarget)
+    {
+        return false;
+    }
+    
 	if (!mRenderer)
 	{
         mRenderer = new IvRendererD3D11(device, context, renderTarget, depthStencilTarget);
@@ -817,8 +822,7 @@ void IvRendererD3D11::BindDefaultShaderIfNeeded(IvVertexFormat format)
 
         sDefaultShaders[format] = static_cast<IvShaderProgramD3D11*>(
             mResourceManager->CreateShaderProgram( vs, fs ));
-        mResourceManager->Destroy( vs );
-        mResourceManager->Destroy( fs );
+
 		if (format == kNPFormat)
 		{
 			IvUniform* diffuseColor = sDefaultShaders[format]->GetUniform("IvDiffuseColor");

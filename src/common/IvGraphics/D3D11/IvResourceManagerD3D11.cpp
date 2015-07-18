@@ -264,6 +264,10 @@ IvResourceManagerD3D11::CreateShaderProgram( IvVertexShader* vs, IvFragmentShade
         delete newProgram;
         newProgram = 0;
     }
+
+    Destroy(vs);
+    Destroy(fs);
+
     return newProgram;
 }
 

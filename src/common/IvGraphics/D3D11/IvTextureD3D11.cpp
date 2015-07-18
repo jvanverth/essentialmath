@@ -392,6 +392,7 @@ void IvTextureD3D11::MakeActive(unsigned int textureUnit, unsigned int samplerUn
 	}
 	ID3D11DeviceContext* d3dContext = ((IvRendererD3D11*)IvRenderer::mRenderer)->GetContext();
 	d3dContext->PSSetSamplers(samplerUnit, 1, &samplerState);
+    samplerState->Release();
 
 	d3dContext->PSSetShaderResources(textureUnit, 1, &mShaderResourceView);
 }

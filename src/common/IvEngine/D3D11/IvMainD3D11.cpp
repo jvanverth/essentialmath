@@ -41,18 +41,10 @@ bool                    gIsFullscreen = false;
 
 PCHAR*  CommandLineWToArgvA( PWCHAR CmdLine, int* _argc );
 
-//void    CALLBACK OnFrameMove(double fTime, float fElapsedTime, void* userContext);
 void    CALLBACK OnKeyboard( UINT nChar, bool bKeyDown, bool bAltDown );
 void	CALLBACK OnMouse( bool bLeftButtonDown, bool bRightButtonDown, bool bMiddleButtonDown, 
                          bool bSideButton1Down, bool bSideButton2Down, int nMouseWheelDelta, 
                          int xPos, int yPos );
-/*LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, bool* pbNoFurtherProcessing );
-void    CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, const D3DCAPS11* pCaps );
-bool	CALLBACK OnDeviceRemoved();
-
-bool    CALLBACK IsDeviceAcceptable( D3DCAPS11* pCaps, D3DFORMAT AdapterFormat, D3DFORMAT BackBufferFormat, bool bWindowed );
-*/
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 bool    InitWindow(LPWSTR name, int& width, int& height, bool fullScreen = false);
@@ -398,7 +390,13 @@ void DestroyDevice()
 		gRenderTargetView = NULL;
 	}
 
-	if (gContext)
+    if (gSwapChain)
+    {
+        gSwapChain->Release();
+        gSwapChain = NULL;
+    }
+
+    if (gContext)
 	{
 		gContext->Release();
 		gContext = NULL;
@@ -418,13 +416,6 @@ void DestroyDevice()
 		gDevice->Release();
 		gDevice = NULL;
 	}
-
-	if (gSwapChain)
-	{
-		gSwapChain->Release();
-		gSwapChain = NULL;
-	}
-	
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -593,78 +584,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
-
-/*
-//--------------------------------------------------------------------------------------
-// Create any D3D9 resources that will live through a device reset (D3DPOOL_MANAGED)
-// and aren't tied to the back buffer size
-//--------------------------------------------------------------------------------------
-HRESULT CALLBACK OnCreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc )
-{
-	// set up renderer
-	if (!IvRendererD3D9::Create( pd3dDevice ) || !IvRendererD3D9::mRenderer->Initialize( 640, 480 ))
-        return false;
-
-    // set up game stuff that depends on renderer
-    IvGame::mGame->PostRendererInitialize();
-
-    return S_OK;
-}
-
-
-//--------------------------------------------------------------------------------------
-// Create any D3D9 resources that won't live through a device reset (D3DPOOL_DEFAULT) 
-// or that are tied to the back buffer size 
-//--------------------------------------------------------------------------------------
-HRESULT CALLBACK OnResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc )
-{
-    return S_OK;
-}
-
-
-//--------------------------------------------------------------------------------------
-// Render the scene using the D3D9 device
-//--------------------------------------------------------------------------------------
-void CALLBACK OnFrameRender( IDirect3DDevice9* pd3dDevice, double fTime, float fElapsedTime )
-{
-    // clear the back buffer
-	IvRenderer::mRenderer->ClearBuffers(kColorDepthClear);
-
-    // Render the scene
-    if( SUCCEEDED( pd3dDevice->BeginScene() ) )
-    {
-	    IvGame::mGame->Display();
-        (void) pd3dDevice->EndScene();
-    }
-}
-
-//--------------------------------------------------------------------------------------
-// Handle updates to the scene.  
-//--------------------------------------------------------------------------------------
-void CALLBACK OnFrameMove( IDirect3DDevice9* pd3dDevice, double fTime, float fElapsedTime )
-{
-    // game move objects and the like
-    IvGame::mGame->Update();
-}
-
-
-//--------------------------------------------------------------------------------------
-// Release D3D9 resources created in the OnD3D9ResetDevice callback 
-//--------------------------------------------------------------------------------------
-void CALLBACK OnLostDevice()
-{
-}
-
-
-//--------------------------------------------------------------------------------------
-// Release D3D9 resources created in the OnD3D9CreateDevice callback 
-//--------------------------------------------------------------------------------------
-void CALLBACK OnDestroyDevice()
-{
-	// delete the renderer
-	//*** IvRenderer::Destroy();
-}
-*/
 
 //--------------------------------------------------------------------------------------
 // Handle key presses

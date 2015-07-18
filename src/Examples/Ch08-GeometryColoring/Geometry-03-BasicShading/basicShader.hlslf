@@ -1,5 +1,10 @@
-float4 ps_main( ) : COLOR
+struct VS_OUTPUT
 {
-	float4 test = float4(1.0, 1.0, 0.0, 1.0);
-	return test;
+    float4 pos : SV_POSITION;
+};
+
+float4 ps_main( VS_OUTPUT input ) : SV_Target
+{
+	float4 test = {1.0, 1.0, 0.0, 1.0};
+    return test;
 }

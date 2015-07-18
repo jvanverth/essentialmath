@@ -66,15 +66,15 @@ IvShaderProgramD3D11::Create( IvVertexShaderD3D11* vertexShaderPtr, IvFragmentSh
     if ( 0 == vertexShaderPtr || 0 == fragmentShaderPtr )
         return false;
     
-	mVertexShaderPtr = vertexShaderPtr->mShaderPtr;
-	mVertexShaderPtr->AddRef();
+    mVertexShaderPtr = vertexShaderPtr->mShaderPtr; 
+    mVertexShaderPtr->AddRef();
     mVertexShaderConstants = vertexShaderPtr->mConstantTable;
-	mVertexShaderConstants->AddRef();
-   
+    mVertexShaderConstants->AddRef();
+
 	mFragmentShaderPtr = fragmentShaderPtr->mShaderPtr;
-	mFragmentShaderPtr->AddRef();
+    mFragmentShaderPtr->AddRef();
     mFragmentShaderConstants = fragmentShaderPtr->mConstantTable;
-	mFragmentShaderConstants->AddRef();
+    mFragmentShaderConstants->AddRef();
 
     return true;
 }

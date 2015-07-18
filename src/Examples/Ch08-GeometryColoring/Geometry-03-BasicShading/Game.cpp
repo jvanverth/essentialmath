@@ -79,10 +79,12 @@ Game::PostRendererInitialize()
     
     mPlayer = new Player();
     if (!mPlayer)
+    {
         return false;
+    }
 
     return true;
-}   // End of Game::Initialize()
+}   // End of Game::PostRendererInitialize()
 
 
 //-------------------------------------------------------------------------------

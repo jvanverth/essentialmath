@@ -75,9 +75,21 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
-    IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereIndices);
+    if (mSphereIndices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereIndices);
+    }
 
-    IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereVerts);
+    if (mSphereVerts)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereVerts);
+    }
+
+    if (mShader)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
+    }
+
 }   // End of Player::~Player()
 
 
@@ -172,7 +184,7 @@ Player::Render()
     transform(1,3) = mTranslate.GetY();
     transform(2,3) = mTranslate.GetZ();
 
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
 
     // draw geometry
     DrawSphere();
