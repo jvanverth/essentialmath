@@ -481,12 +481,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             hr = gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
             if (FAILED(hr))
             {
+                PostQuitMessage(0);
                 return E_FAIL;
             }
             hr = gDevice->CreateRenderTargetView(backBuffer, NULL, &gRenderTargetView);
             backBuffer->Release();
             if (FAILED(hr))
             {
+                PostQuitMessage(0);
                 return E_FAIL;
             }
 
@@ -508,6 +510,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (FAILED(hr))
             {
                 gRenderTargetView->Release();
+                gRenderTargetView = 0;
+                PostQuitMessage(0);
                 return E_FAIL;
             }
 
@@ -521,7 +525,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (FAILED(hr))
             {
                 gDepthStencilBuffer->Release();
+                gDepthStencilBuffer = 0;
                 gRenderTargetView->Release();
+                gRenderTargetView = 0;
+                PostQuitMessage(0);
                 return E_FAIL;
             }
 
