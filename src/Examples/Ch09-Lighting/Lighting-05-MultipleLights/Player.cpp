@@ -60,8 +60,8 @@ Player::Player()
     
     mShader->GetUniform("ambientLightColor")->SetValue(IvVector3(0.0f, 0.0f, 0.2f), 0);
     
-    mLightPos[0] = IvVector3(-15.0f, -10.0f, 0.0f);
-    mLightPos[1] = IvVector3(15.0f, -10.0f, 0.0f);
+    mLightPos[0] = IvVector4(-15.0f, -10.0f, 0.0f, 1.0f);
+    mLightPos[1] = IvVector4(15.0f, -10.0f, 0.0f, 1.0f);
     
     mSpecularPercentage = 0.25f;
     mAmbientFactor = 0.1f;
@@ -174,7 +174,7 @@ Player::Update( float dt )
 
     if (lightPosChanged)
     {       
-        mLightPos[mCurrentLight] += IvVector3(x, y, z);
+        mLightPos[mCurrentLight] += IvVector4(x, y, z, 0.0f);
 
         lightPosChanged = false;
     }
@@ -240,8 +240,8 @@ Player::Update( float dt )
     // clear transform
     if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
     {
-        mLightPos[0] = IvVector3(-15.0f, -10.0f, 0.0f);
-        mLightPos[1] = IvVector3(15.0f, -10.0f, 0.0f);
+        mLightPos[0] = IvVector4(-15.0f, -10.0f, 0.0f, 1.0f);
+        mLightPos[1] = IvVector4(15.0f, -10.0f, 0.0f, 1.0f);
         mEmissiveFactor = 0.0f;
         mAmbientFactor = 0.1f;
         mSpecularPercentage = 0.25f;
@@ -264,21 +264,20 @@ Player::Update( float dt )
 void 
 Player::Render()                                    
 {   
-    // build 4x4 matrix
+    mLightPosUniform->SetValue(mLightPos[0], 0);
+    mLightPosUniform->SetValue(mLightPos[1], 1);
 
     int i,j;
     for (j = -1; j <= 1; j++)
     {
         for (i = -1; i <= 1; i++)
         {
+            // build 4x4 matrix
             IvMatrix44 transform;
             transform.Scaling(IvVector3(mRadius, mRadius, mRadius));
             transform(0, 3) = 5.0f * i;
             transform(2, 3) = 5.0f * j;
 
-            mLightPosUniform->SetValue(mLightPos[0], 0);
-            mLightPosUniform->SetValue(mLightPos[1], 1);
-            
             mViewPosUniform->SetValue(IvVector3(0.0f, -10.0f, 0.0f), 0);
 
             IvSetWorldMatrix(transform);

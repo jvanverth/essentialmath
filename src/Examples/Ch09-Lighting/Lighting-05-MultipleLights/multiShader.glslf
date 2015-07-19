@@ -6,7 +6,7 @@ in vec3 viewDir;
 
 out vec4 fragColor;
 
-uniform vec3 pointLightPosition[2]; // in world space
+uniform vec4 pointLightPosition[2]; // in world space
 uniform vec3 pointLightIntensity;
 
 uniform vec3 ambientLightColor;
@@ -63,7 +63,7 @@ lightSampleValues computePointLightValues(in vec3 surfacePosition, int i)
 {
     lightSampleValues values;
 
-    vec3 lightVec = pointLightPosition[i] - surfacePosition;
+    vec3 lightVec = pointLightPosition[i].xyz - surfacePosition;
 
     values.dir = normalize(lightVec);
 

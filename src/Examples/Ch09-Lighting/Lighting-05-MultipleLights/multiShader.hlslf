@@ -6,7 +6,7 @@ struct VS_OUTPUT
 	float3 viewDir : TEXCOORD1;
 };
 
-float3 pointLightPosition[2]; // in world space
+float4 pointLightPosition[2]; // in world space
 float3 pointLightIntensity;
 
 float3 ambientLightColor;
@@ -63,7 +63,7 @@ lightSampleValues computePointLightValues(float3 surfacePosition, int i)
 {
     lightSampleValues values;
 
-    float3 lightVec = pointLightPosition[i] - surfacePosition;
+    float3 lightVec = pointLightPosition[i].xyz - surfacePosition;
 
     values.dir = normalize(lightVec);
 

@@ -123,6 +123,11 @@ IvShaderProgramOGL::MakeActive()
 IvUniform*
 IvShaderProgramOGL::GetUniform(char const* name)
 {
+    if (!name)
+    {
+        return NULL;
+    }
+
     // Did we already query the uniform?
     if (mUniforms.find(name) != mUniforms.end())
     {
@@ -142,17 +147,22 @@ IvShaderProgramOGL::GetUniform(char const* name)
     GLint count = -1;
     GLenum type = 0;
     GLchar* uniformName = new GLchar[uniformMaxLength];
+    bool found = false;
+    int maxlen = strlen(name);
     for ( GLint i = 0; i < numUniforms; ++i )
     {
         GLsizei length;
         glGetActiveUniform(	mProgramID, i, uniformMaxLength, &length, &count, &type, uniformName);              
-        if ( strcmp(uniformName, name) == 0 )
+        if (strncmp(uniformName, name, maxlen) == 0)
+        {
+            found = true;
             break;
+        }
     }
     delete [] uniformName;
 
     // not found
-    if ( count < 0 )
+    if ( !found || count < 0 )
         return NULL;
     
     IvUniformType ivType;
