@@ -197,7 +197,7 @@ Player::Update( float dt )
             IvVector4(0.0f, 0.0f, 0.0125f, 0.0f), 0);
     }
 
-    bool materialChanged;
+    bool materialChanged = false;
     if (IvGame::mGame->mEventHandler->IsKeyDown('q'))
     {
         mAmbientFactor += dt;

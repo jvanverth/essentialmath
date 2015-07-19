@@ -83,6 +83,7 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 }   // End of Player::~Player()
 
 
@@ -178,7 +179,7 @@ Player::Update( float dt )
         lightPosChanged = false;
     }
 
-    bool materialChanged;
+    bool materialChanged = false;
     if (IvGame::mGame->mEventHandler->IsKeyDown('q'))
     {
         mAmbientFactor += dt;

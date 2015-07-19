@@ -76,7 +76,6 @@ lightSampleValues computePointLightValues(in vec3 surfacePosition, int i)
 
 void main()
 {
-
     fragColor.rgb = materialEmissiveColor
                    + computeAmbientComponent();
     vec3 unitViewDir = normalize(viewDir);

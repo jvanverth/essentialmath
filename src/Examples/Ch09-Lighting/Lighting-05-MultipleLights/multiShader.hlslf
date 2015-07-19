@@ -1,4 +1,92 @@
-float4 ps_main( float4 color : COLOR0 ) : COLOR
+struct VS_OUTPUT
 {
-	return color;
+	float4 pos : SV_POSITION;
+	float3 worldPos : TEXCOORD0;
+	float3 normal : NORMAL;
+	float3 viewDir : TEXCOORD1;
+};
+
+float3 pointLightPosition[2]; // in world space
+float3 pointLightIntensity;
+
+float3 ambientLightColor;
+
+float3 materialAmbientColor;
+float3 materialEmissiveColor;
+float4 materialDiffuseColor;
+float4 materialSpecularColorExp;
+
+struct lightSampleValues
+{
+	float3 dir;
+	float3 L;
+};
+
+float3 computeAmbientComponent()
+{
+    return ambientLightColor * materialAmbientColor;
+}
+
+// surfaceNormal is assumed to be unit-length
+
+float3 computeDiffuseBRDF(float3 surfaceNormal,
+                          lightSampleValues light)
+{
+    return materialDiffuseColor.rgb;
+}
+
+float3 computeSpecularBRDF(float3 surfaceNormal,
+						   float3 surfacePosition,
+                           float3 viewDir,
+                           lightSampleValues light)
+{
+    float3 halfVector = normalize(viewDir + light.dir);
+
+    float nDotH = clamp(dot(surfaceNormal, halfVector), 0.0, 1.0);
+
+    return materialSpecularColorExp.rgb
+            * pow(nDotH, materialSpecularColorExp.a);
+}
+
+float3 computeLitColor(lightSampleValues light,
+					   float3 surfacePosition,
+					   float3 surfaceNormal,
+                       float3 viewDir)
+{
+    float3 brdf = computeDiffuseBRDF(surfaceNormal, light)
+                + computeSpecularBRDF(surfaceNormal, surfacePosition, viewDir, light);
+
+    return light.L * brdf * clamp(dot(surfaceNormal, light.dir), 0.0, 1.0);
+}
+
+lightSampleValues computePointLightValues(float3 surfacePosition, int i)
+{
+    lightSampleValues values;
+
+    float3 lightVec = pointLightPosition[i] - surfacePosition;
+
+    values.dir = normalize(lightVec);
+
+	float distAtten = 1.0 + dot(lightVec, lightVec);
+
+    values.L = pointLightIntensity / distAtten;
+
+    return values;
+}
+
+float4 ps_main( VS_OUTPUT input ) : SV_TARGET
+{
+	float4 fragColor;
+	fragColor.rgb = materialEmissiveColor
+                   + computeAmbientComponent();
+    float3 unitViewDir = normalize(input.viewDir);
+    float3 unitNormal = normalize(input.normal);
+    for (int i = 0; i < 2; ++i)
+    {
+	    lightSampleValues lightValues = computePointLightValues(input.worldPos, i);
+        fragColor.rgb += computeLitColor(lightValues, input.worldPos, unitNormal, unitViewDir);
+    }
+    fragColor.a = materialDiffuseColor.a;
+
+	return fragColor;
 }

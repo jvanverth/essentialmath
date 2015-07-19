@@ -1,4 +1,53 @@
-float4 ps_main( float4 color : COLOR0 ) : COLOR
+
+struct VS_OUTPUT
 {
-	return color;
+	float4 pos : SV_POSITION;
+	float3 worldPos : TEXCOORD0;
+	float3 normal : NORMAL;
+};
+
+float3 spotLightPosition; // in world space
+float3 spotLightIntensity;
+float3 spotLightAttenuation;
+float3 spotLightDir; // unit-length, in world space
+float3 spotLightCosOuterInner;
+
+struct lightSampleValues
+{
+	float3 dir;
+	float3 L;
+};
+
+lightSampleValues computePointLightValues(float3 surfacePosition)
+{
+    lightSampleValues values;
+
+    float3 lightVec = spotLightPosition - surfacePosition;
+	float dist = length(lightVec);
+
+    values.dir = normalize(lightVec);
+
+	// Dot computes the 3-term attenuation in one operation
+	// k_c * 1.0 + k_l * dist + k_q * dist * dist
+
+	float distAtten = dot(spotLightAttenuation,
+		float3(1.0, dist, dist*dist));
+
+	float spotAtten = dot(-spotLightDir, values.dir);
+
+	spotAtten = smoothstep(spotLightCosOuterInner.x, spotLightCosOuterInner.y, spotAtten);
+        
+	values.L = spotLightIntensity * spotAtten / distAtten;
+
+    return values;
+}
+
+float4 ps_main( VS_OUTPUT input ) : SV_TARGET
+{
+	lightSampleValues lightValues = computePointLightValues(input.worldPos);
+
+    float3 lighting = clamp(dot(normalize(input.normal), lightValues.dir), 0.0, 1.0) * lightValues.L;
+    
+    float4 fragColor = float4(lighting.r, lighting.g, lighting.b, 1.0);
+	return fragColor;
 }

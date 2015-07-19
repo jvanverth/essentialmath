@@ -5,7 +5,7 @@ float4x4 modelMatrix;
 struct VS_OUTPUT
 {
 	float4 pos : SV_POSITION;
-	float3 worldPos : POSITION;
+	float3 worldPos : TEXCOORD0;
 	float3 normal : NORMAL;
 };
 

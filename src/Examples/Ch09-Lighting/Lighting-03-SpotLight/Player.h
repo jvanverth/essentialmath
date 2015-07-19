@@ -45,9 +45,6 @@ private:
 
     float mRadius;
 
-    IvIndexBuffer* mSphereIndices;
-    IvVertexBuffer* mSphereVerts;
-
     IvShaderProgram* mShader;
     IvUniform* mColor;
 };
