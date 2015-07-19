@@ -81,6 +81,8 @@ Player::~Player()
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereIndices);
 
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereVerts);
+
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 }   // End of Player::~Player()
 
 

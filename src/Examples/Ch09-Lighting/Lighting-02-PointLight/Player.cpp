@@ -48,10 +48,6 @@ Player::Player()
 {
     mRadius = 2.0f;
 
-    mSphereIndices = NULL;
-
-    mSphereVerts = NULL;
-
     mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
         IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
         "pointShader"),
@@ -76,9 +72,7 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
-    IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereIndices);
-
-    IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereVerts);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 }   // End of Player::~Player()
 
 

@@ -1,48 +1,20 @@
 float4x4 IvModelViewProjectionMatrix;
+float4x4 IvNormalMatrix;
+float4x4 modelMatrix;
+
 struct VS_OUTPUT
 {
-	float4 pos : POSITION;
-	float4 color : COLOR0;
+	float4 pos : SV_POSITION;
+	float3 worldPos : POSITION;
+	float3 normal : NORMAL;
 };
-
-float4 pointLightPosition; 
-float4 pointLightAttenuation; 
-float pointLightIntensity;
-
-struct lightSampleValues
-{
-	float3 L;
-	float iL;
-};
-
-lightSampleValues computePointLightValues(float4 surfacePosition)
-{
-	lightSampleValues values;
-
-	values.L = pointLightPosition - surfacePosition;
-
-	float dist = length(values.L);
-	values.L = values.L / dist; // normalize
-
-	// Dot computes the 3-term attenuation in one operation
-	// k_c * 1.0 + k_l * dist + k_q * dist * dist
-
-	float distAtten = dot(pointLightAttenuation.xyz, 
-		float3(1.0, dist, dist*dist));
-
-	values.iL = pointLightIntensity / distAtten;
-
-	return values;
-}
 
 VS_OUTPUT vs_main( float3 normal : NORMAL, float4 pos : POSITION )
 {
     VS_OUTPUT Out = (VS_OUTPUT) 0;
 
-	lightSampleValues lightValues = computePointLightValues(pos);
-
-    Out.pos = mul(pos, IvModelViewProjectionMatrix);
-    Out.color = clamp(dot(normal, lightValues.L) * lightValues.iL, 0.0, 1.0);
+    Out.pos = mul(IvModelViewProjectionMatrix, pos);
+	Out.worldPos = (float3)(mul(modelMatrix, pos));
+    Out.normal = (float3)(mul(IvNormalMatrix, float4(normal, 0)));
     return Out;
 }
-
