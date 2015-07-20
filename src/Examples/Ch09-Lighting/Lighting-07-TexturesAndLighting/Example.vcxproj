@@ -295,10 +295,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="textureShader.glslf" />
-    <None Include="textureShader.glslv" />
-    <None Include="textureShader.hlslf" />
-    <None Include="textureShader.hlslv" />
+    <None Include="texlitShader.glslf" />
+    <None Include="texlitShader.glslv" />
+    <None Include="texlitShader.hlslf" />
+    <None Include="texlitShader.hlslv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

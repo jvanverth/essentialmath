@@ -1,17 +1,15 @@
 float4x4 IvModelViewProjectionMatrix;
 struct VS_OUTPUT
 {
-	float4 pos : POSITION;
+	float4 pos : SV_POSITION;
 	float3 normal : TEXCOORD0;
 };
-
-float4 dirLightPosition; 
 
 VS_OUTPUT vs_main( float3 normal : NORMAL, float4 pos : POSITION )
 {
     VS_OUTPUT Out = (VS_OUTPUT) 0;
 
-    Out.pos = mul(pos, IvModelViewProjectionMatrix);
+    Out.pos = mul(IvModelViewProjectionMatrix, pos);
     Out.normal = normal;    
     return Out;
 }

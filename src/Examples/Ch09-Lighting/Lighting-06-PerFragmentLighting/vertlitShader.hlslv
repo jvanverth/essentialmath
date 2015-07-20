@@ -1,18 +1,19 @@
 float4x4 IvModelViewProjectionMatrix;
 struct VS_OUTPUT
 {
-	float4 pos : POSITION;
+	float4 pos : SV_POSITION;
 	float4 color : COLOR0;
 };
 
-float4 dirLightPosition; 
+float3 dirLightPosition; 
 
 VS_OUTPUT vs_main( float3 normal : NORMAL, float4 pos : POSITION )
 {
     VS_OUTPUT Out = (VS_OUTPUT) 0;
 
-    Out.pos = mul(pos, IvModelViewProjectionMatrix);
-    Out.color = clamp(dot(normal, dirLightPosition.xyz), 0.0, 1.0);    
+    Out.pos = mul(IvModelViewProjectionMatrix, pos);
+    float lighting = clamp(dot(normalize(normal), dirLightPosition), 0.0, 1.0); 
+	Out.color = float4(lighting, lighting, lighting, 1.0); 
     return Out;
 }
 

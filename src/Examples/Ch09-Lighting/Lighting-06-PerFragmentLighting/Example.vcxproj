@@ -295,10 +295,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="textureShader.glslf" />
-    <None Include="textureShader.glslv" />
-    <None Include="textureShader.hlslf" />
-    <None Include="textureShader.hlslv" />
+    <None Include="fraglitShader.glslf" />
+    <None Include="fraglitShader.glslv" />
+    <None Include="fraglitShader.hlslf" />
+    <None Include="fraglitShader.hlslv" />
+    <None Include="vertlitShader.glslf" />
+    <None Include="vertlitShader.glslv" />
+    <None Include="vertlitShader.hlslf" />
+    <None Include="vertlitShader.hlslv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

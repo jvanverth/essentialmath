@@ -1,7 +1,17 @@
-uniform float4 dirLightPosition;
-sampler Texture;
+float3 dirLightPosition;
+SAMPLER_2D(Texture);
 
-float4 ps_main( float2 uv : TEXCOORD0 ) : COLOR
+struct VS_OUTPUT
 {
-    return clamp(dot(2.0 * (tex2D(Texture, uv).rgb - 0.5), dirLightPosition.xyz), 0.0, 1.0);
+	float4 pos : SV_POSITION;
+	float2 uv : TEXCOORD0;
+};
+
+float4 ps_main( VS_OUTPUT input ) : SV_TARGET
+{
+    float3 normal = 2.0 * (TEXTURE(Texture, input.uv).rgb - (float3)(0.5));
+    float lighting = clamp(dot(normal, dirLightPosition), 0.0, 1.0);
+
+    float4 fragColor = float4(lighting, lighting, lighting, 1.0);
+    return fragColor;
 }

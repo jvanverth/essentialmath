@@ -111,10 +111,10 @@ static const char sDummyShaderTNPFormat[] =
 "struct VS_OUTPUT\n"
 "{\n"
 "    float4 pos : SV_POSITION;\n"
-"    float4 color : COLOR0;\n"
+"    float3 normal : NORMAL;\n"
 "	 float2 uv : TEXCOORD0;\n"
 "};\n"
-"VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 color : COLOR0, float4 pos : POSITION )\n"
+"VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float3 normal : NORMAL, float4 pos : POSITION )\n"
 "{\n"
 "    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
 "    return Out;\n"
@@ -237,6 +237,7 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
 		if (NULL == shaderString)
 		{
 			mBufferPtr->Release();
+			mBufferPtr = 0;
 			return false;
 		}
 
@@ -252,6 +253,7 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
 			DEBUG_OUT(errors << std::endl);
 			errorMessages->Release();
 			mBufferPtr->Release();
+			mBufferPtr = 0;
 			return false;
 		}
 		if (errorMessages)
@@ -262,6 +264,7 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
 		if (FAILED(device->CreateInputLayout(elements, numElements, code->GetBufferPointer(), code->GetBufferSize(), &sInputLayout[format])))
 		{
 			mBufferPtr->Release();
+			mBufferPtr = 0;
 			code->Release();
 			return false;
 		}

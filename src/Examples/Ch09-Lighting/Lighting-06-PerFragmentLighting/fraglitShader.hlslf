@@ -1,7 +1,14 @@
-float4 dirLightPosition;
+float3 dirLightPosition;
 
-float4 ps_main(float3 normal : TEXCOORD0) : COLOR
+struct VS_OUTPUT
 {
-	float3 unitNormal = normalize(normal);
-    return clamp(dot(unitNormal, dirLightPosition.xyz), 0.0, 1.0);
+	float4 pos : SV_POSITION;
+	float3 normal : TEXCOORD0;
+};
+
+float4 ps_main(VS_OUTPUT input) : SV_TARGET
+{
+	float3 unitNormal = normalize(input.normal);
+	float lighting = clamp(dot(unitNormal, dirLightPosition), 0.0, 1.0);
+	return float4(lighting, lighting, lighting, 1.0); 
 }

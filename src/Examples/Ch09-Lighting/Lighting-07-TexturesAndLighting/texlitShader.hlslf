@@ -1,8 +1,90 @@
-uniform float splitColor;
-sampler Texture;
-
-float4 ps_main( float4 diffColor : COLOR0,  float4 specColor : COLOR1, float2 uv : TEXCOORD0 ) : COLOR
+struct VS_OUTPUT
 {
-	float4 tex = tex2D( Texture, uv );
-	return splitColor * (specColor + diffColor * tex) + (1.0 - splitColor) * ((specColor + diffColor) * tex);
+	float4 pos : SV_POSITION;
+	float2 uv : TEXCOORD0;
+	float3 normal : TEXCOORD1;
+	float3 worldPos : TEXCOORD2;
+	float3 viewDir : TEXCOORD3;
+};
+
+SAMPLER_2D(Texture);
+float splitColor;
+
+float3 pointLightPosition; // in world space
+float3 pointLightIntensity;
+
+float3 ambientLightColor;
+
+float3 materialAmbientColor;
+float3 materialEmissiveColor;
+float4 materialDiffuseColor;
+float4 materialSpecularColorExp;
+
+struct lightSampleValues
+{
+    float3 dir;
+    float3 L;
+};
+
+float3 computeAmbientComponent()
+{
+     return ambientLightColor * materialAmbientColor;
+}
+
+// surfaceNormal is assumed to be unit-length
+
+float3 computeDiffuseBRDF(float3 surfaceNormal,
+                          lightSampleValues light)
+{
+    return materialDiffuseColor.rgb;
+}
+
+float3 computeSpecularBRDF(float3 surfaceNormal,
+                           float3 surfacePosition,
+                           float3 viewDir,
+                           lightSampleValues light)
+{
+    float3 halfVector = normalize(viewDir + light.dir);
+
+    float nDotH = clamp(dot(surfaceNormal, halfVector), 0.0, 1.0);
+
+    return materialSpecularColorExp.rgb
+            * pow(nDotH, materialSpecularColorExp.a);
+}
+
+lightSampleValues computePointLightValues(float3 surfacePosition)
+{
+    lightSampleValues values;
+
+    float3 lightVec = pointLightPosition - surfacePosition;
+
+    values.dir = normalize(lightVec);
+
+    float distAtten = 1.0 + dot(lightVec, lightVec);
+
+    values.L = pointLightIntensity / distAtten;
+
+    return values;
+}
+
+float4 ps_main(VS_OUTPUT input) : SV_TARGET
+{
+    lightSampleValues light = computePointLightValues(input.worldPos);
+
+    float3 surfaceNormal = normalize(input.normal);
+    float3 diffuseBRDF = computeDiffuseBRDF(surfaceNormal, light);
+    float3 specularBRDF = computeSpecularBRDF(surfaceNormal, input.worldPos, normalize(input.viewDir), light);
+    float NdotL = clamp(dot(surfaceNormal, light.dir), 0.0, 1.0);
+
+    float3 diffuseColor = materialEmissiveColor
+                      + computeAmbientComponent()
+                      + light.L * diffuseBRDF * NdotL;
+    float3 specularColor = light.L * specularBRDF * NdotL;
+
+    float4 tex = TEXTURE(Texture, input.uv);
+	float4 fragColor;
+    fragColor.rgb = splitColor * (specularColor + diffuseColor * tex.rgb)
+                  + (1.0 - splitColor) * ((specularColor + diffuseColor) * tex.rgb);
+    fragColor.a = materialDiffuseColor.a * tex.a;
+	return fragColor;
 }

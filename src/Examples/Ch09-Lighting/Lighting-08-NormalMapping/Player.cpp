@@ -104,6 +104,8 @@ Player::~Player()
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mPlaneVerts);
     
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mTexture); 
+
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 }   // End of Player::~Player()
 
 
