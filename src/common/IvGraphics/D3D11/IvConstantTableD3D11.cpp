@@ -86,9 +86,7 @@ IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
 			constantDesc.mType = IvUniformType::kFloatUniform;
 		}
 		else if (typeDesc.Class == D3D_SVC_VECTOR && typeDesc.Type == D3D_SVT_FLOAT
-			&& typeDesc.Columns == 3 
-            // only support arrays of floats or float4s at the moment
-            && typeDesc.Elements == 0)
+			&& typeDesc.Columns == 3)
 		{
 			constantDesc.mType = IvUniformType::kFloat3Uniform;
 		}

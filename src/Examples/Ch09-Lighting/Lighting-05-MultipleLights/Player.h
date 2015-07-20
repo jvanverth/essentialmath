@@ -48,7 +48,7 @@ private:
 
     enum { NUM_LIGHTS = 2 };
     unsigned int mCurrentLight;
-    IvVector4 mLightPos[NUM_LIGHTS];
+    IvVector3 mLightPos[NUM_LIGHTS];
     
     float mSpecularPercentage;
     float mAmbientFactor;

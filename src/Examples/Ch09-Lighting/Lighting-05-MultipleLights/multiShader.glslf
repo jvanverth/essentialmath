@@ -6,7 +6,7 @@ in vec3 viewDir;
 
 out vec4 fragColor;
 
-uniform vec4 pointLightPosition[2]; // in world space
+uniform vec3 pointLightPosition[2]; // in world space
 uniform vec3 pointLightIntensity;
 
 uniform vec3 ambientLightColor;

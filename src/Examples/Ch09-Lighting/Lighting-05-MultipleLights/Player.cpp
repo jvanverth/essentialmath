@@ -60,8 +60,8 @@ Player::Player()
     
     mShader->GetUniform("ambientLightColor")->SetValue(IvVector3(0.0f, 0.0f, 0.2f), 0);
     
-    mLightPos[0] = IvVector4(-15.0f, -10.0f, 0.0f, 1.0f);
-    mLightPos[1] = IvVector4(15.0f, -10.0f, 0.0f, 1.0f);
+    mLightPos[0] = IvVector3(-15.0f, -10.0f, 0.0f);
+    mLightPos[1] = IvVector3(15.0f, -10.0f, 0.0f);
     
     mSpecularPercentage = 0.25f;
     mAmbientFactor = 0.1f;
@@ -174,7 +174,7 @@ Player::Update( float dt )
 
     if (lightPosChanged)
     {       
-        mLightPos[mCurrentLight] += IvVector4(x, y, z, 0.0f);
+        mLightPos[mCurrentLight] += IvVector3(x, y, z);
 
         lightPosChanged = false;
     }
@@ -240,8 +240,8 @@ Player::Update( float dt )
     // clear transform
     if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
     {
-        mLightPos[0] = IvVector4(-15.0f, -10.0f, 0.0f, 1.0f);
-        mLightPos[1] = IvVector4(15.0f, -10.0f, 0.0f, 1.0f);
+        mLightPos[0] = IvVector3(-15.0f, -10.0f, 0.0f);
+        mLightPos[1] = IvVector3(15.0f, -10.0f, 0.0f);
         mEmissiveFactor = 0.0f;
         mAmbientFactor = 0.1f;
         mSpecularPercentage = 0.25f;

@@ -6,7 +6,7 @@ struct VS_OUTPUT
 	float3 viewDir : TEXCOORD1;
 };
 
-float4 pointLightPosition[2]; // in world space
+float3 pointLightPosition[2]; // in world space
 float3 pointLightIntensity;
 
 float3 ambientLightColor;
