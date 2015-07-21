@@ -105,7 +105,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..;..\..\..\common\IvCollision;..\..\..\common\IvScene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -122,7 +122,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;opengl32.lib;glew32s.lib;glfw3.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IvCollision.lib;IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;opengl32.lib;glew32s.lib;glfw3.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>ExampleOGL.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\common\Libs\OGLRelease;..\..\..\common\Libs\Win32Release;..\..\..\gl;..\..\..\glew-1.12.0\lib\Release\Win32;..\..\..\glfw-3.1.1\lib-vc2012;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -147,7 +147,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..;..\..\..\common\IvEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..;..\..\..\common\IvEngine;..\..\..\common\IvRandom;..\..\..\common\IvCollision;..\..\..\common\IvScene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -165,7 +165,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;opengl32.lib;glew32s.lib;glfw3.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IvCollision.lib;IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;opengl32.lib;glew32s.lib;glfw3.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>ExampleOGL_d.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\common\Libs\OGLDebug;..\..\..\common\Libs\Win32Debug;..\..\..\gl;..\..\..\glew-1.12.0\lib\Release\Win32;..\..\..\glfw-3.1.1\lib-vc2012;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -191,7 +191,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..;..\..\..\common\IvEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..;..\..\..\common\IvEngine;..\..\..\common\IvCollision;..\..\..\common\IvScene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -209,7 +209,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IvCollision.lib;IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>ExampleD3D11_d.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\common\Libs\D3D11Debug;..\..\..\common\Libs\Win32Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -236,7 +236,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..\common\IvGraphics;..\..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\common\Includes;..\..\..\common\IvGraphics;..\..\..;..\..\..\common\IvCollision;..\..\..\common\IvScene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -253,7 +253,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IvCollision.lib;IvGraphics.lib;IvEngine.lib;IvMath.lib;IvUtility.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;dxguid.lib;comctl32.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>ExampleD3D11.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\common\Libs\D3D11Release;..\..\..\common\Libs\Win32Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -277,6 +277,9 @@
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\common\IvCollision\IvCollision.vcxproj">
+      <Project>{54e9690d-dcb3-4489-b6b6-96dafd2bb5d2}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\common\IvEngine\IvEngine.vcxproj">
       <Project>{63820bf9-b862-44f7-aa0f-996f2f465b26}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -289,16 +292,13 @@
       <Project>{0e0c3d9b-7d4a-4c71-b89c-eba1d08eeb1d}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\common\IvScene\IvScene.vcxproj">
+      <Project>{c125a95a-b6f9-4f96-8764-399bc6192ec3}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\common\IvUtility\IvUtility.vcxproj">
       <Project>{25430902-a996-4870-8167-791b990ffc55}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="marbleShader.glslf" />
-    <None Include="marbleShader.glslv" />
-    <None Include="skyShader.glslf" />
-    <None Include="skyShader.glslv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

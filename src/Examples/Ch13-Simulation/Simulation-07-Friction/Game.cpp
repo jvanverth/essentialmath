@@ -18,7 +18,6 @@
 #include <IvVector4.h>
 #include <IvMatrix44.h>
 #include <IvEventHandler.h>
-#include <OpenGL/OpenGL.h>
 
 #include "Game.h"
 #include "Player.h"
@@ -59,6 +58,8 @@ Game::Game()
     
     mUseCollision = false;
     mUseFriction = false;
+
+    mNumObjects = 0;
 
 }   // End of Game::Game()
 

@@ -94,6 +94,8 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mPath);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mOrbit);
 }   // End of Player::~Player()
 
 
