@@ -139,7 +139,7 @@ void IvUniformD3D11::SetValue(const IvVector3& value, unsigned int index)
 		// float3 array is packed as float4 array
 		char* offset = reinterpret_cast<char*>(mOffset);
 		IvVector3* currVec3 = mValue.mVector3;
-		for (int i = 0; i < mCount; ++i)
+		for (unsigned int i = 0; i < mCount; ++i)
 		{
 			memcpy(offset, currVec3, sizeof(IvVector3));
 			++currVec3;

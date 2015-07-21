@@ -1,7 +1,4 @@
-#define SAMPLER_2D(x) Texture2D x; SamplerState x##Sampler;
-#define TEXTURE(x, uv) x.Sample( x##Sampler, uv );
-
-SAMPLER_2D(Texture)
+SAMPLER_2D(Texture);
 
 struct VS_OUTPUT
 {

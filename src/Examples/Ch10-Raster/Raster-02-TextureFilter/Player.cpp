@@ -127,6 +127,14 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mTexture);
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mCheckerTexture);
+
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
+
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadVerts);
+	IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadIndices);
+
 }   // End of Player::~Player()
 
 
@@ -216,7 +224,7 @@ Player::Render()
     transform(1,3) = 0.0f;
     transform(2,3) = 0.0f;
     
-    ::IvSetWorldMatrix(transform);
+    IvSetWorldMatrix(transform);
 
     // Set the desired texture
     if (mCheckerboard)
@@ -268,7 +276,7 @@ Player::CreateQuad()
     const float size = 3.0f;
 
     mQuadVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4, NULL, kDynamicUsage);
+        kTCPFormat, 4, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mQuadVerts->BeginLoadData());
@@ -292,7 +300,7 @@ Player::CreateQuad()
     mQuadVerts->EndLoadData();
 
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(4, NULL, kDynamicUsage);
+        CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
 

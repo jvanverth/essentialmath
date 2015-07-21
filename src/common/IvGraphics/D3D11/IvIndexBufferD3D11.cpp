@@ -70,7 +70,7 @@ IvIndexBufferD3D11::Create(unsigned int numIndices, void* data, IvDataUsage usag
 	}
 	mUsage = usage;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.CPUAccessFlags = 0;
+	indexBufferDesc.CPUAccessFlags = (usage == kDynamicUsage) ? D3D11_CPU_ACCESS_WRITE : 0;
 	indexBufferDesc.MiscFlags = 0;
 	//*** replacement for D3DMANAGED?
 

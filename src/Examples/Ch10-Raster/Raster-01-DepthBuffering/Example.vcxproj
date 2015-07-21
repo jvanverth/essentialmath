@@ -294,12 +294,6 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="normalShader.glslf" />
-    <None Include="normalShader.glslv" />
-    <None Include="normalShader.hlslf" />
-    <None Include="normalShader.hlslv" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

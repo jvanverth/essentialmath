@@ -179,7 +179,7 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
 	}
 	mUsage = usage;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.CPUAccessFlags = (usage == kDynamicUsage) ? D3D11_CPU_ACCESS_WRITE : 0;
 	vertexBufferDesc.MiscFlags = 0;
 	//*** replacement for D3DMANAGED?
 

@@ -312,31 +312,8 @@ IvRendererD3D11::InitD3D11()
     SetDepthTest(kLessEqualDepthTest);
     SetDepthWrite(true);
 
-	//-------------- For now -------------------------------------
-
-	// Setup the raster description which will determine how and what polygons will be drawn.
-	D3D11_RASTERIZER_DESC rasterDesc;
-	ID3D11RasterizerState* rasterState;
-	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
-	rasterDesc.AntialiasedLineEnable = false;
-	rasterDesc.CullMode = D3D11_CULL_BACK;
-	rasterDesc.DepthBias = 0;
-	rasterDesc.DepthBiasClamp = 0.0f;
-	rasterDesc.DepthClipEnable = true;
-	rasterDesc.FillMode = D3D11_FILL_SOLID;
-	rasterDesc.FrontCounterClockwise = true;
-	rasterDesc.MultisampleEnable = false;
-	rasterDesc.ScissorEnable = false;
-	rasterDesc.SlopeScaledDepthBias = 0.0f;
-	// Create the rasterizer state from the description we just filled out.
-	HRESULT result = mDevice->CreateRasterizerState(&rasterDesc, &rasterState);
-	if (FAILED(result))
-	{
-		return false;
-	}
-	// Now set the rasterizer state.
-	mContext->RSSetState(rasterState);
-	rasterState->Release();
+	// Set solid fill
+	SetFillMode(kSolidFill);
 
 	// Initialize the depth-stencil state.
 	mDepthTestFunc = kLessEqualDepthTest;
@@ -500,18 +477,29 @@ void IvRendererD3D11::UpdateBlendState()
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetFillMode( IvFillMode fill )
 {
-	/*
-    if (fill == kWireframeFill)
-    {
-        mDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_WIREFRAME );
-	    mDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
-    }
-    else if (fill == kSolidFill)
-    {
-        mDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID );
-	    mDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CW );
-    }
-	*/
+	// Setup the raster description which will determine how and what polygons will be drawn.
+	D3D11_RASTERIZER_DESC rasterDesc;
+	ID3D11RasterizerState* rasterState;
+	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
+	rasterDesc.AntialiasedLineEnable = false;
+	rasterDesc.CullMode = (fill == kSolidFill) ? D3D11_CULL_BACK : D3D11_CULL_NONE;
+	rasterDesc.DepthBias = 0;
+	rasterDesc.DepthBiasClamp = 0.0f;
+	rasterDesc.DepthClipEnable = true;
+	rasterDesc.FillMode = (fill == kSolidFill) ? D3D11_FILL_SOLID : D3D11_FILL_WIREFRAME;
+	rasterDesc.FrontCounterClockwise = true;
+	rasterDesc.MultisampleEnable = false;
+	rasterDesc.ScissorEnable = false;
+	rasterDesc.SlopeScaledDepthBias = 0.0f;
+	// Create the rasterizer state from the description we just filled out.
+	HRESULT result = mDevice->CreateRasterizerState(&rasterDesc, &rasterState);
+	if (FAILED(result))
+	{
+		return;
+	}
+	// Now set the rasterizer state.
+	mContext->RSSetState(rasterState);
+	rasterState->Release();
 }
 
 
