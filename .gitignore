@@ -1,0 +1,16 @@
+*.sdf
+*.suo
+*.exe
+*.ilk
+Debug.txt
+Debug\ D3D11
+Release\ D3D11
+Debug\ OGL
+Release\ OGL
+*.vcxproj.user
+Win32Debug
+Win32Release
+src/common/Libs
+src/common/Includes
+*~
+*.opensdf
