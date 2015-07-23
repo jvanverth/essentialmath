@@ -60,7 +60,7 @@
 		CE48B24B1B40242500043459 /* Turret.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Turret.cpp; sourceTree = "<group>"; };
 		CE48B24D1B40243900043459 /* Barrel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Barrel.h; sourceTree = "<group>"; };
 		CE48B24E1B40243E00043459 /* Barrel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Barrel.cpp; sourceTree = "<group>"; };
-		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.0.4/src/libglfw3.a"; sourceTree = "<group>"; };
+		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.1.1/lib-MacOS-10.8/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		CE9C45430D74C7B700FBB88B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -329,9 +329,9 @@
 					/Users/jvsquare/Projects/Ivy3/src/common/Libs/OSXDebug,
 					/Users/jvsquare/Projects/Ivy3/src/gl,
 					/Users/jvsquare/Projects/Ivy3/src/glew/lib,
-					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.0.4/src",
+					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.1.1/lib-MacOS-10.8",
 				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.1.1/lib-MacOS-10.8\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = ExampleD;
@@ -360,9 +360,9 @@
 					/Users/jvsquare/Projects/Ivy3/src/common/Libs/OSXDebug,
 					/Users/jvsquare/Projects/Ivy3/src/gl,
 					/Users/jvsquare/Projects/Ivy3/src/glew/lib,
-					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.0.4/src",
+					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.1.1/lib-MacOS-10.8",
 				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.0.4/src\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.1.1/lib-MacOS-10.8\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PRODUCT_NAME = Example;
