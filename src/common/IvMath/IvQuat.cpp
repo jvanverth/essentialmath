@@ -430,7 +430,7 @@ IvQuat::Normalize()
     }
     else
     {
-        float factor = IvInvSqrt( lengthsq );
+        float factor = IvRecipSqrt( lengthsq );
         w *= factor;
         x *= factor;
         y *= factor;

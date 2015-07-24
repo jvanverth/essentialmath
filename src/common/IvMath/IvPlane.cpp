@@ -171,7 +171,7 @@ IvPlane::Set( float a, float b, float c, float d )
     }
     else
     {
-        float recip = ::IvInvSqrt(lensq);
+        float recip = IvRecipSqrt(lensq);
         mNormal.Set( a*recip, b*recip, c*recip );
         mOffset = d*recip;
     }

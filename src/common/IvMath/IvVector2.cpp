@@ -145,7 +145,7 @@ IvVector2::Normalize()
     }
     else
     {
-        float factor = IvInvSqrt( lengthsq );
+        float factor = IvRecipSqrt( lengthsq );
         x *= factor;
         y *= factor;
     }

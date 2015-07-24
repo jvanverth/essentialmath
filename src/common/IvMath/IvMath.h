@@ -61,7 +61,7 @@ inline float IvSqrt( float val )
 #endif
 }
 
-inline float IvInvSqrt( float val ) 
+inline float IvRecipSqrt( float val ) 
 { 
 #if defined(IV_APPROXIMATION)
     float valhalf = 0.5f*val;
