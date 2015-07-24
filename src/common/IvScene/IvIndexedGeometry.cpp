@@ -214,9 +214,9 @@ void IvIndexedGeometry::Render()
 		IvRenderer::mRenderer->SetFillMode(kWireframeFill);
         IvMatrix44 ident;
         ident.Identity();
-        ident(0,3) = mWorldSphere.GetCenter().GetX();
-        ident(1,3) = mWorldSphere.GetCenter().GetY();
-        ident(2,3) = mWorldSphere.GetCenter().GetZ();
+        ident(0,3) = mWorldSphere.GetCenter().x;
+        ident(1,3) = mWorldSphere.GetCenter().y;
+        ident(2,3) = mWorldSphere.GetCenter().z;
 
         IvSetWorldMatrix(ident);
         IvDrawSphere(mWorldSphere.GetRadius(), kYellow);

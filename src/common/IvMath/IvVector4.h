@@ -63,14 +63,6 @@ public:
 
     // manipulators
     inline void Set( float _x, float _y, float _z, float _w );
-    inline void SetX( float _x ) { x = _x; }
-    inline void SetY( float _y ) { y = _y; }
-    inline void SetZ( float _z ) { z = _z; }
-    inline void SetW( float _w ) { w = _w; }
-    inline float GetX() const { return x; }
-    inline float GetY() const { return y; }
-    inline float GetZ() const { return z; }
-    inline float GetW() const { return w; }
     void Clean();       // sets near-zero elements to 0
     inline void Zero(); // sets all elements to 0
     void Normalize();   // sets to unit vector
@@ -104,11 +96,8 @@ public:
     static IvVector4    wAxis;
     static IvVector4    origin;
         
-protected:
     // member variables
     float x, y, z, w;
-        
-private:
 };
 
 //-------------------------------------------------------------------------------

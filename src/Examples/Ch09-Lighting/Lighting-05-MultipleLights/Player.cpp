@@ -126,16 +126,15 @@ Player::ComputeMaterialComponents()
     {
         mSpecularPercentage = 0.0f;
     }
-    mShader->GetUniform("materialDiffuseColor")->SetValue(
-                                                          (1.0f - mSpecularPercentage)*albedo4, 0);
+    mShader->GetUniform("materialDiffuseColor")->SetValue((1.0f - mSpecularPercentage)*albedo4, 0);
     
     float specularExp = 16.0f;
     IvVector3 specularColor(1.0f, 1.0f, 1.0f);
     specularColor *= mSpecularPercentage;
     specularColor *= (specularExp + 8.0f)/8.0f; // normalization factor
-    mShader->GetUniform("materialSpecularColorExp")->SetValue(IvVector4(specularColor.GetX(),
-                                                                        specularColor.GetY(),
-                                                                        specularColor.GetZ(),
+    mShader->GetUniform("materialSpecularColorExp")->SetValue(IvVector4(specularColor.x,
+                                                                        specularColor.y,
+                                                                        specularColor.z,
                                                                         specularExp), 0);
 }
 

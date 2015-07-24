@@ -72,12 +72,6 @@ public:
 
     // manipulators
     inline void Set( float _x, float _y, float _z );
-    inline void SetX( float _x ) { x = _x; }
-    inline void SetY( float _y ) { y = _y; }
-    inline void SetZ( float _z ) { z = _z; }
-    inline float GetX() const { return x; }
-    inline float GetY() const { return y; }
-    inline float GetZ() const { return z; }
     void Clean();       // sets near-zero elements to 0
     inline void Zero(); // sets all elements to 0
     void Normalize();   // sets to unit vector
@@ -114,11 +108,8 @@ public:
     static IvVector3    zAxis;
     static IvVector3    origin;
     
-protected:
     // member variables
     float x, y, z;
-        
-private:
 };
 
 float Distance( const IvVector3& p0, const IvVector3& p1 );

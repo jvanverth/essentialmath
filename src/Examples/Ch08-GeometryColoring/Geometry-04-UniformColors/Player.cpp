@@ -129,19 +129,19 @@ Player::Update( float dt )
     xlate.Zero();
     if (IvGame::mGame->mEventHandler->IsKeyDown('k'))
     {
-        xlate.SetX( xlate.GetX() - 3.0f*dt);
+        xlate.x -= 3.0f*dt;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('i'))
     {
-        xlate.SetX( xlate.GetX() + 3.0f*dt);
+        xlate.x += 3.0f*dt;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('l'))
     {
-        xlate.SetY( xlate.GetY() - 3.0f*dt);
+        xlate.y -= 3.0f*dt;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('j'))
     {
-        xlate.SetY( xlate.GetY() + 3.0f*dt);
+        xlate.y += 3.0f*dt;
     }
     mTranslate += xlate;
     
@@ -175,9 +175,9 @@ Player::Render()
     transform(0,2) *= mScale;
     transform(1,2) *= mScale;
     transform(2,2) *= mScale;
-    transform(0,3) = mTranslate.GetX();
-    transform(1,3) = mTranslate.GetY();
-    transform(2,3) = mTranslate.GetZ();
+    transform(0,3) = mTranslate.x;
+    transform(1,3) = mTranslate.y;
+    transform(2,3) = mTranslate.z;
 
     ::IvSetWorldMatrix(transform);
 
@@ -185,12 +185,12 @@ Player::Render()
     mColor->SetValue(IvVector4(1.0f, 0.0f, 0.0f, 1.0f), 0);
     DrawSphere();
 
-    transform(0,3) = mTranslate.GetX() - mRadius * mScale;
+    transform(0,3) = mTranslate.x - mRadius * mScale;
     ::IvSetWorldMatrix(transform);
     mColor->SetValue(IvVector4(0.0f, 1.0f, 0.0f, 1.0f), 0);
     DrawSphere();
 
-    transform(0,3) = mTranslate.GetX() + mRadius * mScale;
+    transform(0,3) = mTranslate.x + mRadius * mScale;
     ::IvSetWorldMatrix(transform);
     mColor->SetValue(IvVector4(0.0f, 0.0f, 1.0f, 1.0f), 0);
     DrawSphere();
@@ -249,9 +249,9 @@ Player::CreateSphere()
             float sinPhi, cosPhi;
             IvSinCos(phi, sinPhi, cosPhi);
 
-            tempVerts->position.SetX(mRadius * cosTheta * cosPhi);
-            tempVerts->position.SetY(mRadius * sinTheta * cosPhi);
-            tempVerts->position.SetZ(mRadius * sinPhi);
+            tempVerts->position.x = mRadius * cosTheta * cosPhi;
+            tempVerts->position.y = mRadius * sinTheta * cosPhi;
+            tempVerts->position.z = mRadius * sinPhi;
 
             tempVerts->color.mAlpha = 255;
             tempVerts->color.mRed = 255;

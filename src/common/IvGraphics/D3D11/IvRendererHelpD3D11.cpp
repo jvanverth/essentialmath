@@ -57,9 +57,9 @@ IvSetDefaultViewer( float xPos, float yPos, float zPos )
 
     // build 4x4 matrix
     IvMatrix44 matrix(rotate);
-    matrix(0,3) = xlate.GetX();
-    matrix(1,3) = xlate.GetY();
-    matrix(2,3) = xlate.GetZ();
+    matrix(0,3) = xlate.x;
+    matrix(1,3) = xlate.y;
+    matrix(2,3) = xlate.z;
 
     IvRenderer::mRenderer->SetViewMatrix( matrix );
     

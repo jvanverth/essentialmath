@@ -105,9 +105,9 @@ void IvGeometry::Render()
     transform(0,2) *= mWorldScale;
     transform(1,2) *= mWorldScale;
     transform(2,2) *= mWorldScale;
-    transform(0,3) = mWorldTranslate.GetX();
-    transform(1,3) = mWorldTranslate.GetY();
-    transform(2,3) = mWorldTranslate.GetZ();
+    transform(0,3) = mWorldTranslate.x;
+    transform(1,3) = mWorldTranslate.y;
+    transform(2,3) = mWorldTranslate.z;
     
     // set transform
     IvSetWorldMatrix( transform );

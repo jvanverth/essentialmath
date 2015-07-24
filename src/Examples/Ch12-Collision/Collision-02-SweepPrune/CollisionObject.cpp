@@ -90,20 +90,20 @@ CollisionObject::Update( float dt )
 
     // adjust velocity to keep us inside box
     float radius = mSphere.GetRadius();
-    if ( mPosition.GetX()+radius > 1.0f && mVelocity.GetX() > 0.0f )
-        mVelocity.SetX( -mVelocity.GetX() );
-    if ( mPosition.GetX()-radius < -1.0f && mVelocity.GetX() < 0.0f )
-        mVelocity.SetX( -mVelocity.GetX() );
+    if ( mPosition.x+radius > 1.0f && mVelocity.x > 0.0f )
+        mVelocity.x = -mVelocity.x;
+    if ( mPosition.x-radius < -1.0f && mVelocity.x < 0.0f )
+        mVelocity.x = -mVelocity.x;
 
-    if ( mPosition.GetY()+radius > 1.0f && mVelocity.GetY() > 0.0f )
-        mVelocity.SetY( -mVelocity.GetY() );
-    if ( mPosition.GetY()-radius < -1.0f && mVelocity.GetY() < 0.0f )
-        mVelocity.SetY( -mVelocity.GetY() );
+    if ( mPosition.y+radius > 1.0f && mVelocity.y > 0.0f )
+        mVelocity.y = -mVelocity.y;
+    if ( mPosition.y-radius < -1.0f && mVelocity.y < 0.0f )
+        mVelocity.y = -mVelocity.y;
 
-    if ( mPosition.GetZ()+radius > 1.0f && mVelocity.GetZ() > 0.0f )
-        mVelocity.SetZ( -mVelocity.GetZ() );
-    if ( mPosition.GetZ()-radius < -1.0f && mVelocity.GetZ() < 0.0f )
-        mVelocity.SetZ( -mVelocity.GetZ() );
+    if ( mPosition.z+radius > 1.0f && mVelocity.z > 0.0f )
+        mVelocity.z = -mVelocity.z;
+    if ( mPosition.z-radius < -1.0f && mVelocity.z < 0.0f )
+        mVelocity.z = -mVelocity.z;
 
     // update sphere
     mSphere.SetCenter( mPosition );

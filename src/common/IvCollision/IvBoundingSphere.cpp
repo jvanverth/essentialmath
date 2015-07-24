@@ -124,18 +124,18 @@ IvBoundingSphere::Set( const IvVector3* points, unsigned int numPoints )
     unsigned int i;
     for ( i = 1; i < numPoints; ++i )
     {
-        if (points[i].GetX() < min.GetX())
-            min.SetX( points[i].GetX() ) ;
-        else if (points[i].GetX() > max.GetX() )
-            max.SetX( points[i].GetX() ) ;
-        if (points[i].GetY() < min.GetY())
-            min.SetY( points[i].GetY() ) ;
-        else if (points[i].GetY() > max.GetY() )
-            max.SetY( points[i].GetY() ) ;
-        if (points[i].GetZ() < min.GetZ())
-            min.SetZ( points[i].GetZ() ) ;
-        else if (points[i].GetZ() > max.GetZ() )
-            max.SetZ( points[i].GetZ() ) ;
+        if (points[i].x < min.x)
+            min.x = points[i].x;
+        else if (points[i].x > max.x )
+            max.x = points[i].x;
+        if (points[i].y < min.y)
+            min.y = points[i].y;
+        else if (points[i].y > max.y )
+            max.y = points[i].y;
+        if (points[i].z < min.z)
+            min.z = points[i].z;
+        else if (points[i].z > max.z )
+            max.z = points[i].z;
     }
     // compute center and radius
     mCenter = 0.5f*(min + max);

@@ -178,9 +178,9 @@ Game::Render()
     // or can multiply by transpose of view to world
     IvVector3 eyeInverse = -mCameraPosition*viewToWorldRot;
     // set translation of matrix
-    matrix(0,3) = eyeInverse.GetX();
-    matrix(1,3) = eyeInverse.GetY();
-    matrix(2,3) = eyeInverse.GetZ();
+    matrix(0,3) = eyeInverse.x;
+    matrix(1,3) = eyeInverse.y;
+    matrix(2,3) = eyeInverse.z;
     IvSetViewMatrix( matrix );
 
     // draw axes

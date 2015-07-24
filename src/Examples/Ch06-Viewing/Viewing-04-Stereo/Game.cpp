@@ -193,8 +193,8 @@ Game::UpdateObjects( float dt )
         delta -= dt;
     }
     // move along view direction
-    mViewPoint.SetX( mViewPoint.GetX() + 2.0f * mViewDirection.GetX() * delta );
-    mViewPoint.SetY( mViewPoint.GetY() + 2.0f * mViewDirection.GetY() * delta );
+    mViewPoint.x += 2.0f * mViewDirection.x * delta;
+    mViewPoint.y += 2.0f * mViewDirection.y * delta;
 
     // change camera heading
     float headingChange = 0.0f;
@@ -209,10 +209,10 @@ Game::UpdateObjects( float dt )
     float sintheta, costheta;
     IvSinCos(headingChange, sintheta, costheta);
 
-    float x = mViewDirection.GetX()*costheta - mViewDirection.GetY()*sintheta;
-    mViewDirection.SetY( mViewDirection.GetX()*sintheta 
-                     + mViewDirection.GetY()*costheta );
-    mViewDirection.SetX( x );
+    float x = mViewDirection.x*costheta - mViewDirection.y*sintheta;
+    mViewDirection.y = mViewDirection.x*sintheta
+                     + mViewDirection.y*costheta;
+    mViewDirection.x =  x;
     // shouldn't need this, but it keeps floating precision issues under control
     mViewDirection.Normalize();
 
@@ -258,18 +258,18 @@ Game::SetCamera( const IvVector3& viewDir,
 	// the y column is the view position rotated into view space
 	IvMatrix44 viewMatrix;
 	viewMatrix.Identity();
-	viewMatrix(0,0) = viewSide.GetX();
-	viewMatrix(0,1) = viewSide.GetY();
-	viewMatrix(0,2) = viewSide.GetZ();
-	viewMatrix(0,3) = invViewPos.GetX();
-	viewMatrix(1,0) = viewUp.GetX();
-	viewMatrix(1,1) = viewUp.GetY();
-	viewMatrix(1,2) = viewUp.GetZ();
-	viewMatrix(1,3) = invViewPos.GetY();
-	viewMatrix(2,0) = -viewDir.GetX();
-	viewMatrix(2,1) = -viewDir.GetY();
-	viewMatrix(2,2) = -viewDir.GetZ();
-	viewMatrix(2,3) = invViewPos.GetZ();
+	viewMatrix(0,0) = viewSide.x;
+	viewMatrix(0,1) = viewSide.y;
+	viewMatrix(0,2) = viewSide.z;
+	viewMatrix(0,3) = invViewPos.x;
+	viewMatrix(1,0) = viewUp.x;
+	viewMatrix(1,1) = viewUp.y;
+	viewMatrix(1,2) = viewUp.z;
+	viewMatrix(1,3) = invViewPos.y;
+	viewMatrix(2,0) = -viewDir.x;
+	viewMatrix(2,1) = -viewDir.y;
+	viewMatrix(2,2) = -viewDir.z;
+	viewMatrix(2,3) = invViewPos.z;
 
     ::IvSetViewMatrix( viewMatrix );
 

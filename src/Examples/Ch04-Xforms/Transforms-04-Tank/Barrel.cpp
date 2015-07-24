@@ -257,9 +257,9 @@ Barrel::Render( float parentScale,
     transform(0,2) *= scale;
     transform(1,2) *= scale;
     transform(2,2) *= scale;
-    transform(0,3) = translate.GetX();
-    transform(1,3) = translate.GetY();
-    transform(2,3) = translate.GetZ();
+    transform(0,3) = translate.x;
+    transform(1,3) = translate.y;
+    transform(2,3) = translate.z;
     
     IvSetWorldMatrix( transform );
     IvRenderer::mRenderer->Draw(kTriangleListPrim, mVertices, mIndices);

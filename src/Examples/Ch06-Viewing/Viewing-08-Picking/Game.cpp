@@ -111,7 +111,7 @@ Game::UpdateObjects( float /*dt*/ )
                                     (float) IvRenderer::mRenderer->GetWidth(), (float) IvRenderer::mRenderer->GetHeight() );
 
         // compute intersection with z=0 plane
-        float t = -mEyePoint.GetZ()/ray.GetZ();
+        float t = -mEyePoint.z/ray.z;
         mClickPosition = mEyePoint + t*ray;
 
         mEventHandler->MouseUp();
@@ -181,9 +181,9 @@ Game::LookAt( const IvVector3& eye, const IvVector3& lookAt, const IvVector3& up
     // set rotation
     mViewToWorldMatrix.Rotation(rotate);
     // set translation (eye position)
-    mViewToWorldMatrix(0,3) = eye.GetX();
-    mViewToWorldMatrix(1,3) = eye.GetY();
-    mViewToWorldMatrix(2,3) = eye.GetZ();
+    mViewToWorldMatrix(0,3) = eye.x;
+    mViewToWorldMatrix(1,3) = eye.y;
+    mViewToWorldMatrix(2,3) = eye.z;
 
     // world->view transform
     // set rotation
@@ -191,9 +191,9 @@ Game::LookAt( const IvVector3& eye, const IvVector3& lookAt, const IvVector3& up
     mWorldToViewMatrix.Rotation(rotate);
     // set translation (rotate into view space)
     IvVector3 invEye = -(rotate*eye);
-    mWorldToViewMatrix(0,3) = invEye.GetX();
-    mWorldToViewMatrix(1,3) = invEye.GetY();
-    mWorldToViewMatrix(2,3) = invEye.GetZ();
+    mWorldToViewMatrix(0,3) = invEye.x;
+    mWorldToViewMatrix(1,3) = invEye.y;
+    mWorldToViewMatrix(2,3) = invEye.z;
 
     // send to OpenGL
     IvSetViewMatrix( mWorldToViewMatrix );

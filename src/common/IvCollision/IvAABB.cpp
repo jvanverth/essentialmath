@@ -123,18 +123,18 @@ IvAABB::Set( const IvVector3* points, unsigned int numPoints )
     mMaxima = points[0];
     for ( unsigned int i = 1; i < numPoints; ++i )
     {
-        if (points[i].GetX() < mMinima.GetX())
-            mMinima.SetX( points[i].GetX() );
-        else if (points[i].GetX() > mMaxima.GetX() )
-            mMaxima.SetX( points[i].GetX() );
-        if (points[i].GetY() < mMinima.GetY())
-            mMinima.SetY( points[i].GetY() );
-        else if (points[i].GetY() > mMaxima.GetY() )
-            mMaxima.SetY( points[i].GetY() );
-        if (points[i].GetZ() < mMinima.GetZ())
-            mMinima.SetZ( points[i].GetZ() );
-        else if (points[i].GetZ() > mMaxima.GetZ() )
-            mMaxima.SetZ( points[i].GetZ() );
+        if (points[i].x < mMinima.x)
+            mMinima.x = points[i].x;
+        else if (points[i].x > mMaxima.x )
+            mMaxima.x = points[i].x;
+        if (points[i].y < mMinima.y)
+            mMinima.y = points[i].y;
+        else if (points[i].y > mMaxima.y )
+            mMaxima.y = points[i].y;
+        if (points[i].z < mMinima.z)
+            mMinima.z = points[i].z;
+        else if (points[i].z > mMaxima.z )
+            mMaxima.z = points[i].z;
     }
 }   // End of IvAABB::Set()
 
@@ -147,18 +147,18 @@ IvAABB::Set( const IvVector3* points, unsigned int numPoints )
 void
 IvAABB::AddPoint( const IvVector3& point )
 {
-    if (point.GetX() < mMinima.GetX())
-        mMinima.SetX( point.GetX() );
-    else if (point.GetX() > mMaxima.GetX() )
-        mMaxima.SetX( point.GetX() );
-    if (point.GetY() < mMinima.GetY())
-        mMinima.SetY( point.GetY() );
-    else if (point.GetY() > mMaxima.GetY() )
-        mMaxima.SetY( point.GetY() );
-    if (point.GetZ() < mMinima.GetZ())
-        mMinima.SetZ( point.GetZ() );
-    else if (point.GetZ() > mMaxima.GetZ() )
-        mMaxima.SetZ( point.GetZ() );
+    if (point.x < mMinima.x)
+        mMinima.x = point.x;
+    else if (point.x > mMaxima.x )
+        mMaxima.x = point.x;
+    if (point.y < mMinima.y)
+        mMinima.y = point.y;
+    else if (point.y > mMaxima.y )
+        mMaxima.y = point.y;
+    if (point.z < mMinima.z)
+        mMinima.z = point.z;
+    else if (point.z > mMaxima.z )
+        mMaxima.z = point.z;
 
 }   // End of IvAABB::AddPoint()
 
@@ -172,15 +172,15 @@ bool
 IvAABB::Intersect( const IvAABB& other ) const
 {
     // if separated in x direction
-    if (mMinima.GetX() > other.mMaxima.GetX() || other.mMinima.GetX() > mMaxima.GetX() )
+    if (mMinima.x > other.mMaxima.x || other.mMinima.x > mMaxima.x )
         return false;
 
     // if separated in y direction
-    if (mMinima.GetY() > other.mMaxima.GetY() || other.mMinima.GetY() > mMaxima.GetY() )
+    if (mMinima.y > other.mMaxima.y || other.mMinima.y > mMaxima.y )
         return false;
 
     // if separated in z direction
-    if (mMinima.GetZ() > other.mMaxima.GetZ() || other.mMinima.GetZ() > mMaxima.GetZ() )
+    if (mMinima.z > other.mMaxima.z || other.mMinima.z > mMaxima.z )
         return false;
 
     // no separation, must be intersecting
@@ -330,39 +330,39 @@ IvAABB::Classify( const IvPlane& plane ) const
 {
     IvVector3 diagMin, diagMax;
     // set min/max values for x direction
-    if ( plane.GetNormal().GetX() >= 0.0f )
+    if ( plane.GetNormal().x >= 0.0f )
     {
-        diagMin.SetX( mMinima.GetX() );
-        diagMax.SetX( mMaxima.GetX() );
+        diagMin.x = mMinima.x;
+        diagMax.x = mMaxima.x;
     }
     else
     {
-        diagMin.SetX( mMinima.GetX() );
-        diagMax.SetX( mMaxima.GetX() );
+        diagMin.x = mMinima.x;
+        diagMax.x = mMaxima.x;
     }
 
     // set min/max values for y direction
-    if ( plane.GetNormal().GetX() >= 0.0f )
+    if ( plane.GetNormal().x >= 0.0f )
     {
-        diagMin.SetY( mMinima.GetY() );
-        diagMax.SetY( mMaxima.GetY() );
+        diagMin.y = mMinima.y;
+        diagMax.y = mMaxima.y;
     }
     else
     {
-        diagMin.SetY( mMinima.GetY() );
-        diagMax.SetY( mMaxima.GetY() );
+        diagMin.y = mMinima.y;
+        diagMax.y = mMaxima.y;
     }
 
     // set min/max values for z direction
-    if ( plane.GetNormal().GetZ() >= 0.0f )
+    if ( plane.GetNormal().z >= 0.0f )
     {
-        diagMin.SetZ( mMinima.GetZ() );
-        diagMax.SetZ( mMaxima.GetZ() );
+        diagMin.z = mMinima.z;
+        diagMax.z = mMaxima.z;
     }
     else
     {
-        diagMin.SetZ( mMinima.GetZ() );
-        diagMax.SetZ( mMaxima.GetZ() );
+        diagMin.z = mMinima.z;
+        diagMax.z = mMaxima.z;
     }
 
     // minimum on positive side of plane, box on positive side
@@ -392,19 +392,19 @@ Merge( IvAABB& result, const IvAABB& b0, const IvAABB& b1 )
     IvVector3 newMinima( b0.mMinima );
     IvVector3 newMaxima( b0.mMaxima );
 
-    if (b1.mMinima.GetX() < newMinima.GetX())
-        newMinima.SetX( b1.mMinima.GetX() );
-    if (b1.mMinima.GetY() < newMinima.GetY())
-        newMinima.SetY( b1.mMinima.GetY() );
-    if (b1.mMinima.GetZ() < newMinima.GetZ())
-        newMinima.SetZ( b1.mMinima.GetZ() );
+    if (b1.mMinima.x < newMinima.x)
+        newMinima.x = b1.mMinima.x;
+    if (b1.mMinima.y < newMinima.y)
+        newMinima.y = b1.mMinima.y;
+    if (b1.mMinima.z < newMinima.z)
+        newMinima.z = b1.mMinima.z;
 
-    if (b1.mMaxima.GetX() > newMaxima.GetX() )
-        newMaxima.SetX( b1.mMaxima.GetX() );
-    if (b1.mMaxima.GetY() > newMaxima.GetY() )
-        newMaxima.SetY( b1.mMaxima.GetY() );
-    if (b1.mMaxima.GetZ() > newMaxima.GetZ() )
-        newMaxima.SetZ( b1.mMaxima.GetZ() );
+    if (b1.mMaxima.x > newMaxima.x )
+        newMaxima.x = b1.mMaxima.x;
+    if (b1.mMaxima.y > newMaxima.y )
+        newMaxima.y = b1.mMaxima.y;
+    if (b1.mMaxima.z > newMaxima.z )
+        newMaxima.z = b1.mMaxima.z;
 
     // set new box
     result.mMinima = newMinima;

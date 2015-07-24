@@ -215,5 +215,5 @@ IvRenderer::SetDefaultLightDiffuse(float red, float green, float blue, float alp
 void
 IvRenderer::SetDefaultLightDirection(const IvVector3& direction)
 {
-    mLightDirection.Set(direction.GetX(), direction.GetY(), direction.GetZ(), 0.0);
+    mLightDirection.Set(direction.x, direction.y, direction.z, 0.0);
 }

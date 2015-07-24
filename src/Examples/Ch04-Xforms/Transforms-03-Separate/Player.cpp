@@ -144,18 +144,18 @@ Player::Render()
 {   
     // build 4x4 matrix
     IvMatrix44 transform(mRotate);
-    transform(0,0) *= mScale.GetX();
-    transform(1,0) *= mScale.GetX();
-    transform(2,0) *= mScale.GetX();
-    transform(0,1) *= mScale.GetY();
-    transform(1,1) *= mScale.GetY();
-    transform(2,1) *= mScale.GetY();
-    transform(0,2) *= mScale.GetZ();
-    transform(1,2) *= mScale.GetZ();
-    transform(2,2) *= mScale.GetZ();
-    transform(0,3) = mTranslate.GetX();
-    transform(1,3) = mTranslate.GetY();
-    transform(2,3) = mTranslate.GetZ();
+    transform(0,0) *= mScale.x;
+    transform(1,0) *= mScale.x;
+    transform(2,0) *= mScale.x;
+    transform(0,1) *= mScale.y;
+    transform(1,1) *= mScale.y;
+    transform(2,1) *= mScale.y;
+    transform(0,2) *= mScale.z;
+    transform(1,2) *= mScale.z;
+    transform(2,2) *= mScale.z;
+    transform(0,3) = mTranslate.x;
+    transform(1,3) = mTranslate.y;
+    transform(2,3) = mTranslate.z;
     
     // set current local-to-world matrix
     IvSetWorldMatrix( transform );

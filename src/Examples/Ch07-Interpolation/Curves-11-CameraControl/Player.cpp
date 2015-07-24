@@ -178,9 +178,9 @@ Player::Update( float dt )
     IvVector3 eyeInv = -(rotate*eye);
     // build 4x4 matrix
     IvMatrix44 matrix(rotate);
-    matrix(0,3) = eyeInv.GetX();
-    matrix(1,3) = eyeInv.GetY();
-    matrix(2,3) = eyeInv.GetZ();
+    matrix(0,3) = eyeInv.x;
+    matrix(1,3) = eyeInv.y;
+    matrix(2,3) = eyeInv.z;
 
     ::IvSetViewMatrix( matrix );
 

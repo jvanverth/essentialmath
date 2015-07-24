@@ -54,12 +54,12 @@ void IvComputeCovarianceMatrix( IvMatrix33& C, IvVector3& mean,
     {
         IvVector3 diff = points[i] - mean;
         
-        varX += diff.GetX() * diff.GetX();
-        varY += diff.GetY() * diff.GetY();
-        varZ += diff.GetZ() * diff.GetZ();
-        covXY += diff.GetX() * diff.GetY();
-        covXZ += diff.GetX() * diff.GetZ();
-        covYZ += diff.GetY() * diff.GetZ();
+        varX += diff.x * diff.x;
+        varY += diff.y * diff.y;
+        varZ += diff.z * diff.z;
+        covXY += diff.x * diff.y;
+        covXZ += diff.x * diff.z;
+        covYZ += diff.y * diff.z;
     }
 
     // divide all of the (co)variances by n - 1 

@@ -59,7 +59,7 @@ public:
 
     // manipulators
     void Set( float a, float b, float c, float d );
-    inline void Set( const IvVector3& n, float d ) { Set( n.GetX(), n.GetY(), n.GetZ(), d ); }
+    inline void Set( const IvVector3& n, float d ) { Set( n.x, n.y, n.z, d ); }
     void Set( const IvVector3& p0, const IvVector3& p1, const IvVector3& p2 );
 
     // transform!

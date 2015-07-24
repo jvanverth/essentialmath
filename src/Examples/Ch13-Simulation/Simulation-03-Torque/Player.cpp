@@ -222,9 +222,9 @@ Player::Render()
     IvMatrix44 transform;
     transform.Identity();
     (void) transform.Rotation( mRotate );
-    transform(0,3) = mTranslate.GetX();
-    transform(1,3) = mTranslate.GetY();
-    transform(2,3) = mTranslate.GetZ();
+    transform(0,3) = mTranslate.x;
+    transform(1,3) = mTranslate.y;
+    transform(2,3) = mTranslate.z;
     
     // draw the object
     IvSetWorldMatrix(transform);

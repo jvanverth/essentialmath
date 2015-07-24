@@ -124,19 +124,19 @@ Player::Update( float dt )
     xlate.Zero();
     if (IvGame::mGame->mEventHandler->IsKeyDown('k'))
     {
-        xlate.SetX( xlate.GetX() - 3.0f*dt);
+        xlate.x -= 3.0f*dt;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('i'))
     {
-        xlate.SetX( xlate.GetX() + 3.0f*dt);
+        xlate.x += 3.0f*dt;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('l'))
     {
-        xlate.SetY( xlate.GetY() - 3.0f*dt);
+        xlate.y -= 3.0f*dt;
     }
     if (IvGame::mGame->mEventHandler->IsKeyDown('j'))
     {
-        xlate.SetY( xlate.GetY() + 3.0f*dt);
+        xlate.y += 3.0f*dt;
     }
     mTranslate += xlate;
     
@@ -170,9 +170,9 @@ Player::Render()
     transform(0,2) *= mScale;
     transform(1,2) *= mScale;
     transform(2,2) *= mScale;
-    transform(0,3) = mTranslate.GetX();
-    transform(1,3) = mTranslate.GetY();
-    transform(2,3) = mTranslate.GetZ();
+    transform(0,3) = mTranslate.x;
+    transform(1,3) = mTranslate.y;
+    transform(2,3) = mTranslate.z;
 
     IvSetWorldMatrix(transform);
 
@@ -241,7 +241,7 @@ Player::CreateStrips()
 
         AddStripPair(tempSharpVerts, pos - dir, dir, color);
         
-        pos.SetX( pos.GetX() + 2.0f);
+        pos.x += 2.0f;
 
         AddStripPair(tempSharpVerts, pos - dir, dir, color);
     }

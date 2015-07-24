@@ -167,7 +167,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "";
-				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
+				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.1.1/include";
 				PRODUCT_NAME = IvEngine;
 				SDKROOT = macosx;
 				ZERO_LINK = YES;
@@ -185,7 +185,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "";
-				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.0.4/include";
+				"OTHER_CFLAGS[arch=*]" = "-I../../glfw-3.1.1/include";
 				PRODUCT_NAME = IvEngine;
 				SDKROOT = macosx;
 			};

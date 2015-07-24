@@ -256,44 +256,44 @@ IvOBB::Intersect( const IvOBB& other ) const
     IvVector3 c = (other.mCenter - mCenter)*mRotation;
 
     // separating axis A0
-    cTest = ::IvAbs(c.GetX());
-    aTest = a.GetX();
-    bTest = b.GetX()*Rabs(0,0)+b.GetY()*Rabs(0,1)+b.GetZ()*Rabs(0,2);
+    cTest = ::IvAbs(c.x);
+    aTest = a.x;
+    bTest = b.x*Rabs(0,0)+b.y*Rabs(0,1)+b.z*Rabs(0,2);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A1
-    cTest = ::IvAbs(c.GetY());
-    aTest = a.GetY();
-    bTest = b.GetX()*Rabs(1,0)+b.GetY()*Rabs(1,1)+b.GetZ()*Rabs(1,2);
+    cTest = ::IvAbs(c.y);
+    aTest = a.y;
+    bTest = b.x*Rabs(1,0)+b.y*Rabs(1,1)+b.z*Rabs(1,2);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A2
-    cTest = ::IvAbs(c.GetZ());
-    aTest = a.GetZ();
-    bTest = b.GetX()*Rabs(2,0)+b.GetY()*Rabs(2,1)+b.GetZ()*Rabs(2,2);
+    cTest = ::IvAbs(c.z);
+    aTest = a.z;
+    bTest = b.x*Rabs(2,0)+b.y*Rabs(2,1)+b.z*Rabs(2,2);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis B0
-    cTest = ::IvAbs( c.GetX()*Rt(0,0) + c.GetY()*Rt(1,0) + c.GetZ()*Rt(2,0) );
-    aTest = a.GetX()*Rabs(0,0)+a.GetY()*Rabs(1,0)+a.GetZ()*Rabs(2,0);
-    bTest = b.GetX();
+    cTest = ::IvAbs( c.x*Rt(0,0) + c.y*Rt(1,0) + c.z*Rt(2,0) );
+    aTest = a.x*Rabs(0,0)+a.y*Rabs(1,0)+a.z*Rabs(2,0);
+    bTest = b.x;
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis B1
-    cTest = ::IvAbs( c.GetX()*Rt(0,1) + c.GetY()*Rt(1,1) + c.GetZ()*Rt(2,1) );
-    aTest = a.GetX()*Rabs(0,1)+a.GetY()*Rabs(1,1)+a.GetZ()*Rabs(2,1);
-    bTest = b.GetY();
+    cTest = ::IvAbs( c.x*Rt(0,1) + c.y*Rt(1,1) + c.z*Rt(2,1) );
+    aTest = a.x*Rabs(0,1)+a.y*Rabs(1,1)+a.z*Rabs(2,1);
+    bTest = b.y;
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis B2
-    cTest = ::IvAbs( c.GetX()*Rt(0,2) + c.GetY()*Rt(1,2) + c.GetZ()*Rt(2,2) );
-    aTest = a.GetX()*Rabs(0,2)+a.GetY()*Rabs(1,2)+a.GetZ()*Rabs(2,2);
-    bTest = b.GetZ();
+    cTest = ::IvAbs( c.x*Rt(0,2) + c.y*Rt(1,2) + c.z*Rt(2,2) );
+    aTest = a.x*Rabs(0,2)+a.y*Rabs(1,2)+a.z*Rabs(2,2);
+    bTest = b.z;
     if ( cTest > aTest + bTest )
         return false;
 
@@ -302,65 +302,65 @@ IvOBB::Intersect( const IvOBB& other ) const
         return true;
 
     // separating axis A0 x B0
-    cTest = ::IvAbs(c.GetZ()*Rt(1,0)-c.GetY()*Rt(2,0));
-    aTest = a.GetY()*Rabs(2,0) + a.GetZ()*Rabs(1,0);
-    bTest = b.GetY()*Rabs(0,2) + b.GetZ()*Rabs(0,1);
+    cTest = ::IvAbs(c.z*Rt(1,0)-c.y*Rt(2,0));
+    aTest = a.y*Rabs(2,0) + a.z*Rabs(1,0);
+    bTest = b.y*Rabs(0,2) + b.z*Rabs(0,1);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A0 x B1
-    cTest = ::IvAbs(c.GetZ()*Rt(1,1)-c.GetY()*Rt(2,1));
-    aTest = a.GetY()*Rabs(2,1) + a.GetZ()*Rabs(1,1);
-    bTest = b.GetX()*Rabs(0,2) + b.GetZ()*Rabs(0,0);
+    cTest = ::IvAbs(c.z*Rt(1,1)-c.y*Rt(2,1));
+    aTest = a.y*Rabs(2,1) + a.z*Rabs(1,1);
+    bTest = b.x*Rabs(0,2) + b.z*Rabs(0,0);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A0 x B2
-    cTest = ::IvAbs(c.GetZ()*Rt(1,2)-c.GetY()*Rt(2,2));
-    aTest = a.GetY()*Rabs(2,2) + a.GetZ()*Rabs(1,2);
-    bTest = b.GetX()*Rabs(0,1) + b.GetY()*Rabs(0,0);
+    cTest = ::IvAbs(c.z*Rt(1,2)-c.y*Rt(2,2));
+    aTest = a.y*Rabs(2,2) + a.z*Rabs(1,2);
+    bTest = b.x*Rabs(0,1) + b.y*Rabs(0,0);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A1 x B0
-    cTest = ::IvAbs(c.GetX()*Rt(2,0)-c.GetZ()*Rt(0,0));
-    aTest = a.GetX()*Rabs(2,0) + a.GetZ()*Rabs(0,0);
-    bTest = b.GetY()*Rabs(1,2) + b.GetZ()*Rabs(1,1);
+    cTest = ::IvAbs(c.x*Rt(2,0)-c.z*Rt(0,0));
+    aTest = a.x*Rabs(2,0) + a.z*Rabs(0,0);
+    bTest = b.y*Rabs(1,2) + b.z*Rabs(1,1);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A1 x B1
-    cTest = ::IvAbs(c.GetX()*Rt(2,1)-c.GetZ()*Rt(0,1));
-    aTest = a.GetX()*Rabs(2,1) + a.GetZ()*Rabs(0,1);
-    bTest = b.GetX()*Rabs(1,2) + b.GetZ()*Rabs(1,0);
+    cTest = ::IvAbs(c.x*Rt(2,1)-c.z*Rt(0,1));
+    aTest = a.x*Rabs(2,1) + a.z*Rabs(0,1);
+    bTest = b.x*Rabs(1,2) + b.z*Rabs(1,0);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A1 x B2
-    cTest = ::IvAbs(c.GetX()*Rt(2,2)-c.GetZ()*Rt(0,2));
-    aTest = a.GetX()*Rabs(2,2) + a.GetZ()*Rabs(0,2);
-    bTest = b.GetX()*Rabs(1,1) + b.GetY()*Rabs(1,0);
+    cTest = ::IvAbs(c.x*Rt(2,2)-c.z*Rt(0,2));
+    aTest = a.x*Rabs(2,2) + a.z*Rabs(0,2);
+    bTest = b.x*Rabs(1,1) + b.y*Rabs(1,0);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A2 x B0
-    cTest = ::IvAbs(c.GetY()*Rt(0,0)-c.GetX()*Rt(1,0));
-    aTest = a.GetX()*Rabs(1,0) + a.GetY()*Rabs(0,0);
-    bTest = b.GetY()*Rabs(2,2) + b.GetZ()*Rabs(2,1);
+    cTest = ::IvAbs(c.y*Rt(0,0)-c.x*Rt(1,0));
+    aTest = a.x*Rabs(1,0) + a.y*Rabs(0,0);
+    bTest = b.y*Rabs(2,2) + b.z*Rabs(2,1);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A2 x B1
-    cTest = ::IvAbs(c.GetY()*Rt(0,1)-c.GetX()*Rt(1,1));
-    aTest = a.GetX()*Rabs(1,1) + a.GetY()*Rabs(0,1);
-    bTest = b.GetX()*Rabs(2,2) + b.GetZ()*Rabs(2,0);
+    cTest = ::IvAbs(c.y*Rt(0,1)-c.x*Rt(1,1));
+    aTest = a.x*Rabs(1,1) + a.y*Rabs(0,1);
+    bTest = b.x*Rabs(2,2) + b.z*Rabs(2,0);
     if ( cTest > aTest + bTest )
         return false;
 
     // separating axis A2 x B2
-    cTest = ::IvAbs(c.GetY()*Rt(0,2)-c.GetX()*Rt(1,2));
-    aTest = a.GetX()*Rabs(1,2) + a.GetY()*Rabs(0,2);
-    bTest = b.GetX()*Rabs(2,1) + b.GetY()*Rabs(2,0);
+    cTest = ::IvAbs(c.y*Rt(0,2)-c.x*Rt(1,2));
+    aTest = a.x*Rabs(1,2) + a.y*Rabs(0,2);
+    bTest = b.x*Rabs(2,1) + b.y*Rabs(2,0);
     if ( cTest > aTest + bTest )
         return false;
 
@@ -559,9 +559,9 @@ float IvOBB::Classify( const IvPlane& plane ) const
 {
     IvVector3 xNormal = plane.GetNormal()*mRotation;
     // maximum extent in direction of plane normal 
-    float r = ::IvAbs(mExtents.GetX()*xNormal.GetX()) 
-            + ::IvAbs(mExtents.GetY()*xNormal.GetY()) 
-            + ::IvAbs(mExtents.GetZ()*xNormal.GetZ());
+    float r = ::IvAbs(mExtents.x*xNormal.x) 
+            + ::IvAbs(mExtents.y*xNormal.y) 
+            + ::IvAbs(mExtents.z*xNormal.z);
     // signed distance between box center and plane
     float d = plane.Test(mCenter);
 
@@ -577,7 +577,7 @@ float IvOBB::Classify( const IvPlane& plane ) const
 
 
 //----------------------------------------------------------------------------
-// @ ::Merge()
+// @ Merge()
 // ---------------------------------------------------------------------------
 // Merge two OBBs together to create a new one
 //-----------------------------------------------------------------------------
@@ -613,12 +613,12 @@ Merge( IvOBB& result, const IvOBB& b0, const IvOBB& b1 )
         // rotate into box 0's space
         IvVector3 xAxis = axis*b0.mRotation;
         // maximum extent in direction of axis
-        newExtents[i] = ::IvAbs(centerDiff.GetX()*axis.GetX()) 
-                      + ::IvAbs(centerDiff.GetY()*axis.GetY())  
-                      + ::IvAbs(centerDiff.GetZ()*axis.GetZ()) 
-                      + ::IvAbs(xAxis.GetX()*b0.mExtents.GetX()) 
-                      + ::IvAbs(xAxis.GetY()*b0.mExtents.GetY()) 
-                      + ::IvAbs(xAxis.GetZ()*b0.mExtents.GetZ());
+        newExtents[i] = ::IvAbs(centerDiff.x*axis.x) 
+                      + ::IvAbs(centerDiff.y*axis.y)  
+                      + ::IvAbs(centerDiff.z*axis.z) 
+                      + ::IvAbs(xAxis.x*b0.mExtents.x) 
+                      + ::IvAbs(xAxis.y*b0.mExtents.y) 
+                      + ::IvAbs(xAxis.z*b0.mExtents.z);
 
         // get difference between this box center and other box center
         centerDiff = b1.mCenter - newCenter;
@@ -626,12 +626,12 @@ Merge( IvOBB& result, const IvOBB& b0, const IvOBB& b1 )
         // rotate into box 1's space
         xAxis = axis*b1.mRotation;
         // maximum extent in direction of axis
-        float maxExtent = ::IvAbs(centerDiff.GetX()*axis.GetX()) 
-                      + ::IvAbs(centerDiff.GetY()*axis.GetY())  
-                      + ::IvAbs(centerDiff.GetZ()*axis.GetZ()) 
-                      + ::IvAbs(xAxis.GetX()*b1.mExtents.GetX()) 
-                      + ::IvAbs(xAxis.GetY()*b1.mExtents.GetY()) 
-                      + ::IvAbs(xAxis.GetZ()*b1.mExtents.GetZ());
+        float maxExtent = ::IvAbs(centerDiff.x*axis.x) 
+                      + ::IvAbs(centerDiff.y*axis.y)  
+                      + ::IvAbs(centerDiff.z*axis.z) 
+                      + ::IvAbs(xAxis.x*b1.mExtents.x) 
+                      + ::IvAbs(xAxis.y*b1.mExtents.y) 
+                      + ::IvAbs(xAxis.z*b1.mExtents.z);
         // if greater than box0's result, use it
         if (maxExtent > newExtents[i])
             newExtents[i] = maxExtent;
@@ -642,4 +642,4 @@ Merge( IvOBB& result, const IvOBB& b0, const IvOBB& b1 )
     result.mRotation = newRotation;
     result.mExtents = newExtents;
 
-}   // End of ::Merge()
+}   // End of Merge()

@@ -324,13 +324,13 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 
 	    // set geometry
 		// top
-		vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
 		vertexPtr[currentVertex].normal = IvVector3::zAxis;
-		vertexPtr[currentVertex+1].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, maxima.z);
 		vertexPtr[currentVertex+1].normal = IvVector3::zAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, maxima.z);
 		vertexPtr[currentVertex+2].normal = IvVector3::zAxis;
-		vertexPtr[currentVertex+3].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, maxima.z);
 		vertexPtr[currentVertex+3].normal = IvVector3::zAxis;
 		indexPtr[currentIndex++] = currentVertex+0;
 		indexPtr[currentIndex++] = currentVertex+1;
@@ -341,13 +341,13 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 		currentVertex += 4;
 
 		// bottom
-		vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, minima.z);
 		vertexPtr[currentVertex].normal = -IvVector3::zAxis;
-		vertexPtr[currentVertex+1].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, minima.z);
 		vertexPtr[currentVertex+1].normal = -IvVector3::zAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
 		vertexPtr[currentVertex+2].normal = -IvVector3::zAxis;
-		vertexPtr[currentVertex+3].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, minima.z);
 		vertexPtr[currentVertex+3].normal = -IvVector3::zAxis;
 		indexPtr[currentIndex++] = currentVertex+0;
 		indexPtr[currentIndex++] = currentVertex+2;
@@ -358,13 +358,13 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 		currentVertex += 4;
 
 		// left
-		vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
 		vertexPtr[currentVertex].normal = IvVector3::yAxis;
-		vertexPtr[currentVertex+1].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+1].position.Set(maxima.x, maxima.y, minima.z);
 		vertexPtr[currentVertex+1].normal = IvVector3::yAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+2].position.Set(minima.x, maxima.y, minima.z);
 		vertexPtr[currentVertex+2].normal = IvVector3::yAxis;
-		vertexPtr[currentVertex+3].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, maxima.z);
 		vertexPtr[currentVertex+3].normal = IvVector3::yAxis;
 		indexPtr[currentIndex++] = currentVertex+0;
 		indexPtr[currentIndex++] = currentVertex+1;
@@ -375,13 +375,13 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 		currentVertex += 4;    
 
 		// right
-		vertexPtr[currentVertex].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex].position.Set(maxima.x, minima.y, maxima.z);
 		vertexPtr[currentVertex].normal = -IvVector3::yAxis;
-		vertexPtr[currentVertex+1].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, minima.z);
 		vertexPtr[currentVertex+1].normal = -IvVector3::yAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
 		vertexPtr[currentVertex+2].normal = -IvVector3::yAxis;
-		vertexPtr[currentVertex+3].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex+3].position.Set(minima.x, minima.y, maxima.z);
 		vertexPtr[currentVertex+3].normal = -IvVector3::yAxis;
 		indexPtr[currentIndex++] = currentVertex+0;
 		indexPtr[currentIndex++] = currentVertex+2;
@@ -392,13 +392,13 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 		currentVertex += 4;  
 
 		// front
-		vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
 		vertexPtr[currentVertex].normal = IvVector3::xAxis;
-		vertexPtr[currentVertex+1].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, maxima.z);
 		vertexPtr[currentVertex].normal = IvVector3::xAxis;
-		vertexPtr[currentVertex+2].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+2].position.Set(maxima.x, minima.y, minima.z);
 		vertexPtr[currentVertex+2].normal = IvVector3::xAxis;
-		vertexPtr[currentVertex+3].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+3].position.Set(maxima.x, maxima.y, minima.z);
 		vertexPtr[currentVertex+3].normal = IvVector3::xAxis;
 		indexPtr[currentIndex++] = currentVertex+0;
 		indexPtr[currentIndex++] = currentVertex+1;
@@ -409,13 +409,13 @@ IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 		currentVertex += 4;  
 
 		// back
-		vertexPtr[currentVertex].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex].position.Set(minima.x, maxima.y, maxima.z);
 		vertexPtr[currentVertex].normal = -IvVector3::xAxis;
-		vertexPtr[currentVertex+1].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+		vertexPtr[currentVertex+1].position.Set(minima.x, minima.y, maxima.z);
 		vertexPtr[currentVertex+1].normal = -IvVector3::xAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
 		vertexPtr[currentVertex+2].normal = -IvVector3::xAxis;
-		vertexPtr[currentVertex+3].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+		vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, minima.z);
 		vertexPtr[currentVertex+3].normal = -IvVector3::xAxis;
 		indexPtr[currentIndex++] = currentVertex+0;
 		indexPtr[currentIndex++] = currentVertex+2;
@@ -484,13 +484,13 @@ IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor col
         
         // set geometry
         // top
-        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
         vertexPtr[currentVertex].normal = IvVector3::zAxis;
-        vertexPtr[currentVertex+1].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, maxima.z);
         vertexPtr[currentVertex+1].normal = IvVector3::zAxis;
-        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, maxima.z);
         vertexPtr[currentVertex+2].normal = IvVector3::zAxis;
-        vertexPtr[currentVertex+3].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, maxima.z);
         vertexPtr[currentVertex+3].normal = IvVector3::zAxis;
         indexPtr[currentIndex++] = currentVertex+0;
         indexPtr[currentIndex++] = currentVertex+1;
@@ -501,13 +501,13 @@ IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor col
         currentVertex += 4;
         
         // bottom
-        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, minima.z);
         vertexPtr[currentVertex].normal = -IvVector3::zAxis;
-        vertexPtr[currentVertex+1].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, minima.z);
         vertexPtr[currentVertex+1].normal = -IvVector3::zAxis;
-        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
         vertexPtr[currentVertex+2].normal = -IvVector3::zAxis;
-        vertexPtr[currentVertex+3].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, minima.z);
         vertexPtr[currentVertex+3].normal = -IvVector3::zAxis;
         indexPtr[currentIndex++] = currentVertex+0;
         indexPtr[currentIndex++] = currentVertex+2;
@@ -518,13 +518,13 @@ IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor col
         currentVertex += 4;
         
         // left
-        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
         vertexPtr[currentVertex].normal = IvVector3::yAxis;
-        vertexPtr[currentVertex+1].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+1].position.Set(maxima.x, maxima.y, minima.z);
         vertexPtr[currentVertex+1].normal = IvVector3::yAxis;
-        vertexPtr[currentVertex+2].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].position.Set(minima.x, maxima.y, minima.z);
         vertexPtr[currentVertex+2].normal = IvVector3::yAxis;
-        vertexPtr[currentVertex+3].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, maxima.z);
         vertexPtr[currentVertex+3].normal = IvVector3::yAxis;
         indexPtr[currentIndex++] = currentVertex+0;
         indexPtr[currentIndex++] = currentVertex+1;
@@ -535,13 +535,13 @@ IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor col
         currentVertex += 4;
         
         // right
-        vertexPtr[currentVertex].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].position.Set(maxima.x, minima.y, maxima.z);
         vertexPtr[currentVertex].normal = -IvVector3::yAxis;
-        vertexPtr[currentVertex+1].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, minima.z);
         vertexPtr[currentVertex+1].normal = -IvVector3::yAxis;
-        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
         vertexPtr[currentVertex+2].normal = -IvVector3::yAxis;
-        vertexPtr[currentVertex+3].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+3].position.Set(minima.x, minima.y, maxima.z);
         vertexPtr[currentVertex+3].normal = -IvVector3::yAxis;
         indexPtr[currentIndex++] = currentVertex+0;
         indexPtr[currentIndex++] = currentVertex+2;
@@ -552,13 +552,13 @@ IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor col
         currentVertex += 4;
         
         // front
-        vertexPtr[currentVertex].position.Set(maxima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
         vertexPtr[currentVertex].normal = IvVector3::xAxis;
-        vertexPtr[currentVertex+1].position.Set(maxima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, maxima.z);
         vertexPtr[currentVertex].normal = IvVector3::xAxis;
-        vertexPtr[currentVertex+2].position.Set(maxima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].position.Set(maxima.x, minima.y, minima.z);
         vertexPtr[currentVertex+2].normal = IvVector3::xAxis;
-        vertexPtr[currentVertex+3].position.Set(maxima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+3].position.Set(maxima.x, maxima.y, minima.z);
         vertexPtr[currentVertex+3].normal = IvVector3::xAxis;
         indexPtr[currentIndex++] = currentVertex+0;
         indexPtr[currentIndex++] = currentVertex+1;
@@ -569,13 +569,13 @@ IvDrawBoxNoShader( const IvVector3& minima, const IvVector3& maxima, IvColor col
         currentVertex += 4;
         
         // back
-        vertexPtr[currentVertex].position.Set(minima.GetX(), maxima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex].position.Set(minima.x, maxima.y, maxima.z);
         vertexPtr[currentVertex].normal = -IvVector3::xAxis;
-        vertexPtr[currentVertex+1].position.Set(minima.GetX(), minima.GetY(), maxima.GetZ());
+        vertexPtr[currentVertex+1].position.Set(minima.x, minima.y, maxima.z);
         vertexPtr[currentVertex+1].normal = -IvVector3::xAxis;
-        vertexPtr[currentVertex+2].position.Set(minima.GetX(), minima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
         vertexPtr[currentVertex+2].normal = -IvVector3::xAxis;
-        vertexPtr[currentVertex+3].position.Set(minima.GetX(), maxima.GetY(), minima.GetZ());
+        vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, minima.z);
         vertexPtr[currentVertex+3].normal = -IvVector3::xAxis;
         indexPtr[currentIndex++] = currentVertex+0;
         indexPtr[currentIndex++] = currentVertex+2;
@@ -635,9 +635,9 @@ IvDrawOBB( const IvVector3& extents, const IvVector3& center, const IvMatrix33& 
     IvVector3 minima = -extents;
     IvMatrix33 mat = ::Transpose(axes);
     IvMatrix44 transform( mat );
-    transform(0,3) = center.GetX();
-    transform(1,3) = center.GetY();
-    transform(2,3) = center.GetZ();
+    transform(0,3) = center.x;
+    transform(1,3) = center.y;
+    transform(2,3) = center.z;
 
     IvSetWorldMatrix( transform );
     IvDrawBox( minima, extents, color );
@@ -1059,9 +1059,9 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     if ( ::IsZero( length ) )
     {
         IvMatrix44 transform;
-        transform(0,3) = segment.GetEndpoint0().GetX();
-        transform(1,3) = segment.GetEndpoint0().GetY();
-        transform(2,3) = segment.GetEndpoint0().GetZ();
+        transform(0,3) = segment.GetEndpoint0().x;
+        transform(1,3) = segment.GetEndpoint0().y;
+        transform(2,3) = segment.GetEndpoint0().z;
 
         // concatenate with the current matrix
         IvMatrix44 currentMat = IvRenderer::mRenderer->GetWorldMatrix();
@@ -1092,9 +1092,9 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     transform(0,2) *= radius;
     transform(1,2) *= radius;
     transform(2,2) *= radius;
-    transform(0,3) = segment.GetEndpoint0().GetX();
-    transform(1,3) = segment.GetEndpoint0().GetY();
-    transform(2,3) = segment.GetEndpoint0().GetZ();
+    transform(0,3) = segment.GetEndpoint0().x;
+    transform(1,3) = segment.GetEndpoint0().y;
+    transform(2,3) = segment.GetEndpoint0().z;
 
     // concatenate with the current matrix
     IvMatrix44 currentMat = IvRenderer::mRenderer->GetWorldMatrix();

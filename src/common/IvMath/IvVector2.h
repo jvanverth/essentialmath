@@ -54,10 +54,6 @@ public:
 
     // manipulators
     inline void Set( float _x, float _y );
-    inline void SetX( float _x ) { x = _x; }
-    inline void SetY( float _y ) { y = _y; }
-    inline float GetX() const { return x; }
-    inline float GetY() const { return y; }
     void Clean();       // sets near-zero elements to 0
     inline void Zero(); // sets all elements to 0
     void Normalize();   // sets to unit vector
@@ -93,12 +89,9 @@ public:
     static IvVector2    yAxis;
     static IvVector2    origin;
     static IvVector2    xy;
-        
-protected:
+    
     // member variables
     float x, y;
-        
-private:
 };
 
 //-------------------------------------------------------------------------------

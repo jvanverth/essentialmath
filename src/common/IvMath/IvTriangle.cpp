@@ -357,41 +357,41 @@ inline bool CoplanarTriangleIntersect( const IvVector3& P0,
                      const IvVector3& Q0, const IvVector3& Q1, 
                      const IvVector3& Q2, const IvVector3& planeNormal )
 {
-    IvVector3 absNormal( ::IvAbs(planeNormal.GetX()), ::IvAbs(planeNormal.GetY()), 
-                        ::IvAbs(planeNormal.GetZ()) );
+    IvVector3 absNormal( ::IvAbs(planeNormal.x), ::IvAbs(planeNormal.y), 
+                        ::IvAbs(planeNormal.z) );
 
     IvVector2 projP0, projP1, projP2;
     IvVector2 projQ0, projQ1, projQ2;
 
     // if x is direction of largest magnitude
-    if ( absNormal.GetX() > absNormal.GetY() && absNormal.GetX() >= absNormal.GetZ() )
+    if ( absNormal.x > absNormal.y && absNormal.x >= absNormal.z )
     {
-        projP0.Set( P0.GetY(), P0.GetZ() );
-        projP1.Set( P1.GetY(), P1.GetZ() );
-        projP2.Set( P2.GetY(), P2.GetZ() );
-        projQ0.Set( Q0.GetY(), Q0.GetZ() );
-        projQ1.Set( Q1.GetY(), Q1.GetZ() );
-        projQ2.Set( Q2.GetY(), Q2.GetZ() );
+        projP0.Set( P0.y, P0.z );
+        projP1.Set( P1.y, P1.z );
+        projP2.Set( P2.y, P2.z );
+        projQ0.Set( Q0.y, Q0.z );
+        projQ1.Set( Q1.y, Q1.z );
+        projQ2.Set( Q2.y, Q2.z );
     }
     // if y is direction of largest magnitude
-    else if ( absNormal.GetY() > absNormal.GetX() && absNormal.GetY() >= absNormal.GetZ() )
+    else if ( absNormal.y > absNormal.x && absNormal.y >= absNormal.z )
     {
-        projP0.Set( P0.GetX(), P0.GetZ() );
-        projP1.Set( P1.GetX(), P1.GetZ() );
-        projP2.Set( P2.GetX(), P2.GetZ() );
-        projQ0.Set( Q0.GetX(), Q0.GetZ() );
-        projQ1.Set( Q1.GetX(), Q1.GetZ() );
-        projQ2.Set( Q2.GetX(), Q2.GetZ() );
+        projP0.Set( P0.x, P0.z );
+        projP1.Set( P1.x, P1.z );
+        projP2.Set( P2.x, P2.z );
+        projQ0.Set( Q0.x, Q0.z );
+        projQ1.Set( Q1.x, Q1.z );
+        projQ2.Set( Q2.x, Q2.z );
     }
     // z is the direction of largest magnitude
     else
     {
-        projP0.Set( P0.GetX(), P0.GetY() );
-        projP1.Set( P1.GetX(), P1.GetY() );
-        projP2.Set( P2.GetX(), P2.GetY() );
-        projQ0.Set( Q0.GetX(), Q0.GetY() );
-        projQ1.Set( Q1.GetX(), Q1.GetY() );
-        projQ2.Set( Q2.GetX(), Q2.GetY() );
+        projP0.Set( P0.x, P0.y );
+        projP1.Set( P1.x, P1.y );
+        projP2.Set( P2.x, P2.y );
+        projQ0.Set( Q0.x, Q0.y );
+        projQ1.Set( Q1.x, Q1.y );
+        projQ2.Set( Q2.x, Q2.y );
     }
 
     return TriangleIntersect( projP0, projP1, projP2, projQ0, projQ1, projQ2 );
