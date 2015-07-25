@@ -184,7 +184,7 @@ IvVertexBufferOGL::MakeActive()
 // Lock down the buffer and start loading
 // Returns pointer to client side data area
 //-------------------------------------------------------------------------------
-void *
+void*
 IvVertexBufferOGL::BeginLoadData()
 {
     if (mUsage == kImmutableUsage)
@@ -192,7 +192,6 @@ IvVertexBufferOGL::BeginLoadData()
         return NULL;
     }
     
-    glBindVertexArray(mVertexArrayID);
     glBindBuffer( GL_ARRAY_BUFFER, mBufferID );
     return glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 }
@@ -211,8 +210,8 @@ IvVertexBufferOGL::EndLoadData()
         return false;
     }
     
+    glBindBuffer(GL_ARRAY_BUFFER, mBufferID);
     bool ret = glUnmapBuffer(GL_ARRAY_BUFFER) != GL_FALSE;
-    glBindVertexArray(0);
     return ret;
 }
 

@@ -147,9 +147,7 @@ IvIndexBufferOGL::EndLoadData()
     }
     
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mBufferID );
-
     bool ret = (glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER) != GL_FALSE);
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
     return ret;
 }
