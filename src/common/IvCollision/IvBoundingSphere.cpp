@@ -318,7 +318,7 @@ Merge( IvBoundingSphere& result,
     float dist = ::IvSqrt( distsq );
     float radius = 0.5f*( s0.mRadius + s1.mRadius + dist );
     IvVector3 center = s0.mCenter;
-    if (!::IsZero( dist ))
+    if (!IvIsZero( dist ))
         center += ((radius-s0.mRadius)/dist)*diff;
 
     result.SetRadius( radius );

@@ -76,8 +76,8 @@ IvVector2::LengthSquared() const
 bool 
 IvVector2::operator==( const IvVector2& other ) const
 {
-    if ( ::IvAreEqual( other.x, x )
-        && ::IvAreEqual( other.y, y ) )
+    if ( IvAreEqual( other.x, x )
+        && IvAreEqual( other.y, y ) )
         return true;
 
     return false;   
@@ -92,8 +92,8 @@ IvVector2::operator==( const IvVector2& other ) const
 bool 
 IvVector2::operator!=( const IvVector2& other ) const
 {
-    if ( ::IvAreEqual( other.x, x )
-        && ::IvAreEqual( other.y, y ) )
+    if ( IvAreEqual( other.x, x )
+        && IvAreEqual( other.y, y ) )
         return false;
 
     return true;
@@ -108,7 +108,7 @@ IvVector2::operator!=( const IvVector2& other ) const
 bool 
 IvVector2::IsZero() const
 {
-    return ::IsZero(x*x + y*y);
+    return IvIsZero(x*x + y*y);
 
 }   // End of IvVector2::IsZero()
 
@@ -121,9 +121,9 @@ IvVector2::IsZero() const
 void
 IvVector2::Clean()
 {
-    if ( ::IsZero( x ) )
+    if ( IvIsZero( x ) )
         x = 0.0f;
-    if ( ::IsZero( y ) )
+    if ( IvIsZero( y ) )
         y = 0.0f;
 
 }   // End of IvVector2::Clean()
@@ -139,7 +139,7 @@ IvVector2::Normalize()
 {
     float lengthsq = x*x + y*y;
 
-    if ( ::IsZero( lengthsq ) )
+    if ( IvIsZero( lengthsq ) )
     {
         Zero();
     }

@@ -394,7 +394,7 @@ IvOBB::Intersect( const IvLine3& line ) const
         float f = line.GetDirection().Dot( axis );
 
         // ray is parallel to plane
-        if ( ::IsZero( f ) )
+        if ( IvIsZero( f ) )
         {
             // ray passes by box
             if ( -e - mExtents[i] > 0.0f || -e + mExtents[i] > 0.0f )
@@ -454,7 +454,7 @@ IvOBB::Intersect( const IvRay3& ray ) const
         float f = ray.GetDirection().Dot( axis );
 
         // ray is parallel to plane
-        if ( ::IsZero( f ) )
+        if ( IvIsZero( f ) )
         {
             // ray passes by box
             if ( -e - mExtents[i] > 0.0f || -e + mExtents[i] > 0.0f )
@@ -514,7 +514,7 @@ IvOBB::Intersect( const IvLineSegment3& segment ) const
         float f = segment.GetDirection().Dot( axis );
 
         // ray is parallel to plane
-        if ( ::IsZero( f ) )
+        if ( IvIsZero( f ) )
         {
             // ray passes by box
             if ( -e - mExtents[i] > 0.0f || -e + mExtents[i] > 0.0f )

@@ -115,7 +115,7 @@ Distance( const IvVector3& p0, const IvVector3& p1 )
     float y = p0.y - p1.y;
     float z = p0.z - p1.z;
 
-    return ::IvSqrt( x*x + y*y + z*z );
+    return IvSqrt( x*x + y*y + z*z );
 
 }   // End of IvVector3::Length()
 
@@ -145,9 +145,9 @@ DistanceSquared( const IvVector3& p0, const IvVector3& p1 )
 bool 
 IvVector3::operator==( const IvVector3& other ) const
 {
-    if ( ::IvAreEqual( other.x, x )
-        && ::IvAreEqual( other.y, y )
-        && ::IvAreEqual( other.z, z ) )
+    if ( IvAreEqual( other.x, x )
+        && IvAreEqual( other.y, y )
+        && IvAreEqual( other.z, z ) )
         return true;
 
     return false;   
@@ -162,9 +162,9 @@ IvVector3::operator==( const IvVector3& other ) const
 bool 
 IvVector3::operator!=( const IvVector3& other ) const
 {
-    if ( ::IvAreEqual( other.x, x )
-        && ::IvAreEqual( other.y, y )
-        && ::IvAreEqual( other.z, z ) )
+    if ( IvAreEqual( other.x, x )
+        && IvAreEqual( other.y, y )
+        && IvAreEqual( other.z, z ) )
         return false;
 
     return true;
@@ -179,7 +179,7 @@ IvVector3::operator!=( const IvVector3& other ) const
 bool 
 IvVector3::IsZero() const
 {
-    return ::IsZero(x*x + y*y + z*z);
+    return IvIsZero(x*x + y*y + z*z);
 
 }   // End of IvVector3::IsZero()
 
@@ -192,7 +192,7 @@ IvVector3::IsZero() const
 bool 
 IvVector3::IsUnit() const
 {
-    return ::IsZero(1.0f - x*x - y*y - z*z);
+    return IvIsZero(1.0f - x*x - y*y - z*z);
 
 }   // End of IvVector3::IsUnit()
 
@@ -205,12 +205,18 @@ IvVector3::IsUnit() const
 void
 IvVector3::Clean()
 {
-    if ( ::IsZero( x ) )
+    if (IvIsZero(x))
+    {
         x = 0.0f;
-    if ( ::IsZero( y ) )
+    }
+    if (IvIsZero(y))
+    {
         y = 0.0f;
-    if ( ::IsZero( z ) )
+    }
+    if (IvIsZero(z))
+    {
         z = 0.0f;
+    }
 
 }   // End of IvVector3::Clean()
 
@@ -225,7 +231,7 @@ IvVector3::Normalize()
 {
     float lengthsq = x*x + y*y + z*z;
 
-    if ( ::IsZero( lengthsq ) )
+    if ( IvIsZero( lengthsq ) )
     {
         Zero();
     }

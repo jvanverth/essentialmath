@@ -204,7 +204,7 @@ float DistanceSquared( const IvLine3& line0, const IvLine3& line1,
     float d = line0.mDirection.Dot( w0 );
     float e = line1.mDirection.Dot( w0 );
     float denom = a*c - b*b;
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         s_c = 0.0f;
         t_c = e/c;
@@ -259,7 +259,7 @@ void ClosestPoints( IvVector3& point0, IvVector3& point1,
 
     float denom = a*c - b*b;
 
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         point0 = line0.mOrigin;
         point1 = line1.mOrigin + (e/c)*line1.mDirection;

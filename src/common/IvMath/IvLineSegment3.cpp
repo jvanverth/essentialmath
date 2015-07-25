@@ -270,7 +270,7 @@ DistanceSquared( const IvLineSegment3& segment0, const IvLineSegment3& segment1,
     float sn, sd, tn, td;
 
     // if denom is zero, try finding closest point on segment1 to origin0
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         // clamp s_c to 0
         sd = td = c;
@@ -375,7 +375,7 @@ DistanceSquared( const IvLineSegment3& segment, const IvRay3& ray,
     float sn, sd, tn, td;
 
     // if denom is zero, try finding closest point on segment1 to origin0
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         // clamp s_c to 0
         sd = td = c;
@@ -459,7 +459,7 @@ DistanceSquared( const IvLineSegment3& segment, const IvLine3& line,
     float denom = a*c - b*b;
 
     // if denom is zero, try finding closest point on segment1 to origin0
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         s_c = 0.0f;
         t_c = e/c;
@@ -561,7 +561,7 @@ void ClosestPoints( IvVector3& point0, IvVector3& point1,
     float sn, sd, tn, td;
 
     // if denom is zero, try finding closest point on segment1 to origin0
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         // clamp s_c to 0
         sd = td = c;
@@ -666,7 +666,7 @@ void ClosestPoints( IvVector3& point0, IvVector3& point1,
     float sn, sd, tn, td;
 
     // if denom is zero, try finding closest point on segment1 to origin0
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         // clamp s_c to 0
         sd = td = c;
@@ -749,7 +749,7 @@ void ClosestPoints( IvVector3& point0, IvVector3& point1,
     float denom = a*c - b*b;
 
     // if denom is zero, try finding closest point on line to segment origin
-    if ( ::IsZero(denom) )
+    if ( IvIsZero(denom) )
     {
         // compute closest points
         point0 = segment.mOrigin;

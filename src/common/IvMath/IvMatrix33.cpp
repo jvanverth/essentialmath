@@ -156,7 +156,7 @@ IvMatrix33::IsZero() const
 {
     for (unsigned int i = 0; i < 9; ++i)
     {
-        if ( !::IsZero( mV[i] ) )
+        if ( !IvIsZero( mV[i] ) )
             return false;
     }
     return true;
@@ -172,15 +172,15 @@ IvMatrix33::IsZero() const
 bool 
 IvMatrix33::IsIdentity() const
 {
-    return ::IvAreEqual( 1.0f, mV[0] )
-        && ::IvAreEqual( 1.0f, mV[4] )
-        && ::IvAreEqual( 1.0f, mV[8] )
-        && ::IsZero( mV[1] ) 
-        && ::IsZero( mV[2] )
-        && ::IsZero( mV[3] )
-        && ::IsZero( mV[5] ) 
-        && ::IsZero( mV[6] )
-        && ::IsZero( mV[7] );
+    return IvAreEqual( 1.0f, mV[0] )
+        && IvAreEqual( 1.0f, mV[4] )
+        && IvAreEqual( 1.0f, mV[8] )
+        && IvIsZero( mV[1] ) 
+        && IvIsZero( mV[2] )
+        && IvIsZero( mV[3] )
+        && IvIsZero( mV[5] ) 
+        && IvIsZero( mV[6] )
+        && IvIsZero( mV[7] );
 
 }   // End of IvMatrix33::IsIdentity()
 
@@ -314,7 +314,7 @@ IvMatrix33::Clean()
 {
     for (unsigned int i = 0; i < 9; ++i)
     {
-        if ( ::IsZero( mV[i] ) )
+        if ( IvIsZero( mV[i] ) )
             mV[i] = 0.0f;
     }
 
@@ -372,7 +372,7 @@ Inverse( const IvMatrix33& mat )
     float cofactor3 = mat.mV[2]*mat.mV[7] - mat.mV[1]*mat.mV[8];
     float cofactor6 = mat.mV[1]*mat.mV[5] - mat.mV[2]*mat.mV[4];
     float det = mat.mV[0]*cofactor0 + mat.mV[3]*cofactor3 + mat.mV[6]*cofactor6;
-    if (::IsZero( det ))
+    if (IvIsZero( det ))
     {
         ASSERT( false );
         ERROR_OUT( "Matrix33::Inverse() -- singular matrix\n" );
@@ -734,7 +734,7 @@ IvMatrix33::GetFixedAngles( float& zRotation, float& yRotation, float& xRotation
     Sy = mV[6];
     Cy = ::IvSqrt( 1.0f - Sy*Sy );
     // normal case
-    if ( !::IsZero( Cy ) )
+    if ( !IvIsZero( Cy ) )
     {
         float factor = 1.0f/Cy;
         Sx = -mV[7]*factor;
@@ -772,7 +772,7 @@ IvMatrix33::GetAxisAngle( IvVector3& axis, float& angle )
     angle = acosf( cosTheta );
 
     // angle is zero, axis can be anything
-    if ( ::IsZero( angle ) )
+    if ( IvIsZero( angle ) )
     {
         axis = IvVector3::xAxis;
     }

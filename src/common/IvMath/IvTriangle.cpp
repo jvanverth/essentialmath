@@ -416,7 +416,7 @@ TriangleIntersect( float& t, const IvVector3& P0, const IvVector3& P1,
 
     // if result zero, no intersection or infinite intersections
     // (ray parallel to triangle plane)
-    if ( ::IsZero(a) )
+    if ( IvIsZero(a) )
         return false;
 
     // compute denominator

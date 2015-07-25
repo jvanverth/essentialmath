@@ -33,8 +33,8 @@ public:
     bool HasCollision( const CollisionObject* other ) const;
     inline void SetColliding( bool colliding ) { mColliding = colliding; }
 
-    inline float GetMinXExtent() { return mPosition.GetX() - mSphere.GetRadius(); }
-    inline float GetMaxXExtent() { return mPosition.GetX() + mSphere.GetRadius(); }
+    inline float GetMinXExtent() { return mPosition.x - mSphere.GetRadius(); }
+    inline float GetMaxXExtent() { return mPosition.x + mSphere.GetRadius(); }
 
 private:
     IvVector3           mPosition;

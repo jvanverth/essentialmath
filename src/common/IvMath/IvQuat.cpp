@@ -185,10 +185,10 @@ IvQuat::Norm() const
 bool 
 IvQuat::operator==( const IvQuat& other ) const
 {
-    if ( ::IsZero( other.w - w )
-        && ::IsZero( other.x - x )
-        && ::IsZero( other.y - y )
-        && ::IsZero( other.z - z ) )
+    if ( IvIsZero( other.w - w )
+        && IvIsZero( other.x - x )
+        && IvIsZero( other.y - y )
+        && IvIsZero( other.z - z ) )
         return true;
 
     return false;   
@@ -203,10 +203,10 @@ IvQuat::operator==( const IvQuat& other ) const
 bool 
 IvQuat::operator!=( const IvQuat& other ) const
 {
-    if ( ::IsZero( other.w - w )
-        || ::IsZero( other.x - x )
-        || ::IsZero( other.y - y )
-        || ::IsZero( other.z - z ) )
+    if ( IvIsZero( other.w - w )
+        || IvIsZero( other.x - x )
+        || IvIsZero( other.y - y )
+        || IvIsZero( other.z - z ) )
         return false;
 
     return true;
@@ -221,7 +221,7 @@ IvQuat::operator!=( const IvQuat& other ) const
 bool 
 IvQuat::IsZero() const
 {
-    return ::IsZero(w*w + x*x + y*y + z*z);
+    return IvIsZero(w*w + x*x + y*y + z*z);
 
 }   // End of IvQuat::IsZero()
 
@@ -234,7 +234,7 @@ IvQuat::IsZero() const
 bool 
 IvQuat::IsUnit() const
 {
-    return ::IsZero(1.0f - w*w - x*x - y*y - z*z);
+    return IvIsZero(1.0f - w*w - x*x - y*y - z*z);
 
 }   // End of IvQuat::IsUnit()
 
@@ -247,10 +247,10 @@ IvQuat::IsUnit() const
 bool 
 IvQuat::IsIdentity() const
 {
-    return ::IsZero(1.0f - w)
-        && ::IsZero( x ) 
-        && ::IsZero( y )
-        && ::IsZero( z );
+    return IvIsZero(1.0f - w)
+        && IvIsZero( x ) 
+        && IvIsZero( y )
+        && IvIsZero( z );
 
 }   // End of IvQuat::IsIdentity()
 
@@ -265,7 +265,7 @@ IvQuat::Set( const IvVector3& axis, float angle )
 {
     // if axis of rotation is zero vector, just set to identity quat
     float length = axis.LengthSquared();
-    if ( ::IsZero( length ) )
+    if ( IvIsZero( length ) )
     {
         Identity();
         return;
@@ -383,7 +383,7 @@ IvQuat::GetAxisAngle( IvVector3& axis, float& angle )
 {
     angle = 2.0f*acosf( w );
     float length = ::IvSqrt( 1.0f - w*w );
-    if ( ::IsZero(length) )
+    if ( IvIsZero(length) )
         axis.Zero();
     else
     {
@@ -402,14 +402,22 @@ IvQuat::GetAxisAngle( IvVector3& axis, float& angle )
 void
 IvQuat::Clean()
 {
-    if ( ::IsZero( w ) )
+    if (IvIsZero(w))
+    {
         w = 0.0f;
-    if ( ::IsZero( x ) )
+    }
+    if (IvIsZero(x))
+    {
         x = 0.0f;
-    if ( ::IsZero( y ) )
+    }
+    if (IvIsZero(y))
+    {
         y = 0.0f;
-    if ( ::IsZero( z ) )
+    }
+    if (IvIsZero(z))
+    {
         z = 0.0f;
+    }
 
 }   // End of IvQuat::Clean()
 
@@ -424,7 +432,7 @@ IvQuat::Normalize()
 {
     float lengthsq = w*w + x*x + y*y + z*z;
 
-    if ( ::IsZero( lengthsq ) )
+    if ( IvIsZero( lengthsq ) )
     {
         Zero();
     }
@@ -480,7 +488,7 @@ Inverse( const IvQuat& quat )
 {
     float norm = quat.w*quat.w + quat.x*quat.x + quat.y*quat.y + quat.z*quat.z;
     // if we're the zero quaternion, just return identity
-    if ( !::IsZero( norm ) )
+    if ( !IvIsZero( norm ) )
     {
         ASSERT( false );
         return IvQuat();
@@ -503,8 +511,10 @@ IvQuat::Inverse()
 {
     float norm = w*w + x*x + y*y + z*z;
     // if we're the zero quaternion, just return
-    if ( ::IsZero( norm ) )
+	if (IvIsZero(norm))
+    {
         return *this;
+    }
 
     float normRecip = 1.0f / norm;
     w = normRecip*w;

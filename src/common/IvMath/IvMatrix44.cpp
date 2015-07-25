@@ -183,7 +183,7 @@ IvMatrix44::IsZero() const
 {
     for (unsigned int i = 0; i < 16; ++i)
     {
-        if ( !::IsZero( mV[i] ) )
+        if ( !IvIsZero( mV[i] ) )
             return false;
     }
     return true;
@@ -199,22 +199,22 @@ IvMatrix44::IsZero() const
 bool 
 IvMatrix44::IsIdentity() const
 {
-    return ::IvAreEqual( 1.0f, mV[0] )
-        && ::IvAreEqual( 1.0f, mV[5] )
-        && ::IvAreEqual( 1.0f, mV[10] )
-        && ::IvAreEqual( 1.0f, mV[15] )
-        && ::IsZero( mV[1] ) 
-        && ::IsZero( mV[2] )
-        && ::IsZero( mV[3] )
-        && ::IsZero( mV[4] ) 
-        && ::IsZero( mV[6] )
-        && ::IsZero( mV[7] )
-        && ::IsZero( mV[8] )
-        && ::IsZero( mV[9] )
-        && ::IsZero( mV[11] )
-        && ::IsZero( mV[12] )
-        && ::IsZero( mV[13] )
-        && ::IsZero( mV[14] );
+    return IvAreEqual( 1.0f, mV[0] )
+        && IvAreEqual( 1.0f, mV[5] )
+        && IvAreEqual( 1.0f, mV[10] )
+        && IvAreEqual( 1.0f, mV[15] )
+        && IvIsZero( mV[1] ) 
+        && IvIsZero( mV[2] )
+        && IvIsZero( mV[3] )
+        && IvIsZero( mV[4] ) 
+        && IvIsZero( mV[6] )
+        && IvIsZero( mV[7] )
+        && IvIsZero( mV[8] )
+        && IvIsZero( mV[9] )
+        && IvIsZero( mV[11] )
+        && IvIsZero( mV[12] )
+        && IvIsZero( mV[13] )
+        && IvIsZero( mV[14] );
 
 }   // End of IvMatrix44::IsIdentity()
 
@@ -229,7 +229,7 @@ IvMatrix44::Clean()
 {
     for (unsigned int i = 0; i < 16; ++i)
     {
-        if ( ::IsZero( mV[i] ) )
+        if ( IvIsZero( mV[i] ) )
             mV[i] = 0.0f;
     }
 
@@ -296,7 +296,7 @@ AffineInverse( const IvMatrix44& mat )
     float cofactor4 = mat.mV[2]*mat.mV[9] - mat.mV[1]*mat.mV[10];
     float cofactor8 = mat.mV[1]*mat.mV[6] - mat.mV[2]*mat.mV[5];
     float det = mat.mV[0]*cofactor0 + mat.mV[4]*cofactor4 + mat.mV[8]*cofactor8;
-    if (::IsZero( det ))
+    if (IvIsZero( det ))
     {
         ASSERT( false );
         ERROR_OUT( "Matrix44::Inverse() -- singular matrix\n" );
@@ -741,7 +741,7 @@ IvMatrix44::GetFixedAngles( float& zRotation, float& yRotation, float& xRotation
     Sy = mV[8];
     Cy = ::IvSqrt( 1.0f - Sy*Sy );
     // normal case
-    if ( !::IsZero( Cy ) )
+    if ( !IvIsZero( Cy ) )
     {
         float factor = 1.0f/Cy;
         Sx = -mV[9]*factor;
@@ -779,7 +779,7 @@ IvMatrix44::GetAxisAngle( IvVector3& axis, float& angle )
     angle = acosf( cosTheta );
 
     // angle is zero, axis can be anything
-    if ( ::IsZero( angle ) )
+    if ( IvIsZero( angle ) )
     {
         axis = IvVector3::xAxis;
     }

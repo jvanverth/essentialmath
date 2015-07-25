@@ -1056,7 +1056,7 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     float length = direction.Length();
 
     // if spherical capsule, just draw sphere
-    if ( ::IsZero( length ) )
+    if ( IvIsZero( length ) )
     {
         IvMatrix44 transform;
         transform(0,3) = segment.GetEndpoint0().x;

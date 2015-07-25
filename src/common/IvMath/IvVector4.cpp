@@ -115,11 +115,13 @@ IvVector4::LengthSquared() const
 bool 
 IvVector4::operator==( const IvVector4& other ) const
 {
-    if ( ::IvAreEqual( other.x, x )
-        && ::IvAreEqual( other.y, y )
-        && ::IvAreEqual( other.z, z )
-        && ::IvAreEqual( other.w, w ) )
+    if (IvAreEqual(other.x, x)
+        && IvAreEqual(other.y, y)
+        && IvAreEqual(other.z, z)
+        && IvAreEqual(other.w, w))
+    {
         return true;
+    }
 
     return false;   
 }   // End of IvVector4::operator==()
@@ -133,10 +135,10 @@ IvVector4::operator==( const IvVector4& other ) const
 bool 
 IvVector4::operator!=( const IvVector4& other ) const
 {
-    if ( ::IvAreEqual( other.x, x )
-        && ::IvAreEqual( other.y, y )
-        && ::IvAreEqual( other.z, z )
-        && ::IvAreEqual( other.w, w ) )
+    if ( IvAreEqual( other.x, x )
+        && IvAreEqual( other.y, y )
+        && IvAreEqual( other.z, z )
+        && IvAreEqual( other.w, w ) )
         return false;
 
     return true;
@@ -151,7 +153,7 @@ IvVector4::operator!=( const IvVector4& other ) const
 bool 
 IvVector4::IsZero() const
 {
-    return ::IsZero(x*x + y*y + z*z + w*w);
+    return IvIsZero(x*x + y*y + z*z + w*w);
 
 }   // End of IvVector4::IsZero()
 
@@ -164,7 +166,7 @@ IvVector4::IsZero() const
 bool 
 IvVector4::IsUnit() const
 {
-    return ::IsZero(1.0f - x*x - y*y - z*z - w*w);
+    return IvIsZero(1.0f - x*x - y*y - z*z - w*w);
 
 }   // End of IvVector4::IsUnit()
 
@@ -177,14 +179,22 @@ IvVector4::IsUnit() const
 void
 IvVector4::Clean()
 {
-    if ( ::IsZero( x ) )
+    if (IvIsZero(x))
+    {
         x = 0.0f;
-    if ( ::IsZero( y ) )
+    }
+    if (IvIsZero(y))
+    {
         y = 0.0f;
-    if ( ::IsZero( z ) )
+    }
+    if (IvIsZero(z))
+    {
         z = 0.0f;
-    if ( ::IsZero( w ) )
+    }
+    if (IvIsZero(w))
+    {
         w = 0.0f;
+    }
 
 }   // End of IvVector4::Clean()
 
@@ -199,13 +209,13 @@ IvVector4::Normalize()
 {
     float lengthsq = x*x + y*y + z*z + w*w;
 
-    if ( ::IsZero( lengthsq ) )
+    if (IvIsZero(lengthsq))
     {
         Zero();
     }
     else
     {
-        float factor = IvRecipSqrt( lengthsq );
+        float factor = IvRecipSqrt(lengthsq);
         x *= factor;
         y *= factor;
         z *= factor;

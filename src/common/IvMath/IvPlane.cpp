@@ -161,10 +161,10 @@ IvPlane::Set( float a, float b, float c, float d )
     // normalize for cheap distance checks
     float lensq = a*a + b*b + c*c;
     // length of normal had better not be zero
-    ASSERT( !::IsZero( lensq ) );
+    ASSERT( !IvIsZero( lensq ) );
 
     // recover gracefully
-    if ( ::IsZero( lensq ) )
+    if ( IvIsZero( lensq ) )
     {
         mNormal = IvVector3::xAxis;
         mOffset = 0.0f;
@@ -195,10 +195,10 @@ IvPlane::Set( const IvVector3& p0, const IvVector3& p1, const IvVector3& p2 )
     // normalize for cheap distance checks
     float lensq = w.x*w.x + w.y*w.y + w.z*w.z;
     // length of normal had better not be zero
-    ASSERT( !::IsZero( lensq ) );
+    ASSERT( !IvIsZero( lensq ) );
 
     // recover gracefully
-    if ( ::IsZero( lensq ) )
+    if ( IvIsZero( lensq ) )
     {
         mNormal = IvVector3::xAxis;
         mOffset = 0.0f;

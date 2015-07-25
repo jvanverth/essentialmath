@@ -73,7 +73,7 @@ inline float IvRecipSqrt( float val )
 #else
     return 1.0f/sqrtf( val );
 #endif
-} // InvSqrt
+} // RecipSqrt
 
 inline float IvAbs( float f )           { return fabsf(f); }
 
@@ -91,24 +91,24 @@ extern void IvFastSinCos( float a, float& sina, float& cosa );
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
-// @ IsZero()
+// @ IvIsZero()
 //-------------------------------------------------------------------------------
 // Is this floating point value close to zero?
 //-------------------------------------------------------------------------------
-inline bool IsZero( float a ) 
+inline bool IvIsZero( float a, float epsilon = kEpsilon ) 
 {
-    return ( fabsf(a) < kEpsilon );
+    return (IvAbs(a) <= epsilon);
 
-}   // End of IsZero()
+}   // End of IvIsZero()
 
 //-------------------------------------------------------------------------------
 // @ IvAreEqual()
 //-------------------------------------------------------------------------------
 // Are these floating point values close to equal?
 //-------------------------------------------------------------------------------
-inline bool IvAreEqual( float a, float b ) 
+inline bool IvAreEqual( float a, float b, float epsilon = kEpsilon ) 
 {
-    return ( ::IsZero(a-b) );
+    return (IvAbs(a-b) <= epsilon*(IvAbs(a) + IvAbs(b) + 1.0f));
 
 }   // End of IvAreEqual()
 
