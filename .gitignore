@@ -15,6 +15,7 @@ src/common/Includes
 *~
 *.opensdf
 *.app
+*.app.dSYM
 xcuserdata/
 build/
 .DS_Store
