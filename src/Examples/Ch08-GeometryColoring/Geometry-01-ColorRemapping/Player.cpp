@@ -222,7 +222,7 @@ Player::Update( float dt )
 
     if (IvGame::mGame->mEventHandler->IsKeyDown('-'))
     {
-        mColorScale -= 0.1f;
+        mColorScale -= 0.01f;
 
         mShaderClamp->GetUniform("scale")->SetValue(mColorScale, 0);
         mShaderScale->GetUniform("scale")->SetValue(mColorScale, 0);
@@ -230,7 +230,7 @@ Player::Update( float dt )
 
     if (IvGame::mGame->mEventHandler->IsKeyDown('='))
     {
-        mColorScale += 0.1f;
+        mColorScale += 0.01f;
 
         mShaderClamp->GetUniform("scale")->SetValue(mColorScale, 0);
         mShaderScale->GetUniform("scale")->SetValue(mColorScale, 0);

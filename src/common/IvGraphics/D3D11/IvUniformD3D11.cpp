@@ -115,11 +115,8 @@ void IvUniformD3D11::SetValue( float value, unsigned int index)
 
     mValue.mFloat[index] = value;
 
-	if (mShader == IvRenderer::mRenderer->GetShaderProgram())
-	{
-		memcpy(mOffset, mValue.mFloat, mCount*sizeof(float));
-		mConstantTable->MarkDirty();
-	}
+	memcpy(mOffset, mValue.mFloat, mCount*sizeof(float));
+	mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
@@ -134,19 +131,16 @@ void IvUniformD3D11::SetValue(const IvVector3& value, unsigned int index)
 
 	mValue.mVector3[index] = value;
 
-	if (mShader == IvRenderer::mRenderer->GetShaderProgram())
+	// float3 array is packed as float4 array
+	char* offset = reinterpret_cast<char*>(mOffset);
+	IvVector3* currVec3 = mValue.mVector3;
+	for (unsigned int i = 0; i < mCount; ++i)
 	{
-		// float3 array is packed as float4 array
-		char* offset = reinterpret_cast<char*>(mOffset);
-		IvVector3* currVec3 = mValue.mVector3;
-		for (unsigned int i = 0; i < mCount; ++i)
-		{
-			memcpy(offset, currVec3, sizeof(IvVector3));
-			++currVec3;
-			offset += 4*sizeof(float);
-		}
-		mConstantTable->MarkDirty();
+		memcpy(offset, currVec3, sizeof(IvVector3));
+		++currVec3;
+		offset += 4*sizeof(float);
 	}
+	mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
@@ -161,11 +155,8 @@ void IvUniformD3D11::SetValue( const IvVector4& value, unsigned int index )
 
     mValue.mVector4[index] = value;
 
-	if (mShader == IvRenderer::mRenderer->GetShaderProgram())
-	{
-		memcpy(mOffset, mValue.mVector4, mCount*sizeof(IvVector4));
-		mConstantTable->MarkDirty();
-	}
+	memcpy(mOffset, mValue.mVector4, mCount*sizeof(IvVector4));
+	mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
@@ -180,11 +171,8 @@ void IvUniformD3D11::SetValue( const IvMatrix44& value, unsigned int index )
 
     mValue.mMatrix44[index] = value;
 
-	if (mShader == IvRenderer::mRenderer->GetShaderProgram())
-	{
-		memcpy(mOffset, mValue.mMatrix44, mCount*sizeof(IvMatrix44));
-		mConstantTable->MarkDirty();
-	}
+	memcpy(mOffset, mValue.mMatrix44, mCount*sizeof(IvMatrix44));
+	mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
