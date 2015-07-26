@@ -183,7 +183,7 @@ IvRay3::Transform( float scale, const IvQuat& rotate, const IvVector3& translate
     transform(1,3) = translate.y;
     transform(2,3) = translate.z;
 
-    ray.mOrigin = transform.Transform( mOrigin );
+    ray.mOrigin = transform.TransformPoint( mOrigin );
 
     return ray;
 

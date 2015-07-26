@@ -182,7 +182,7 @@ IvLine3::Transform( float scale, const IvQuat& rotate, const IvVector3& translat
     transform(1,3) = translate.y;
     transform(2,3) = translate.z;
 
-    line.mOrigin = transform.Transform( mOrigin );
+    line.mOrigin = transform.TransformPoint( mOrigin );
 
     return line;
 

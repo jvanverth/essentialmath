@@ -471,7 +471,7 @@ IvCapsule::ComputeCollision( const IvCapsule& other, IvVector3& collisionNormal,
 
     // if colliding
     float s, t;
-    float distancesq = ::DistanceSquared( mSegment, other.mSegment, s, t ); 
+    float distancesq = DistanceSquared( mSegment, other.mSegment, s, t );
 
     if ( distancesq <= radiusSum*radiusSum )
     {

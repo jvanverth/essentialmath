@@ -206,7 +206,7 @@ IvLineSegment3::Transform( float scale, const IvQuat& rotate, const IvVector3& t
     transform(1,3) = translate.y;
     transform(2,3) = translate.z;
 
-    segment.mOrigin = transform.Transform( mOrigin );
+    segment.mOrigin = transform.TransformPoint( mOrigin );
 
     return segment;
 
@@ -240,7 +240,7 @@ IvLineSegment3::Transform( float scale, const IvMatrix33& rotate,
     transform(1,3) = translate.y;
     transform(2,3) = translate.z;
 
-    segment.mOrigin = transform.Transform( mOrigin );
+    segment.mOrigin = transform.TransformPoint( mOrigin );
 
     return segment;
 
@@ -248,7 +248,7 @@ IvLineSegment3::Transform( float scale, const IvMatrix33& rotate,
 
 
 //----------------------------------------------------------------------------
-// @ ::DistanceSquared()
+// @ DistanceSquared()
 // ---------------------------------------------------------------------------
 // Returns the distance squared between two line segments.
 // Based on article and code by Dan Sunday at www.geometryalgorithms.com
@@ -349,11 +349,11 @@ DistanceSquared( const IvLineSegment3& segment0, const IvLineSegment3& segment1,
     IvVector3 wc = w0 + s_c*segment0.mDirection - t_c*segment1.mDirection;
     return wc.Dot(wc);
 
-}   // End of ::DistanceSquared()
+}   // End of DistanceSquared()
 
 
 //----------------------------------------------------------------------------
-// @ ::DistanceSquared()
+// @ DistanceSquared()
 // ---------------------------------------------------------------------------
 // Returns the distance squared between line segment and ray.
 // Based on article and code by Dan Sunday at www.geometryalgorithms.com
