@@ -13,6 +13,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvShaderProgramOGL.h"
+#include "IvAssert.h"
 #include "IvFragmentShaderOGL.h"
 #include "IvUniformOGL.h"
 #include "IvVertexShaderOGL.h"
@@ -31,7 +32,9 @@
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvShaderProgramOGL::IvShaderProgramOGL() : IvShaderProgram(), mProgramID(0), mNextTextureStage(0)
+IvShaderProgramOGL::IvShaderProgramOGL() : IvShaderProgram()
+    , mProgramID(0)
+    , mNextTextureStage(0)
 {
 }
 
@@ -42,7 +45,7 @@ IvShaderProgramOGL::IvShaderProgramOGL() : IvShaderProgram(), mProgramID(0), mNe
 //-------------------------------------------------------------------------------
 IvShaderProgramOGL::~IvShaderProgramOGL()
 {
-    Destroy();
+    ASSERT(!mProgramID);
 }
 
 //-------------------------------------------------------------------------------
@@ -84,10 +87,8 @@ IvShaderProgramOGL::Create( GLuint vertexShaderID, GLuint fragmentShaderID )
 void
 IvShaderProgramOGL::Destroy()
 {
-    if ( mProgramID != 0 )
-    {
-        glDeleteProgram( mProgramID );
-    }
+    glDeleteProgram(mProgramID);
+    mProgramID = 0;
 }
 
 //-------------------------------------------------------------------------------

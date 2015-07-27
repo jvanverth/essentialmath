@@ -13,6 +13,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvVertexBufferOGL.h"
+#include "IvAssert.h"
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
@@ -29,9 +30,10 @@
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvVertexBufferOGL::IvVertexBufferOGL() : IvVertexBuffer(), mBufferID(0), mVertexArrayID(0)
+IvVertexBufferOGL::IvVertexBufferOGL() : IvVertexBuffer(), mBufferID(0), 
+                                         mVertexArrayID(0)
 {
-}	// End of IvVertexBufferOGL::IvVertexBufferOGL()
+}
 
 //-------------------------------------------------------------------------------
 // @ IvVertexBufferOGL::~IvVertexBufferOGL()
@@ -40,7 +42,8 @@ IvVertexBufferOGL::IvVertexBufferOGL() : IvVertexBuffer(), mBufferID(0), mVertex
 //-------------------------------------------------------------------------------
 IvVertexBufferOGL::~IvVertexBufferOGL()
 {
-    Destroy();
+    ASSERT(!mBufferID);
+    ASSERT(!mVertexArrayID);
 }
 
 //-------------------------------------------------------------------------------
@@ -49,8 +52,8 @@ IvVertexBufferOGL::~IvVertexBufferOGL()
 // Create the resources for the vertex buffer
 //-------------------------------------------------------------------------------
 bool
-IvVertexBufferOGL::Create( IvVertexFormat format, unsigned int numVertices, void* data,
-                           IvDataUsage usage )
+IvVertexBufferOGL::Create(IvVertexFormat format, unsigned int numVertices, 
+                          void* data, IvDataUsage usage)
 {
     if ( numVertices == 0 || mBufferID != 0 )
         return false;

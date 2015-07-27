@@ -13,6 +13,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvIndexBufferOGL.h"
+#include "IvAssert.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -30,9 +31,9 @@
 // Default constructor
 //-------------------------------------------------------------------------------
 IvIndexBufferOGL::IvIndexBufferOGL() : IvIndexBuffer()
+    , mBufferID(0)
 {
-    mBufferID = 0;
-}	// End of IvIndexBufferOGL::IvIndexBufferOGL()
+}
 
 //-------------------------------------------------------------------------------
 // @ IvIndexBufferOGL::~IvIndexBufferOGL()
@@ -41,7 +42,7 @@ IvIndexBufferOGL::IvIndexBufferOGL() : IvIndexBuffer()
 //-------------------------------------------------------------------------------
 IvIndexBufferOGL::~IvIndexBufferOGL()
 {
-    Destroy();
+    ASSERT(!mBufferID);
 }
 
 //-------------------------------------------------------------------------------

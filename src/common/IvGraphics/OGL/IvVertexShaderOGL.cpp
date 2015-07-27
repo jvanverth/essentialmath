@@ -13,6 +13,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvVertexShaderOGL.h"
+#include "IvAssert.h"
 #include "IvDebugger.h"
 #include <string>
 
@@ -139,7 +140,7 @@ IvVertexShaderOGL::IvVertexShaderOGL() : IvVertexShader(), mShaderID(0)
 //-------------------------------------------------------------------------------
 IvVertexShaderOGL::~IvVertexShaderOGL()
 {
-    Destroy();
+    ASSERT(!mShaderID);
 }
 
 //-------------------------------------------------------------------------------
@@ -266,6 +267,6 @@ IvVertexShaderOGL::CreateDefault( IvVertexFormat format )
 void
 IvVertexShaderOGL::Destroy()
 {
-    if ( mShaderID != 0 )
-        glDeleteShader( mShaderID );
+    glDeleteShader(mShaderID);
+    mShaderID = 0;
 }

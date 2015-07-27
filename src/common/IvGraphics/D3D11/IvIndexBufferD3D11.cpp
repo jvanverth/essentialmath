@@ -14,6 +14,7 @@
 
 #include "IvIndexBufferD3D11.h"
 
+#include "IvAssert.h"
 #include "IvRendererD3D11.h"
 #include "IvTypes.h"
 #include <stdio.h>
@@ -42,7 +43,8 @@ IvIndexBufferD3D11::IvIndexBufferD3D11() : IvIndexBuffer(), mBufferPtr(0), mData
 //-------------------------------------------------------------------------------
 IvIndexBufferD3D11::~IvIndexBufferD3D11()
 {
-    Destroy();
+    ASSERT(!mBufferPtr);
+    ASSERT(!mDataPtr);
 }
 
 //-------------------------------------------------------------------------------

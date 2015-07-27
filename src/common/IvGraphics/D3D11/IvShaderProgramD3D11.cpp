@@ -13,14 +13,15 @@
 //-------------------------------------------------------------------------------
 
 #include "IvShaderProgramD3D11.h"
+#include "IvAssert.h"
 #include "IvConstantTableD3D11.h"
 #include "IvFragmentShaderD3D11.h"
 #include "IvUniformD3D11.h"
 #include "IvVertexShaderD3D11.h"
 
 // probably don't belong here
-#include "IvMatrix44.h"
-#include "IvRendererD3D11.h"
+//#include "IvMatrix44.h"
+//#include "IvRendererD3D11.h"
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
@@ -51,7 +52,10 @@ IvShaderProgramD3D11::IvShaderProgramD3D11() :
 //-------------------------------------------------------------------------------
 IvShaderProgramD3D11::~IvShaderProgramD3D11()
 {
-    Destroy();
+    ASSERT(!mVertexShaderPtr);
+    ASSERT(!mFragmentShaderPtr);
+    ASSERT(!mVertexShaderConstants);
+    ASSERT(!mFragmentShaderConstants);
 }
 
 //-------------------------------------------------------------------------------

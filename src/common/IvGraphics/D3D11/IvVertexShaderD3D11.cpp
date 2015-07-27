@@ -15,6 +15,7 @@
 #include "IvVertexShaderD3D11.h"
 #include "IvConstantTableD3D11.h"
 
+#include "IvAssert.h"
 #include "IvDebugger.h"
 #include <d3dcompiler.h>
 #include <string>
@@ -154,7 +155,8 @@ IvVertexShaderD3D11::IvVertexShaderD3D11() : IvVertexShader()
 //-------------------------------------------------------------------------------
 IvVertexShaderD3D11::~IvVertexShaderD3D11()
 {
-    Destroy();
+    ASSERT(!mShaderPtr);
+    ASSERT(!mConstantTable);
 }
 
 //-------------------------------------------------------------------------------

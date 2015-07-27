@@ -38,7 +38,9 @@ IvTextureD3D11::IvTextureD3D11() : IvTexture()
 //-------------------------------------------------------------------------------
 IvTextureD3D11::~IvTextureD3D11()
 {
-	Destroy();
+    ASSERT(!mLevels);
+    ASSERT(!mTexturePtr);
+    ASSERT(!mShaderResourceView);
 }
 
 //-------------------------------------------------------------------------------

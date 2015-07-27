@@ -14,6 +14,7 @@
 
 #include "IvVertexBufferD3D11.h"
 
+#include "IvAssert.h"
 #include "IvDebugger.h"
 #include "IvRendererD3D11.h"
 
@@ -140,7 +141,8 @@ IvVertexBufferD3D11::IvVertexBufferD3D11() : IvVertexBuffer(), mBufferPtr(0), mD
 //-------------------------------------------------------------------------------
 IvVertexBufferD3D11::~IvVertexBufferD3D11()
 {
-    Destroy();
+    ASSERT(!mBufferPtr);
+    ASSERT(!mDataPtr);
 }
 
 //-------------------------------------------------------------------------------

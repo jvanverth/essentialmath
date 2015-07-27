@@ -13,6 +13,7 @@
 //-------------------------------------------------------------------------------
 
 #include "IvFragmentShaderOGL.h"
+#include "IvAssert.h"
 #include "IvDebugger.h"
 #include <string>
 
@@ -80,7 +81,8 @@ static const char sShaderTNPFormat[] =
 //-------------------------------------------------------------------------------
 // Default constructor
 //-------------------------------------------------------------------------------
-IvFragmentShaderOGL::IvFragmentShaderOGL() : IvFragmentShader(), mShaderID(0)
+IvFragmentShaderOGL::IvFragmentShaderOGL() : IvFragmentShader()
+    , mShaderID(0)
 {
     sDefaultFragmentShader[kCPFormat] = sShaderCPFormat;
     sDefaultFragmentShader[kNPFormat] = sShaderNPFormat;
@@ -96,7 +98,7 @@ IvFragmentShaderOGL::IvFragmentShaderOGL() : IvFragmentShader(), mShaderID(0)
 //-------------------------------------------------------------------------------
 IvFragmentShaderOGL::~IvFragmentShaderOGL()
 {
-    Destroy();
+    ASSERT(!mShaderID);
 }
 
 //-------------------------------------------------------------------------------
@@ -213,6 +215,6 @@ IvFragmentShaderOGL::CreateDefault( IvVertexFormat format )
 void
 IvFragmentShaderOGL::Destroy()
 {
-    if ( mShaderID != 0 )
-        glDeleteShader( mShaderID );
+    glDeleteShader(mShaderID);
+    mShaderID = 0;
 }

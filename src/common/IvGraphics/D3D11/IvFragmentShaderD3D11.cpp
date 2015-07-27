@@ -15,6 +15,7 @@
 #include "IvFragmentShaderD3D11.h"
 #include "IvConstantTableD3D11.h"
 
+#include "IvAssert.h"
 #include "IvDebugger.h"
 #include <d3dcompiler.h>
 #include <string>
@@ -116,7 +117,8 @@ IvFragmentShaderD3D11::IvFragmentShaderD3D11() : IvFragmentShader()
 //-------------------------------------------------------------------------------
 IvFragmentShaderD3D11::~IvFragmentShaderD3D11()
 {
-    Destroy();
+    ASSERT(!mShaderPtr);
+    ASSERT(!mConstantTable);
 }
 
 //-------------------------------------------------------------------------------

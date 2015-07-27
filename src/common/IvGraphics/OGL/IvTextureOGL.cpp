@@ -15,6 +15,7 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #endif
+#include "IvAssert.h"
 
 static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 3};
 
@@ -26,6 +27,7 @@ static unsigned int sTextureFormatSize[kTexFmtCount] = {4, 3};
 IvTextureOGL::IvTextureOGL() : IvTexture()
     , mID(0)
     , mLevelCount(0)
+    , mTempData(0)
 {
 }
 
@@ -36,7 +38,8 @@ IvTextureOGL::IvTextureOGL() : IvTexture()
 //-------------------------------------------------------------------------------
 IvTextureOGL::~IvTextureOGL()
 {
-	Destroy();
+    ASSERT(!mID);
+    ASSERT(!mTempData);
 }
 
 //-------------------------------------------------------------------------------
@@ -215,11 +218,12 @@ IvTextureOGL::CreateMipmapped(unsigned int width, unsigned int height, IvTexture
 void
 IvTextureOGL::Destroy()
 {
-    if (mID != 0)
-    {
-        glDeleteTextures(1, &mID);
-        mID = 0;
-    }
+    glDeleteTextures(1, &mID);
+    mID = 0;
+
+    ASSERT(!mTempData);
+    delete mTempData;
+    mTempData = NULL;
 }
 
 //-------------------------------------------------------------------------------
