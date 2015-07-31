@@ -16,6 +16,7 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+#include <IvHierarchy.h>
 #include <IvMatrix33.h>
 #include <IvQuat.h>
 #include <IvVector3.h>
@@ -23,8 +24,6 @@
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
-
-class IvSpatial;
 
 class Player
 {
@@ -45,9 +44,7 @@ private:
     float       mScale;         // current scale
     IvQuat      mRotate;        // current orientation
     IvVector3   mTranslate;     // current position
-    IvSpatial* mTank;
-    IvSpatial* mTurret;
-    IvSpatial* mBarrel;
+    IvHierarchy mTank;
 
     float      mMass;          // mass of object
 

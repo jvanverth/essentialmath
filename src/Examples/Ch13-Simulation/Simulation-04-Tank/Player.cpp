@@ -22,10 +22,9 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+#include <IvAssert.h>
 #include <IvRenderer.h>
 #include <IvFileReader.h>
-#include <IvNode.h>
-#include <IvIndexedGeometry.h>
 #include <IvEventHandler.h>
 #include <IvMatrix44.h>
 #include <IvRendererHelp.h>
@@ -39,6 +38,10 @@
 
 static const IvVector3 kForceOffset1( 0.0f, 1.0f, 0.0f );
 static const IvVector3 kForceOffset2( 0.0f, -1.0f, 0.0f );
+
+const int kTankIndex = 0;
+const int kTurretIndex = 1;
+const int kBarrelIndex = 2;
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -75,48 +78,36 @@ Player::Player()
     mConstantTorque.Zero();
 
     // Build the tank hierarchy, which looks like:
-    //               mTank (IvNode)
-    //              /              \
-    // tankGeom (IvIndexedGeom)     mTurret (IvNode)
-    //                             /                \
-    //        turretGeom (IvIndexedGeom)     mBarrel = barrelGeom (IvIndexedGeom)
+    //               Tank 
+    //                |           
+    //              Turret
+    //                |             
+    //              Barrel
+
+    bool result;
+    result = mTank.AllocNodes(3);
+    ASSERT(result);
 
     // Read the tank body geometry from file
     IvFileReader tankFile("Tank.txt");
-    IvIndexedGeometry* tankGeom = IvIndexedGeometry::CreateFromStream(tankFile);
+    result = mTank.AddNode(kTankIndex, kTankIndex, tankFile,
+                           IvVector3::origin, IvQuat(), 0.2f);
+    ASSERT(result);
 
     // Read the tank turret geometry from file
     IvFileReader turretFile("Turret.txt");
-    IvIndexedGeometry* turretGeom 
-        = IvIndexedGeometry::CreateFromStream(turretFile);
+    result = mTank.AddNode(kTurretIndex, kTankIndex, turretFile,
+                           IvVector3(0.75f, 0.0f, 3.55f), IvQuat(), 1.0f);
+    ASSERT(result);
 
     // Read the tank barrel geometry from file
     IvFileReader barrelFile("Barrel.txt");
-    IvIndexedGeometry* barrelGeom 
-        = IvIndexedGeometry::CreateFromStream(barrelFile);
-
-    // Create the scene graph from the bottom up
-    mBarrel = barrelGeom;
-    mBarrel->SetLocalTranslate(IvVector3(4.5f, 0.0f, 1.0f));
-
-    // create the turret node and attach the children
-    mTurret = new IvNode(2);
-
-    mTurret->SetLocalTranslate(IvVector3(0.75f, 0.0f, 3.55f));
-    ((IvNode*)mTurret)->SetChild(0, turretGeom);
-    ((IvNode*)mTurret)->SetChild(1, mBarrel);
-
-    // create the tank node and attach the children
-    mTank = new IvNode(2);
-
-    ((IvNode*)mTank)->SetChild(0, tankGeom);
-    ((IvNode*)mTank)->SetChild(1, mTurret);
-
-    // Scale the entire scene down to fit in view
-    mTank->SetLocalScale(0.2f);
+    result = mTank.AddNode(kBarrelIndex, kTurretIndex, barrelFile,
+                           IvVector3(4.5f, 0.0f, 1.0f), IvQuat(), 1.0f);
+    ASSERT(result);
 
     // Update the transforms and bounds
-    mTank->UpdateWorldTransform();
+    mTank.UpdateWorldTransforms();
 
 }   // End of Player::Player()
 
@@ -128,7 +119,6 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
-    delete mTank;
 }   // End of Player::~Player()
 
 
@@ -228,9 +218,9 @@ Player::Update( float dt )
     // compute new physical values
     Integrate( dt );
 
-    mTank->SetLocalTranslate( mTranslate );
-    mTank->SetLocalRotate( IvMatrix33( mRotate ) );
-    mTank->UpdateWorldTransform();
+    mTank.SetLocalTranslate( mTranslate, 0 );
+    mTank.SetLocalRotate( mRotate, 0 );
+    mTank.UpdateWorldTransforms();
     
 }   // End of Player::Update()
 
@@ -244,7 +234,7 @@ void
 Player::Render()                                    
 {   
     
-    mTank->Render();
+    mTank.Render();
                 
     // draw force line
     IvSetWorldIdentity();
