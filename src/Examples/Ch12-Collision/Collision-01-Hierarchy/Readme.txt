@@ -1,8 +1,12 @@
-This demo shows the power of a simple scene graph, which allows for quick and
-easy creation, management and rendering of hierachical scenes such as the
+This demo shows the power of a simple hierarchy, which allows for quick and
+easy creation, management and rendering of hierachical objects such as the
 articulated submarine used herein.  The demo allows the user to move and rotate
 the submarine.  In addition, the rudder, dive planes and periscope can be 
-independently articulated, as well
+independently articulated, as well.
+
+The hierarchy is managed via a 'structure of arrays' approach, rather than
+the more traditionally objected-oriented tree of separately allocated nodes.
+This gives better cache coherency during updates and rendering.
 
 This demo also displays the bounding hierarchy for the submarine, showing how 
 the different levels of bounding objects are constructed and relate to one

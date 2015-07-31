@@ -16,7 +16,7 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvSpatial;
+#include <IvHierarchy.h>
 
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
@@ -32,13 +32,7 @@ public:
     void Render();
 
 private:
-    IvSpatial* mBody;
-    IvSpatial* mTail;
-    IvSpatial* mTower;
-    IvSpatial* mPeriscope;
-    IvSpatial* mPlanes;
-    IvSpatial* mRudder;
-    IvSpatial* mPropeller;
+    IvHierarchy mHierarchy;
 };
 
 #endif

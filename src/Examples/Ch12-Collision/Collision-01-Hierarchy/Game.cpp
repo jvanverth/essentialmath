@@ -12,7 +12,7 @@
 //-------------------------------------------------------------------------------
 
 #include <IvRendererHelp.h>
-#include <IvSpatial.h>
+#include <IvHierarchy.h>
 
 #include "Game.h"
 #include "Player.h"
@@ -84,8 +84,8 @@ Game::PostRendererInitialize()
     IvSetDefaultLighting();
 
     // set up bounding object displays
-    IvSpatial::gDisplayHierarchyBounds = true;
-    IvSpatial::gDisplayLeafBounds = true;
+    IvHierarchy::gDisplayHierarchyBounds = true;
+    IvHierarchy::gDisplayLeafBounds = true;
 
     return true;
 }   // End of Game::PostRendererInitialize()

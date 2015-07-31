@@ -13,13 +13,14 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 #include "IvIndexedGeometry.h"
+#include <IvAssert.h>
 #include <IvRenderer.h>
 #include <IvRendererHelp.h>
 #include <IvVector3.h>
-#include <IvMatrix44.h>
 #include <IvResourceManager.h>
 #include <IvVertexBuffer.h>
 #include <IvIndexBuffer.h>
+#include <IvCapsule.h>
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
@@ -34,7 +35,7 @@
 //-------------------------------------------------------------------------------
 //
 //-------------------------------------------------------------------------------
-IvIndexedGeometry::IvIndexedGeometry() : IvGeometry()
+IvIndexedGeometry::IvIndexedGeometry()
 {
     mVertices = 0;
     mIndices = 0;
@@ -49,10 +50,8 @@ IvIndexedGeometry::IvIndexedGeometry() : IvGeometry()
 //-------------------------------------------------------------------------------
 IvIndexedGeometry::~IvIndexedGeometry()
 {
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
-	mVertices = 0;
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mIndices);
-    mIndices = 0;
+    ASSERT(mVertices == 0);
+    ASSERT(mIndices == 0);
 
 }  // End of IvIndexedGeometry::~IvIndexedGeometry
 
@@ -61,7 +60,7 @@ IvIndexedGeometry::~IvIndexedGeometry()
 // @ IvIndexedGeometry::CreateFromStream()
 //-------------------------------------------------------------------------------
 //
-// Creates an IvIndexedGeometry object from a file of the following format
+// Loads an IvIndexedGeometry object from a file of the following format
 //
 // VertexCount
 //
@@ -81,9 +80,12 @@ IvIndexedGeometry::~IvIndexedGeometry()
 // ...
 //
 //-------------------------------------------------------------------------------
-IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
+bool IvIndexedGeometry::LoadFromStream(IvReader& in, IvCapsule& capsule)
 {
-    IvIndexedGeometry* geom = new IvIndexedGeometry;
+    // no memory leaks
+    ASSERT(mVertices == 0);
+    ASSERT(mIndices == 0);
+
     IvCNPVertex* dataPtr = 0;  
     IvVector3* tempPosition = 0;
     UInt32* indexPtr = 0;
@@ -95,9 +97,9 @@ IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
         goto error_exit;
 
     // read verts
-    geom->mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
-                                                                                      NULL, kDefaultUsage);
-    dataPtr = (IvCNPVertex*) geom->mVertices->BeginLoadData();
+    mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
+                                                                                NULL, kDefaultUsage);
+    dataPtr = (IvCNPVertex*) mVertices->BeginLoadData();
     tempPosition = new IvVector3[numVerts];	// save for capsule creation
     for ( UInt32 i = 0; i < numVerts; ++i )
     {
@@ -116,9 +118,11 @@ IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
     {
         float x, y, z;
         in >> x >> y >> z;
-	dataPtr[i].normal.Set(x,y,z);
-        if (!in.good() )
+	    dataPtr[i].normal.Set(x,y,z);
+        if (!in.good())
+        {
             goto error_exit;
+        }
     }
 
     // read colors
@@ -130,11 +134,13 @@ IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
         dataPtr[i].color.mGreen = UChar8(g*255);
         dataPtr[i].color.mBlue = UChar8(b*255);
         dataPtr[i].color.mAlpha = 255;
-        if (!in.good() )
+        if (!in.good())
+        {
             goto error_exit;
+        }
     }
 
-    if (!geom->mVertices->EndLoadData())
+    if (!mVertices->EndLoadData())
     {
         goto error_exit;
     }
@@ -143,13 +149,15 @@ IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
     // get number of indices
     UInt32 numIndices;
     in >> numIndices;
-    if ( !in.good() )
+    if (!in.good())
+    {
         goto error_exit;
+    }
 
     // read indices
-    geom->mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices,
-                                                                                    NULL, kDefaultUsage);
-    indexPtr = static_cast<UInt32*>(geom->mIndices->BeginLoadData());
+    mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices,
+                                                                              NULL, kDefaultUsage);
+    indexPtr = static_cast<UInt32*>(mIndices->BeginLoadData());
     for ( UInt32 i = 0; i < numIndices; ++i )
     {
         in >> indexPtr[i];
@@ -158,33 +166,48 @@ IvIndexedGeometry* IvIndexedGeometry::CreateFromStream(IvReader& in)
             goto error_exit;
         }
     }
-    if (!geom->mIndices->EndLoadData())
+    if (!mIndices->EndLoadData())
     {
         goto error_exit;
     }
     indexPtr = 0;
 	
     // initialize the model-space capsule to the vertex data
-    geom->mModelCapsule.Set( tempPosition, numVerts );
+    capsule.Set(tempPosition, numVerts);
+
     delete [] tempPosition;
 
-    return geom;
+    return true;
 
 error_exit:
     // error cleanup case
     delete [] tempPosition;
 
-    // delete the partially-created object
-    delete geom;
+    if (dataPtr)
+    {
+        (void)mVertices->EndLoadData();
+    }
+    if (indexPtr)
+    {
+        (void)mIndices->EndLoadData();
+    }
+    FreeResources();
 
-    if ( dataPtr )
-        (void) geom->mVertices->EndLoadData();
-    if ( indexPtr )
-        (void) geom->mIndices->EndLoadData();
+    return false;
+} 
 
-
-    return 0;
-}  // End of IvIndexedGeometry::CreateFromStream
+//-------------------------------------------------------------------------------
+// @ IvIndexedGeometry::FreeResources()
+//-------------------------------------------------------------------------------
+// Need to call before destructor
+//-------------------------------------------------------------------------------
+void IvIndexedGeometry::FreeResources()
+{
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
+    mVertices = 0;
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mIndices);
+    mIndices = 0;
+}
 
 
 //-------------------------------------------------------------------------------
@@ -196,33 +219,7 @@ error_exit:
 //-------------------------------------------------------------------------------
 void IvIndexedGeometry::Render()
 {
-    IvGeometry::Render();
-
     IvRenderer::mRenderer->Draw(kTriangleListPrim, mVertices, mIndices);
-
-    if (gDisplayLeafBounds)
-    {
-		IvRenderer::mRenderer->SetFillMode(kWireframeFill);
-
-        IvSetWorldIdentity();
-        IvDrawCapsule(mWorldCapsule.GetSegment(), mWorldCapsule.GetRadius(), kOrange);
-		IvRenderer::mRenderer->SetFillMode(kSolidFill);
-    }
-       
-    if (gDisplayHierarchyBounds)
-    {
-		IvRenderer::mRenderer->SetFillMode(kWireframeFill);
-        IvMatrix44 ident;
-        ident.Identity();
-        ident(0,3) = mWorldSphere.GetCenter().x;
-        ident(1,3) = mWorldSphere.GetCenter().y;
-        ident(2,3) = mWorldSphere.GetCenter().z;
-
-        IvSetWorldMatrix(ident);
-        IvDrawSphere(mWorldSphere.GetRadius(), kYellow);
-
-		IvRenderer::mRenderer->SetFillMode(kSolidFill);
-    }
 
 }  // End of IvIndexedGeometry::Render
 

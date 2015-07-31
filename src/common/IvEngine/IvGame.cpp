@@ -192,8 +192,10 @@ IvGame::Update()
     mClock->Update();
 
     // if sim is running, update objects
-    if ( !mPaused )
-        UpdateObjects( mClock->GetElapsedTime() );
+    if (!mPaused)
+    {
+        UpdateObjects(mClock->GetElapsedTime());
+    }
     
 }   // End of IvGame::Update()
 

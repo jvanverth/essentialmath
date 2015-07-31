@@ -14,13 +14,12 @@
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
-#include "IvGeometry.h"
 #include <IvReader.h>
 #include <IvWriter.h>
 
-class IvVector3;
 class IvVertexBuffer;
 class IvIndexBuffer;
+class IvCapsule;
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
@@ -30,16 +29,17 @@ class IvIndexBuffer;
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvIndexedGeometry : public IvGeometry
+class IvIndexedGeometry
 {
 public:
     // constructor/destructor
     IvIndexedGeometry();
-    virtual ~IvIndexedGeometry();
+    ~IvIndexedGeometry();
 
-    static IvIndexedGeometry* CreateFromStream(IvReader& in);
+    bool LoadFromStream(IvReader& in, IvCapsule& boundingCapsule);
+    void FreeResources();
 
-    virtual void Render();
+    void Render();
     
 protected:
     // geometry

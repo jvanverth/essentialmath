@@ -118,16 +118,12 @@ copy .\Iv*.h ..\Includes
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IvGeometry.cpp" />
+    <ClCompile Include="IvHierarchy.cpp" />
     <ClCompile Include="IvIndexedGeometry.cpp" />
-    <ClCompile Include="IvNode.cpp" />
-    <ClCompile Include="IvSpatial.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IvGeometry.h" />
+    <ClInclude Include="IvHierarchy.h" />
     <ClInclude Include="IvIndexedGeometry.h" />
-    <ClInclude Include="IvNode.h" />
-    <ClInclude Include="IvSpatial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
