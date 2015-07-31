@@ -1,5 +1,5 @@
-This demo shows the power of a simple scene graph, which allows for quick and
-easy creation, management and rendering of hierachical scenes such as the
+This demo shows the power of a simple hierarchy, which allows for quick and
+easy creation, management and rendering of hierachical objects such as the
 articulated tank used herein.  The demo allows the user to move and rotate
 the tank, which turns the turret and barrel as well.  In addition, the turret
 and barrel can be independently articulated, as well

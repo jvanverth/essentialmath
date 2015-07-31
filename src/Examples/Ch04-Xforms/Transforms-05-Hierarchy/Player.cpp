@@ -28,15 +28,14 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+#include <IvAssert.h>
 #include <IvEventHandler.h>
 #include <IvFileReader.h>
 #include <IvRendererHelp.h>
 #include <IvImage.h>
 #include <IvIndexedGeometry.h>
 #include <IvMath.h>
-#include <IvNode.h>
 #include <IvMatrix44.h>
-#include <IvSpatial.h>
 
 #include "Player.h"
 #include "Game.h"
@@ -44,6 +43,10 @@
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
+
+const int kTankIndex = 0;
+const int kTurretIndex = 1;
+const int kBarrelIndex = 2;
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -57,48 +60,36 @@
 Player::Player()
 {
     // Build the tank hierarchy, which looks like:
-    //               mTank (IvNode)
-    //              /              \
-    // tankGeom (IvIndexedGeom)     mTurret (IvNode)
-    //                             /                \
-    //        turretGeom (IvIndexedGeom)     mBarrel = barrelGeom (IvIndexedGeom)
+    //               Tank 
+    //                |           
+    //              Turret
+    //                |             
+    //              Barrel
+
+    bool result;
+    result = mTank.AllocNodes(3);
+    ASSERT(result);
 
     // Read the tank body geometry from file
     IvFileReader tankFile("Tank.txt");
-    IvIndexedGeometry* tankGeom = IvIndexedGeometry::CreateFromStream(tankFile);
+    result = mTank.AddNode(kTankIndex, kTankIndex, tankFile,
+                           IvVector3::origin, IvQuat(), 0.2f);
+    ASSERT(result);
 
     // Read the tank turret geometry from file
     IvFileReader turretFile("Turret.txt");
-    IvIndexedGeometry* turretGeom 
-        = IvIndexedGeometry::CreateFromStream(turretFile);
+    result = mTank.AddNode(kTurretIndex, kTankIndex, turretFile,
+                           IvVector3(0.75f, 0.0f, 3.55f), IvQuat(), 1.0f);
+    ASSERT(result);
 
     // Read the tank barrel geometry from file
     IvFileReader barrelFile("Barrel.txt");
-    IvIndexedGeometry* barrelGeom 
-        = IvIndexedGeometry::CreateFromStream(barrelFile);
-
-    // Create the scene graph from the bottom up
-    mBarrel = barrelGeom;
-    mBarrel->SetLocalTranslate(IvVector3(4.5f, 0.0f, 1.0f));
-
-    // create the turret node and attach the children
-    mTurret = new IvNode(2);
-
-    mTurret->SetLocalTranslate(IvVector3(0.75f, 0.0f, 3.55f));
-    ((IvNode*)mTurret)->SetChild(0, turretGeom);
-    ((IvNode*)mTurret)->SetChild(1, mBarrel);
-
-    // create the tank node and attach the children
-    mTank = new IvNode(2);
-
-    ((IvNode*)mTank)->SetChild(0, tankGeom);
-    ((IvNode*)mTank)->SetChild(1, mTurret);
-
-    // Scale the entire scene down to fit in view
-    mTank->SetLocalScale(0.25f);
+    result = mTank.AddNode(kBarrelIndex, kTurretIndex, barrelFile,
+                           IvVector3(4.5f, 0.0f, 1.0f), IvQuat(), 1.0f);
+    ASSERT(result);
 
     // Update the transforms and bounds
-    mTank->UpdateWorldTransform();
+    mTank.UpdateWorldTransforms();
 
 }   // End of Player::Player()
 
@@ -110,9 +101,6 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
-    // no need to delete the child nodes - root of scene (tank) will delete them
-    delete mTank;
-
 }   // End of Player::~Player()
 
 
@@ -125,7 +113,6 @@ void
 Player::Update( float dt )
 {
     bool update = false;
-
 
     // set up tank scale
     {
@@ -140,7 +127,7 @@ Player::Update( float dt )
             s += 0.25f*dt;
             update = true;
         }
-        mTank->SetLocalScale( mTank->GetLocalScale() * s);
+        mTank.SetLocalScale(mTank.GetLocalScale(kTankIndex) * s, kTankIndex);
     }
     
     // set up tank rotate
@@ -157,9 +144,8 @@ Player::Update( float dt )
             update = true;
         }
 
-        IvMatrix33 rotate;
-        rotate.RotationZ(r);
-        mTank->SetLocalRotate(mTank->GetLocalRotate() * rotate);
+        IvQuat rotate(IvVector3::zAxis, r);
+        mTank.SetLocalRotate(mTank.GetLocalRotate(kTankIndex) * rotate, kTankIndex);
     }
 
     // set up turret rotate
@@ -175,9 +161,8 @@ Player::Update( float dt )
             r -= kPI*0.25f*dt;
             update = true;
         }
-        IvMatrix33 rotate;
-        rotate.RotationZ(r);
-        mTurret->SetLocalRotate(mTurret->GetLocalRotate() * rotate);
+        IvQuat rotate(IvVector3::zAxis, r);
+        mTank.SetLocalRotate(mTank.GetLocalRotate(kTurretIndex) * rotate, kTurretIndex);
     }
     
     // set up barrel rotate
@@ -193,9 +178,8 @@ Player::Update( float dt )
             r -= kPI*0.25f*dt;
             update = true;
         }
-        IvMatrix33 rotate;
-        rotate.RotationY(r);
-        mBarrel->SetLocalRotate(mBarrel->GetLocalRotate() * rotate);
+        IvQuat rotate(IvVector3::yAxis, r);
+        mTank.SetLocalRotate(mTank.GetLocalRotate(kBarrelIndex) * rotate, kBarrelIndex);
     }
     
     // set up tank translation
@@ -221,20 +205,20 @@ Player::Update( float dt )
         xlate += 3.0f*dt*IvVector3::yAxis;
         update = true;
     }
-    mTank->SetLocalTranslate(mTank->GetLocalTranslate() + xlate);
+    mTank.SetLocalTranslate(mTank.GetLocalTranslate(kTankIndex) + xlate, kTankIndex);
     
     // clear transforms
     if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
     {
-        IvMatrix33 reset;
+        IvQuat reset;
         reset.Identity();
 
-        mTank->SetLocalRotate(reset);
-        mTank->SetLocalTranslate(IvVector3::origin);
-        mTank->SetLocalScale(0.25f);
+        mTank.SetLocalRotate(reset, kTankIndex);
+        mTank.SetLocalTranslate(IvVector3::origin, kTankIndex);
+        mTank.SetLocalScale(0.25f, kTankIndex);
 
-        mTurret->SetLocalRotate(reset);
-        mBarrel->SetLocalRotate(reset);
+        mTank.SetLocalRotate(reset, kTurretIndex);
+        mTank.SetLocalRotate(reset, kBarrelIndex);
 
         update = true;
     }
@@ -242,7 +226,9 @@ Player::Update( float dt )
     // For ease of use, just update the entire scene if any transforms have
     // changed.  We do avoid this if no transforms have changed, though
     if (update)
-        mTank->UpdateWorldTransform();
+    {
+        mTank.UpdateWorldTransforms();
+    }
 
 }   // End of Player::Update()
 
@@ -256,7 +242,7 @@ void
 Player::Render()                                    
 {   
     // Just render the root - the scene graph handles the rest for us.
-    mTank->Render();
+    mTank.Render();
 
 }   // End of Player::Render()
 
