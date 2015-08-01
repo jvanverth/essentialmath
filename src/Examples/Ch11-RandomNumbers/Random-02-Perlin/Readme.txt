@@ -1,9 +1,10 @@
-In this demo we show different Perlin noise shaders: a sky and marble texture. Both are created in the fragment shader, by passing the local position in and generating a noise value which is used to blend two colors. 
+In this demo we show different noise shaders: a sky and marble texture. 
+Both are created in the fragment shader, by passing the local position in and 
+generating a noise value which is used to blend two colors. 
 
-Note that these are quite slow; it would probably be better to do a lookup via a texture map rather than use the noise function.
-
-Also, due to time constraints, only OpenGL is currently supported.  D3D requires a special kind of shader and texture creation for noise() support -- look on the website for updates.
-
+The noise function used is not classic Perlin noise, but simplex noise as it
+is faster and more symmetric. The implementation is by Ian McEwan of Ashima Arts.
+See https://github.com/ashima/webgl-noise for more details.
 
 Controls
 --------
