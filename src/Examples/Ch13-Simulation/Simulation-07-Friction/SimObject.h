@@ -42,6 +42,9 @@ public:
     inline void SetConstantForce( const IvVector3& force ) { mConstantForce = force; }
     inline void SetConstantTorque( const IvVector3& torque ) { mConstantTorque = torque; }
 
+    static void CreateStoneGeometry();
+    static void DestroyStoneGeometry();
+
 protected:
     void        InitializeMoments();
     void        Integrate( float dt );

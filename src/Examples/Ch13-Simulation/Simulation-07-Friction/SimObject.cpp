@@ -30,8 +30,8 @@
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-static IvVertexBuffer* stoneVertices = 0;
-static IvIndexBuffer* stoneIndices = 0;
+static IvVertexBuffer* gStoneVertices = 0;
+static IvIndexBuffer* gStoneIndices = 0;
 
 extern bool mUseFriction;
 
@@ -363,115 +363,6 @@ SimObject::Render()
     
     IvSetWorldMatrix( transform );
     
-	// load data if not there
-	if ( stoneVertices == 0 )
-	{
-		const int stacks = 16;
-		const int slices = 12;
-        
-		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
-        
-        int numVerts = slices*(stacks-1)+2;
-		IvNPVertex* vertexPtr = (IvNPVertex*) IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numVerts);
-        int numIndices = 6*slices*(stacks-1);
-		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * numIndices);
-        
-		int currentVertex = 0;
-		int currentIndex = 0;
-		
-		// verts
-		vertexPtr[currentVertex].normal.Set(0.0, 0.0f, -1.0f);
-		vertexPtr[currentVertex].position.Set(0.0, 0.0f, -1.0f);
-		currentVertex++;
-		const float increment = kPI/(float)stacks;
-		const float thetaIncrement = kTwoPI/(float)(2*slices-2);
-        
-		for (UInt32 latitude = 1; latitude < stacks; ++latitude)
-		{
-			for (UInt32 longitude = 0; longitude < slices; ++longitude)
-			{
-				float phi = -kHalfPI + float(latitude)*increment;
-				float theta = float(longitude)*thetaIncrement;
-                
-				float sinTheta, cosTheta;
-				IvSinCos(theta, sinTheta, cosTheta);
-                
-				float sinPhi, cosPhi;
-				IvSinCos(phi, sinPhi, cosPhi);
-                
-				vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
-				vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
-                
-				if ( longitude > 0 )
-				{
-					if ( currentVertex >= 1+slices )
-					{
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-1;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex-slices;
-					}
-					else
-					{
-						indexPtr[currentIndex++] = 0;
-						indexPtr[currentIndex++] = currentVertex;
-						indexPtr[currentIndex++] = currentVertex-1;
-					}
-				}
-				currentVertex++;
-			}
-			if ( currentVertex >= 2*slices )
-			{
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-2*slices;
-			}
-			else
-			{
-				indexPtr[currentIndex++] = 0;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-			}
-		}
-        
-		vertexPtr[currentVertex].normal.Set(0.0, 0.0f, 1.0f);
-		vertexPtr[currentVertex].position.Set(0.0, 0.0f, 1.0f);
-        
-		for (UInt32 longitude = 0; longitude < slices-1; ++longitude)
-		{
-			indexPtr[currentIndex++] = currentVertex;
-			indexPtr[currentIndex++] = currentVertex-longitude-2;
-			indexPtr[currentIndex++] = currentVertex-longitude-1;
-		}
-		indexPtr[currentIndex++] = currentVertex;
-		indexPtr[currentIndex++] = currentVertex-1;
-		indexPtr[currentIndex++] = currentVertex-slices;
-
-  		stoneVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr, kImmutableUsage);
-		stoneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr, kImmutableUsage);
-       
-		if (!stoneVertices || !stoneIndices)
-		{
-            if (stoneVertices)
-            {
-                IvRenderer::mRenderer->GetResourceManager()->Destroy(stoneVertices);
-                stoneVertices = 0;
-            }
-            if (stoneIndices)
-            {
-                IvRenderer::mRenderer->GetResourceManager()->Destroy(stoneIndices);
-                stoneIndices = 0;
-            }
-		}
-        
-		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
-	}
-    
 	// clear to default shader
 	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
 	IvRenderer::mRenderer->SetShaderProgram(0);
@@ -488,7 +379,7 @@ SimObject::Render()
     // draw it
     IvColor color = kCyan;
 	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
-    IvRenderer::mRenderer->Draw(kTriangleListPrim, stoneVertices, stoneIndices);
+    IvRenderer::mRenderer->Draw(kTriangleListPrim, gStoneVertices, gStoneIndices);
     
     IvMatrix44 rotate;
     rotate.Rotation(kPI, 0.0f, 0.0f);
@@ -496,7 +387,7 @@ SimObject::Render()
     IvRenderer::mRenderer->SetWorldMatrix(currentMat * rotate * transform);
     color = kRed;
 	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
-    IvRenderer::mRenderer->Draw(kTriangleListPrim, stoneVertices, stoneIndices);
+    IvRenderer::mRenderer->Draw(kTriangleListPrim, gStoneVertices, gStoneIndices);
     
 	// restore original state
 	IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -504,3 +395,138 @@ SimObject::Render()
     IvRenderer::mRenderer->SetWorldMatrix(currentMat);
 }
 
+//-------------------------------------------------------------------------------
+// @ SimObject::CreateStoneGeometry()
+//-------------------------------------------------------------------------------
+// Set up global vertex and index buffer
+//-------------------------------------------------------------------------------
+void SimObject::CreateStoneGeometry()
+{
+    // load data if not there
+    if (gStoneVertices == 0)
+    {
+        const int stacks = 16;
+        const int slices = 12;
+
+        size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+
+        int numVerts = slices*(stacks - 1) + 2;
+        IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numVerts);
+        int numIndices = 6 * slices*(stacks - 1);
+        UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * numIndices);
+
+        int currentVertex = 0;
+        int currentIndex = 0;
+
+        // verts
+        vertexPtr[currentVertex].normal.Set(0.0, 0.0f, -1.0f);
+        vertexPtr[currentVertex].position.Set(0.0, 0.0f, -1.0f);
+        currentVertex++;
+        const float increment = kPI / (float)stacks;
+        const float thetaIncrement = kTwoPI / (float)(2 * slices - 2);
+
+        for (UInt32 latitude = 1; latitude < stacks; ++latitude)
+        {
+            for (UInt32 longitude = 0; longitude < slices; ++longitude)
+            {
+                float phi = -kHalfPI + float(latitude)*increment;
+                float theta = float(longitude)*thetaIncrement;
+
+                float sinTheta, cosTheta;
+                IvSinCos(theta, sinTheta, cosTheta);
+
+                float sinPhi, cosPhi;
+                IvSinCos(phi, sinPhi, cosPhi);
+
+                vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+                vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+
+                if (longitude > 0)
+                {
+                    if (currentVertex >= 1 + slices)
+                    {
+                        indexPtr[currentIndex++] = currentVertex + 0;
+                        indexPtr[currentIndex++] = currentVertex - 1;
+                        indexPtr[currentIndex++] = currentVertex - slices - 1;
+                        indexPtr[currentIndex++] = currentVertex + 0;
+                        indexPtr[currentIndex++] = currentVertex - slices - 1;
+                        indexPtr[currentIndex++] = currentVertex - slices;
+                    }
+                    else
+                    {
+                        indexPtr[currentIndex++] = 0;
+                        indexPtr[currentIndex++] = currentVertex;
+                        indexPtr[currentIndex++] = currentVertex - 1;
+                    }
+                }
+                currentVertex++;
+            }
+            if (currentVertex >= 2 * slices)
+            {
+                indexPtr[currentIndex++] = currentVertex - slices;
+                indexPtr[currentIndex++] = currentVertex - 1;
+                indexPtr[currentIndex++] = currentVertex - slices - 1;
+                indexPtr[currentIndex++] = currentVertex - slices;
+                indexPtr[currentIndex++] = currentVertex - slices - 1;
+                indexPtr[currentIndex++] = currentVertex - 2 * slices;
+            }
+            else
+            {
+                indexPtr[currentIndex++] = 0;
+                indexPtr[currentIndex++] = currentVertex - slices;
+                indexPtr[currentIndex++] = currentVertex - 1;
+            }
+        }
+
+        vertexPtr[currentVertex].normal.Set(0.0, 0.0f, 1.0f);
+        vertexPtr[currentVertex].position.Set(0.0, 0.0f, 1.0f);
+
+        for (UInt32 longitude = 0; longitude < slices - 1; ++longitude)
+        {
+            indexPtr[currentIndex++] = currentVertex;
+            indexPtr[currentIndex++] = currentVertex - longitude - 2;
+            indexPtr[currentIndex++] = currentVertex - longitude - 1;
+        }
+        indexPtr[currentIndex++] = currentVertex;
+        indexPtr[currentIndex++] = currentVertex - 1;
+        indexPtr[currentIndex++] = currentVertex - slices;
+
+        gStoneVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr, kImmutableUsage);
+        gStoneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr, kImmutableUsage);
+
+        if (!gStoneVertices || !gStoneIndices)
+        {
+            if (gStoneVertices)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(gStoneVertices);
+                gStoneVertices = 0;
+            }
+            if (gStoneIndices)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(gStoneIndices);
+                gStoneIndices = 0;
+            }
+        }
+
+        IvStackAllocator::mScratchAllocator->Reset(currentOffset);
+    }
+}
+
+//-------------------------------------------------------------------------------
+// @ SimObject::DestroyStoneGeometry()
+//-------------------------------------------------------------------------------
+// Delete up global vertex and index buffer
+//-------------------------------------------------------------------------------
+void SimObject::DestroyStoneGeometry()
+{
+    if (gStoneVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(gStoneVertices);
+        gStoneVertices = 0;
+    }
+    if (gStoneIndices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(gStoneIndices);
+        gStoneIndices = 0;
+    }
+}

@@ -71,6 +71,8 @@ Game::Game()
 //-------------------------------------------------------------------------------
 Game::~Game()
 {
+    SimObject::DestroyStoneGeometry();
+
     delete mPlayer;
     mPlayer = 0;
 
@@ -117,8 +119,10 @@ Game::PostRendererInitialize()
     mObjects[mNumObjects++].SetTranslate( IvVector3( 0.8f, 3.8f+yDiff, 0.0f ) );
     mObjects[mNumObjects].Reset();
     mObjects[mNumObjects++].SetTranslate( IvVector3( -0.8f, 3.8f+yDiff, 0.0f ) );
+
+    SimObject::CreateStoneGeometry();
     
-    ::IvSetDefaultLighting();
+    IvSetDefaultLighting();
     
     return true;
 }   // End of Game::PostRendererInitialize()
@@ -258,39 +262,4 @@ Game::Render()                                  // Here's Where We Do All The Dr
     {
         mObjects[i].Render();
     }
-    
-    // draw the collision state
-/*    IvSetWorldIdentity();
-    glRasterPos3f(-37, 27, 0);
-    char outString[256];
-    strncpy(outString, "Collision: ", 255);
-    if (mUseCollision)
-    {
-        strncat(outString, "On", 244);
-    }
-    else
-    {
-        strncat(outString, "Off", 244);
-    }
-    for (char* c=outString; *c != '\0'; c++) 
-    {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
-    }
-    
-    // draw the collision state
-    glRasterPos3f(-37, 25, 0);
-    strncpy(outString, "Friction: ", 255);
-    if (mUseFriction)
-    {
-        strncat(outString, "On", 244);
-    }
-    else
-    {
-        strncat(outString, "Off", 244);
-    }
-    for (char* c=outString; *c != '\0'; c++) 
-    {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
-    }
-    */
 }
