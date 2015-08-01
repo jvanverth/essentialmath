@@ -1,0 +1,24 @@
+float4x4 IvModelViewProjectionMatrix;
+float4x4 IvNormalMatrix;
+float4   IvLightDirection;
+float4   IvLightAmbient;
+float4   IvLightDiffuse;
+float4   IvDiffuseColor;
+
+struct VS_OUTPUT
+{
+    float4 pos : SV_POSITION;
+    float4 color : COLOR0;
+	float3 localPos : TEXCOORD0;
+};
+
+VS_OUTPUT vs_main( float4 normal : NORMAL, float4 pos : POSITION )
+{
+    VS_OUTPUT Out = (VS_OUTPUT) 0;
+    Out.pos = mul(IvModelViewProjectionMatrix, pos);
+    float4 transNormal = normalize(mul(IvNormalMatrix, normal));
+    float4 lightValue = IvLightAmbient + IvLightDiffuse*saturate(dot(IvLightDirection,transNormal));
+    Out.color = IvDiffuseColor*lightValue;
+	Out.localPos = pos.xyz;
+    return Out;
+};

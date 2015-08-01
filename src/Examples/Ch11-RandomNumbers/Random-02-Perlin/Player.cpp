@@ -80,6 +80,8 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mSkyShader);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mMarbleShader);
 }   // End of Player::~Player()
 
 
