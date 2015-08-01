@@ -62,6 +62,7 @@ Player::Player()
 
     delete [] samplePositions;
     delete [] sampleTimes;
+    delete [] controls;
 
     mTime = 0.0f;
     mRun = true;

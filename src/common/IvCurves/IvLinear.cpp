@@ -49,9 +49,7 @@ IvLinear::IvLinear() :
 //-------------------------------------------------------------------------------
 IvLinear::~IvLinear()
 {
-    delete [] mPositions;
-    delete [] mTimes;
-
+    Clean();
 }   // End of IvLinear::~IvLinear()
 
 
@@ -116,8 +114,20 @@ IvLinear::Initialize( const IvVector3* samples, const float* times,
 void 
 IvLinear::Clean()
 {
-    delete [] mPositions;
-    delete [] mTimes;
+    if (mCurveVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mCurveVertices);
+        mCurveVertices = 0;
+    }
+    if (mPointVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mPointVertices);
+        mPointVertices = 0;
+    }
+
+    delete[] mPositions;
+    delete[] mTimes;
+
     mCount = 0;
 
 }   // End of IvLinear::Clean()

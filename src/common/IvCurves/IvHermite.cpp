@@ -333,6 +333,22 @@ IvHermite::InitializeNatural( const IvVector3* positions,
 //-------------------------------------------------------------------------------
 void IvHermite::Clean()
 {
+    if (mCurveVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mCurveVertices);
+        mCurveVertices = 0;
+    }
+    if (mPointVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mPointVertices);
+        mPointVertices = 0;
+    }
+    if (mTangentVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mTangentVertices);
+        mTangentVertices = 0;
+    }
+
     delete [] mPositions;
     delete [] mInTangents;
     delete [] mOutTangents;

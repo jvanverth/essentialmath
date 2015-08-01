@@ -202,7 +202,23 @@ IvBezier::Initialize( const IvVector3* positions,
 //-------------------------------------------------------------------------------
 void IvBezier::Clean()
 {
-    delete [] mPositions;
+    if (mCurveVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mCurveVertices);
+        mCurveVertices = 0;
+    }
+    if (mPointVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mPointVertices);
+        mPointVertices = 0;
+    }
+    if (mControlVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mControlVertices);
+        mControlVertices = 0;
+    }
+
+    delete[] mPositions;
     delete [] mControls;
     delete [] mTimes;
     delete [] mLengths;
@@ -708,9 +724,11 @@ IvBezier::SubdivideCurve( IvCPVertex* currentVertex, const IvVector3& P0, const 
     // check to see if straight
     IvLineSegment3 segment( P0, P3 );
     float t;
-    if ( DistanceSquared( segment, P1, t ) < 1.0e-6f &&
-         DistanceSquared( segment, P2, t ) < 1.0e-6f )
-         return currentVertex;
+    if (DistanceSquared(segment, P1, t) < 1.0e-6f &&
+        DistanceSquared(segment, P2, t) < 1.0e-6f)
+    {
+        return currentVertex;
+    }
 
     // otherwise get control points for subdivision
     IvVector3 L1 = (P0 + P1) * 0.5f;

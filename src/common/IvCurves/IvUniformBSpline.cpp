@@ -151,7 +151,18 @@ IvUniformBSpline::Initialize( const IvVector3* positions,
 void
 IvUniformBSpline::Clean()
 {
-    delete [] mPositions;
+    if (mCurveVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mCurveVertices);
+        mCurveVertices = 0;
+    }
+    if (mPointVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mPointVertices);
+        mPointVertices = 0;
+    }
+
+    delete[] mPositions;
     delete [] mTimes;
     delete [] mLengths;
     mTotalLength = 0.0f;
