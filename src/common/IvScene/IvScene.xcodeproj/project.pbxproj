@@ -7,25 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE90E73B0D75176C007DA437 /* IvGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E7300D75176C007DA437 /* IvGeometry.cpp */; };
-		CE90E73C0D75176C007DA437 /* IvGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E7310D75176C007DA437 /* IvGeometry.h */; };
+		CE6700AE1B6C6D2800571010 /* IvHierarchy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE6700AC1B6C6D2800571010 /* IvHierarchy.cpp */; };
+		CE6700AF1B6C6D2800571010 /* IvHierarchy.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6700AD1B6C6D2800571010 /* IvHierarchy.h */; };
 		CE90E73D0D75176C007DA437 /* IvIndexedGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E7320D75176C007DA437 /* IvIndexedGeometry.cpp */; };
 		CE90E73E0D75176C007DA437 /* IvIndexedGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E7330D75176C007DA437 /* IvIndexedGeometry.h */; };
-		CE90E73F0D75176C007DA437 /* IvNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E7340D75176C007DA437 /* IvNode.cpp */; };
-		CE90E7400D75176C007DA437 /* IvNode.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E7350D75176C007DA437 /* IvNode.h */; };
-		CE90E7410D75176C007DA437 /* IvSpatial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE90E7390D75176C007DA437 /* IvSpatial.cpp */; };
-		CE90E7420D75176C007DA437 /* IvSpatial.h in Headers */ = {isa = PBXBuildFile; fileRef = CE90E73A0D75176C007DA437 /* IvSpatial.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE90E7300D75176C007DA437 /* IvGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvGeometry.cpp; sourceTree = "<group>"; };
-		CE90E7310D75176C007DA437 /* IvGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvGeometry.h; sourceTree = "<group>"; };
+		CE6700AC1B6C6D2800571010 /* IvHierarchy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvHierarchy.cpp; sourceTree = "<group>"; };
+		CE6700AD1B6C6D2800571010 /* IvHierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvHierarchy.h; sourceTree = "<group>"; };
 		CE90E7320D75176C007DA437 /* IvIndexedGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvIndexedGeometry.cpp; sourceTree = "<group>"; };
 		CE90E7330D75176C007DA437 /* IvIndexedGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvIndexedGeometry.h; sourceTree = "<group>"; };
-		CE90E7340D75176C007DA437 /* IvNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvNode.cpp; sourceTree = "<group>"; };
-		CE90E7350D75176C007DA437 /* IvNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvNode.h; sourceTree = "<group>"; };
-		CE90E7390D75176C007DA437 /* IvSpatial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IvSpatial.cpp; sourceTree = "<group>"; };
-		CE90E73A0D75176C007DA437 /* IvSpatial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvSpatial.h; sourceTree = "<group>"; };
 		D2AAC046055464E500DB518D /* libIvScene.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIvScene.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -53,14 +45,10 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				CE90E7300D75176C007DA437 /* IvGeometry.cpp */,
-				CE90E7310D75176C007DA437 /* IvGeometry.h */,
+				CE6700AC1B6C6D2800571010 /* IvHierarchy.cpp */,
+				CE6700AD1B6C6D2800571010 /* IvHierarchy.h */,
 				CE90E7320D75176C007DA437 /* IvIndexedGeometry.cpp */,
 				CE90E7330D75176C007DA437 /* IvIndexedGeometry.h */,
-				CE90E7340D75176C007DA437 /* IvNode.cpp */,
-				CE90E7350D75176C007DA437 /* IvNode.h */,
-				CE90E7390D75176C007DA437 /* IvSpatial.cpp */,
-				CE90E73A0D75176C007DA437 /* IvSpatial.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -87,10 +75,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE90E73C0D75176C007DA437 /* IvGeometry.h in Headers */,
 				CE90E73E0D75176C007DA437 /* IvIndexedGeometry.h in Headers */,
-				CE90E7400D75176C007DA437 /* IvNode.h in Headers */,
-				CE90E7420D75176C007DA437 /* IvSpatial.h in Headers */,
+				CE6700AF1B6C6D2800571010 /* IvHierarchy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,10 +129,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE90E73B0D75176C007DA437 /* IvGeometry.cpp in Sources */,
+				CE6700AE1B6C6D2800571010 /* IvHierarchy.cpp in Sources */,
 				CE90E73D0D75176C007DA437 /* IvIndexedGeometry.cpp in Sources */,
-				CE90E73F0D75176C007DA437 /* IvNode.cpp in Sources */,
-				CE90E7410D75176C007DA437 /* IvSpatial.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
