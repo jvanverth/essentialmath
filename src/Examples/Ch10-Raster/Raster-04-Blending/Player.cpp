@@ -175,6 +175,14 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mBaseTexture);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mBlendTextures[0]);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mBlendTextures[1]);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mBlendTextures[2]);
+
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mCylinderVerts);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mCylinderIndices);
 }   // End of Player::~Player()
 
 

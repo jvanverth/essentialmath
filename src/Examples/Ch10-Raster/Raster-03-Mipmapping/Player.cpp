@@ -167,6 +167,13 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadVerts);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadIndices);
+
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mCheckerBoardTex);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mMipmapLevelBandsTex);
+
 }   // End of Player::~Player()
 
 

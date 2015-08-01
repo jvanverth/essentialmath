@@ -84,6 +84,7 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 }   // End of Player::~Player()
 
 
