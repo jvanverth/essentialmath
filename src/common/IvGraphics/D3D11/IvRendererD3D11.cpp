@@ -682,7 +682,7 @@ void IvRendererD3D11::SetShaderProgram(IvShaderProgram* program)
 // Draws the given buffers
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, 
-                  IvIndexBuffer* indexBuffer, unsigned int numIndices)
+                           IvIndexBuffer* indexBuffer, unsigned int numIndices)
 {
     BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 

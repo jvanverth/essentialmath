@@ -113,7 +113,7 @@ copy .\Iv*.h ..\Includes
     </Bscmake>
     <PostBuildEvent>
       <Command>if not exist ..\Includes mkdir ..\Includes
-copy .\Iv*.h ..\Includes
+ copy .\Iv*.h ..\Includes
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
