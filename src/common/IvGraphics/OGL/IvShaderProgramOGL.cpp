@@ -142,9 +142,9 @@ IvShaderProgramOGL::GetUniform(char const* name)
     
     // now find it in the list of uniforms to get type and size
     GLint numUniforms = 0;
-    glGetProgramiv(	mProgramID, GL_ACTIVE_UNIFORMS, &numUniforms );
+    glGetProgramiv( mProgramID, GL_ACTIVE_UNIFORMS, &numUniforms );
     GLint uniformMaxLength = 0;
-    glGetProgramiv(	mProgramID, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformMaxLength );
+    glGetProgramiv( mProgramID, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformMaxLength );
     GLint count = -1;
     GLenum type = 0;
     GLchar* uniformName = new GLchar[uniformMaxLength];
@@ -153,7 +153,7 @@ IvShaderProgramOGL::GetUniform(char const* name)
     for ( GLint i = 0; i < numUniforms; ++i )
     {
         GLsizei length;
-        glGetActiveUniform(	mProgramID, i, uniformMaxLength, &length, &count, &type, uniformName);              
+        glGetActiveUniform( mProgramID, i, uniformMaxLength, &length, &count, &type, uniformName);              
         if (strncmp(uniformName, name, maxlen) == 0)
         {
             found = true;
@@ -188,8 +188,8 @@ IvShaderProgramOGL::GetUniform(char const* name)
             return NULL;
     };
 
-	IvUniformOGL* uniform = new IvUniformOGL(ivType, (unsigned int)count, this, location, 
-											 ivType == kTextureUniform?mNextTextureStage++:0);
+    IvUniformOGL* uniform = new IvUniformOGL(ivType, (unsigned int)count, this, location, 
+                                             ivType == kTextureUniform?mNextTextureStage++:0);
     mUniforms[name] = uniform;
 
     return uniform;

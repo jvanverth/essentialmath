@@ -66,7 +66,7 @@ public:
 
 protected:
     // constructor/destructor
-	IvTexture() : mFormat(kRGBA32TexFmt), mWidth(0), mHeight(0) { }
+    IvTexture() : mFormat(kRGBA32TexFmt), mWidth(0), mHeight(0) { }
     virtual ~IvTexture() {}
 
     IvTextureFormat     mFormat;
@@ -76,7 +76,7 @@ protected:
 private:
     // copy operations (unimplemented so we can't copy)
     IvTexture(const IvTexture& other);
-	IvTexture& operator=(const IvTexture& other);
+    IvTexture& operator=(const IvTexture& other);
 }; 
 
 #endif

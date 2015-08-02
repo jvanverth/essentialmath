@@ -163,7 +163,7 @@ bool TriangleIntersect( const IvVector3& P0, const IvVector3& P1,
             return AdjustQ(P2, P0, P1, Q0, Q2, Q1, testQ0, testQ2, testQ1, normalP);
         // P2 in Q's positive half-space (so P1 is lone vertex)
         else if (testP2 > kEpsilon) 
-            return AdjustQ(P1, P2, P0, Q0, Q2, Q1, testQ0, testQ2, testQ1, normalP);	
+            return AdjustQ(P1, P2, P0, Q0, Q2, Q1, testQ0, testQ2, testQ1, normalP);    
         // P0 is lone vertex
         else 
             return AdjustQ(P0, P1, P2, Q0, Q1, Q2, testQ0, testQ1, testQ2, normalP);

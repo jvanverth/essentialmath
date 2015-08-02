@@ -33,12 +33,12 @@
 // Default constructor
 //-------------------------------------------------------------------------------
 IvUniformOGL::IvUniformOGL(IvUniformType type, unsigned int count, 
-						   IvShaderProgramOGL* shader, unsigned int shaderIndex, 
-						   unsigned int stage)
-	: IvUniform( type, count )
-	, mShader( shader )
-	, mShaderIndex( shaderIndex)
-	, mTextureStage( 0 )
+                           IvShaderProgramOGL* shader, unsigned int shaderIndex, 
+                           unsigned int stage)
+    : IvUniform( type, count )
+    , mShader( shader )
+    , mShaderIndex( shaderIndex)
+    , mTextureStage( 0 )
 {
     switch (mType)
     {
@@ -56,7 +56,7 @@ IvUniformOGL::IvUniformOGL(IvUniformType type, unsigned int count,
             break;
         case kTextureUniform:
             mValue.mTexture = 0;
-			mTextureStage = stage;
+            mTextureStage = stage;
             break;
     };
 }
@@ -278,10 +278,10 @@ void IvUniformOGL::Update()
     if (mShader != IvRenderer::mRenderer->GetShaderProgram())
         return;
 
-	if ( mType == kTextureUniform )
-	{
+    if ( mType == kTextureUniform )
+    {
         mValue.mTexture->MakeActive(mTextureStage);
-	}
+    }
 
     if (!mNeedsUpdate)
         return;
@@ -301,7 +301,7 @@ void IvUniformOGL::Update()
             glUniformMatrix4fv(mShaderIndex, mCount, GL_FALSE, (GLfloat*)mValue.mMatrix44);
             break;
         case kTextureUniform:
-			glUniform1iv(mShaderIndex, 1, &mTextureStage);
+            glUniform1iv(mShaderIndex, 1, &mTextureStage);
             break;
     };
     

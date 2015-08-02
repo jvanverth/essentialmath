@@ -152,31 +152,31 @@ Game::UpdateObjects( float dt )
 void 
 Game::Perspective( float fov, float aspect, float nearZ, float farZ )
 {
-	IvMatrix44 perspective;
-	if (IvRenderer::mRenderer->GetAPI() == kOpenGL)
-	{
-		float d = 1.0f/IvTan(fov/180.0f*kPI*0.5f);
-		float recip = 1.0f/(nearZ-farZ);
+    IvMatrix44 perspective;
+    if (IvRenderer::mRenderer->GetAPI() == kOpenGL)
+    {
+        float d = 1.0f/IvTan(fov/180.0f*kPI*0.5f);
+        float recip = 1.0f/(nearZ-farZ);
 
-		perspective(0,0) = d/aspect;
-		perspective(1,1) = d;
-		perspective(2,2) = (nearZ+farZ)*recip;
-		perspective(2,3) = 2.0f*nearZ*farZ*recip;
-		perspective(3,2) = -1.0f;
-		perspective(3,3) = 0.0f;
-	}
-	else
-	{
-		float d = 1.0f/IvTan(fov/180.0f*kPI*0.5f);
-		float Q = farZ/(farZ-nearZ);
+        perspective(0,0) = d/aspect;
+        perspective(1,1) = d;
+        perspective(2,2) = (nearZ+farZ)*recip;
+        perspective(2,3) = 2.0f*nearZ*farZ*recip;
+        perspective(3,2) = -1.0f;
+        perspective(3,3) = 0.0f;
+    }
+    else
+    {
+        float d = 1.0f/IvTan(fov/180.0f*kPI*0.5f);
+        float Q = farZ/(farZ-nearZ);
 
-		perspective(0,0) = d/aspect;
-		perspective(1,1) = d;
-		perspective(2,2) = Q;
-		perspective(2,3) = -nearZ*Q;
-		perspective(3,2) = 1.0f;
-		perspective(3,3) = 0.0f;
-	}
+        perspective(0,0) = d/aspect;
+        perspective(1,1) = d;
+        perspective(2,2) = Q;
+        perspective(2,3) = -nearZ*Q;
+        perspective(3,2) = 1.0f;
+        perspective(3,3) = 0.0f;
+    }
 
     // send to Renderer
     IvSetProjectionMatrix( perspective );

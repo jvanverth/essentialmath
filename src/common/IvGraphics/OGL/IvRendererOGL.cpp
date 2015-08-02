@@ -42,24 +42,24 @@ static IvShaderProgramOGL* sDefaultShaders[kVertexFormatCount];
 
 static GLenum sBlendFunc[kBlendFuncCount] =
 {
-	GL_ZERO,
-	GL_ONE,
-	GL_SRC_COLOR,
-	GL_ONE_MINUS_SRC_COLOR,
-	GL_SRC_ALPHA,
-	GL_ONE_MINUS_SRC_ALPHA,
-	GL_DST_COLOR,
-	GL_ONE_MINUS_DST_COLOR,
-	GL_DST_ALPHA,
-	GL_ONE_MINUS_DST_ALPHA,
+    GL_ZERO,
+    GL_ONE,
+    GL_SRC_COLOR,
+    GL_ONE_MINUS_SRC_COLOR,
+    GL_SRC_ALPHA,
+    GL_ONE_MINUS_SRC_ALPHA,
+    GL_DST_COLOR,
+    GL_ONE_MINUS_DST_COLOR,
+    GL_DST_ALPHA,
+    GL_ONE_MINUS_DST_ALPHA,
 };
 
 static GLenum sBlendOp[kBlendOpCount] =
 {
-	GL_FUNC_ADD,
-	GL_FUNC_SUBTRACT,
-	GL_MIN,
-	GL_MAX,
+    GL_FUNC_ADD,
+    GL_FUNC_SUBTRACT,
+    GL_MIN,
+    GL_MAX,
 };
 
 static GLenum sDepthFunc[kDepthTestCount];
@@ -76,8 +76,8 @@ static GLenum sDepthFunc[kDepthTestCount];
 bool 
 IvRendererOGL::Create()
 {
-	if ( !mRenderer )
-		mRenderer = new IvRendererOGL();
+    if ( !mRenderer )
+        mRenderer = new IvRendererOGL();
     return ( mRenderer != 0 );
 
 }   // End of IvRendererOGL::Create()
@@ -92,10 +92,10 @@ IvRendererOGL::IvRendererOGL() : IvRenderer()
 {
     mShader = NULL;
 
-	mAPI = kOpenGL;
+    mAPI = kOpenGL;
 
-//	GLfloat diffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-//	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
+//  GLfloat diffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+//  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
 
     sPrimTypeMap[kPointListPrim] = GL_POINTS;
     sPrimTypeMap[kLineListPrim] = GL_LINES;
@@ -120,7 +120,7 @@ IvRendererOGL::IvRendererOGL() : IvRenderer()
 //-------------------------------------------------------------------------------
 IvRendererOGL::~IvRendererOGL()
 {
-	// delete shader program?
+    // delete shader program?
     for ( unsigned int i = 0; i < kVertexFormatCount; ++i )
     {
         if (sDefaultShaders[i])
@@ -294,17 +294,17 @@ void IvRendererOGL::ClearBuffers(IvClearBuffer buffer)
 //-------------------------------------------------------------------------------
 void IvRendererOGL::SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc destBlend, IvBlendOp op)
 {
-	if (kOneBlendFunc == srcBlend && kZeroBlendFunc == destBlend && kAddBlendOp == op)
-	{
-		glDisable(GL_BLEND);
-	}
-	else
-	{
-		glEnable(GL_BLEND);
-	}
+    if (kOneBlendFunc == srcBlend && kZeroBlendFunc == destBlend && kAddBlendOp == op)
+    {
+        glDisable(GL_BLEND);
+    }
+    else
+    {
+        glEnable(GL_BLEND);
+    }
 
-	glBlendFunc(sBlendFunc[srcBlend], sBlendFunc[destBlend]);
-	glBlendEquation(sBlendOp[op]);
+    glBlendFunc(sBlendFunc[srcBlend], sBlendFunc[destBlend]);
+    glBlendEquation(sBlendOp[op]);
 }
 
 
@@ -342,14 +342,14 @@ void IvRendererOGL::SetDepthTest(IvDepthTestFunc func)
 //-------------------------------------------------------------------------------
 IvDepthTestFunc IvRendererOGL::GetDepthTest()
 {
-	GLint mode;
-	glGetIntegerv( GL_DEPTH_TEST, &mode );
+    GLint mode;
+    glGetIntegerv( GL_DEPTH_TEST, &mode );
     if (mode == GL_FALSE)
-	{
+    {
         return kDisableDepthTest;
-	}
+    }
 
-	glGetIntegerv( GL_DEPTH_FUNC, &mode );
+    glGetIntegerv( GL_DEPTH_FUNC, &mode );
     for (unsigned int func = 0; func < kDepthTestCount; ++func)
     {
         if ( mode == sDepthFunc[func] )
@@ -404,21 +404,21 @@ void IvRendererOGL::SetShadeMode( IvShadeMode shade )
 IvShadeMode 
 IvRendererOGL::GetShadeMode()
 {
-//	GLint mode;
-//	glGetIntegerv( GL_SHADE_MODEL, &mode );
+//  GLint mode;
+//  glGetIntegerv( GL_SHADE_MODEL, &mode );
 //    if (mode == GL_FLAT)
-//	{
+//  {
 //        return kFlatShaded;
-//	}
+//  }
 //    else if (mode == GL_SMOOTH)
-//	{
-//		return kGouraudShaded;
-//	}
-//	else
-//	{
-//		ASSERT(false);
-//		return kGouraudShaded;
-//	}
+//  {
+//      return kGouraudShaded;
+//  }
+//  else
+//  {
+//      ASSERT(false);
+//      return kGouraudShaded;
+//  }
     return kGouraudShaded;
 }
 
@@ -506,40 +506,40 @@ void IvRendererOGL::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 {
     BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
-	// update any default uniforms
-	if ( mShader )
-	{
-		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-		if ( modelviewproj )
-		{
-			modelviewproj->SetValue(mWVPMat, 0);
-		}
-		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-		if ( normalMat )
-		{
-			normalMat->SetValue(mNormalMat, 0);
-		}
-		IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-		if (diffuseColor)
-		{
-			diffuseColor->SetValue(mDiffuseColor,0);
-		}
-		IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-		if ( ambient )
-		{
-			ambient->SetValue(mLightAmbient,0);
-		}
-		IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-		if ( diffuse )
-		{
-			diffuse->SetValue(mLightDiffuse,0);
-		}
-		IvUniform* direction = mShader->GetUniform("IvLightDirection");
-		if ( direction )
-		{
-			direction->SetValue(mLightDirection,0);
-		}
-	}
+    // update any default uniforms
+    if ( mShader )
+    {
+        IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+        if ( modelviewproj )
+        {
+            modelviewproj->SetValue(mWVPMat, 0);
+        }
+        IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
+        if ( normalMat )
+        {
+            normalMat->SetValue(mNormalMat, 0);
+        }
+        IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
+        if (diffuseColor)
+        {
+            diffuseColor->SetValue(mDiffuseColor,0);
+        }
+        IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
+        if ( ambient )
+        {
+            ambient->SetValue(mLightAmbient,0);
+        }
+        IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
+        if ( diffuse )
+        {
+            diffuse->SetValue(mLightDiffuse,0);
+        }
+        IvUniform* direction = mShader->GetUniform("IvLightDirection");
+        if ( direction )
+        {
+            direction->SetValue(mLightDirection,0);
+        }
+    }
 
     if (vertexBuffer)
         static_cast<IvVertexBufferOGL*>(vertexBuffer)->MakeActive();
@@ -564,40 +564,40 @@ void IvRendererOGL::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsi
 {
     BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
-	// update any default uniforms
-	if ( mShader )
-	{
-		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-		if ( modelviewproj )
-		{
-			modelviewproj->SetValue(mWVPMat, 0);
-		}
-		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-		if ( normalMat )
-		{
-			normalMat->SetValue(mNormalMat, 0);
-		}
-		IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-		if (diffuseColor)
-		{
-			diffuseColor->SetValue(mDiffuseColor,0);
-		}
-		IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-		if ( ambient )
-		{
-			ambient->SetValue(mLightAmbient,0);
-		}
-		IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-		if ( diffuse )
-		{
-			diffuse->SetValue(mLightDiffuse,0);
-		}
-		IvUniform* direction = mShader->GetUniform("IvLightDirection");
-		if ( direction )
-		{
-			direction->SetValue(mLightDirection,0);
-		}
-	}
+    // update any default uniforms
+    if ( mShader )
+    {
+        IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+        if ( modelviewproj )
+        {
+            modelviewproj->SetValue(mWVPMat, 0);
+        }
+        IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
+        if ( normalMat )
+        {
+            normalMat->SetValue(mNormalMat, 0);
+        }
+        IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
+        if (diffuseColor)
+        {
+            diffuseColor->SetValue(mDiffuseColor,0);
+        }
+        IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
+        if ( ambient )
+        {
+            ambient->SetValue(mLightAmbient,0);
+        }
+        IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
+        if ( diffuse )
+        {
+            diffuse->SetValue(mLightDiffuse,0);
+        }
+        IvUniform* direction = mShader->GetUniform("IvLightDirection");
+        if ( direction )
+        {
+            direction->SetValue(mLightDirection,0);
+        }
+    }
 
     if (vertexBuffer)
         static_cast<IvVertexBufferOGL*>(vertexBuffer)->MakeActive();

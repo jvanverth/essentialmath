@@ -27,21 +27,21 @@
 class IvStackAllocator
 {
 public:
-	IvStackAllocator(size_t totalBytes);
-	~IvStackAllocator();
+    IvStackAllocator(size_t totalBytes);
+    ~IvStackAllocator();
 
-	size_t GetCurrentOffset() { return fCurrentOffset; }
-	void Reset(size_t offset = 0) { fCurrentOffset = offset; }
+    size_t GetCurrentOffset() { return fCurrentOffset; }
+    void Reset(size_t offset = 0) { fCurrentOffset = offset; }
 
-	void* Allocate(size_t bytes);
+    void* Allocate(size_t bytes);
 
-	static IvStackAllocator* mScratchAllocator;
+    static IvStackAllocator* mScratchAllocator;
 
 private:
-	IvStackAllocator();
-	unsigned char* fAllocation;
-	size_t         fTotalBytes;
-	size_t         fCurrentOffset;
+    IvStackAllocator();
+    unsigned char* fAllocation;
+    size_t         fTotalBytes;
+    size_t         fCurrentOffset;
 };
 
 

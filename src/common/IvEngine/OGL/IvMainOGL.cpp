@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
     glfwMakeContextCurrent(window);
     
 #ifndef PLATFORM_OSX
-	glewExperimental = GL_TRUE;
-	GLenum err = glewInit();
+    glewExperimental = GL_TRUE;
+    GLenum err = glewInit();
     if ( GLEW_OK != err )
     {
         ERROR_OUT("Error: " << glewGetErrorString(err) << std::endl);
@@ -108,8 +108,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-	// set up renderer
-	if (!IvRendererOGL::Create() || !IvRendererOGL::mRenderer->Initialize( 640, 480 ))
+    // set up renderer
+    if (!IvRendererOGL::Create() || !IvRendererOGL::mRenderer->Initialize( 640, 480 ))
     {
         IvRenderer::Destroy();
         IvGame::Destroy();
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     }
 
     // Set the background dark blue
-	IvRenderer::mRenderer->SetClearColor( 0.0f, 0.0f, 0.10f, 1.0f );
+    IvRenderer::mRenderer->SetClearColor( 0.0f, 0.0f, 0.10f, 1.0f );
 
     // Do post-renderer creation initialization
     if (!IvGame::mGame->PostRendererInitialize())
@@ -172,7 +172,7 @@ int main(int argc, char *argv[])
 static void
 visibilityCallback(GLFWwindow* window, int vis)
 {
-	IvRenderer::mRenderer->Activate( vis == GL_TRUE );
+    IvRenderer::mRenderer->Activate( vis == GL_TRUE );
 }
 
 

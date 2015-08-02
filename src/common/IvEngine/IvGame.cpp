@@ -71,11 +71,11 @@ IvGame::~IvGame()
         mClock = 0;
     }
 
-	if (IvStackAllocator::mScratchAllocator)
-	{
-		delete IvStackAllocator::mScratchAllocator;
-		IvStackAllocator::mScratchAllocator = 0;
-	}
+    if (IvStackAllocator::mScratchAllocator)
+    {
+        delete IvStackAllocator::mScratchAllocator;
+        IvStackAllocator::mScratchAllocator = 0;
+    }
 
 }   // End of IvGame::~IvGame() 
 
@@ -147,8 +147,8 @@ IvGame::ParseCommandLine( int, char*[] )
 bool 
 IvGame::SetupSubsystems()
 {
-	// create the scratch allocator
-	IvStackAllocator::mScratchAllocator = new IvStackAllocator(1 * 1024 * 1024);
+    // create the scratch allocator
+    IvStackAllocator::mScratchAllocator = new IvStackAllocator(1 * 1024 * 1024);
 
     // create display
     mClock = new IvClock;
@@ -157,7 +157,7 @@ IvGame::SetupSubsystems()
 
     mClock->Update();
 
-	// create event handler
+    // create event handler
     mEventHandler = new IvEventHandler;
     if (!mEventHandler)
         return false;
@@ -176,7 +176,7 @@ IvGame::SetupSubsystems()
 void
 IvGame::Update()
 {
-	IvStackAllocator::mScratchAllocator->Reset();
+    IvStackAllocator::mScratchAllocator->Reset();
 
     if ( mQuit )
     {

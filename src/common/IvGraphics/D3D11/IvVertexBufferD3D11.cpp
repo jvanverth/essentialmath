@@ -33,35 +33,35 @@ D3D11_INPUT_ELEMENT_DESC sPFormatElements[] =
 
 D3D11_INPUT_ELEMENT_DESC sCPFormatElements[] =
 {
-	{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    { "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
 D3D11_INPUT_ELEMENT_DESC sNPFormatElements[] =
 {
-	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
 D3D11_INPUT_ELEMENT_DESC sCNPFormatElements[] =
 {
-	{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    { "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
 D3D11_INPUT_ELEMENT_DESC sTCPFormatElements[] =
 {
-	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
 D3D11_INPUT_ELEMENT_DESC sTNPFormatElements[] =
 {
-	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
 static const char sDummyShaderPFormat[] =
@@ -116,7 +116,7 @@ static const char sDummyShaderTCPFormat[] =
 "{\n"
 "    float4 pos : SV_POSITION;\n"
 "    float4 color : COLOR0;\n"
-"	 float2 uv : TEXCOORD0;\n"
+"    float2 uv : TEXCOORD0;\n"
 "};\n"
 "VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 color : COLOR0, float4 pos : POSITION )\n"
 "{\n"
@@ -129,7 +129,7 @@ static const char sDummyShaderTNPFormat[] =
 "{\n"
 "    float4 pos : SV_POSITION;\n"
 "    float3 normal : NORMAL;\n"
-"	 float2 uv : TEXCOORD0;\n"
+"    float2 uv : TEXCOORD0;\n"
 "};\n"
 "VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float3 normal : NORMAL, float4 pos : POSITION )\n"
 "{\n"
@@ -170,39 +170,39 @@ bool
 IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
                            ID3D11Device* device)
 {
-	if (numVertices == 0)
-	{
-		return false;
-	}
+    if (numVertices == 0)
+    {
+        return false;
+    }
 
-	if (usage == kImmutableUsage && !data)
-	{
-		return false;
-	}
+    if (usage == kImmutableUsage && !data)
+    {
+        return false;
+    }
 
-	D3D11_BUFFER_DESC vertexBufferDesc;
-	vertexBufferDesc.ByteWidth = numVertices*kIvVFSize[format];
-	switch (usage)
-	{
-	default:
-	case kDefaultUsage:
-		vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		break;
-	case kDynamicUsage:
-		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-		break;
-	case kImmutableUsage:
-		vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
-		break;
-	}
-	mUsage = usage;
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = (usage == kDynamicUsage) ? D3D11_CPU_ACCESS_WRITE : 0;
-	vertexBufferDesc.MiscFlags = 0;
-	//*** replacement for D3DMANAGED?
+    D3D11_BUFFER_DESC vertexBufferDesc;
+    vertexBufferDesc.ByteWidth = numVertices*kIvVFSize[format];
+    switch (usage)
+    {
+    default:
+    case kDefaultUsage:
+        vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+        break;
+    case kDynamicUsage:
+        vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+        break;
+    case kImmutableUsage:
+        vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+        break;
+    }
+    mUsage = usage;
+    vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    vertexBufferDesc.CPUAccessFlags = (usage == kDynamicUsage) ? D3D11_CPU_ACCESS_WRITE : 0;
+    vertexBufferDesc.MiscFlags = 0;
+    //*** replacement for D3DMANAGED?
 
     D3D11_SUBRESOURCE_DATA* initDataPtr = NULL;
-	D3D11_SUBRESOURCE_DATA initData;
+    D3D11_SUBRESOURCE_DATA initData;
     if (data)
     {
         initDataPtr = &initData;
@@ -212,97 +212,97 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
     }
 
     if (FAILED(device->CreateBuffer(&vertexBufferDesc, initDataPtr, &mBufferPtr)))
-	{
-		mBufferPtr = 0;
-		return false;
-	}
+    {
+        mBufferPtr = 0;
+        return false;
+    }
 
-	if (sInputLayout[format] == 0)
-	{
-		D3D11_INPUT_ELEMENT_DESC* elements = NULL;
-		UINT numElements = 0;
-		const char* shaderString = NULL;
+    if (sInputLayout[format] == 0)
+    {
+        D3D11_INPUT_ELEMENT_DESC* elements = NULL;
+        UINT numElements = 0;
+        const char* shaderString = NULL;
 
-		switch (format)
-		{
+        switch (format)
+        {
         case kPFormat:
             elements = sPFormatElements;
             numElements = sizeof(sPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
             shaderString = sDummyShaderPFormat;
             break;
         case kCPFormat:
-			elements = sCPFormatElements;
-			numElements = sizeof(sCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-			shaderString = sDummyShaderCPFormat;
-			break;
-		case kNPFormat:
-			elements = sNPFormatElements;
-			numElements = sizeof(sNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-			shaderString = sDummyShaderNPFormat;
-			break;
-		case kCNPFormat:
-			elements = sCNPFormatElements;
-			numElements = sizeof(sCNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-			shaderString = sDummyShaderCNPFormat;
-			break;
-		case kTCPFormat:
-			elements = sTCPFormatElements;
-			numElements = sizeof(sTCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-			shaderString = sDummyShaderTCPFormat;
-			break;
-		case kTNPFormat:
-			elements = sTNPFormatElements;
-			numElements = sizeof(sTNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-			shaderString = sDummyShaderTNPFormat;
-			break;
-		}
+            elements = sCPFormatElements;
+            numElements = sizeof(sCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+            shaderString = sDummyShaderCPFormat;
+            break;
+        case kNPFormat:
+            elements = sNPFormatElements;
+            numElements = sizeof(sNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+            shaderString = sDummyShaderNPFormat;
+            break;
+        case kCNPFormat:
+            elements = sCNPFormatElements;
+            numElements = sizeof(sCNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+            shaderString = sDummyShaderCNPFormat;
+            break;
+        case kTCPFormat:
+            elements = sTCPFormatElements;
+            numElements = sizeof(sTCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+            shaderString = sDummyShaderTCPFormat;
+            break;
+        case kTNPFormat:
+            elements = sTNPFormatElements;
+            numElements = sizeof(sTNPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+            shaderString = sDummyShaderTNPFormat;
+            break;
+        }
 
-		if (NULL == shaderString)
-		{
-			mBufferPtr->Release();
-			mBufferPtr = 0;
-			return false;
-		}
+        if (NULL == shaderString)
+        {
+            mBufferPtr->Release();
+            mBufferPtr = 0;
+            return false;
+        }
 
-		ID3DBlob* code;
-		ID3DBlob* errorMessages = NULL;
+        ID3DBlob* code;
+        ID3DBlob* errorMessages = NULL;
 
-		// compile the shader to assembly
-		if (FAILED(D3DCompile(shaderString, strlen(shaderString) + 1, NULL, NULL, NULL, "vs_main", "vs_4_0",
-			D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG, 0, &code, &errorMessages)))
-		{
-			const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
-			DEBUG_OUT("Vertex shader error: ");
-			DEBUG_OUT(errors << std::endl);
-			errorMessages->Release();
-			mBufferPtr->Release();
-			mBufferPtr = 0;
-			return false;
-		}
-		if (errorMessages)
-		{
-			errorMessages->Release();
-		}
+        // compile the shader to assembly
+        if (FAILED(D3DCompile(shaderString, strlen(shaderString) + 1, NULL, NULL, NULL, "vs_main", "vs_4_0",
+            D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG, 0, &code, &errorMessages)))
+        {
+            const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
+            DEBUG_OUT("Vertex shader error: ");
+            DEBUG_OUT(errors << std::endl);
+            errorMessages->Release();
+            mBufferPtr->Release();
+            mBufferPtr = 0;
+            return false;
+        }
+        if (errorMessages)
+        {
+            errorMessages->Release();
+        }
 
-		if (FAILED(device->CreateInputLayout(elements, numElements, code->GetBufferPointer(), code->GetBufferSize(), &sInputLayout[format])))
-		{
-			mBufferPtr->Release();
-			mBufferPtr = 0;
-			code->Release();
-			return false;
-		}
-		code->Release();
-	}
+        if (FAILED(device->CreateInputLayout(elements, numElements, code->GetBufferPointer(), code->GetBufferSize(), &sInputLayout[format])))
+        {
+            mBufferPtr->Release();
+            mBufferPtr = 0;
+            code->Release();
+            return false;
+        }
+        code->Release();
+    }
     else
     {
-		sInputLayout[format]->AddRef();
+        sInputLayout[format]->AddRef();
     }
 
-	mVertexFormat = format;
-	mNumVertices = numVertices;
+    mVertexFormat = format;
+    mNumVertices = numVertices;
 
-	return true;
-}	
+    return true;
+}   
 
 //-------------------------------------------------------------------------------
 // @ IvVertexBufferD3D11::Destroy()
@@ -315,18 +315,18 @@ IvVertexBufferD3D11::Destroy()
     delete[] mDataPtr;
     mDataPtr = 0;
 
-	if ( mBufferPtr )
-	{
-		// clear the handle and any associated memory
-		mBufferPtr->Release();
-		mBufferPtr = 0;
-	}
-
-	if (sInputLayout[mVertexFormat])
+    if ( mBufferPtr )
     {
-		if (sInputLayout[mVertexFormat]->Release() == 0)
+        // clear the handle and any associated memory
+        mBufferPtr->Release();
+        mBufferPtr = 0;
+    }
+
+    if (sInputLayout[mVertexFormat])
+    {
+        if (sInputLayout[mVertexFormat]->Release() == 0)
         {
-			sInputLayout[mVertexFormat] = 0;
+            sInputLayout[mVertexFormat] = 0;
         }
     }
 
@@ -344,11 +344,11 @@ IvVertexBufferD3D11::MakeActive(ID3D11DeviceContext* context)
     if ( mBufferPtr == 0 || mNumVertices == 0 )
         return false;
     
-	UINT stride = kIvVFSize[mVertexFormat];
-	UINT offset = 0;
-	context->IASetVertexBuffers(0, 1, &mBufferPtr, &stride, &offset);
+    UINT stride = kIvVFSize[mVertexFormat];
+    UINT offset = 0;
+    context->IASetVertexBuffers(0, 1, &mBufferPtr, &stride, &offset);
 
-	context->IASetInputLayout(sInputLayout[mVertexFormat]);
+    context->IASetInputLayout(sInputLayout[mVertexFormat]);
     
     return true;
 }
@@ -362,11 +362,11 @@ IvVertexBufferD3D11::MakeActive(ID3D11DeviceContext* context)
 void *
 IvVertexBufferD3D11::BeginLoadData()
 {
-	if (mUsage == kImmutableUsage)
-	{
-		return NULL;
-	}
-	
+    if (mUsage == kImmutableUsage)
+    {
+        return NULL;
+    }
+    
     // already "locked"
     if (mDataPtr)
     {
@@ -386,11 +386,11 @@ IvVertexBufferD3D11::BeginLoadData()
 bool
 IvVertexBufferD3D11::EndLoadData()
 {
-	if (mUsage == kImmutableUsage)
-	{
-		return false;
-	}
-	
+    if (mUsage == kImmutableUsage)
+    {
+        return false;
+    }
+    
     // not already "locked"
     if (!mDataPtr)
     {
@@ -409,7 +409,7 @@ IvVertexBufferD3D11::EndLoadData()
         // use Map/Unmap
         D3D11_MAPPED_SUBRESOURCE mappedResource;
         ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-        //	Disable GPU access to the vertex buffer data.
+        //  Disable GPU access to the vertex buffer data.
         if (S_OK != d3dContext->Map(mBufferPtr, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource))
         {
             return false;
@@ -418,7 +418,7 @@ IvVertexBufferD3D11::EndLoadData()
         void* bufferData = mappedResource.pData;
         memcpy(bufferData, mDataPtr, mNumVertices*kIvVFSize[mVertexFormat]);
 
-        //	Reenable GPU access to the vertex buffer data.
+        //  Reenable GPU access to the vertex buffer data.
         d3dContext->Unmap(mBufferPtr, 0);
     }
 

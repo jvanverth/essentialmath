@@ -610,7 +610,7 @@ IvBezier::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
+    IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
 
     // subdivide to get all but last point
     for ( unsigned int i = 0; i < mCount-1; ++i )
@@ -622,7 +622,7 @@ IvBezier::RebuildVertexBuffers()
     curveDataPtr->position = mPositions[mCount-1];
     curveDataPtr->color = kOrange;
 
-	if (!mCurveVertices->EndLoadData())
+    if (!mCurveVertices->EndLoadData())
         return false;
 
     // set up sample points
@@ -639,7 +639,7 @@ IvBezier::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
+    IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
     
     for ( UInt32 i = 0; i < mCount; ++i )
     {
@@ -663,7 +663,7 @@ IvBezier::RebuildVertexBuffers()
                                                                                            NULL, kDefaultUsage);
     }
 
-	IvCPVertex *controlDataPtr = (IvCPVertex*) mControlVertices->BeginLoadData();
+    IvCPVertex *controlDataPtr = (IvCPVertex*) mControlVertices->BeginLoadData();
     
     for ( UInt32 i = 0; i < 2*(mCount-1); ++i )
     {

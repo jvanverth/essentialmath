@@ -53,9 +53,9 @@ Barrel::Barrel()
 //-------------------------------------------------------------------------------
 Barrel::~Barrel()
 {
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
-	mVertices = 0;
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mIndices);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
+    mVertices = 0;
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mIndices);
     mIndices = 0;
 
 }   // End of Barrel::~Barrel()
@@ -98,12 +98,12 @@ Barrel::ReadData()
 
     mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
                                                                                 NULL, kDefaultUsage);
-	IvCNPVertex* dataPtr = (IvCNPVertex*) mVertices->BeginLoadData();
+    IvCNPVertex* dataPtr = (IvCNPVertex*) mVertices->BeginLoadData();
 
     // read positions
     for ( UInt32 i = 0; i < numVerts; ++i )
     {
-		float x, y, z;
+        float x, y, z;
         in >> x >> y >> z;
         dataPtr[i].position.Set(x,y,z);
         if (!in.good() )
@@ -116,7 +116,7 @@ Barrel::ReadData()
     // read normals
     for ( UInt32 i = 0; i < numVerts; ++i )
     {
-		float x, y, z;
+        float x, y, z;
         in >> x >> y >> z;
         dataPtr[i].normal.Set(x,y,z);
         if (!in.good() )
@@ -129,12 +129,12 @@ Barrel::ReadData()
     // read colors
     for ( UInt32 i = 0; i < numVerts; ++i )
     {
-		float r, g, b;
+        float r, g, b;
         in >> r >> g >> b;
-		dataPtr[i].color.mRed = UChar8(r*255);
-		dataPtr[i].color.mGreen = UChar8(g*255);
-		dataPtr[i].color.mBlue = UChar8(b*255);
-		dataPtr[i].color.mAlpha = 255;
+        dataPtr[i].color.mRed = UChar8(r*255);
+        dataPtr[i].color.mGreen = UChar8(g*255);
+        dataPtr[i].color.mBlue = UChar8(b*255);
+        dataPtr[i].color.mAlpha = 255;
 
         if (!in.good() )
         {
@@ -143,14 +143,14 @@ Barrel::ReadData()
         }
     }
 
-	if (!mVertices->EndLoadData())
-	{
+    if (!mVertices->EndLoadData())
+    {
         CleanData();
         return false;
-	}
+    }
 
     // get number of indices
-	UInt32 numTankBodyIndices;
+    UInt32 numTankBodyIndices;
     in >> numTankBodyIndices;
     if ( !in.good() )
         return false;
@@ -158,7 +158,7 @@ Barrel::ReadData()
     // read indices
     mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTankBodyIndices,
                                                                               NULL, kDefaultUsage);
-	UInt32* indexPtr = static_cast<UInt32*>(mIndices->BeginLoadData());
+    UInt32* indexPtr = static_cast<UInt32*>(mIndices->BeginLoadData());
     for ( UInt32 i = 0; i < numTankBodyIndices; ++i )
     {
         in >> indexPtr[i];
@@ -168,13 +168,13 @@ Barrel::ReadData()
             return false;
         }
     }
-	if (!mIndices->EndLoadData())
-	{
+    if (!mIndices->EndLoadData())
+    {
         CleanData();
         return false;
-	}
-	
-	return true;
+    }
+    
+    return true;
 
 }   // End of Barrel::ReadData()
 
@@ -187,9 +187,9 @@ Barrel::ReadData()
 void 
 Barrel::CleanData()
 {
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
-	mVertices = 0;
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mIndices);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
+    mVertices = 0;
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mIndices);
     mIndices = 0;
 
 }   // End of Barrel::CleanData()

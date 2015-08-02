@@ -32,9 +32,9 @@ IvStackAllocator* IvStackAllocator::mScratchAllocator = NULL;
 //-------------------------------------------------------------------------------
 IvStackAllocator::IvStackAllocator(size_t totalBytes)
 {
-	fAllocation = (unsigned char*) malloc(totalBytes);
+    fAllocation = (unsigned char*) malloc(totalBytes);
     fTotalBytes = totalBytes;
-	fCurrentOffset = 0;
+    fCurrentOffset = 0;
 }
 
 //-------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ IvStackAllocator::IvStackAllocator(size_t totalBytes)
 //-------------------------------------------------------------------------------
 IvStackAllocator::~IvStackAllocator()
 {
-	free(fAllocation);
+    free(fAllocation);
 }
 
 //-------------------------------------------------------------------------------
@@ -54,13 +54,13 @@ IvStackAllocator::~IvStackAllocator()
 //-------------------------------------------------------------------------------
 void* IvStackAllocator::Allocate(size_t bytes)
 {
-	if (fCurrentOffset + bytes > fTotalBytes)
-	{
-		ASSERT(false);
-		return NULL;
-	}
+    if (fCurrentOffset + bytes > fTotalBytes)
+    {
+        ASSERT(false);
+        return NULL;
+    }
 
-	void* alloc = fAllocation + fCurrentOffset;
-	fCurrentOffset += bytes;
-	return alloc;
+    void* alloc = fAllocation + fCurrentOffset;
+    fCurrentOffset += bytes;
+    return alloc;
 }

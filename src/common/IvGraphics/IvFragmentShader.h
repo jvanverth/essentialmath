@@ -31,12 +31,12 @@ public:
 protected:
     // constructor/destructor
     IvFragmentShader() {}
-	virtual ~IvFragmentShader() {}
+    virtual ~IvFragmentShader() {}
     
 private:
     // copy operations (unimplemented so we can't copy)
     IvFragmentShader(const IvFragmentShader& other);
-	IvFragmentShader& operator=(const IvFragmentShader& other);
+    IvFragmentShader& operator=(const IvFragmentShader& other);
 }; 
 
 //-------------------------------------------------------------------------------

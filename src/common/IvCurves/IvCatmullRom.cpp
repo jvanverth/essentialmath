@@ -592,7 +592,7 @@ IvCatmullRom::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
+    IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
 
     UInt32 currentVertex = 0;
     for (float t = mTimes[0]; t <= mTimes[mCount-1]; t += 0.1f)
@@ -602,7 +602,7 @@ IvCatmullRom::RebuildVertexBuffers()
     }
     curveDataPtr[currentVertex].position = Evaluate( mTimes[mCount-1] );
     curveDataPtr[currentVertex++].color = kOrange;
-	if (!mCurveVertices->EndLoadData())
+    if (!mCurveVertices->EndLoadData())
         return false;
 
     // set up sample points
@@ -619,7 +619,7 @@ IvCatmullRom::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
+    IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
     
     for ( UInt32 i = 0; i < mCount; ++i )
     {

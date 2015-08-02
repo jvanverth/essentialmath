@@ -712,7 +712,7 @@ IvHermite::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
+    IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
     UInt32 currentVertex = 0;
 
     for ( UInt32 i = 0; i < mCount-1; ++i )
@@ -748,7 +748,7 @@ IvHermite::RebuildVertexBuffers()
             dP2 += dP3;
         }
     }
-	if (!mCurveVertices->EndLoadData())
+    if (!mCurveVertices->EndLoadData())
         return false;
 
     // set up sample points
@@ -765,7 +765,7 @@ IvHermite::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
+    IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
     
     for ( UInt32 i = 0; i < mCount; ++i )
     {
@@ -789,7 +789,7 @@ IvHermite::RebuildVertexBuffers()
                                                                                            NULL, kDefaultUsage);
     }
 
-	IvCPVertex *tangentDataPtr = (IvCPVertex*) mTangentVertices->BeginLoadData();
+    IvCPVertex *tangentDataPtr = (IvCPVertex*) mTangentVertices->BeginLoadData();
     currentVertex = 0;
 
     for ( UInt32 i = 0; i < mCount-1; ++i )

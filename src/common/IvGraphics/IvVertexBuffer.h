@@ -40,7 +40,7 @@ protected:
     IvVertexBuffer() : mVertexFormat( kCPFormat ), mNumVertices( 0 )
     {
     }
-	virtual ~IvVertexBuffer() {}
+    virtual ~IvVertexBuffer() {}
 
     IvVertexFormat      mVertexFormat;
     unsigned int        mNumVertices;
@@ -48,7 +48,7 @@ protected:
 private:
     // copy operations (unimplemented so we can't copy)
     IvVertexBuffer(const IvVertexBuffer& other);
-	IvVertexBuffer& operator=(const IvVertexBuffer& other);
+    IvVertexBuffer& operator=(const IvVertexBuffer& other);
 }; 
 
 #endif

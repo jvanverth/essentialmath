@@ -46,7 +46,7 @@ public:
 private:
     // constructor/destructor
     IvFragmentShaderOGL();
-	~IvFragmentShaderOGL();
+    ~IvFragmentShaderOGL();
     
     // initialization
     bool CreateFromFile( const char* filename );
@@ -58,9 +58,9 @@ private:
 private:
     // copy operations
     IvFragmentShaderOGL(const IvFragmentShaderOGL& other);
-	IvFragmentShaderOGL& operator=(const IvFragmentShaderOGL& other);
+    IvFragmentShaderOGL& operator=(const IvFragmentShaderOGL& other);
 
-	GLuint mShaderID;
+    GLuint mShaderID;
 };
 
 

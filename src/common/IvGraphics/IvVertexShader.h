@@ -31,12 +31,12 @@ public:
 protected:
     // constructor/destructor
     IvVertexShader() {}
-	virtual ~IvVertexShader() {}
+    virtual ~IvVertexShader() {}
     
 private:
     // copy operations (unimplemented so we can't copy)
     IvVertexShader(const IvVertexShader& other);
-	IvVertexShader& operator=(const IvVertexShader& other);
+    IvVertexShader& operator=(const IvVertexShader& other);
 }; 
 
 //-------------------------------------------------------------------------------

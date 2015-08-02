@@ -122,7 +122,7 @@ Player::Update( float dt )
     }
     rotate.Set(IvVector3::zAxis, r);
     mRotate = rotate*mRotate;
-	mRotate.Normalize();
+    mRotate.Normalize();
     
     // set up translation
     if (IvGame::mGame->mEventHandler->IsKeyDown('k'))

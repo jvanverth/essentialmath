@@ -36,22 +36,22 @@
 //-------------------------------------------------------------------------------
 IvUniformD3D11::IvUniformD3D11(IvUniformType type, unsigned int count, 
                              void* offset,
-							 IvConstantTableD3D11* constantTable,
-							 IvShaderProgramD3D11* shader)
-	: IvUniform( type, count )
-	, mShader( shader )
-	, mOffset( offset )
-	, mConstantTable( constantTable )
+                             IvConstantTableD3D11* constantTable,
+                             IvShaderProgramD3D11* shader)
+    : IvUniform( type, count )
+    , mShader( shader )
+    , mOffset( offset )
+    , mConstantTable( constantTable )
 {
     switch (mType)
     {
         case kFloatUniform:
             mValue.mFloat = new float[mCount];
             break;
-		case kFloat3Uniform:
-			mValue.mVector3 = new IvVector3[mCount];
-			break;
-		case kFloat4Uniform:
+        case kFloat3Uniform:
+            mValue.mVector3 = new IvVector3[mCount];
+            break;
+        case kFloat4Uniform:
             mValue.mVector4 = new IvVector4[mCount];
             break;
         case kFloatMatrix44Uniform:
@@ -70,11 +70,11 @@ IvUniformD3D11::IvUniformD3D11(IvUniformType type, unsigned int count,
 // Texture uniform constructor
 //-------------------------------------------------------------------------------
 IvUniformD3D11::IvUniformD3D11(int textureUnit, int samplerUnit,
-	                         IvShaderProgramD3D11* shader)
-	: IvUniform(kTextureUniform, 1)
-	, mShader(shader)
-	, mTextureUnit(textureUnit)
-	, mSamplerUnit(samplerUnit)
+                             IvShaderProgramD3D11* shader)
+    : IvUniform(kTextureUniform, 1)
+    , mShader(shader)
+    , mTextureUnit(textureUnit)
+    , mSamplerUnit(samplerUnit)
 {
     mValue.mTexture = 0;
 }
@@ -91,10 +91,10 @@ IvUniformD3D11::~IvUniformD3D11()
         case kFloatUniform:
             delete [] mValue.mFloat;
             break;
-		case kFloat3Uniform:
-			delete[] mValue.mVector3;
-			break;
-		case kFloat4Uniform:
+        case kFloat3Uniform:
+            delete[] mValue.mVector3;
+            break;
+        case kFloat4Uniform:
             delete [] mValue.mVector4;
             break;
         case kFloatMatrix44Uniform:
@@ -115,8 +115,8 @@ void IvUniformD3D11::SetValue( float value, unsigned int index)
 
     mValue.mFloat[index] = value;
 
-	memcpy(mOffset, mValue.mFloat, mCount*sizeof(float));
-	mConstantTable->MarkDirty();
+    memcpy(mOffset, mValue.mFloat, mCount*sizeof(float));
+    mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
@@ -126,21 +126,21 @@ void IvUniformD3D11::SetValue( float value, unsigned int index)
 //-------------------------------------------------------------------------------
 void IvUniformD3D11::SetValue(const IvVector3& value, unsigned int index)
 {
-	if (mType != kFloat3Uniform)
-		return;
+    if (mType != kFloat3Uniform)
+        return;
 
-	mValue.mVector3[index] = value;
+    mValue.mVector3[index] = value;
 
-	// float3 array is packed as float4 array
-	char* offset = reinterpret_cast<char*>(mOffset);
-	IvVector3* currVec3 = mValue.mVector3;
-	for (unsigned int i = 0; i < mCount; ++i)
-	{
-		memcpy(offset, currVec3, sizeof(IvVector3));
-		++currVec3;
-		offset += 4*sizeof(float);
-	}
-	mConstantTable->MarkDirty();
+    // float3 array is packed as float4 array
+    char* offset = reinterpret_cast<char*>(mOffset);
+    IvVector3* currVec3 = mValue.mVector3;
+    for (unsigned int i = 0; i < mCount; ++i)
+    {
+        memcpy(offset, currVec3, sizeof(IvVector3));
+        ++currVec3;
+        offset += 4*sizeof(float);
+    }
+    mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
@@ -155,8 +155,8 @@ void IvUniformD3D11::SetValue( const IvVector4& value, unsigned int index )
 
     mValue.mVector4[index] = value;
 
-	memcpy(mOffset, mValue.mVector4, mCount*sizeof(IvVector4));
-	mConstantTable->MarkDirty();
+    memcpy(mOffset, mValue.mVector4, mCount*sizeof(IvVector4));
+    mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
@@ -171,8 +171,8 @@ void IvUniformD3D11::SetValue( const IvMatrix44& value, unsigned int index )
 
     mValue.mMatrix44[index] = value;
 
-	memcpy(mOffset, mValue.mMatrix44, mCount*sizeof(IvMatrix44));
-	mConstantTable->MarkDirty();
+    memcpy(mOffset, mValue.mMatrix44, mCount*sizeof(IvMatrix44));
+    mConstantTable->MarkDirty();
 }
 
 //-------------------------------------------------------------------------------
@@ -182,10 +182,10 @@ void IvUniformD3D11::SetValue( const IvMatrix44& value, unsigned int index )
 //-------------------------------------------------------------------------------
 void IvUniformD3D11::SetValue( IvTexture* value )
 {
-	if (mType != kTextureUniform)
-	{
-		return;
-	}
+    if (mType != kTextureUniform)
+    {
+        return;
+    }
 
     mValue.mTexture = static_cast<IvTextureD3D11*>(value);
 
@@ -221,11 +221,11 @@ bool IvUniformD3D11::GetValue( float& value, unsigned int index) const
 //-------------------------------------------------------------------------------
 bool IvUniformD3D11::GetValue(IvVector3& value, unsigned int index) const
 {
-	if (mType != kFloat3Uniform)
-		return false;
+    if (mType != kFloat3Uniform)
+        return false;
 
-	value = mValue.mVector3[index];
-	return true;
+    value = mValue.mVector3[index];
+    return true;
 }
 
 //-------------------------------------------------------------------------------
@@ -263,11 +263,11 @@ bool IvUniformD3D11::GetValue( IvMatrix44& value, unsigned int index ) const
 //-------------------------------------------------------------------------------
 bool IvUniformD3D11::GetValue( IvTexture*& value ) const
 {
-	if (mType != kTextureUniform)
+    if (mType != kTextureUniform)
         return false;
 
-	value = mValue.mTexture;
-	return true;
+    value = mValue.mTexture;
+    return true;
 }
 
 
@@ -278,16 +278,16 @@ bool IvUniformD3D11::GetValue( IvTexture*& value ) const
 //-------------------------------------------------------------------------------
 void IvUniformD3D11::Update()
 {
-	if (mShader != IvRenderer::mRenderer->GetShaderProgram())
-	{
-		return;
-	}
+    if (mShader != IvRenderer::mRenderer->GetShaderProgram())
+    {
+        return;
+    }
 
-	if ( mType == kTextureUniform )
-	{
+    if ( mType == kTextureUniform )
+    {
         mValue.mTexture->MakeActive(mTextureUnit, mSamplerUnit, static_cast<IvRendererD3D11*>(IvRenderer::mRenderer)->GetDevice());
-		return;
-	}
+        return;
+    }
 
     if (!mNeedsUpdate)
         return;

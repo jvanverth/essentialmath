@@ -50,48 +50,48 @@ protected:
     virtual ~IvTextureD3D11();
 
     // creation
-	bool Create(unsigned int width, unsigned int height, IvTextureFormat format,
-		        void* data, IvDataUsage usage, ID3D11Device* device);
-	bool CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
-		        void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device);
+    bool Create(unsigned int width, unsigned int height, IvTextureFormat format,
+                void* data, IvDataUsage usage, ID3D11Device* device);
+    bool CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
+                void** data, unsigned int levels, IvDataUsage usage, ID3D11Device* device);
 
-	// destruction
-	void Destroy();
+    // destruction
+    void Destroy();
 
-	// activation
-	void MakeActive(unsigned int textureUnit, unsigned int samplerUnit, ID3D11Device* device);
+    // activation
+    void MakeActive(unsigned int textureUnit, unsigned int samplerUnit, ID3D11Device* device);
 
     unsigned int mLevelCount;
 
-	struct Level
-	{
-		void* mData;
-		size_t mSize;
-		unsigned int mWidth;
-		unsigned int mHeight;
-	};
+    struct Level
+    {
+        void* mData;
+        size_t mSize;
+        unsigned int mWidth;
+        unsigned int mHeight;
+    };
 
-	Level* mLevels;
+    Level* mLevels;
 
-	IvDataUsage  mUsage;
+    IvDataUsage  mUsage;
 
 private:
     // copy operations (unimplemented so we can't copy)
     IvTextureD3D11(const IvTextureD3D11& other);
-	IvTextureD3D11& operator=(const IvTextureD3D11& other);
+    IvTextureD3D11& operator=(const IvTextureD3D11& other);
 
-	// D3D objects
-	ID3D11Texture2D*          mTexturePtr;
-	ID3D11ShaderResourceView* mShaderResourceView;
+    // D3D objects
+    ID3D11Texture2D*          mTexturePtr;
+    ID3D11ShaderResourceView* mShaderResourceView;
 
-	IvTextureMagFilter         mMagFilter;
-	IvTextureMinFilter         mMinFilter;
-	bool					   mEnableMip;
-	D3D11_FILTER               mFilter;
-	D3D11_TEXTURE_ADDRESS_MODE mUAddrMode;
-	D3D11_TEXTURE_ADDRESS_MODE mVAddrMode;
+    IvTextureMagFilter         mMagFilter;
+    IvTextureMinFilter         mMinFilter;
+    bool                       mEnableMip;
+    D3D11_FILTER               mFilter;
+    D3D11_TEXTURE_ADDRESS_MODE mUAddrMode;
+    D3D11_TEXTURE_ADDRESS_MODE mVAddrMode;
 
-	DXGI_FORMAT			       mD3DFormat;
+    DXGI_FORMAT                mD3DFormat;
 }; 
 
 #endif

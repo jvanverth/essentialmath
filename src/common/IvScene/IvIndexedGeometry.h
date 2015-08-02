@@ -44,7 +44,7 @@ public:
 protected:
     // geometry
     IvVertexBuffer* mVertices;
-	IvIndexBuffer*  mIndices;
+    IvIndexBuffer*  mIndices;
 
 };
 

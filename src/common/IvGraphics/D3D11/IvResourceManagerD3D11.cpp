@@ -35,9 +35,9 @@
 //-------------------------------------------------------------------------------
 IvResourceManagerD3D11::IvResourceManagerD3D11(ID3D11Device* device) : IvResourceManager()
 {
-	mDevice = device;
-	mDevice->AddRef();
-}	// End of IvResourceManagerD3D11::IvResourceManagerD3D11()
+    mDevice = device;
+    mDevice->AddRef();
+}   // End of IvResourceManagerD3D11::IvResourceManagerD3D11()
 
 //-------------------------------------------------------------------------------
 // @ IvResourceManagerD3D11::~IvResourceManagerD3D11()
@@ -46,8 +46,8 @@ IvResourceManagerD3D11::IvResourceManagerD3D11(ID3D11Device* device) : IvResourc
 //-------------------------------------------------------------------------------
 IvResourceManagerD3D11::~IvResourceManagerD3D11()
 {
-	mDevice->Release();
-}	// End of IvResourceManagerD3D11::~IvResourceManagerD3D11()
+    mDevice->Release();
+}   // End of IvResourceManagerD3D11::~IvResourceManagerD3D11()
 
 //-------------------------------------------------------------------------------
 // @ IvResourceManagerD3D11::CreateVertexBuffer()
@@ -253,9 +253,9 @@ IvResourceManagerD3D11::Destroy( IvFragmentShader* fs)
 IvShaderProgram* 
 IvResourceManagerD3D11::CreateShaderProgram( IvVertexShader* vs, IvFragmentShader* fs )
 {
-	// make sure we're not handed garbage
-	if ( vs == 0 || fs == 0 )
-		return 0;
+    // make sure we're not handed garbage
+    if ( vs == 0 || fs == 0 )
+        return 0;
 
     IvShaderProgramD3D11* newProgram = new IvShaderProgramD3D11();
     if ( !newProgram->Create( static_cast<IvVertexShaderD3D11*>(vs), 
@@ -292,15 +292,15 @@ IvResourceManagerD3D11::Destroy( IvShaderProgram* sp )
 IvTexture*
 IvResourceManagerD3D11::CreateTexture(IvTextureFormat format, 
                                      unsigned int width, unsigned int height, 
-									 void* data, IvDataUsage usage)
+                                     void* data, IvDataUsage usage)
 {
-	IvTextureD3D11* newTexture = new IvTextureD3D11();
-	if (!newTexture->Create(width, height, format, data, usage, mDevice))
-	{
-		delete newTexture;
-		newTexture = 0;
-	}
-	return newTexture;
+    IvTextureD3D11* newTexture = new IvTextureD3D11();
+    if (!newTexture->Create(width, height, format, data, usage, mDevice))
+    {
+        delete newTexture;
+        newTexture = 0;
+    }
+    return newTexture;
 }
 
 //-------------------------------------------------------------------------------
@@ -313,13 +313,13 @@ IvResourceManagerD3D11::CreateMipmappedTexture(IvTextureFormat format,
        unsigned int width, unsigned int height,
        void** data, unsigned int levels, IvDataUsage usage)
 {
-	IvTextureD3D11* newTexture = new IvTextureD3D11();
-	if (!newTexture->CreateMipmapped(width, height, format, data, levels, usage, mDevice))
-	{
-		delete newTexture;
-		newTexture = 0;
-	}
-	return newTexture;
+    IvTextureD3D11* newTexture = new IvTextureD3D11();
+    if (!newTexture->CreateMipmapped(width, height, format, data, levels, usage, mDevice))
+    {
+        delete newTexture;
+        newTexture = 0;
+    }
+    return newTexture;
 }
 
 //-------------------------------------------------------------------------------
@@ -330,7 +330,7 @@ IvResourceManagerD3D11::CreateMipmappedTexture(IvTextureFormat format,
 void 
 IvResourceManagerD3D11::Destroy( IvTexture* tex )
 {
-	IvTextureD3D11* texD3D11 = static_cast<IvTextureD3D11*>(tex);
-	texD3D11->Destroy();
-	delete texD3D11;
+    IvTextureD3D11* texD3D11 = static_cast<IvTextureD3D11*>(tex);
+    texD3D11->Destroy();
+    delete texD3D11;
 }

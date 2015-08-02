@@ -149,7 +149,7 @@ void
 Player::Render()                                    
 {   
     // store current matrix
-	IvRenderer::mRenderer->SetWorldMatrix( mTransform );
+    IvRenderer::mRenderer->SetWorldMatrix( mTransform );
 
     // draw geometry
     IvDrawTeapot();

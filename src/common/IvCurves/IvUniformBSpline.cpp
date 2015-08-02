@@ -542,7 +542,7 @@ IvUniformBSpline::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
+    IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
     UInt32 currentVertex = 0;
 
     // set up first control points
@@ -597,7 +597,7 @@ IvUniformBSpline::RebuildVertexBuffers()
         controls[1] = r;
     }
 
-	if (!mCurveVertices->EndLoadData())
+    if (!mCurveVertices->EndLoadData())
         return false;
 
     // set up sample points
@@ -614,7 +614,7 @@ IvUniformBSpline::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
+    IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
     
     for ( UInt32 i = 0; i < mCount; ++i )
     {

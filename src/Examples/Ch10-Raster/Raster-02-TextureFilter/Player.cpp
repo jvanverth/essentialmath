@@ -127,13 +127,13 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mTexture);
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mCheckerTexture);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mTexture);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mCheckerTexture);
 
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadVerts);
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadIndices);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadVerts);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mQuadIndices);
 
 }   // End of Player::~Player()
 

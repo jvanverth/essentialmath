@@ -33,7 +33,7 @@ class IvRendererD3D11 : public IvRenderer
 friend class IvRenderer;
 
 public:
-	bool static Create(ID3D11Device* device, ID3D11DeviceContext* context,
+    bool static Create(ID3D11Device* device, ID3D11DeviceContext* context,
                        ID3D11RenderTargetView* renderTarget, 
                        ID3D11DepthStencilView* depthStencilTarget);
 
@@ -43,17 +43,17 @@ public:
     void ReleaseTargets();
 
     virtual void  SetClearColor( float red, float green, float blue, float alpha );
-	virtual void  SetClearDepth( float depth );
+    virtual void  SetClearDepth( float depth );
     virtual void  ClearBuffers(IvClearBuffer buffer);
 
-	virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op);
-	virtual void SetColorMask( bool red, bool green, bool blue, bool alpha );
+    virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op);
+    virtual void SetColorMask( bool red, bool green, bool blue, bool alpha );
 
-	virtual void SetFillMode(IvFillMode fill);
-	virtual void SetShadeMode(IvShadeMode shade);
-	virtual IvShadeMode GetShadeMode();
+    virtual void SetFillMode(IvFillMode fill);
+    virtual void SetShadeMode(IvShadeMode shade);
+    virtual IvShadeMode GetShadeMode();
 
-	virtual void SetDepthTest(IvDepthTestFunc func);
+    virtual void SetDepthTest(IvDepthTestFunc func);
     virtual IvDepthTestFunc GetDepthTest();
     virtual void SetDepthWrite(bool write);
 
@@ -75,8 +75,8 @@ public:
                       IvIndexBuffer* indexBuffer, unsigned int numIndices);
     virtual void Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices);
 
-	ID3D11Device* GetDevice()         { return mDevice; }
-	ID3D11DeviceContext* GetContext() { return mContext; }
+    ID3D11Device* GetDevice()         { return mDevice; }
+    ID3D11DeviceContext* GetContext() { return mContext; }
     
 protected:
     bool InitD3D11();
@@ -86,8 +86,8 @@ protected:
 
 private:
     // constructor/destructor
-	IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* context, 
-		            ID3D11RenderTargetView* renderTarget, 
+    IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* context, 
+                    ID3D11RenderTargetView* renderTarget, 
                     ID3D11DepthStencilView* depthStencilTarget);
     ~IvRendererD3D11();
 
@@ -95,27 +95,27 @@ private:
     IvRendererD3D11(const IvRendererD3D11& other);
     IvRendererD3D11& operator=(const IvRendererD3D11& other);
 
-	void UpdateDepthStencilState();
-	void UpdateBlendState();
+    void UpdateDepthStencilState();
+    void UpdateBlendState();
 
     // private D3D11 things 
-	ID3D11Device*        mDevice;
-	ID3D11DeviceContext* mContext;
-	ID3D11RenderTargetView* mRenderTarget;
-	ID3D11DepthStencilView* mDepthStencilTarget;
+    ID3D11Device*        mDevice;
+    ID3D11DeviceContext* mContext;
+    ID3D11RenderTargetView* mRenderTarget;
+    ID3D11DepthStencilView* mDepthStencilTarget;
 
-	IvDepthTestFunc      mDepthTestFunc;
-	BOOL                 mDepthWrite;
+    IvDepthTestFunc      mDepthTestFunc;
+    BOOL                 mDepthWrite;
 
-	float 	             mClearColor[4];
-	float			     mClearDepth;
+    float                mClearColor[4];
+    float                mClearDepth;
 
-	D3D11_BLEND          mSrcBlend;
-	D3D11_BLEND          mDestBlend;
-	D3D11_BLEND          mSrcBlendAlpha;
-	D3D11_BLEND          mDestBlendAlpha;
-	D3D11_BLEND_OP       mBlendOp;
-	UINT8                mWriteMask;
+    D3D11_BLEND          mSrcBlend;
+    D3D11_BLEND          mDestBlend;
+    D3D11_BLEND          mSrcBlendAlpha;
+    D3D11_BLEND          mDestBlendAlpha;
+    D3D11_BLEND_OP       mBlendOp;
+    UINT8                mWriteMask;
 };
 
 

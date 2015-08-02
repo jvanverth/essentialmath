@@ -180,7 +180,7 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
 
     length = fread(shaderSrc, 1, length, fp);
     shaderSrc[length] = 0;
-	fclose(fp);
+    fclose(fp);
 
     // allocate the shader id
     mShaderID = glCreateShader( GL_VERTEX_SHADER );
@@ -241,7 +241,7 @@ IvVertexShaderOGL::CreateFromString( const char* string )
     GLint status = 0;
     glGetShaderiv( mShaderID, GL_COMPILE_STATUS, &status );
     if ( 0 == status )
-	{
+    {
         GLint len;
         glGetShaderiv(mShaderID, GL_INFO_LOG_LENGTH, &len);
         if(len > 0) 
@@ -252,7 +252,7 @@ IvVertexShaderOGL::CreateFromString( const char* string )
             DEBUG_OUT(str << std::endl);
         }
         return false;
-	}
+    }
     
     return true;
 }

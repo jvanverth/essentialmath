@@ -30,7 +30,7 @@ enum IvVertexFormat
     kPFormat,       // position only
     kCPFormat,      // color, position
     kNPFormat,      // normal, position
-	kCNPFormat,		// color, normal, position
+    kCNPFormat,     // color, normal, position
     kTCPFormat,     // texture coord, color, position
     kTNPFormat,      // texture coord, normal, position
 

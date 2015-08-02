@@ -190,41 +190,41 @@ Game::Oblique( float left, float right,
                float nearZ, float farZ )
 {
     IvMatrix44 oblique;
-	oblique.Identity();
-	if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(nearZ-farZ);
+    oblique.Identity();
+    if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(nearZ-farZ);
 
-		oblique(0,0) = 2.0f*recipX;
-		oblique(0,2) = -recipX;
-		oblique(0,3) = -(right+left)*recipX - nearZ*recipX;
+        oblique(0,0) = 2.0f*recipX;
+        oblique(0,2) = -recipX;
+        oblique(0,3) = -(right+left)*recipX - nearZ*recipX;
 
-		oblique(1,1) = 2.0f*recipY;
-		oblique(1,2) = -recipY;
-		oblique(1,3) = -(top+bottom)*recipY - nearZ*recipY;
+        oblique(1,1) = 2.0f*recipY;
+        oblique(1,2) = -recipY;
+        oblique(1,3) = -(top+bottom)*recipY - nearZ*recipY;
 
-		oblique(2,2) = 2.0f*recipZ;
-		oblique(2,3) = (nearZ+farZ)*recipZ;
-	}
-	else
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(farZ-nearZ);
+        oblique(2,2) = 2.0f*recipZ;
+        oblique(2,3) = (nearZ+farZ)*recipZ;
+    }
+    else
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(farZ-nearZ);
 
-		oblique(0,0) = 2.0f*recipX;
-		oblique(0,2) = recipX;
-		oblique(0,3) = -(right+left)*recipX - nearZ*recipX;
+        oblique(0,0) = 2.0f*recipX;
+        oblique(0,2) = recipX;
+        oblique(0,3) = -(right+left)*recipX - nearZ*recipX;
 
-		oblique(1,1) = 2.0f*recipY;
-		oblique(1,2) = recipY;
-		oblique(1,3) = -(top+bottom)*recipY - nearZ*recipY;
+        oblique(1,1) = 2.0f*recipY;
+        oblique(1,2) = recipY;
+        oblique(1,3) = -(top+bottom)*recipY - nearZ*recipY;
 
-		oblique(2,2) = recipZ;
-		oblique(2,3) = -nearZ*recipZ;
-	}
+        oblique(2,2) = recipZ;
+        oblique(2,3) = -nearZ*recipZ;
+    }
 
     // send to renderer
     IvSetProjectionMatrix( oblique );
@@ -247,45 +247,45 @@ Game::Cabinet( float left, float right,
                float nearZ, float farZ )
 {
     IvMatrix44 cabinet;
-	cabinet.Identity();
-	if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(nearZ-farZ);
+    cabinet.Identity();
+    if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(nearZ-farZ);
 
-		float halfsqrt2 = ::IvSqrt(2.0f)*0.5f;
+        float halfsqrt2 = ::IvSqrt(2.0f)*0.5f;
 
-		cabinet(0,0) = 2.0f*recipX;
-		cabinet(0,2) = -halfsqrt2*recipX;
-		cabinet(0,3) = (-halfsqrt2*nearZ - right - left)*recipX; 
+        cabinet(0,0) = 2.0f*recipX;
+        cabinet(0,2) = -halfsqrt2*recipX;
+        cabinet(0,3) = (-halfsqrt2*nearZ - right - left)*recipX; 
 
-		cabinet(1,1) = 2.0f*recipY;
-		cabinet(1,2) = -halfsqrt2*recipY;
-		cabinet(1,3) = (-halfsqrt2*nearZ - top - bottom)*recipY;
+        cabinet(1,1) = 2.0f*recipY;
+        cabinet(1,2) = -halfsqrt2*recipY;
+        cabinet(1,3) = (-halfsqrt2*nearZ - top - bottom)*recipY;
 
-		cabinet(2,2) = 2.0f*recipZ;
-		cabinet(2,3) = (nearZ+farZ)*recipZ;
-	}
-	else
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(farZ-nearZ);
+        cabinet(2,2) = 2.0f*recipZ;
+        cabinet(2,3) = (nearZ+farZ)*recipZ;
+    }
+    else
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(farZ-nearZ);
 
-		float halfsqrt2 = ::IvSqrt(2.0f)*0.5f;
+        float halfsqrt2 = ::IvSqrt(2.0f)*0.5f;
 
-		cabinet(0,0) = 2.0f*recipX;
-		cabinet(0,2) = halfsqrt2*recipX;
-		cabinet(0,3) = (-halfsqrt2*nearZ - right - left)*recipX; 
+        cabinet(0,0) = 2.0f*recipX;
+        cabinet(0,2) = halfsqrt2*recipX;
+        cabinet(0,3) = (-halfsqrt2*nearZ - right - left)*recipX; 
 
-		cabinet(1,1) = 2.0f*recipY;
-		cabinet(1,2) = halfsqrt2*recipY;
-		cabinet(1,3) = (-halfsqrt2*nearZ - top - bottom)*recipY;
+        cabinet(1,1) = 2.0f*recipY;
+        cabinet(1,2) = halfsqrt2*recipY;
+        cabinet(1,3) = (-halfsqrt2*nearZ - top - bottom)*recipY;
 
-		cabinet(2,2) = recipZ;
-		cabinet(2,3) = -nearZ*recipZ;
-	}
+        cabinet(2,2) = recipZ;
+        cabinet(2,3) = -nearZ*recipZ;
+    }
 
     // send to renderer
     IvSetProjectionMatrix( cabinet );

@@ -221,36 +221,36 @@ Game::Render()                                  // Here's Where We Do All The Dr
     float top = 30.0f;
     float nearZ = -10.0f; 
     float farZ = 10.0f;
-	if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(nearZ-farZ);
+    if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(nearZ-farZ);
 
-		ortho(0,0) = 2.0f*recipX;
-		ortho(0,3) = -(right+left)*recipX;
+        ortho(0,0) = 2.0f*recipX;
+        ortho(0,3) = -(right+left)*recipX;
 
-		ortho(1,1) = 2.0f*recipY;
-		ortho(1,3) = -(top+bottom)*recipY;
+        ortho(1,1) = 2.0f*recipY;
+        ortho(1,3) = -(top+bottom)*recipY;
 
-		ortho(2,2) = 2.0f*recipZ;
-		ortho(2,3) = (nearZ+farZ)*recipZ;
-	}
-	else
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(farZ-nearZ);
+        ortho(2,2) = 2.0f*recipZ;
+        ortho(2,3) = (nearZ+farZ)*recipZ;
+    }
+    else
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(farZ-nearZ);
 
-		ortho(0,0) = 2.0f*recipX;
-		ortho(0,3) = -(right+left)*recipX;
+        ortho(0,0) = 2.0f*recipX;
+        ortho(0,3) = -(right+left)*recipX;
 
-		ortho(1,1) = 2.0f*recipY;
-		ortho(1,3) = -(top+bottom)*recipY;
+        ortho(1,1) = 2.0f*recipY;
+        ortho(1,3) = -(top+bottom)*recipY;
 
-		ortho(2,2) = recipZ;
-		ortho(2,3) = -nearZ*recipZ;
-	}
+        ortho(2,2) = recipZ;
+        ortho(2,3) = -nearZ*recipZ;
+    }
 
     // send to renderer
     ::IvSetProjectionMatrix( ortho );

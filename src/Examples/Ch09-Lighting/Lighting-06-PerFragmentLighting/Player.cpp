@@ -87,8 +87,8 @@ Player::~Player()
 
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mPlaneVerts);
 
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertlitShader);
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mFraglitShader);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertlitShader);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mFraglitShader);
 }   // End of Player::~Player()
 
 

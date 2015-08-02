@@ -44,22 +44,22 @@ public:
 private:
     // constructor/destructor
     IvVertexShaderD3D11();
-	~IvVertexShaderD3D11();
+    ~IvVertexShaderD3D11();
     
     // initialization
-	bool CreateFromFile(const char* filename, ID3D11Device* device);
-	bool CreateFromString(const char* filename, ID3D11Device* device);
-	bool CreateDefault(IvVertexFormat format, ID3D11Device* device);
+    bool CreateFromFile(const char* filename, ID3D11Device* device);
+    bool CreateFromString(const char* filename, ID3D11Device* device);
+    bool CreateDefault(IvVertexFormat format, ID3D11Device* device);
     
     void Destroy();
     
 private:
     // copy operations
     IvVertexShaderD3D11(const IvVertexShaderD3D11& other);
-	IvVertexShaderD3D11& operator=(const IvVertexShaderD3D11& other);
+    IvVertexShaderD3D11& operator=(const IvVertexShaderD3D11& other);
 
-	ID3D11VertexShader*  mShaderPtr;
-	IvConstantTableD3D11* mConstantTable;
+    ID3D11VertexShader*  mShaderPtr;
+    IvConstantTableD3D11* mConstantTable;
 };
 
 

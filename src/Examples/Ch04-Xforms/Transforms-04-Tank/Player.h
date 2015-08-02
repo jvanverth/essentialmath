@@ -46,7 +46,7 @@ private:
 
     // geometry
     IvVertexBuffer* mVertices;
-	IvIndexBuffer*  mIndices;
+    IvIndexBuffer*  mIndices;
 
     // children
     Turret*     mTurret;

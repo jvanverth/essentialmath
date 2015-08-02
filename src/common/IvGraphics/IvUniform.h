@@ -62,17 +62,17 @@ public:
     
 protected:
     // constructor/destructor
-	IvUniform( IvUniformType type, unsigned int count ) : mType(type), mCount(count), mNeedsUpdate(true) {}
-	virtual ~IvUniform() {}
+    IvUniform( IvUniformType type, unsigned int count ) : mType(type), mCount(count), mNeedsUpdate(true) {}
+    virtual ~IvUniform() {}
 
-    IvUniformType	mType;
-    unsigned int	mCount;
-	bool			mNeedsUpdate;
+    IvUniformType   mType;
+    unsigned int    mCount;
+    bool            mNeedsUpdate;
 
 private:
     // copy operations (unimplemented so we can't copy)
     IvUniform(const IvUniform& other);
-	IvUniform& operator=(const IvUniform& other);
+    IvUniform& operator=(const IvUniform& other);
 }; 
 
 //-------------------------------------------------------------------------------

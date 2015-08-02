@@ -110,14 +110,14 @@ IvVertexBufferOGL::Create(IvVertexFormat format, unsigned int numVertices,
             offset += 3*sizeof(float);
             break;
             
-		case kCNPFormat:
+        case kCNPFormat:
             glEnableVertexAttribArray(COLOR);
             glVertexAttribPointer(COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (GLvoid*) offset);
             offset += 4*sizeof(unsigned char);
             glEnableVertexAttribArray(NORMAL);
             glVertexAttribPointer(NORMAL, 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
             offset += 3*sizeof(float);
-			break;
+            break;
             
         case kTCPFormat:
             glEnableVertexAttribArray(TEXCOORD0);

@@ -247,29 +247,29 @@ Game::SetCamera( const IvVector3& viewDir,
     // get the third view vector
     IvVector3 viewUp = viewSide.Cross( viewDir );
 
-	// this effectively multiplies the view position by the
-	// transpose of the view-to-world rotation and negates it
-	IvVector3 invViewPos( -viewSide.Dot(viewPos), 
-						  -viewUp.Dot(viewPos), 
-						 viewDir.Dot(viewPos) );
+    // this effectively multiplies the view position by the
+    // transpose of the view-to-world rotation and negates it
+    IvVector3 invViewPos( -viewSide.Dot(viewPos), 
+                          -viewUp.Dot(viewPos), 
+                         viewDir.Dot(viewPos) );
 
-	// build the matrix
-	// the rows of the 3x3 are the view vectors
-	// the y column is the view position rotated into view space
-	IvMatrix44 viewMatrix;
-	viewMatrix.Identity();
-	viewMatrix(0,0) = viewSide.x;
-	viewMatrix(0,1) = viewSide.y;
-	viewMatrix(0,2) = viewSide.z;
-	viewMatrix(0,3) = invViewPos.x;
-	viewMatrix(1,0) = viewUp.x;
-	viewMatrix(1,1) = viewUp.y;
-	viewMatrix(1,2) = viewUp.z;
-	viewMatrix(1,3) = invViewPos.y;
-	viewMatrix(2,0) = -viewDir.x;
-	viewMatrix(2,1) = -viewDir.y;
-	viewMatrix(2,2) = -viewDir.z;
-	viewMatrix(2,3) = invViewPos.z;
+    // build the matrix
+    // the rows of the 3x3 are the view vectors
+    // the y column is the view position rotated into view space
+    IvMatrix44 viewMatrix;
+    viewMatrix.Identity();
+    viewMatrix(0,0) = viewSide.x;
+    viewMatrix(0,1) = viewSide.y;
+    viewMatrix(0,2) = viewSide.z;
+    viewMatrix(0,3) = invViewPos.x;
+    viewMatrix(1,0) = viewUp.x;
+    viewMatrix(1,1) = viewUp.y;
+    viewMatrix(1,2) = viewUp.z;
+    viewMatrix(1,3) = invViewPos.y;
+    viewMatrix(2,0) = -viewDir.x;
+    viewMatrix(2,1) = -viewDir.y;
+    viewMatrix(2,2) = -viewDir.z;
+    viewMatrix(2,3) = invViewPos.z;
 
     ::IvSetViewMatrix( viewMatrix );
 
@@ -288,43 +288,43 @@ Game::Frustum( float left, float right,
 {
     IvMatrix44 perspective;
 
-	if (IvRenderer::mRenderer->GetAPI() == kOpenGL)
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(nearZ-farZ);
+    if (IvRenderer::mRenderer->GetAPI() == kOpenGL)
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(nearZ-farZ);
 
-		perspective(0,0) = 2.0f*nearZ*recipX;
-		perspective(0,2) = (right+left)*recipX;
+        perspective(0,0) = 2.0f*nearZ*recipX;
+        perspective(0,2) = (right+left)*recipX;
 
-		perspective(1,1) = 2.0f*nearZ*recipY;
-		perspective(1,2) = (top+bottom)*recipY;
+        perspective(1,1) = 2.0f*nearZ*recipY;
+        perspective(1,2) = (top+bottom)*recipY;
 
-		perspective(2,2) = (nearZ+farZ)*recipZ;
-		perspective(2,3) = 2.0f*nearZ*farZ*recipZ;
+        perspective(2,2) = (nearZ+farZ)*recipZ;
+        perspective(2,3) = 2.0f*nearZ*farZ*recipZ;
 
-		perspective(3,2) = -1.0f;
-		perspective(3,3) = 0.0f;
-	}
-	else
-	{
-		// modified D3D9 matrix with view direction down -z
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float Q = farZ/(nearZ-farZ);
+        perspective(3,2) = -1.0f;
+        perspective(3,3) = 0.0f;
+    }
+    else
+    {
+        // modified D3D9 matrix with view direction down -z
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float Q = farZ/(nearZ-farZ);
 
-		perspective(0,0) = 2.0f*nearZ*recipX;
-		perspective(0,2) = (right+left)*recipX;
+        perspective(0,0) = 2.0f*nearZ*recipX;
+        perspective(0,2) = (right+left)*recipX;
 
-		perspective(1,1) = 2.0f*nearZ*recipY;
-		perspective(1,2) = (top+bottom)*recipY;
+        perspective(1,1) = 2.0f*nearZ*recipY;
+        perspective(1,2) = (top+bottom)*recipY;
 
-		perspective(2,2) = Q;
-		perspective(2,3) = nearZ*Q;
+        perspective(2,2) = Q;
+        perspective(2,3) = nearZ*Q;
 
-		perspective(3,2) = -1.0f;
-		perspective(3,3) = 0.0f;
-	}
+        perspective(3,2) = -1.0f;
+        perspective(3,3) = 0.0f;
+    }
 
     // send to renderer
     ::IvSetProjectionMatrix( perspective );
@@ -350,7 +350,7 @@ Game::Render()
     viewSide.Normalize();
 
     // render only using red channel
-	IvRenderer::mRenderer->SetColorMask( true, false, false, true );
+    IvRenderer::mRenderer->SetColorMask( true, false, false, true );
 
     // set right eye perspective matrix
     // set window on near plane so that frustum will be incident at focal length
@@ -370,9 +370,9 @@ Game::Render()
     DrawScene();
 
     // clear only the z-buffer, leaving the red channel information
-	IvRenderer::mRenderer->ClearBuffers( kDepthClear );
+    IvRenderer::mRenderer->ClearBuffers( kDepthClear );
     // render only using blue channel
-	IvRenderer::mRenderer->SetColorMask( false, false, true, true );
+    IvRenderer::mRenderer->SetColorMask( false, false, true, true );
 
     // set left eye perspective matrix
     // translate window on near plane so that frustum will be incident at focal length
@@ -390,7 +390,7 @@ Game::Render()
     DrawScene();
 
     // reset to use all channels (so we can clear properly for next frame)
-	IvRenderer::mRenderer->SetColorMask( true, true, true, true );
+    IvRenderer::mRenderer->SetColorMask( true, true, true, true );
 }
 
 

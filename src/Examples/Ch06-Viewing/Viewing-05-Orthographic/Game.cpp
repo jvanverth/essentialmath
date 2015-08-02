@@ -192,36 +192,36 @@ Game::Orthographic( float left, float right,
                float nearZ, float farZ )
 {
     IvMatrix44 ortho;
-	if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(nearZ-farZ);
+    if ( IvRenderer::mRenderer->GetAPI() == kOpenGL )
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(nearZ-farZ);
 
-		ortho(0,0) = 2.0f*recipX;
-		ortho(0,3) = -(right+left)*recipX;
+        ortho(0,0) = 2.0f*recipX;
+        ortho(0,3) = -(right+left)*recipX;
 
-		ortho(1,1) = 2.0f*recipY;
-		ortho(1,3) = -(top+bottom)*recipY;
+        ortho(1,1) = 2.0f*recipY;
+        ortho(1,3) = -(top+bottom)*recipY;
 
-		ortho(2,2) = 2.0f*recipZ;
-		ortho(2,3) = (nearZ+farZ)*recipZ;
-	}
-	else
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(farZ-nearZ);
+        ortho(2,2) = 2.0f*recipZ;
+        ortho(2,3) = (nearZ+farZ)*recipZ;
+    }
+    else
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(farZ-nearZ);
 
-		ortho(0,0) = 2.0f*recipX;
-		ortho(0,3) = -(right+left)*recipX;
+        ortho(0,0) = 2.0f*recipX;
+        ortho(0,3) = -(right+left)*recipX;
 
-		ortho(1,1) = 2.0f*recipY;
-		ortho(1,3) = -(top+bottom)*recipY;
+        ortho(1,1) = 2.0f*recipY;
+        ortho(1,3) = -(top+bottom)*recipY;
 
-		ortho(2,2) = recipZ;
-		ortho(2,3) = -nearZ*recipZ;
-	}
+        ortho(2,2) = recipZ;
+        ortho(2,3) = -nearZ*recipZ;
+    }
 
     // send to renderer
     ::IvSetProjectionMatrix( ortho );
@@ -240,42 +240,42 @@ Game::Frustum( float left, float right,
 {
     IvMatrix44 perspective;
 
-	if (IvRenderer::mRenderer->GetAPI() == kOpenGL)
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float recipZ = 1.0f/(nearZ-farZ);
+    if (IvRenderer::mRenderer->GetAPI() == kOpenGL)
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float recipZ = 1.0f/(nearZ-farZ);
 
-		perspective(0,0) = 2.0f*nearZ*recipX;
-		perspective(0,2) = (right+left)*recipX;
+        perspective(0,0) = 2.0f*nearZ*recipX;
+        perspective(0,2) = (right+left)*recipX;
 
-		perspective(1,1) = 2.0f*nearZ*recipY;
-		perspective(1,2) = (top+bottom)*recipY;
+        perspective(1,1) = 2.0f*nearZ*recipY;
+        perspective(1,2) = (top+bottom)*recipY;
 
-		perspective(2,2) = (nearZ+farZ)*recipZ;
-		perspective(2,3) = 2.0f*nearZ*farZ*recipZ;
+        perspective(2,2) = (nearZ+farZ)*recipZ;
+        perspective(2,3) = 2.0f*nearZ*farZ*recipZ;
 
-		perspective(3,2) = -1.0f;
-		perspective(3,3) = 0.0f;
-	}
-	else
-	{
-		float recipX = 1.0f/(right-left);
-		float recipY = 1.0f/(top-bottom);
-		float Q = farZ/(farZ-nearZ);
+        perspective(3,2) = -1.0f;
+        perspective(3,3) = 0.0f;
+    }
+    else
+    {
+        float recipX = 1.0f/(right-left);
+        float recipY = 1.0f/(top-bottom);
+        float Q = farZ/(farZ-nearZ);
 
-		perspective(0,0) = 2.0f*nearZ*recipX;
-		perspective(0,2) = -(right+left)*recipX;
+        perspective(0,0) = 2.0f*nearZ*recipX;
+        perspective(0,2) = -(right+left)*recipX;
 
-		perspective(1,1) = 2.0f*nearZ*recipY;
-		perspective(1,2) = -(top+bottom)*recipY;
+        perspective(1,1) = 2.0f*nearZ*recipY;
+        perspective(1,2) = -(top+bottom)*recipY;
 
-		perspective(2,2) = Q;
-		perspective(2,3) = -nearZ*Q;
+        perspective(2,2) = Q;
+        perspective(2,3) = -nearZ*Q;
 
-		perspective(3,2) = 1.0f;
-		perspective(3,3) = 0.0f;
-	}
+        perspective(3,2) = 1.0f;
+        perspective(3,3) = 0.0f;
+    }
 
     // send to renderer
     ::IvSetProjectionMatrix( perspective );

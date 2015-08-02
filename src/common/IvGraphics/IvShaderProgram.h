@@ -34,12 +34,12 @@ public:
 protected:
     // constructor/destructor
     IvShaderProgram() {}
-	virtual ~IvShaderProgram() {}
+    virtual ~IvShaderProgram() {}
 
 private:
     // copy operations (unimplemented so we can't copy)
     IvShaderProgram(const IvShaderProgram& other);
-	IvShaderProgram& operator=(const IvShaderProgram& other);
+    IvShaderProgram& operator=(const IvShaderProgram& other);
 }; 
 
 //-------------------------------------------------------------------------------

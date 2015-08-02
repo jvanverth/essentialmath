@@ -124,9 +124,9 @@ Player::Player()
         IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
         "textureShader"));
 
-	IvUniform* texUniform = mShader->GetUniform("Texture");
+    IvUniform* texUniform = mShader->GetUniform("Texture");
     if (texUniform)
-		texUniform->SetValue(mTextures[0]);
+        texUniform->SetValue(mTextures[0]);
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
 

@@ -53,10 +53,10 @@ protected:
     bool CreateMipmapped(unsigned int width, unsigned int height, IvTextureFormat format,
                 void** data, unsigned int levels, IvDataUsage usage);
 
-	// destruction
+    // destruction
     void Destroy();
 
-	// activation
+    // activation
     void MakeActive(unsigned int unit = 0);
 
     unsigned int mID;
@@ -70,7 +70,7 @@ protected:
 private:
     // copy operations (unimplemented so we can't copy)
     IvTextureOGL(const IvTextureOGL& other);
-	IvTextureOGL& operator=(const IvTextureOGL& other);
+    IvTextureOGL& operator=(const IvTextureOGL& other);
 }; 
 
 #endif

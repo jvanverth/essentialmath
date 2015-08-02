@@ -64,8 +64,8 @@ IvIndexBufferOGL::Create( unsigned int numIndices, void* data, IvDataUsage usage
     }
     
     // create the handle
-	glGenBuffers( 1, &mBufferID );
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mBufferID );
+    glGenBuffers( 1, &mBufferID );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mBufferID );
     
     // allocate the memory    
     (void) glGetError();  // clear any previous errors (probably not safe)

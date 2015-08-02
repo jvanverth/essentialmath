@@ -54,7 +54,7 @@ protected:
     // constructor/destructor
     IvUniformOGL(IvUniformType type, unsigned int count, 
         IvShaderProgramOGL* shader, unsigned int shaderIndex,
-		unsigned int textureStage);
+        unsigned int textureStage);
     virtual ~IvUniformOGL();
     void Update();
 
@@ -71,12 +71,12 @@ protected:
         IvTextureOGL* mTexture;
     } mValue;
 
-	int mTextureStage;
+    int mTextureStage;
 
 private:
     // copy operations (unimplemented so we can't copy)
     IvUniformOGL(const IvUniformOGL& other);
-	IvUniformOGL& operator=(const IvUniformOGL& other);
+    IvUniformOGL& operator=(const IvUniformOGL& other);
 }; 
 
 //-------------------------------------------------------------------------------

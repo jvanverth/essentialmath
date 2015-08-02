@@ -34,7 +34,7 @@
 //-------------------------------------------------------------------------------
 IvIndexBufferD3D11::IvIndexBufferD3D11() : IvIndexBuffer(), mBufferPtr(0), mDataPtr(0)
 {
-}	// End of IvIndexBufferD3D11::IvIndexBufferD3D11()
+}   // End of IvIndexBufferD3D11::IvIndexBufferD3D11()
 
 //-------------------------------------------------------------------------------
 // @ IvIndexBufferD3D11::~IvIndexBufferD3D11()
@@ -55,26 +55,26 @@ IvIndexBufferD3D11::~IvIndexBufferD3D11()
 bool
 IvIndexBufferD3D11::Create(unsigned int numIndices, void* data, IvDataUsage usage, ID3D11Device* device)
 {
-	D3D11_BUFFER_DESC indexBufferDesc;
-	indexBufferDesc.ByteWidth = sizeof(unsigned int)*numIndices;
-	switch (usage)
-	{
-	default:
-	case kDefaultUsage:
-		indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		break;
-	case kDynamicUsage:
-		indexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-		break;
-	case kImmutableUsage:
-		indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
-		break;
-	}
-	mUsage = usage;
-	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.CPUAccessFlags = (usage == kDynamicUsage) ? D3D11_CPU_ACCESS_WRITE : 0;
-	indexBufferDesc.MiscFlags = 0;
-	//*** replacement for D3DMANAGED?
+    D3D11_BUFFER_DESC indexBufferDesc;
+    indexBufferDesc.ByteWidth = sizeof(unsigned int)*numIndices;
+    switch (usage)
+    {
+    default:
+    case kDefaultUsage:
+        indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+        break;
+    case kDynamicUsage:
+        indexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+        break;
+    case kImmutableUsage:
+        indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+        break;
+    }
+    mUsage = usage;
+    indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+    indexBufferDesc.CPUAccessFlags = (usage == kDynamicUsage) ? D3D11_CPU_ACCESS_WRITE : 0;
+    indexBufferDesc.MiscFlags = 0;
+    //*** replacement for D3DMANAGED?
 
     D3D11_SUBRESOURCE_DATA* initDataPtr = NULL;
     D3D11_SUBRESOURCE_DATA initData;
@@ -86,15 +86,15 @@ IvIndexBufferD3D11::Create(unsigned int numIndices, void* data, IvDataUsage usag
         initData.SysMemSlicePitch = 0;
     }
 
-	if (FAILED(device->CreateBuffer(&indexBufferDesc, initDataPtr, &mBufferPtr)))
-	{
-		mBufferPtr = 0;
-		return false;
-	}
+    if (FAILED(device->CreateBuffer(&indexBufferDesc, initDataPtr, &mBufferPtr)))
+    {
+        mBufferPtr = 0;
+        return false;
+    }
 
-	mNumIndices = numIndices;
+    mNumIndices = numIndices;
 
-	return true;
+    return true;
 }
 
 //-------------------------------------------------------------------------------
@@ -108,12 +108,12 @@ IvIndexBufferD3D11::Destroy()
     delete [] mDataPtr;
     mDataPtr = 0;
 
-	if (mBufferPtr)
-	{
-		// clear the handle and any associated memory
-		mBufferPtr->Release();
-		mBufferPtr = 0;
-	}
+    if (mBufferPtr)
+    {
+        // clear the handle and any associated memory
+        mBufferPtr->Release();
+        mBufferPtr = 0;
+    }
     
     mNumIndices = 0;
 }
@@ -129,7 +129,7 @@ IvIndexBufferD3D11::MakeActive(ID3D11DeviceContext* context)
     if ( mBufferPtr == 0 || mNumIndices == 0 )
         return false;
     
-	context->IASetIndexBuffer(mBufferPtr, DXGI_FORMAT_R32_UINT, 0);
+    context->IASetIndexBuffer(mBufferPtr, DXGI_FORMAT_R32_UINT, 0);
     
     return true;
 }
@@ -143,14 +143,14 @@ IvIndexBufferD3D11::MakeActive(ID3D11DeviceContext* context)
 void *
 IvIndexBufferD3D11::BeginLoadData()
 {
-	if (mUsage == kImmutableUsage)
-	{
-		return NULL;
-	}
+    if (mUsage == kImmutableUsage)
+    {
+        return NULL;
+    }
 
     mDataPtr = (void*) new unsigned char[mNumIndices*sizeof(unsigned int)];
 
-	return mDataPtr;
+    return mDataPtr;
 }
 
 //-------------------------------------------------------------------------------
@@ -162,10 +162,10 @@ IvIndexBufferD3D11::BeginLoadData()
 bool
 IvIndexBufferD3D11::EndLoadData()
 {
-	if (mUsage == kImmutableUsage)
-	{
-		return false;
-	}
+    if (mUsage == kImmutableUsage)
+    {
+        return false;
+    }
 
     // not already "locked"
     if (!mDataPtr)
@@ -185,7 +185,7 @@ IvIndexBufferD3D11::EndLoadData()
         // use Map/Unmap
         D3D11_MAPPED_SUBRESOURCE mappedResource;
         ZeroMemory(&mappedResource, sizeof(D3D11_MAPPED_SUBRESOURCE));
-        //	Disable GPU access to the vertex buffer data.
+        //  Disable GPU access to the vertex buffer data.
         if (S_OK != d3dContext->Map(mBufferPtr, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource))
         {
             return false;
@@ -194,7 +194,7 @@ IvIndexBufferD3D11::EndLoadData()
         void* bufferData = mappedResource.pData;
         memcpy(bufferData, mDataPtr, mNumIndices*sizeof(unsigned int));
 
-        //	Reenable GPU access to the vertex buffer data.
+        //  Reenable GPU access to the vertex buffer data.
         d3dContext->Unmap(mBufferPtr, 0);
     }
 

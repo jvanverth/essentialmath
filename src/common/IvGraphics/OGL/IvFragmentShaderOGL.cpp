@@ -152,7 +152,7 @@ IvFragmentShaderOGL::CreateFromFile( const char* filename )
     GLint status = 0;
     glGetShaderiv( mShaderID, GL_COMPILE_STATUS, &status );
     if ( 0 == status )
-	{
+    {
         GLint len;
         glGetShaderiv(mShaderID, GL_INFO_LOG_LENGTH, &len);
         if(len > 0) 
@@ -163,7 +163,7 @@ IvFragmentShaderOGL::CreateFromFile( const char* filename )
             ERROR_OUT(str << std::endl);
         }
         return false;
-	}
+    }
 
     return true;
 }
@@ -189,8 +189,8 @@ IvFragmentShaderOGL::CreateFromString( const char* string )
     glCompileShader( mShaderID );
     GLint status = 0;
     glGetShaderiv( mShaderID, GL_COMPILE_STATUS, &status );
-	if (status == 0)
-	{
+    if (status == 0)
+    {
         GLint len;
         glGetShaderiv(mShaderID, GL_INFO_LOG_LENGTH, &len);
         if(len > 0) 
@@ -201,7 +201,7 @@ IvFragmentShaderOGL::CreateFromString( const char* string )
             DEBUG_OUT(str << std::endl);
         }
         return false;
-	}
+    }
     
     return true;
 }

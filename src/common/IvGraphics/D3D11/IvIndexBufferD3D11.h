@@ -34,8 +34,8 @@ class IvIndexBufferD3D11 : private IvIndexBuffer
 {
 public:
     // interface routines
-	virtual void* BeginLoadData();
-	virtual bool  EndLoadData();
+    virtual void* BeginLoadData();
+    virtual bool  EndLoadData();
 
     friend class IvResourceManagerD3D11;
     friend class IvRendererD3D11;
@@ -43,25 +43,25 @@ public:
 private:
     // constructor/destructor
     IvIndexBufferD3D11(); 
-	~IvIndexBufferD3D11();
+    ~IvIndexBufferD3D11();
 
     // creation 
-	bool Create(unsigned int numVertices, void* data, IvDataUsage usage, ID3D11Device* device);
+    bool Create(unsigned int numVertices, void* data, IvDataUsage usage, ID3D11Device* device);
     
     // destruction
     void Destroy();
     
     // activate
-	bool MakeActive(ID3D11DeviceContext* device);
+    bool MakeActive(ID3D11DeviceContext* device);
 
 private:
     // copy operations
     IvIndexBufferD3D11(const IvIndexBufferD3D11& other);
-	IvIndexBufferD3D11& operator=(const IvIndexBufferD3D11& other);
+    IvIndexBufferD3D11& operator=(const IvIndexBufferD3D11& other);
 
-	ID3D11Buffer* mBufferPtr;
+    ID3D11Buffer* mBufferPtr;
     void*         mDataPtr;
-	IvDataUsage   mUsage;
+    IvDataUsage   mUsage;
 };
 
 

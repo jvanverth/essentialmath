@@ -79,77 +79,77 @@ IvCleanUpRendererHelpData()
 {
     if ( axesVerts )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(axesVerts);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(axesVerts);
         axesVerts = 0;
     }
 
     if ( floorVerts )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(floorVerts);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(floorVerts);
         floorVerts = 0;
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(floorIndices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(floorIndices);
         floorIndices = 0;
     }
 
     if ( boxVerts )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(boxVerts);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(boxVerts);
         boxVerts = 0;
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(boxIndices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(boxIndices);
         boxIndices = 0;
     }
 
     if ( teapotVertexBuffer )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
         teapotVertexBuffer = 0;
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
         teapotIndexBuffer = 0;
     }
 
     if ( lineVertexBuffer )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(lineVertexBuffer);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(lineVertexBuffer);
         lineVertexBuffer = 0;
     }
 
     if ( sphereVertices )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereVertices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereVertices);
         sphereVertices = 0;
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereIndices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereIndices);
         sphereIndices = 0;
     }
 
-	if ( capsuleTopVertices )
+    if ( capsuleTopVertices )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopVertices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopVertices);
         capsuleTopVertices = 0;
     }
-	if ( capsuleMidVertices )
+    if ( capsuleMidVertices )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidVertices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidVertices);
         capsuleMidVertices = 0;
     }
-	if ( capsuleBottomVertices )
+    if ( capsuleBottomVertices )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomVertices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomVertices);
         capsuleBottomVertices = 0;
     }
 
-	if ( capsuleTopIndices )
+    if ( capsuleTopIndices )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopIndices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopIndices);
         capsuleTopIndices = 0;
     }
-	if ( capsuleMidIndices )
+    if ( capsuleMidIndices )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidIndices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidIndices);
         capsuleMidIndices = 0;
     }
-	if ( capsuleBottomIndices )
+    if ( capsuleBottomIndices )
     {
-	    IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomIndices);
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomIndices);
         capsuleBottomIndices = 0;
     }
 }
@@ -163,49 +163,49 @@ IvCleanUpRendererHelpData()
 void 
 IvDrawAxes()
 {
-	// build data if not there
-	if ( axesVerts == 0 )
-	{
-		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
-		IvCPVertex* dataPtr = (IvCPVertex*) IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 6);
+    // build data if not there
+    if ( axesVerts == 0 )
+    {
+        size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+        IvCPVertex* dataPtr = (IvCPVertex*) IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 6);
         
         if (NULL == dataPtr)
         {
             return;
         }
 
-		dataPtr[0].color.Set(255, 0, 0, 255);
-		dataPtr[0].position.Set(0.0f, 0.0f, 0.0f);
-		dataPtr[1].color.Set(255, 0, 0, 255);
-		dataPtr[1].position.Set(2.5f, 0.0f, 0.0f);
+        dataPtr[0].color.Set(255, 0, 0, 255);
+        dataPtr[0].position.Set(0.0f, 0.0f, 0.0f);
+        dataPtr[1].color.Set(255, 0, 0, 255);
+        dataPtr[1].position.Set(2.5f, 0.0f, 0.0f);
 
-		dataPtr[2].color.Set(0, 255, 0, 255);
-		dataPtr[2].position.Set(0.0f, 0.0f, 0.0f);
-		dataPtr[3].color.Set(0, 255, 0, 255);
-		dataPtr[3].position.Set(0.0f, 2.5f, 0.0f);
+        dataPtr[2].color.Set(0, 255, 0, 255);
+        dataPtr[2].position.Set(0.0f, 0.0f, 0.0f);
+        dataPtr[3].color.Set(0, 255, 0, 255);
+        dataPtr[3].position.Set(0.0f, 2.5f, 0.0f);
 
-		dataPtr[4].color.Set(0, 0, 255, 255);
-		dataPtr[4].position.Set(0.0f, 0.0f, 0.0f);
-		dataPtr[5].color.Set(0, 0, 255, 255);
-		dataPtr[5].position.Set(0.0f, 0.0f, 2.5f);
+        dataPtr[4].color.Set(0, 0, 255, 255);
+        dataPtr[4].position.Set(0.0f, 0.0f, 0.0f);
+        dataPtr[5].color.Set(0, 0, 255, 255);
+        dataPtr[5].position.Set(0.0f, 0.0f, 2.5f);
 
-		axesVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6, dataPtr,
+        axesVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6, dataPtr,
                                                                                     kImmutableUsage);
 
-		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
-	}
+        IvStackAllocator::mScratchAllocator->Reset(currentOffset);
+    }
 
     IvSetWorldIdentity();
 
-	// clear to default shader
-	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	IvRenderer::mRenderer->SetShaderProgram(0);
+    // clear to default shader
+    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+    IvRenderer::mRenderer->SetShaderProgram(0);
 
     // draw it
     IvRenderer::mRenderer->Draw(kLineListPrim, axesVerts);
 
-	// restore original shader
-	IvRenderer::mRenderer->SetShaderProgram(oldShader);
+    // restore original shader
+    IvRenderer::mRenderer->SetShaderProgram(oldShader);
 
 }   // End of IvDrawAxes()
 
@@ -218,74 +218,74 @@ IvDrawAxes()
 void 
 IvDrawFloor()
 {
-	// build data if not there
-	if ( floorVerts == 0 )
-	{
-		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
-		IvCPVertex* vertexPtr = (IvCPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 4 * 81); 
-		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * 6 * 81);
-		int currentVertex = 0;
-		int currentIndex = 0;
-		for ( int i = -12; i <= 12; i += 3 )
-		{
-			for ( int j = -12; j <= 12; j += 3 )
-			{
-				IvColor color;
-				if ( ( i & 0x1 ) == (j & 0x1 ))
-					color.Set( 64, 64, 64, 255 );
-				else
-					color.Set( 192, 192, 192, 255 );
-				vertexPtr[currentVertex].position.Set(0.0f + (float)i, 0.0f + (float)j, 0.0f);
-				vertexPtr[currentVertex].color = color;
-				vertexPtr[currentVertex+1].position.Set(3.0f + (float)i, 0.0f + (float)j, 0.0f);
-				vertexPtr[currentVertex+1].color = color;
-				vertexPtr[currentVertex+2].position.Set(0.0f + (float)i, 3.0f + (float)j, 0.0f);
-				vertexPtr[currentVertex+2].color = color;
-				vertexPtr[currentVertex+3].position.Set(3.0f + (float)i, 3.0f + (float)j, 0.0f);
-				vertexPtr[currentVertex+3].color = color;
-				indexPtr[currentIndex++] = currentVertex;
-				indexPtr[currentIndex++] = currentVertex+1;
-				indexPtr[currentIndex++] = currentVertex+2;
-				indexPtr[currentIndex++] = currentVertex+2;
-				indexPtr[currentIndex++] = currentVertex+1;
-				indexPtr[currentIndex++] = currentVertex+3;
-				currentVertex += 4;
-			}
-		}
+    // build data if not there
+    if ( floorVerts == 0 )
+    {
+        size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+        IvCPVertex* vertexPtr = (IvCPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 4 * 81); 
+        UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * 6 * 81);
+        int currentVertex = 0;
+        int currentIndex = 0;
+        for ( int i = -12; i <= 12; i += 3 )
+        {
+            for ( int j = -12; j <= 12; j += 3 )
+            {
+                IvColor color;
+                if ( ( i & 0x1 ) == (j & 0x1 ))
+                    color.Set( 64, 64, 64, 255 );
+                else
+                    color.Set( 192, 192, 192, 255 );
+                vertexPtr[currentVertex].position.Set(0.0f + (float)i, 0.0f + (float)j, 0.0f);
+                vertexPtr[currentVertex].color = color;
+                vertexPtr[currentVertex+1].position.Set(3.0f + (float)i, 0.0f + (float)j, 0.0f);
+                vertexPtr[currentVertex+1].color = color;
+                vertexPtr[currentVertex+2].position.Set(0.0f + (float)i, 3.0f + (float)j, 0.0f);
+                vertexPtr[currentVertex+2].color = color;
+                vertexPtr[currentVertex+3].position.Set(3.0f + (float)i, 3.0f + (float)j, 0.0f);
+                vertexPtr[currentVertex+3].color = color;
+                indexPtr[currentIndex++] = currentVertex;
+                indexPtr[currentIndex++] = currentVertex+1;
+                indexPtr[currentIndex++] = currentVertex+2;
+                indexPtr[currentIndex++] = currentVertex+2;
+                indexPtr[currentIndex++] = currentVertex+1;
+                indexPtr[currentIndex++] = currentVertex+3;
+                currentVertex += 4;
+            }
+        }
 
-		floorVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 4 * 81, vertexPtr,
+        floorVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 4 * 81, vertexPtr,
                                                                                      kImmutableUsage);
-		floorIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 81, indexPtr,
+        floorIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 81, indexPtr,
                                                                                       kImmutableUsage);
 
-		if (!floorVerts || !floorIndices)
-		{
-			if (floorVerts)
-			{
-				IvRenderer::mRenderer->GetResourceManager()->Destroy(floorVerts);
-				floorVerts = 0;
-			}
-			if (floorIndices)
-			{
-				IvRenderer::mRenderer->GetResourceManager()->Destroy(floorIndices);
-				floorIndices = 0;
-			}
-		}
+        if (!floorVerts || !floorIndices)
+        {
+            if (floorVerts)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(floorVerts);
+                floorVerts = 0;
+            }
+            if (floorIndices)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(floorIndices);
+                floorIndices = 0;
+            }
+        }
 
-		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
-	}
+        IvStackAllocator::mScratchAllocator->Reset(currentOffset);
+    }
 
     IvSetWorldIdentity();
 
-	// clear to default shader
-	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	IvRenderer::mRenderer->SetShaderProgram(0);
+    // clear to default shader
+    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+    IvRenderer::mRenderer->SetShaderProgram(0);
 
     // draw it
     IvRenderer::mRenderer->Draw(kTriangleListPrim, floorVerts, floorIndices);
 
-	// restore original shader
-	IvRenderer::mRenderer->SetShaderProgram(oldShader);
+    // restore original shader
+    IvRenderer::mRenderer->SetShaderProgram(oldShader);
 
 }   // End of IvDrawFloor()
 
@@ -312,155 +312,155 @@ IvDrawCube( IvColor color )
 void 
 IvDrawBox( const IvVector3& minima, const IvVector3& maxima, IvColor color )
 {
-	// load data if not there
-	if ( boxVerts == 0 )
-	{
-		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
-		IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * 4 * 6);
-		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * 6 * 6);
+    // load data if not there
+    if ( boxVerts == 0 )
+    {
+        size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+        IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * 4 * 6);
+        UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * 6 * 6);
 
-		int currentVertex = 0;
-		int currentIndex = 0;
+        int currentVertex = 0;
+        int currentIndex = 0;
 
-	    // set geometry
-		// top
-		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
-		vertexPtr[currentVertex].normal = IvVector3::zAxis;
-		vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, maxima.z);
-		vertexPtr[currentVertex+1].normal = IvVector3::zAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, maxima.z);
-		vertexPtr[currentVertex+2].normal = IvVector3::zAxis;
-		vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, maxima.z);
-		vertexPtr[currentVertex+3].normal = IvVector3::zAxis;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+1;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+3;
-		currentVertex += 4;
+        // set geometry
+        // top
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
+        vertexPtr[currentVertex].normal = IvVector3::zAxis;
+        vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, maxima.z);
+        vertexPtr[currentVertex+1].normal = IvVector3::zAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, maxima.z);
+        vertexPtr[currentVertex+2].normal = IvVector3::zAxis;
+        vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, maxima.z);
+        vertexPtr[currentVertex+3].normal = IvVector3::zAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+3;
+        currentVertex += 4;
 
-		// bottom
-		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, minima.z);
-		vertexPtr[currentVertex].normal = -IvVector3::zAxis;
-		vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, minima.z);
-		vertexPtr[currentVertex+1].normal = -IvVector3::zAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
-		vertexPtr[currentVertex+2].normal = -IvVector3::zAxis;
-		vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, minima.z);
-		vertexPtr[currentVertex+3].normal = -IvVector3::zAxis;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+1;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+3;
-		indexPtr[currentIndex++] = currentVertex+2;
-		currentVertex += 4;
+        // bottom
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, minima.z);
+        vertexPtr[currentVertex].normal = -IvVector3::zAxis;
+        vertexPtr[currentVertex+1].position.Set(minima.x, maxima.y, minima.z);
+        vertexPtr[currentVertex+1].normal = -IvVector3::zAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
+        vertexPtr[currentVertex+2].normal = -IvVector3::zAxis;
+        vertexPtr[currentVertex+3].position.Set(maxima.x, minima.y, minima.z);
+        vertexPtr[currentVertex+3].normal = -IvVector3::zAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+3;
+        indexPtr[currentIndex++] = currentVertex+2;
+        currentVertex += 4;
 
-		// left
-		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
-		vertexPtr[currentVertex].normal = IvVector3::yAxis;
-		vertexPtr[currentVertex+1].position.Set(maxima.x, maxima.y, minima.z);
-		vertexPtr[currentVertex+1].normal = IvVector3::yAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.x, maxima.y, minima.z);
-		vertexPtr[currentVertex+2].normal = IvVector3::yAxis;
-		vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, maxima.z);
-		vertexPtr[currentVertex+3].normal = IvVector3::yAxis;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+1;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+3;
-		currentVertex += 4;    
+        // left
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
+        vertexPtr[currentVertex].normal = IvVector3::yAxis;
+        vertexPtr[currentVertex+1].position.Set(maxima.x, maxima.y, minima.z);
+        vertexPtr[currentVertex+1].normal = IvVector3::yAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.x, maxima.y, minima.z);
+        vertexPtr[currentVertex+2].normal = IvVector3::yAxis;
+        vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, maxima.z);
+        vertexPtr[currentVertex+3].normal = IvVector3::yAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+3;
+        currentVertex += 4;    
 
-		// right
-		vertexPtr[currentVertex].position.Set(maxima.x, minima.y, maxima.z);
-		vertexPtr[currentVertex].normal = -IvVector3::yAxis;
-		vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, minima.z);
-		vertexPtr[currentVertex+1].normal = -IvVector3::yAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
-		vertexPtr[currentVertex+2].normal = -IvVector3::yAxis;
-		vertexPtr[currentVertex+3].position.Set(minima.x, minima.y, maxima.z);
-		vertexPtr[currentVertex+3].normal = -IvVector3::yAxis;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+1;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+3;
-		indexPtr[currentIndex++] = currentVertex+2;
-		currentVertex += 4;  
+        // right
+        vertexPtr[currentVertex].position.Set(maxima.x, minima.y, maxima.z);
+        vertexPtr[currentVertex].normal = -IvVector3::yAxis;
+        vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, minima.z);
+        vertexPtr[currentVertex+1].normal = -IvVector3::yAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
+        vertexPtr[currentVertex+2].normal = -IvVector3::yAxis;
+        vertexPtr[currentVertex+3].position.Set(minima.x, minima.y, maxima.z);
+        vertexPtr[currentVertex+3].normal = -IvVector3::yAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+3;
+        indexPtr[currentIndex++] = currentVertex+2;
+        currentVertex += 4;  
 
-		// front
-		vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
-		vertexPtr[currentVertex].normal = IvVector3::xAxis;
-		vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, maxima.z);
-		vertexPtr[currentVertex].normal = IvVector3::xAxis;
-		vertexPtr[currentVertex+2].position.Set(maxima.x, minima.y, minima.z);
-		vertexPtr[currentVertex+2].normal = IvVector3::xAxis;
-		vertexPtr[currentVertex+3].position.Set(maxima.x, maxima.y, minima.z);
-		vertexPtr[currentVertex+3].normal = IvVector3::xAxis;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+1;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+3;
-		currentVertex += 4;  
+        // front
+        vertexPtr[currentVertex].position.Set(maxima.x, maxima.y, maxima.z);
+        vertexPtr[currentVertex].normal = IvVector3::xAxis;
+        vertexPtr[currentVertex+1].position.Set(maxima.x, minima.y, maxima.z);
+        vertexPtr[currentVertex].normal = IvVector3::xAxis;
+        vertexPtr[currentVertex+2].position.Set(maxima.x, minima.y, minima.z);
+        vertexPtr[currentVertex+2].normal = IvVector3::xAxis;
+        vertexPtr[currentVertex+3].position.Set(maxima.x, maxima.y, minima.z);
+        vertexPtr[currentVertex+3].normal = IvVector3::xAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+3;
+        currentVertex += 4;  
 
-		// back
-		vertexPtr[currentVertex].position.Set(minima.x, maxima.y, maxima.z);
-		vertexPtr[currentVertex].normal = -IvVector3::xAxis;
-		vertexPtr[currentVertex+1].position.Set(minima.x, minima.y, maxima.z);
-		vertexPtr[currentVertex+1].normal = -IvVector3::xAxis;
-		vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
-		vertexPtr[currentVertex+2].normal = -IvVector3::xAxis;
-		vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, minima.z);
-		vertexPtr[currentVertex+3].normal = -IvVector3::xAxis;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+2;
-		indexPtr[currentIndex++] = currentVertex+1;
-		indexPtr[currentIndex++] = currentVertex+0;
-		indexPtr[currentIndex++] = currentVertex+3;
-		indexPtr[currentIndex++] = currentVertex+2;
-		currentVertex += 4;  
+        // back
+        vertexPtr[currentVertex].position.Set(minima.x, maxima.y, maxima.z);
+        vertexPtr[currentVertex].normal = -IvVector3::xAxis;
+        vertexPtr[currentVertex+1].position.Set(minima.x, minima.y, maxima.z);
+        vertexPtr[currentVertex+1].normal = -IvVector3::xAxis;
+        vertexPtr[currentVertex+2].position.Set(minima.x, minima.y, minima.z);
+        vertexPtr[currentVertex+2].normal = -IvVector3::xAxis;
+        vertexPtr[currentVertex+3].position.Set(minima.x, maxima.y, minima.z);
+        vertexPtr[currentVertex+3].normal = -IvVector3::xAxis;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+2;
+        indexPtr[currentIndex++] = currentVertex+1;
+        indexPtr[currentIndex++] = currentVertex+0;
+        indexPtr[currentIndex++] = currentVertex+3;
+        indexPtr[currentIndex++] = currentVertex+2;
+        currentVertex += 4;  
 
-		boxVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, 4 * 6, vertexPtr,
+        boxVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, 4 * 6, vertexPtr,
                                                                                    kImmutableUsage);
-		boxIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 6, indexPtr,
+        boxIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(6 * 6, indexPtr,
                                                                                     kImmutableUsage);
 
-		if (!boxVerts || !boxIndices)
-		{
-			if (boxVerts)
-			{
-				IvRenderer::mRenderer->GetResourceManager()->Destroy(boxVerts);
-				boxVerts = 0;
-			}
-			if (boxIndices)
-			{
-				IvRenderer::mRenderer->GetResourceManager()->Destroy(boxIndices);
-				boxIndices = 0;
-			}
-		}
+        if (!boxVerts || !boxIndices)
+        {
+            if (boxVerts)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(boxVerts);
+                boxVerts = 0;
+            }
+            if (boxIndices)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(boxIndices);
+                boxIndices = 0;
+            }
+        }
         
-		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
-	}
+        IvStackAllocator::mScratchAllocator->Reset(currentOffset);
+    }
 
-	// clear to default shader
-	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	IvRenderer::mRenderer->SetShaderProgram(0);
+    // clear to default shader
+    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+    IvRenderer::mRenderer->SetShaderProgram(0);
 
     // draw it
-	IvShadeMode oldShadeMode = IvRenderer::mRenderer->GetShadeMode();
-	IvRenderer::mRenderer->SetShadeMode( kFlatShaded );
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
+    IvShadeMode oldShadeMode = IvRenderer::mRenderer->GetShadeMode();
+    IvRenderer::mRenderer->SetShadeMode( kFlatShaded );
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
     IvRenderer::mRenderer->Draw(kTriangleListPrim, boxVerts, boxIndices);
 
-	// restore original state
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	IvRenderer::mRenderer->SetShaderProgram( oldShader );
-	IvRenderer::mRenderer->SetShadeMode( oldShadeMode );
+    // restore original state
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+    IvRenderer::mRenderer->SetShaderProgram( oldShader );
+    IvRenderer::mRenderer->SetShadeMode( oldShadeMode );
 
 }   // End of IvDrawBox()
 
@@ -654,101 +654,101 @@ static void
 CreateSphere()
 {
     // load data if not there
-	if ( sphereVertices == 0 )
-	{
-		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+    if ( sphereVertices == 0 )
+    {
+        size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
         
-		const int stacks = 16;
-		const int slices = 24;
+        const int stacks = 16;
+        const int slices = 24;
         const int numVerts = slices*(stacks-1)+2;
         const int numIndices = 6*slices*(stacks-1);
         
-		IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numVerts);
-		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * numIndices);
+        IvNPVertex* vertexPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numVerts);
+        UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32) * numIndices);
         
-		int currentVertex = 0;
-		int currentIndex = 0;
-		
-		// verts
-		vertexPtr[currentVertex].normal.Set(0.0, 0.0f, -1.0f);
-		vertexPtr[currentVertex].position.Set(0.0, 0.0f, -1.0f);
-		currentVertex++;
-		const float increment = kPI/(float)stacks;
-		const float thetaIncrement = kTwoPI/(float)slices;
+        int currentVertex = 0;
+        int currentIndex = 0;
         
-		for (UInt32 latitude = 1; latitude < stacks; ++latitude)
-		{
-			for (UInt32 longitude = 0; longitude < slices; ++longitude)
-			{
-				float phi = -kHalfPI + float(latitude)*increment;
-				float theta = float(longitude)*thetaIncrement;
+        // verts
+        vertexPtr[currentVertex].normal.Set(0.0, 0.0f, -1.0f);
+        vertexPtr[currentVertex].position.Set(0.0, 0.0f, -1.0f);
+        currentVertex++;
+        const float increment = kPI/(float)stacks;
+        const float thetaIncrement = kTwoPI/(float)slices;
+        
+        for (UInt32 latitude = 1; latitude < stacks; ++latitude)
+        {
+            for (UInt32 longitude = 0; longitude < slices; ++longitude)
+            {
+                float phi = -kHalfPI + float(latitude)*increment;
+                float theta = float(longitude)*thetaIncrement;
                 
-				float sinTheta, cosTheta;
-				IvSinCos(theta, sinTheta, cosTheta);
+                float sinTheta, cosTheta;
+                IvSinCos(theta, sinTheta, cosTheta);
                 
-				float sinPhi, cosPhi;
-				IvSinCos(phi, sinPhi, cosPhi);
+                float sinPhi, cosPhi;
+                IvSinCos(phi, sinPhi, cosPhi);
                 
-				vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
-				vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+                vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+                vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
                 
-				if ( longitude > 0 )
-				{
-					if ( currentVertex >= 1+slices )
-					{
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-1;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex-slices;
-					}
-					else
-					{
-						indexPtr[currentIndex++] = 0;
-						indexPtr[currentIndex++] = currentVertex;
-						indexPtr[currentIndex++] = currentVertex-1;
-					}
-				}
-				currentVertex++;
-			}
-			if ( currentVertex >= 2*slices )
-			{
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-2*slices;
-			}
-			else
-			{
-				indexPtr[currentIndex++] = 0;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-			}
-		}
+                if ( longitude > 0 )
+                {
+                    if ( currentVertex >= 1+slices )
+                    {
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-1;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex-slices;
+                    }
+                    else
+                    {
+                        indexPtr[currentIndex++] = 0;
+                        indexPtr[currentIndex++] = currentVertex;
+                        indexPtr[currentIndex++] = currentVertex-1;
+                    }
+                }
+                currentVertex++;
+            }
+            if ( currentVertex >= 2*slices )
+            {
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-1;
+                indexPtr[currentIndex++] = currentVertex-slices-1;
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-slices-1;
+                indexPtr[currentIndex++] = currentVertex-2*slices;
+            }
+            else
+            {
+                indexPtr[currentIndex++] = 0;
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-1;
+            }
+        }
         
-		vertexPtr[currentVertex].normal.Set(0.0, 0.0f, 1.0f);
-		vertexPtr[currentVertex].position.Set(0.0, 0.0f, 1.0f);
+        vertexPtr[currentVertex].normal.Set(0.0, 0.0f, 1.0f);
+        vertexPtr[currentVertex].position.Set(0.0, 0.0f, 1.0f);
         
-		for (UInt32 longitude = 0; longitude < slices-1; ++longitude)
-		{
-			indexPtr[currentIndex++] = currentVertex;
-			indexPtr[currentIndex++] = currentVertex-longitude-2;
-			indexPtr[currentIndex++] = currentVertex-longitude-1;
-		}
-		indexPtr[currentIndex++] = currentVertex;
-		indexPtr[currentIndex++] = currentVertex-1;
-		indexPtr[currentIndex++] = currentVertex-slices;
+        for (UInt32 longitude = 0; longitude < slices-1; ++longitude)
+        {
+            indexPtr[currentIndex++] = currentVertex;
+            indexPtr[currentIndex++] = currentVertex-longitude-2;
+            indexPtr[currentIndex++] = currentVertex-longitude-1;
+        }
+        indexPtr[currentIndex++] = currentVertex;
+        indexPtr[currentIndex++] = currentVertex-1;
+        indexPtr[currentIndex++] = currentVertex-slices;
         
-		sphereVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr,
+        sphereVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numVerts, vertexPtr,
                                                                                          kImmutableUsage);
-		sphereIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr,
+        sphereIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices, indexPtr,
                                                                                        kImmutableUsage);
         
-		if (!sphereVertices || !sphereIndices)
-		{
+        if (!sphereVertices || !sphereIndices)
+        {
             if (sphereVertices)
             {
                 IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereVertices);
@@ -759,10 +759,10 @@ CreateSphere()
                 IvRenderer::mRenderer->GetResourceManager()->Destroy(sphereIndices);
                 sphereIndices = 0;
             }
-		}
+        }
         
         IvStackAllocator::mScratchAllocator->Reset(currentOffset);
-	}
+    }
 }
 
 //-------------------------------------------------------------------------------
@@ -773,13 +773,13 @@ CreateSphere()
 void 
 IvDrawSphere( float radius, IvColor color )
 {
-	// clear to default shader
-	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	IvRenderer::mRenderer->SetShaderProgram(0);
+    // clear to default shader
+    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+    IvRenderer::mRenderer->SetShaderProgram(0);
 
     // create matrix to scale to radius
     IvMatrix44 transform;
-	transform.Scaling(IvVector3(radius,radius,radius));
+    transform.Scaling(IvVector3(radius,radius,radius));
 
     // concatenate with the current matrix
     IvMatrix44 currentMat = IvRenderer::mRenderer->GetWorldMatrix();
@@ -788,12 +788,12 @@ IvDrawSphere( float radius, IvColor color )
     IvRenderer::mRenderer->SetWorldMatrix(currentMat * transform);
         
     // draw it
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
     IvDrawUnitSphere();
 
-	// restore original state
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	IvRenderer::mRenderer->SetShaderProgram( oldShader );
+    // restore original state
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+    IvRenderer::mRenderer->SetShaderProgram( oldShader );
     IvRenderer::mRenderer->SetWorldMatrix(currentMat);
 
 }   // End of IvDrawSphere()
@@ -822,229 +822,229 @@ IvDrawUnitSphere()
 void 
 IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 {
-	// load data if not there
-	const int stacks = 16;
-	const int slices = 24;
-	if ( capsuleBottomVertices == 0 )
-	{
-		capsuleBottomVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
+    // load data if not there
+    const int stacks = 16;
+    const int slices = 24;
+    if ( capsuleBottomVertices == 0 )
+    {
+        capsuleBottomVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
                                             kNPFormat, slices*stacks/2+1, NULL, kDefaultUsage);
-		IvNPVertex* vertexPtr = (IvNPVertex*) capsuleBottomVertices->BeginLoadData();
-		capsuleBottomIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
+        IvNPVertex* vertexPtr = (IvNPVertex*) capsuleBottomVertices->BeginLoadData();
+        capsuleBottomIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
                                             3*slices*stacks, NULL, kDefaultUsage);
-		UInt32* indexPtr = (UInt32*) capsuleBottomIndices->BeginLoadData();
-		int currentVertex = 0;
-		int currentIndex = 0;
-		
-		// verts
-		vertexPtr[currentVertex].normal.Set(0.0, 0.0f, -1.0f);
-		vertexPtr[currentVertex].position.Set(0.0, 0.0f, -1.0f);
-		currentVertex++;
-		const float increment = kPI/(float)stacks;
-		const float thetaIncrement = kTwoPI/(float)slices;
+        UInt32* indexPtr = (UInt32*) capsuleBottomIndices->BeginLoadData();
+        int currentVertex = 0;
+        int currentIndex = 0;
+        
+        // verts
+        vertexPtr[currentVertex].normal.Set(0.0, 0.0f, -1.0f);
+        vertexPtr[currentVertex].position.Set(0.0, 0.0f, -1.0f);
+        currentVertex++;
+        const float increment = kPI/(float)stacks;
+        const float thetaIncrement = kTwoPI/(float)slices;
 
-		for (UInt32 latitude = 1; latitude <= stacks/2; ++latitude)
-		{
-			for (UInt32 longitude = 0; longitude < slices; ++longitude)
-			{
-				float phi = -kHalfPI + float(latitude)*increment;
-				float theta = float(longitude)*thetaIncrement;
+        for (UInt32 latitude = 1; latitude <= stacks/2; ++latitude)
+        {
+            for (UInt32 longitude = 0; longitude < slices; ++longitude)
+            {
+                float phi = -kHalfPI + float(latitude)*increment;
+                float theta = float(longitude)*thetaIncrement;
 
-				float sinTheta, cosTheta;
-				IvSinCos(theta, sinTheta, cosTheta);
+                float sinTheta, cosTheta;
+                IvSinCos(theta, sinTheta, cosTheta);
 
-				float sinPhi, cosPhi;
-				IvSinCos(phi, sinPhi, cosPhi);
+                float sinPhi, cosPhi;
+                IvSinCos(phi, sinPhi, cosPhi);
 
-				vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
-				vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+                vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+                vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
 
-				if ( longitude > 0 )
-				{
-					if ( currentVertex >= 1+slices )
-					{
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-1;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex-slices;
-					}
-					else
-					{
-						indexPtr[currentIndex++] = 0;
-						indexPtr[currentIndex++] = currentVertex;
-						indexPtr[currentIndex++] = currentVertex-1;
-					}
-				}
-				currentVertex++;
-			}
-			if ( currentVertex >= 2*slices )
-			{
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-2*slices;
-			}
-			else
-			{
-				indexPtr[currentIndex++] = 0;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-			}
-		}
+                if ( longitude > 0 )
+                {
+                    if ( currentVertex >= 1+slices )
+                    {
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-1;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex-slices;
+                    }
+                    else
+                    {
+                        indexPtr[currentIndex++] = 0;
+                        indexPtr[currentIndex++] = currentVertex;
+                        indexPtr[currentIndex++] = currentVertex-1;
+                    }
+                }
+                currentVertex++;
+            }
+            if ( currentVertex >= 2*slices )
+            {
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-1;
+                indexPtr[currentIndex++] = currentVertex-slices-1;
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-slices-1;
+                indexPtr[currentIndex++] = currentVertex-2*slices;
+            }
+            else
+            {
+                indexPtr[currentIndex++] = 0;
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-1;
+            }
+        }
 
-		if (!capsuleBottomVertices->EndLoadData() || !capsuleBottomIndices->EndLoadData())
-		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomVertices);
-			capsuleBottomVertices = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomIndices);
-			capsuleBottomIndices = 0;
-		}    
-	}
+        if (!capsuleBottomVertices->EndLoadData() || !capsuleBottomIndices->EndLoadData())
+        {
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomVertices);
+            capsuleBottomVertices = 0;
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleBottomIndices);
+            capsuleBottomIndices = 0;
+        }    
+    }
 
-	if ( capsuleTopVertices == 0 )
-	{
-		capsuleTopVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
+    if ( capsuleTopVertices == 0 )
+    {
+        capsuleTopVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
                                                   kNPFormat, slices*stacks/2+1, NULL, kDefaultUsage);
-		IvNPVertex* vertexPtr = (IvNPVertex*) capsuleTopVertices->BeginLoadData();
-		capsuleTopIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
+        IvNPVertex* vertexPtr = (IvNPVertex*) capsuleTopVertices->BeginLoadData();
+        capsuleTopIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
                                                   3*slices*stacks, NULL, kDefaultUsage);
-		UInt32* indexPtr = (UInt32*) capsuleTopIndices->BeginLoadData();
-		int currentVertex = 0;
-		int currentIndex = 0;
-		
-		// verts
-		const float increment = kPI/(float)stacks;
-		const float thetaIncrement = kTwoPI/(float)slices;
+        UInt32* indexPtr = (UInt32*) capsuleTopIndices->BeginLoadData();
+        int currentVertex = 0;
+        int currentIndex = 0;
+        
+        // verts
+        const float increment = kPI/(float)stacks;
+        const float thetaIncrement = kTwoPI/(float)slices;
 
-		for (UInt32 latitude = stacks/2; latitude < stacks; ++latitude)
-		{
-			for (UInt32 longitude = 0; longitude < slices; ++longitude)
-			{
-				float phi = -kHalfPI + float(latitude)*increment;
-				float theta = float(longitude)*thetaIncrement;
+        for (UInt32 latitude = stacks/2; latitude < stacks; ++latitude)
+        {
+            for (UInt32 longitude = 0; longitude < slices; ++longitude)
+            {
+                float phi = -kHalfPI + float(latitude)*increment;
+                float theta = float(longitude)*thetaIncrement;
 
-				float sinTheta, cosTheta;
-				IvSinCos(theta, sinTheta, cosTheta);
+                float sinTheta, cosTheta;
+                IvSinCos(theta, sinTheta, cosTheta);
 
-				float sinPhi, cosPhi;
-				IvSinCos(phi, sinPhi, cosPhi);
+                float sinPhi, cosPhi;
+                IvSinCos(phi, sinPhi, cosPhi);
 
-				vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
-				vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+                vertexPtr[currentVertex].normal.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
+                vertexPtr[currentVertex].position.Set(cosTheta*cosPhi, sinTheta*cosPhi, sinPhi);
 
-				if ( longitude > 0 )
-				{
-					if ( currentVertex >= 1+slices )
-					{
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-1;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex+0;
-						indexPtr[currentIndex++] = currentVertex-slices-1;
-						indexPtr[currentIndex++] = currentVertex-slices;
-					}
-				}
-				currentVertex++;
-			}
-			if ( currentVertex >= 2*slices )
-			{
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-slices-1;
-				indexPtr[currentIndex++] = currentVertex-2*slices;
-			}
-			else
-			{
-				indexPtr[currentIndex++] = 0;
-				indexPtr[currentIndex++] = currentVertex-slices;
-				indexPtr[currentIndex++] = currentVertex-1;
-			}
-		}
+                if ( longitude > 0 )
+                {
+                    if ( currentVertex >= 1+slices )
+                    {
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-1;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex-slices;
+                    }
+                }
+                currentVertex++;
+            }
+            if ( currentVertex >= 2*slices )
+            {
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-1;
+                indexPtr[currentIndex++] = currentVertex-slices-1;
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-slices-1;
+                indexPtr[currentIndex++] = currentVertex-2*slices;
+            }
+            else
+            {
+                indexPtr[currentIndex++] = 0;
+                indexPtr[currentIndex++] = currentVertex-slices;
+                indexPtr[currentIndex++] = currentVertex-1;
+            }
+        }
 
-		vertexPtr[currentVertex].normal.Set(0.0, 0.0f, 1.0f);
-		vertexPtr[currentVertex].position.Set(0.0, 0.0f, 1.0f);
+        vertexPtr[currentVertex].normal.Set(0.0, 0.0f, 1.0f);
+        vertexPtr[currentVertex].position.Set(0.0, 0.0f, 1.0f);
 
-		for (UInt32 longitude = 0; longitude < slices-1; ++longitude)
-		{
-			indexPtr[currentIndex++] = currentVertex;
-			indexPtr[currentIndex++] = currentVertex-longitude-2;
-			indexPtr[currentIndex++] = currentVertex-longitude-1;
-		}
-		indexPtr[currentIndex++] = currentVertex;
-		indexPtr[currentIndex++] = currentVertex-1;
-		indexPtr[currentIndex++] = currentVertex-slices;
+        for (UInt32 longitude = 0; longitude < slices-1; ++longitude)
+        {
+            indexPtr[currentIndex++] = currentVertex;
+            indexPtr[currentIndex++] = currentVertex-longitude-2;
+            indexPtr[currentIndex++] = currentVertex-longitude-1;
+        }
+        indexPtr[currentIndex++] = currentVertex;
+        indexPtr[currentIndex++] = currentVertex-1;
+        indexPtr[currentIndex++] = currentVertex-slices;
 
-		if (!capsuleTopVertices->EndLoadData() || !capsuleTopIndices->EndLoadData())
-		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopVertices);
-			capsuleTopVertices = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopIndices);
-			capsuleTopIndices = 0;
-		}    
-	}
+        if (!capsuleTopVertices->EndLoadData() || !capsuleTopIndices->EndLoadData())
+        {
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopVertices);
+            capsuleTopVertices = 0;
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleTopIndices);
+            capsuleTopIndices = 0;
+        }    
+    }
     
-	if ( capsuleMidVertices == 0 )
-	{
-		capsuleMidVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
+    if ( capsuleMidVertices == 0 )
+    {
+        capsuleMidVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
                                                             kNPFormat, slices*2, NULL, kDefaultUsage);
-		IvNPVertex* vertexPtr = (IvNPVertex*) capsuleMidVertices->BeginLoadData();
-		capsuleMidIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
+        IvNPVertex* vertexPtr = (IvNPVertex*) capsuleMidVertices->BeginLoadData();
+        capsuleMidIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
                                                             6*slices, NULL, kDefaultUsage);
-		UInt32* indexPtr = (UInt32*) capsuleMidIndices->BeginLoadData();
-		int currentVertex = 0;
-		int currentIndex = 0;
-		
-		// verts
-		const float thetaIncrement = kTwoPI/(float)slices;
+        UInt32* indexPtr = (UInt32*) capsuleMidIndices->BeginLoadData();
+        int currentVertex = 0;
+        int currentIndex = 0;
+        
+        // verts
+        const float thetaIncrement = kTwoPI/(float)slices;
 
         for (UInt32 z = 0; z <= 1; ++z)
         {
-		    for (UInt32 longitude = 0; longitude < slices; ++longitude)
-		    {
-			    float theta = float(longitude)*thetaIncrement;
+            for (UInt32 longitude = 0; longitude < slices; ++longitude)
+            {
+                float theta = float(longitude)*thetaIncrement;
 
-			    float sinTheta, cosTheta;
-			    IvSinCos(theta, sinTheta, cosTheta);
+                float sinTheta, cosTheta;
+                IvSinCos(theta, sinTheta, cosTheta);
 
-			    vertexPtr[currentVertex].normal.Set(cosTheta, sinTheta, 0.0f);
-			    vertexPtr[currentVertex].position.Set(cosTheta, sinTheta, (float)z);
+                vertexPtr[currentVertex].normal.Set(cosTheta, sinTheta, 0.0f);
+                vertexPtr[currentVertex].position.Set(cosTheta, sinTheta, (float)z);
 
-			    if ( longitude > 0 )
-			    {
-				    if ( currentVertex >= slices )
-				    {
-					    indexPtr[currentIndex++] = currentVertex+0;
-					    indexPtr[currentIndex++] = currentVertex-1;
-					    indexPtr[currentIndex++] = currentVertex-slices-1;
-					    indexPtr[currentIndex++] = currentVertex+0;
-					    indexPtr[currentIndex++] = currentVertex-slices-1;
-					    indexPtr[currentIndex++] = currentVertex-slices;
-				    }
-			    }
-			    currentVertex++;
-		    }
+                if ( longitude > 0 )
+                {
+                    if ( currentVertex >= slices )
+                    {
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-1;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex+0;
+                        indexPtr[currentIndex++] = currentVertex-slices-1;
+                        indexPtr[currentIndex++] = currentVertex-slices;
+                    }
+                }
+                currentVertex++;
+            }
         }
-		indexPtr[currentIndex++] = currentVertex-slices;
-		indexPtr[currentIndex++] = currentVertex-1;
-		indexPtr[currentIndex++] = currentVertex-slices-1;
-		indexPtr[currentIndex++] = currentVertex-slices;
-		indexPtr[currentIndex++] = currentVertex-slices-1;
-		indexPtr[currentIndex++] = currentVertex-2*slices;
+        indexPtr[currentIndex++] = currentVertex-slices;
+        indexPtr[currentIndex++] = currentVertex-1;
+        indexPtr[currentIndex++] = currentVertex-slices-1;
+        indexPtr[currentIndex++] = currentVertex-slices;
+        indexPtr[currentIndex++] = currentVertex-slices-1;
+        indexPtr[currentIndex++] = currentVertex-2*slices;
 
-		if (!capsuleMidVertices->EndLoadData() || !capsuleMidIndices->EndLoadData())
-		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidVertices);
-			capsuleMidVertices = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidIndices);
-			capsuleMidIndices = 0;
-		}    
-	}
+        if (!capsuleMidVertices->EndLoadData() || !capsuleMidIndices->EndLoadData())
+        {
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidVertices);
+            capsuleMidVertices = 0;
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(capsuleMidIndices);
+            capsuleMidIndices = 0;
+        }    
+    }
     
     // this is kind of a cheat
     // we are going to draw this in a local space oriented along the z axis
@@ -1103,11 +1103,11 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     IvRenderer::mRenderer->SetWorldMatrix(currentMat * transform);
 
     // clear to default shader
-	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	IvRenderer::mRenderer->SetShaderProgram(0);
+    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+    IvRenderer::mRenderer->SetShaderProgram(0);
 
     // draw it
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
     IvRenderer::mRenderer->Draw(kTriangleListPrim, capsuleBottomVertices, capsuleBottomIndices);
 
     IvMatrix44 xlate;
@@ -1124,8 +1124,8 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     IvRenderer::mRenderer->Draw(kTriangleListPrim, capsuleMidVertices, capsuleMidIndices);
 
     // restore original state
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	IvRenderer::mRenderer->SetShaderProgram(oldShader);
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+    IvRenderer::mRenderer->SetShaderProgram(oldShader);
 
 }   // End of IvDrawCapsule()
 
@@ -1141,29 +1141,29 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
 void 
 IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
 {
-	// create vertex buffer if not there
-	if ( lineVertexBuffer == 0 )
-	{
-		lineVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2,
+    // create vertex buffer if not there
+    if ( lineVertexBuffer == 0 )
+    {
+        lineVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2,
                                                                                            NULL, kDynamicUsage);
-	}
+    }
     
-	IvCPVertex* dataPtr = (IvCPVertex*) lineVertexBuffer->BeginLoadData();
+    IvCPVertex* dataPtr = (IvCPVertex*) lineVertexBuffer->BeginLoadData();
     dataPtr[0].position = from;
     dataPtr[0].color = color;
     dataPtr[1].position = to;
     dataPtr[1].color = color;
-	(void) lineVertexBuffer->EndLoadData();
+    (void) lineVertexBuffer->EndLoadData();
 
     // clear to default shader
-	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	IvRenderer::mRenderer->SetShaderProgram(0);
+    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+    IvRenderer::mRenderer->SetShaderProgram(0);
 
     // draw it
     IvRenderer::mRenderer->Draw(kLineListPrim, lineVertexBuffer);
 
     // restore data
-	IvRenderer::mRenderer->SetShaderProgram(oldShader);
+    IvRenderer::mRenderer->SetShaderProgram(oldShader);
 
 }   // End of IvDrawLine()
 
@@ -1176,69 +1176,69 @@ IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
 void 
 IvDrawTeapot( IvColor color, bool useDefaultShader )
 {
-	// load data if not there
-	if ( teapotVertexBuffer == 0 )
-	{
+    // load data if not there
+    if ( teapotVertexBuffer == 0 )
+    {
         std::vector<IvTNPVertex> vertices;
         std::vector<unsigned int> indices;
 
         BuildTeapot( vertices, indices );
 
         unsigned int numTeapotVerts = vertices.size();
-		size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
-		IvNPVertex* dataPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numTeapotVerts);        
+        size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
+        IvNPVertex* dataPtr = (IvNPVertex*)IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kNPFormat] * numTeapotVerts);        
         for ( unsigned int i = 0; i < numTeapotVerts; ++i )
         {
             dataPtr[i].position = vertices[i].position;
             dataPtr[i].normal = vertices[i].normal;
         }
-		teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numTeapotVerts, dataPtr,
+        teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kNPFormat, numTeapotVerts, dataPtr,
                                                                                              kImmutableUsage);
 
         unsigned int numTeapotIndices = indices.size();
-		UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32)* numTeapotIndices);
+        UInt32* indexPtr = (UInt32*)IvStackAllocator::mScratchAllocator->Allocate(sizeof(UInt32)* numTeapotIndices);
         for ( unsigned int i = 0; i < numTeapotIndices; ++i )
         {
             indexPtr[i] = indices[i];
         }
 
-		teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices, indexPtr,
+        teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices, indexPtr,
                                                                                            kImmutableUsage);
 
-		if (!teapotVertexBuffer || !teapotIndexBuffer)
-		{
-			if (teapotVertexBuffer)
-			{
-				IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
-				teapotVertexBuffer = 0;
-			}
-			if (teapotIndexBuffer)
-			{
-				IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
-				teapotIndexBuffer = 0;
-			}
-		}
+        if (!teapotVertexBuffer || !teapotIndexBuffer)
+        {
+            if (teapotVertexBuffer)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
+                teapotVertexBuffer = 0;
+            }
+            if (teapotIndexBuffer)
+            {
+                IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
+                teapotIndexBuffer = 0;
+            }
+        }
 
-		IvStackAllocator::mScratchAllocator->Reset(currentOffset);
-	}
+        IvStackAllocator::mScratchAllocator->Reset(currentOffset);
+    }
 
     IvShaderProgram* oldShader = NULL;
     if (useDefaultShader)
     {
-	    // clear to default shader
+        // clear to default shader
         oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	    IvRenderer::mRenderer->SetShaderProgram(0);
+        IvRenderer::mRenderer->SetShaderProgram(0);
 
-	    IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
+        IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
     }
     // draw it
     IvRenderer::mRenderer->Draw(kTriangleListPrim, teapotVertexBuffer, teapotIndexBuffer);
 
     if (useDefaultShader)
     {
-	    // restore original state
-	    IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	    IvRenderer::mRenderer->SetShaderProgram( oldShader );
+        // restore original state
+        IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+        IvRenderer::mRenderer->SetShaderProgram( oldShader );
     }
 }   // End of IvDrawTeapot()
 
@@ -1251,17 +1251,17 @@ IvDrawTeapot( IvColor color, bool useDefaultShader )
 void 
 IvDrawTexturedTeapot( bool useDefaultShader )
 {
-	// load data if not there
-	if ( teapotVertexBuffer == 0 )
-	{
+    // load data if not there
+    if ( teapotVertexBuffer == 0 )
+    {
         std::vector<IvTNPVertex> vertices;
         std::vector<unsigned int> indices;
 
         BuildTeapot( vertices, indices );
 
         unsigned int numTeapotVerts = vertices.size();
-		teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTNPFormat, numTeapotVerts);
-		IvTNPVertex* dataPtr = (IvTNPVertex*) teapotVertexBuffer->BeginLoadData();
+        teapotVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kTNPFormat, numTeapotVerts);
+        IvTNPVertex* dataPtr = (IvTNPVertex*) teapotVertexBuffer->BeginLoadData();
         
         for ( unsigned int i = 0; i < numTeapotVerts; ++i )
         {
@@ -1269,41 +1269,41 @@ IvDrawTexturedTeapot( bool useDefaultShader )
             dataPtr[i].normal = vertices[i].normal;
             dataPtr[i].texturecoord = vertices[i].texturecoord;
         }
-		if (!teapotVertexBuffer->EndLoadData())
-		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
-			teapotVertexBuffer = 0;
-		}
+        if (!teapotVertexBuffer->EndLoadData())
+        {
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
+            teapotVertexBuffer = 0;
+        }
 
         unsigned int numTeapotIndices = indices.size();
-		teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices);
-		unsigned int* indexPtr = (unsigned int*) teapotIndexBuffer->BeginLoadData();
+        teapotIndexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTeapotIndices);
+        unsigned int* indexPtr = (unsigned int*) teapotIndexBuffer->BeginLoadData();
         for ( unsigned int i = 0; i < numTeapotIndices; ++i )
         {
             indexPtr[i] = indices[i];
         }
-		if (!teapotIndexBuffer->EndLoadData())
-		{
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
-			teapotVertexBuffer = 0;
-			IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
-			teapotIndexBuffer = 0;
-		}
-	}
+        if (!teapotIndexBuffer->EndLoadData())
+        {
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotVertexBuffer);
+            teapotVertexBuffer = 0;
+            IvRenderer::mRenderer->GetResourceManager()->Destroy(teapotIndexBuffer);
+            teapotIndexBuffer = 0;
+        }
+    }
 
     IvShaderProgram* oldShader = NULL;
     if (useDefaultShader)
     {
-	    // clear to default shader
+        // clear to default shader
         oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	    IvRenderer::mRenderer->SetShaderProgram(0);
+        IvRenderer::mRenderer->SetShaderProgram(0);
     }
     IvRenderer::mRenderer->Draw(kTriangleListPrim, teapotVertexBuffer, teapotIndexBuffer);
 
     if (useDefaultShader)
     {
-	    // restore original state
-	    IvRenderer::mRenderer->SetShaderProgram( oldShader );
+        // restore original state
+        IvRenderer::mRenderer->SetShaderProgram( oldShader );
     }
 }   // End of IvDrawTexturedTeapot()
 */
@@ -1317,9 +1317,9 @@ IvSetDefaultLighting()
 {
     IvVector3 dir(-1.0f, 0.5f, 0.25f);
     dir.Normalize();
-	IvRenderer::mRenderer->SetDefaultLightDirection(dir);
-	IvRenderer::mRenderer->SetDefaultLightAmbient(0.15f, 0.15f, 0.15f, 1.0f);
-	IvRenderer::mRenderer->SetDefaultLightDiffuse(0.35f, 0.35f, 0.35f, 1.0f);
+    IvRenderer::mRenderer->SetDefaultLightDirection(dir);
+    IvRenderer::mRenderer->SetDefaultLightAmbient(0.15f, 0.15f, 0.15f, 1.0f);
+    IvRenderer::mRenderer->SetDefaultLightDiffuse(0.35f, 0.35f, 0.35f, 1.0f);
 
 }   // End of IvSetDefaultLighting()
 

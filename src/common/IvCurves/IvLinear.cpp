@@ -194,13 +194,13 @@ IvLinear::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
+    IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
     for ( UInt32 i = 0; i < mCount; ++i )
     {
         curveDataPtr[i].position = mPositions[i];
         curveDataPtr[i].color = kOrange;
     }
-	if (!mCurveVertices->EndLoadData())
+    if (!mCurveVertices->EndLoadData())
         return false;
 
     // set up sample points
@@ -217,7 +217,7 @@ IvLinear::RebuildVertexBuffers()
                                                                                          NULL, kDefaultUsage);
     }
 
-	IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
+    IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
     
     for ( UInt32 i = 0; i < mCount; ++i )
     {

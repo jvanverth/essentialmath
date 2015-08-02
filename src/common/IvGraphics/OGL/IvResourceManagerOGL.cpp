@@ -35,7 +35,7 @@
 //-------------------------------------------------------------------------------
 IvResourceManagerOGL::IvResourceManagerOGL() : IvResourceManager()
 {
-}	// End of IvResourceManagerOGL::IvResourceManagerOGL()
+}   // End of IvResourceManagerOGL::IvResourceManagerOGL()
 
 //-------------------------------------------------------------------------------
 // @ IvResourceManagerOGL::~IvResourceManagerOGL()
@@ -44,7 +44,7 @@ IvResourceManagerOGL::IvResourceManagerOGL() : IvResourceManager()
 //-------------------------------------------------------------------------------
 IvResourceManagerOGL::~IvResourceManagerOGL()
 {
-}	// End of IvResourceManagerOGL::~IvResourceManagerOGL()
+}   // End of IvResourceManagerOGL::~IvResourceManagerOGL()
 
 //-------------------------------------------------------------------------------
 // @ IvResourceManagerOGL::CreateVertexBuffer()
@@ -87,7 +87,7 @@ IvResourceManagerOGL::CreateIndexBuffer( unsigned int numIndices, void* data,
                                          IvDataUsage usage)
 {
     IvIndexBufferOGL* newBuffer = new IvIndexBufferOGL();
-	if (!newBuffer->Create( numIndices, data, usage ))
+    if (!newBuffer->Create( numIndices, data, usage ))
     {
         delete newBuffer;
         newBuffer = 0;
@@ -250,11 +250,11 @@ IvResourceManagerOGL::Destroy( IvFragmentShader* fs)
 IvShaderProgram* 
 IvResourceManagerOGL::CreateShaderProgram( IvVertexShader* vs, IvFragmentShader* fs )
 {
- 	// make sure we're not handed garbage
-	if ( vs == 0 || fs == 0 )
-		return 0;
+    // make sure we're not handed garbage
+    if ( vs == 0 || fs == 0 )
+        return 0;
 
-	IvShaderProgramOGL* newProgram = new IvShaderProgramOGL();
+    IvShaderProgramOGL* newProgram = new IvShaderProgramOGL();
     if ( !newProgram->Create( static_cast<IvVertexShaderOGL*>(vs)->mShaderID, 
                               static_cast<IvFragmentShaderOGL*>(fs)->mShaderID ) )
     {
@@ -287,7 +287,7 @@ IvResourceManagerOGL::CreateTexture( IvTextureFormat format,
                                      unsigned int width, unsigned int height,
                                      void* data, IvDataUsage usage )
 {
-	IvTextureOGL* newTexture = new IvTextureOGL();
+    IvTextureOGL* newTexture = new IvTextureOGL();
     if ( !newTexture->Create( width, height, format, data, usage ) )
     {
         delete newTexture;

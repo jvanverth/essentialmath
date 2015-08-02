@@ -26,7 +26,7 @@
 #ifdef _DEBUG
 #define ASSERT(x) \
     if (!(x)) \
-	DEBUG_OUT( "Assertion failed: file " << __FILE__ << " line " << __LINE__ << std::endl ); \
+    DEBUG_OUT( "Assertion failed: file " << __FILE__ << " line " << __LINE__ << std::endl ); \
     assert(x)
 #else
 #define ASSERT(x)

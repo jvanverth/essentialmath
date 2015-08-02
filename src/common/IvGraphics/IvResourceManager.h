@@ -67,10 +67,10 @@ public:
     virtual IvTexture* CreateTexture(IvTextureFormat format,
                                      unsigned int width, unsigned int height,
                                      void* data, IvDataUsage usage) = 0;
-	virtual IvTexture* CreateMipmappedTexture(IvTextureFormat format,
-		                             unsigned int width, unsigned int height,
-		                             void** data, unsigned int levels, IvDataUsage usage) = 0;
-	virtual void Destroy(IvTexture* tex) = 0;
+    virtual IvTexture* CreateMipmappedTexture(IvTextureFormat format,
+                                     unsigned int width, unsigned int height,
+                                     void** data, unsigned int levels, IvDataUsage usage) = 0;
+    virtual void Destroy(IvTexture* tex) = 0;
 
 protected:
     IvResourceManager() {}
@@ -79,7 +79,7 @@ protected:
 private:
     // copy operations
     IvResourceManager(const IvVertexBuffer& other);
-	IvResourceManager& operator=(const IvVertexBuffer& other);
+    IvResourceManager& operator=(const IvVertexBuffer& other);
     
 }; 
 

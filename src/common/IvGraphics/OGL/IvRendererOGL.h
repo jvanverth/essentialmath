@@ -33,20 +33,20 @@ class IvRendererOGL : public IvRenderer
 friend class IvRenderer;
 
 public:
-	bool static Create();
+    bool static Create();
 
-	virtual bool Initialize( unsigned int  width, unsigned int  height );
+    virtual bool Initialize( unsigned int  width, unsigned int  height );
     virtual void Resize( unsigned int width, unsigned int height );
         
     virtual void  SetClearColor( float red, float green, float blue, float alpha );
     virtual void  SetClearDepth( float depth );
     virtual void  ClearBuffers(IvClearBuffer buffer);
 
-	virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op);
-	virtual void SetColorMask( bool red, bool green, bool blue, bool alpha );
-	virtual void SetFillMode(IvFillMode fill);
-	virtual void SetShadeMode(IvShadeMode shade);
-	virtual IvShadeMode GetShadeMode();
+    virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op);
+    virtual void SetColorMask( bool red, bool green, bool blue, bool alpha );
+    virtual void SetFillMode(IvFillMode fill);
+    virtual void SetShadeMode(IvShadeMode shade);
+    virtual IvShadeMode GetShadeMode();
 
     virtual void SetDepthTest(IvDepthTestFunc func);
     virtual IvDepthTestFunc GetDepthTest();

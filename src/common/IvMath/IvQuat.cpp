@@ -511,7 +511,7 @@ IvQuat::Inverse()
 {
     float norm = w*w + x*x + y*y + z*z;
     // if we're the zero quaternion, just return
-	if (IvIsZero(norm))
+    if (IvIsZero(norm))
     {
         return *this;
     }

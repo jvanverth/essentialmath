@@ -33,36 +33,36 @@ enum IvBlendFunc
 {
     kZeroBlendFunc,
     kOneBlendFunc,
-	kSrcColorBlendFunc,
-	kOneMinusSrcColorBlendFunc,
-	kSrcAlphaBlendFunc,
+    kSrcColorBlendFunc,
+    kOneMinusSrcColorBlendFunc,
+    kSrcAlphaBlendFunc,
     kOneMinusSrcAlphaBlendFunc,
-	kDestColorBlendFunc,
-	kOneMinusDestColorBlendFunc,
-	kDestAlphaBlendFunc,
-	kOneMinusDestAlphaBlendFunc,
+    kDestColorBlendFunc,
+    kOneMinusDestColorBlendFunc,
+    kDestAlphaBlendFunc,
+    kOneMinusDestAlphaBlendFunc,
 
-	kLastBlendFunc = kOneMinusDestAlphaBlendFunc
+    kLastBlendFunc = kOneMinusDestAlphaBlendFunc
 };
 const int kBlendFuncCount = kLastBlendFunc+1;
 
 enum IvBlendOp
 {
-	kAddBlendOp,
-	kSubtractBlendOp,
-	kMinBlendOp,
-	kMaxBlendOp,
+    kAddBlendOp,
+    kSubtractBlendOp,
+    kMinBlendOp,
+    kMaxBlendOp,
 
-	kLastBlendOp = kMaxBlendOp
+    kLastBlendOp = kMaxBlendOp
 };
 const int kBlendOpCount = kLastBlendOp+1;
 
 enum IvFillMode
 {
-	kWireframeFill,
-	kSolidFill,
+    kWireframeFill,
+    kSolidFill,
 
-	kLastFillMode = kSolidFill
+    kLastFillMode = kSolidFill
 };
 const int kFillModeCount = kLastFillMode+1;
 
@@ -71,7 +71,7 @@ enum IvShadeMode
     kFlatShaded,
     kGouraudShaded,
 
-	kLastShadeMode = kGouraudShaded
+    kLastShadeMode = kGouraudShaded
 };
 const int kShadeModeCount = kLastShadeMode+1;
 
@@ -81,7 +81,7 @@ enum IvClearBuffer
     kDepthClear,
     kColorDepthClear,
 
-	kLastClear = kColorDepthClear
+    kLastClear = kColorDepthClear
 };
 const int kClearCount = kLastClear+1;
 
@@ -93,7 +93,7 @@ enum IvDepthTestFunc
     kLessDepthTest,
     kLessEqualDepthTest,
 
-	kLastDepthTest = kLessEqualDepthTest
+    kLastDepthTest = kLessEqualDepthTest
 };
 const int kDepthTestCount = kLastDepthTest+1;
 
@@ -105,14 +105,14 @@ enum IvPrimType
     kTriangleListPrim,
     kTriangleStripPrim,
 
-	kLastPrim = kTriangleStripPrim
+    kLastPrim = kTriangleStripPrim
 };
 const int kPrimTypeCount = kLastPrim + 1;
 
 enum IvAPI
 {
-	kOpenGL,
-	kD3D11
+    kOpenGL,
+    kD3D11
 };
 
 //-------------------------------------------------------------------------------
@@ -122,8 +122,8 @@ enum IvAPI
 class IvRenderer 
 {
 public:
-	// Create defined in each subclass
-	static void Destroy();
+    // Create defined in each subclass
+    static void Destroy();
 
     virtual bool Initialize( unsigned int  width, unsigned int  height ) = 0;
     virtual void Resize( unsigned int width, unsigned int height ) = 0;
@@ -142,14 +142,14 @@ public:
     inline void SetFarPlane( float farPlane )       { mFar = farPlane; }
 
     virtual void  SetClearColor( float red, float green, float blue, float alpha ) = 0;
-	virtual void  SetClearDepth( float depth ) = 0;
+    virtual void  SetClearDepth( float depth ) = 0;
     virtual void  ClearBuffers(IvClearBuffer buffer) = 0;
 
     virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op) = 0;
-	virtual void SetColorMask( bool red, bool green, bool blue, bool alpha ) = 0;
-	virtual void SetFillMode(IvFillMode fill) = 0;
-	virtual void SetShadeMode(IvShadeMode shade) = 0;
-	virtual IvShadeMode GetShadeMode() = 0;
+    virtual void SetColorMask( bool red, bool green, bool blue, bool alpha ) = 0;
+    virtual void SetFillMode(IvFillMode fill) = 0;
+    virtual void SetShadeMode(IvShadeMode shade) = 0;
+    virtual IvShadeMode GetShadeMode() = 0;
 
     virtual void SetDepthTest(IvDepthTestFunc func) = 0;
     virtual IvDepthTestFunc GetDepthTest() = 0;
@@ -162,10 +162,10 @@ public:
     const IvMatrix44& GetProjectionMatrix();
     virtual void SetProjectionMatrix(const IvMatrix44& matrix);
 
-	void SetDefaultDiffuseColor(float red, float green, float blue, float alpha);
-	void SetDefaultLightAmbient(float red, float green, float blue, float alpha);
-	void SetDefaultLightDiffuse(float red, float green, float blue, float alpha);
-	void SetDefaultLightDirection(const IvVector3& direction);
+    void SetDefaultDiffuseColor(float red, float green, float blue, float alpha);
+    void SetDefaultLightAmbient(float red, float green, float blue, float alpha);
+    void SetDefaultLightDiffuse(float red, float green, float blue, float alpha);
+    void SetDefaultLightDirection(const IvVector3& direction);
 
     // Setting this to NULL uses the default shader for the vertex format
     // that is drawn
@@ -189,7 +189,7 @@ public:
     const IvResourceManager* GetResourceManager() const;
     IvResourceManager* GetResourceManager();
 
-	inline IvAPI GetAPI() { return mAPI; }
+    inline IvAPI GetAPI() { return mAPI; }
 
     static IvRenderer*  mRenderer;          // global pointer
 
@@ -209,7 +209,7 @@ protected:
     
     IvResourceManager*  mResourceManager;
 
-	IvAPI		      mAPI;
+    IvAPI             mAPI;
 
     IvMatrix44        mWorldMat;
     IvMatrix44        mViewMat;
@@ -218,10 +218,10 @@ protected:
     IvMatrix44        mWVPMat;
     IvMatrix44        mNormalMat;
 
-	IvVector4		  mDiffuseColor;
-	IvVector4		  mLightAmbient;
-	IvVector4		  mLightDiffuse;
-	IvVector4		  mLightDirection;
+    IvVector4         mDiffuseColor;
+    IvVector4         mLightAmbient;
+    IvVector4         mLightDiffuse;
+    IvVector4         mLightDirection;
 
 private:
     // copy operations

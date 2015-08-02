@@ -75,7 +75,7 @@ IvShaderProgramD3D11::Create( IvVertexShaderD3D11* vertexShaderPtr, IvFragmentSh
     mVertexShaderConstants = vertexShaderPtr->mConstantTable;
     mVertexShaderConstants->AddRef();
 
-	mFragmentShaderPtr = fragmentShaderPtr->mShaderPtr;
+    mFragmentShaderPtr = fragmentShaderPtr->mShaderPtr;
     mFragmentShaderPtr->AddRef();
     mFragmentShaderConstants = fragmentShaderPtr->mConstantTable;
     mFragmentShaderConstants->AddRef();
@@ -93,24 +93,24 @@ IvShaderProgramD3D11::Destroy()
 {
     if (mVertexShaderPtr)
     {
-	    mVertexShaderPtr->Release();
-	    mVertexShaderPtr = 0;
+        mVertexShaderPtr->Release();
+        mVertexShaderPtr = 0;
     }
     if (mVertexShaderConstants)
     {
-		mVertexShaderConstants->Release();
+        mVertexShaderConstants->Release();
         mVertexShaderConstants = 0;
     }
 
-	if (mFragmentShaderPtr)
+    if (mFragmentShaderPtr)
     {
         mFragmentShaderPtr->Release();
-	    mFragmentShaderPtr = 0;
+        mFragmentShaderPtr = 0;
     }
     if (mFragmentShaderConstants)
     {
-		mFragmentShaderConstants->Release();
-		mFragmentShaderConstants = 0;
+        mFragmentShaderConstants->Release();
+        mFragmentShaderConstants = 0;
     }
 
     std::map<std::string, IvUniformD3D11*>::iterator iter = mUniforms.begin();
@@ -132,11 +132,11 @@ IvShaderProgramD3D11::MakeActive(ID3D11DeviceContext* context)
 {
     if ( mVertexShaderPtr == 0 || mFragmentShaderPtr == 0 )
         return false;
-	
-	context->VSSetShader(mVertexShaderPtr, NULL, 0);
-	context->PSSetShader(mFragmentShaderPtr, NULL, 0);
+    
+    context->VSSetShader(mVertexShaderPtr, NULL, 0);
+    context->PSSetShader(mFragmentShaderPtr, NULL, 0);
 
-	//*** Update the uniforms here?
+    //*** Update the uniforms here?
 
     std::map<std::string, IvUniformD3D11*>::iterator iter = mUniforms.begin();
    
@@ -158,13 +158,13 @@ IvShaderProgramD3D11::MakeActive(ID3D11DeviceContext* context)
 bool
 IvShaderProgramD3D11::BindUniforms(ID3D11DeviceContext* context)
 {
-	if (mVertexShaderConstants == 0 || mFragmentShaderConstants == 0)
-		return false;
+    if (mVertexShaderConstants == 0 || mFragmentShaderConstants == 0)
+        return false;
 
-	mVertexShaderConstants->MakeActiveVS(context);
-	mFragmentShaderConstants->MakeActivePS(context);
+    mVertexShaderConstants->MakeActiveVS(context);
+    mFragmentShaderConstants->MakeActivePS(context);
 
-	return true;
+    return true;
 }
 
 
@@ -182,32 +182,32 @@ IvShaderProgramD3D11::GetUniform(char const* name)
         return static_cast<IvUniform*>(mUniforms[name]);
     }
 
-	IvConstantDesc desc;
+    IvConstantDesc desc;
 
-	// check the vertex shader first
-	IvConstantTableD3D11* constantTable;
-	if (mVertexShaderConstants->GetConstantDesc(name, &desc))
-	{
-		constantTable = mVertexShaderConstants;
-	} 
-	else if (mFragmentShaderConstants->GetConstantDesc(name, &desc))
-	{
-		constantTable = mFragmentShaderConstants;
-	}
-	else
-	{
-		return NULL;
-	}
+    // check the vertex shader first
+    IvConstantTableD3D11* constantTable;
+    if (mVertexShaderConstants->GetConstantDesc(name, &desc))
+    {
+        constantTable = mVertexShaderConstants;
+    } 
+    else if (mFragmentShaderConstants->GetConstantDesc(name, &desc))
+    {
+        constantTable = mFragmentShaderConstants;
+    }
+    else
+    {
+        return NULL;
+    }
 
-	IvUniformD3D11* uniform;
-	if (desc.mType == kTextureUniform)
-	{
-		uniform = new IvUniformD3D11(desc.mTextureSlot, desc.mSamplerSlot, this);
-	} 
-	else
-	{
+    IvUniformD3D11* uniform;
+    if (desc.mType == kTextureUniform)
+    {
+        uniform = new IvUniformD3D11(desc.mTextureSlot, desc.mSamplerSlot, this);
+    } 
+    else
+    {
         uniform = new IvUniformD3D11(desc.mType, desc.mCount, desc.mOffset, constantTable, this);
-	}
+    }
 
     mUniforms[name] = uniform;
 

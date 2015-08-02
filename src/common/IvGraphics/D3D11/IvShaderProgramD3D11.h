@@ -52,7 +52,7 @@ public:
 private:
     // constructor/destructor
     IvShaderProgramD3D11();
-	~IvShaderProgramD3D11();
+    ~IvShaderProgramD3D11();
     
     // initialization
     bool Create( IvVertexShaderD3D11* vertexShaderPtr, IvFragmentShaderD3D11* fragmentShaderPtr );
@@ -61,22 +61,22 @@ private:
     void Destroy();
     
     // make this the active program
-	bool MakeActive(ID3D11DeviceContext* context);
+    bool MakeActive(ID3D11DeviceContext* context);
 
-	// bind the associated uniforms
-	bool BindUniforms(ID3D11DeviceContext* context);
+    // bind the associated uniforms
+    bool BindUniforms(ID3D11DeviceContext* context);
     
 private:
     // copy operations
     IvShaderProgramD3D11(const IvShaderProgramD3D11& other);
-	IvShaderProgramD3D11& operator=(const IvShaderProgramD3D11& other);
+    IvShaderProgramD3D11& operator=(const IvShaderProgramD3D11& other);
 
 private:
     // D3D-specific data
-	ID3D11VertexShader*  mVertexShaderPtr;
-	IvConstantTableD3D11* mVertexShaderConstants;
-	ID3D11PixelShader*   mFragmentShaderPtr;
-	IvConstantTableD3D11* mFragmentShaderConstants;
+    ID3D11VertexShader*  mVertexShaderPtr;
+    IvConstantTableD3D11* mVertexShaderConstants;
+    ID3D11PixelShader*   mFragmentShaderPtr;
+    IvConstantTableD3D11* mFragmentShaderConstants;
 
     std::map<std::string, IvUniformD3D11*> mUniforms;
 };

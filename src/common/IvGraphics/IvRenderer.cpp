@@ -41,10 +41,10 @@ IvRenderer::IvRenderer() :
     mNear = 0.1f;
     mFar = 35.0f;
 
-	mDiffuseColor.Set(1.0f, 1.0f, 1.0f, 1.0f);
+    mDiffuseColor.Set(1.0f, 1.0f, 1.0f, 1.0f);
 
-	mLightAmbient.Set(1.0f, 1.0f, 1.0f, 1.0f);
-	mLightDiffuse.Set(1.0f, 1.0f, 1.0f, 1.0f);
+    mLightAmbient.Set(1.0f, 1.0f, 1.0f, 1.0f);
+    mLightDiffuse.Set(1.0f, 1.0f, 1.0f, 1.0f);
     mLightDirection = IvVector4::xAxis;
 
 }   // End of IvRenderer::IvRenderer()
@@ -69,8 +69,8 @@ IvRenderer::~IvRenderer()
 void 
 IvRenderer::Destroy()
 {
-	delete mRenderer;
-	mRenderer = 0;
+    delete mRenderer;
+    mRenderer = 0;
 }   // End of IvRenderer::Destroy()
 
 
@@ -124,12 +124,12 @@ void IvRenderer::SetWorldMatrix(const IvMatrix44& matrix)
 {
     mWorldMat = matrix;
     mWVPMat = mProjectionMat*mViewMat*mWorldMat;
-	IvMatrix33 worldMat3x3;
-	IvVector3 col0(mWorldMat(0,0), mWorldMat(1,0), mWorldMat(2,0));
-	IvVector3 col1(mWorldMat(0,1), mWorldMat(1,1), mWorldMat(2,1));
-	IvVector3 col2(mWorldMat(0,2), mWorldMat(1,2), mWorldMat(2,2));
-	worldMat3x3.SetColumns(col0, col1, col2);
-	mNormalMat.Rotation(Transpose(Inverse(worldMat3x3)));
+    IvMatrix33 worldMat3x3;
+    IvVector3 col0(mWorldMat(0,0), mWorldMat(1,0), mWorldMat(2,0));
+    IvVector3 col1(mWorldMat(0,1), mWorldMat(1,1), mWorldMat(2,1));
+    IvVector3 col2(mWorldMat(0,2), mWorldMat(1,2), mWorldMat(2,2));
+    worldMat3x3.SetColumns(col0, col1, col2);
+    mNormalMat.Rotation(Transpose(Inverse(worldMat3x3)));
 }
 
 //-------------------------------------------------------------------------------

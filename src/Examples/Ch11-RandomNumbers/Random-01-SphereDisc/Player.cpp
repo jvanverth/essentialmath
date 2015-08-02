@@ -64,7 +64,7 @@ Player::Player()
     mRotate.Identity();
     mScale = 1.0f;
     
-	mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1500,
+    mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1500,
                                                                                 NULL, kDefaultUsage);
     IvCPVertex* dataPtr = (IvCPVertex*) mVertices->BeginLoadData();
     for (unsigned int i = 0; i < 1500; ++i)
@@ -86,10 +86,10 @@ Player::Player()
 //-------------------------------------------------------------------------------
 Player::~Player()
 {
-	if (mVertices)
-	{
-		IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
-	}
+    if (mVertices)
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mVertices);
+    }
 }   // End of Player::~Player()
 
 
@@ -205,7 +205,7 @@ Player::Update( float dt )
     }
     rotate.Set(IvVector3::zAxis, r);
     mRotate = rotate*mRotate;
-	mRotate.Normalize();
+    mRotate.Normalize();
         
     if (IvGame::mGame->mEventHandler->IsKeyDown('m'))
     {
@@ -214,7 +214,7 @@ Player::Update( float dt )
         IvCPVertex* dataPtr = (IvCPVertex*) mVertices->BeginLoadData();
         for (unsigned int i = 0; i < 1500; ++i)
         {
-			dataPtr[i].color = kOrange;
+            dataPtr[i].color = kOrange;
             switch (mMode)
             {
             default:

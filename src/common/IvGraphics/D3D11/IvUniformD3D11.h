@@ -40,61 +40,61 @@ public:
 
     virtual void SetValue( float value, unsigned int index);
     virtual void SetValue( const IvVector4& value, unsigned int index );
-	virtual void SetValue(const IvVector3& value, unsigned int index);
-	virtual void SetValue(const IvMatrix44& value, unsigned int index);
+    virtual void SetValue(const IvVector3& value, unsigned int index);
+    virtual void SetValue(const IvMatrix44& value, unsigned int index);
     virtual void SetValue( IvTexture* value );
     
     // return false on type mismatch
     virtual bool GetValue( float& value, unsigned int index) const;
     virtual bool GetValue( IvVector4& value, unsigned int index ) const;
-	virtual bool GetValue(IvVector3& value, unsigned int index) const;
-	virtual bool GetValue(IvMatrix44& value, unsigned int index) const;
+    virtual bool GetValue(IvVector3& value, unsigned int index) const;
+    virtual bool GetValue(IvMatrix44& value, unsigned int index) const;
     virtual bool GetValue( IvTexture*& value ) const;
     
 protected:
     // constructor/destructor for most uniforms
     IvUniformD3D11(IvUniformType type, unsigned int count, void* offset,
-		          IvConstantTableD3D11* constantTable, 
-				  IvShaderProgramD3D11* shader);
-	// constructor/destructor for texture uniforms
-	IvUniformD3D11(int textureUnit, int samplerUnit,
-		          IvShaderProgramD3D11* shader);
-	virtual ~IvUniformD3D11();
+                  IvConstantTableD3D11* constantTable, 
+                  IvShaderProgramD3D11* shader);
+    // constructor/destructor for texture uniforms
+    IvUniformD3D11(int textureUnit, int samplerUnit,
+                  IvShaderProgramD3D11* shader);
+    virtual ~IvUniformD3D11();
     void Update();
 
-    IvShaderProgramD3D11*	 mShader;
-	union
-	{
+    IvShaderProgramD3D11*    mShader;
+    union
+    {
         // we use an offset into the global constant buffer
         // to update most uniforms
         struct
         {
-            void*				 mOffset;
+            void*                mOffset;
             IvConstantTableD3D11* mConstantTable;
         };
         // we use the texture and sampler units for textures
-		struct
-		{
-			int                  mTextureUnit;
-			int                  mSamplerUnit;
-		};
-	};
+        struct
+        {
+            int                  mTextureUnit;
+            int                  mSamplerUnit;
+        };
+    };
 
     // Could subclass for each type (particularly textures), 
     // but likely not worth it.
     union  
     {
         float* mFloat;
-		IvVector3* mVector3;
-		IvVector4* mVector4;
-		IvMatrix44* mMatrix44;
+        IvVector3* mVector3;
+        IvVector4* mVector4;
+        IvMatrix44* mMatrix44;
         IvTextureD3D11* mTexture;
     } mValue;
 
 private:
     // copy operations (unimplemented so we can't copy)
     IvUniformD3D11(const IvUniformD3D11& other);
-	IvUniformD3D11& operator=(const IvUniformD3D11& other);
+    IvUniformD3D11& operator=(const IvUniformD3D11& other);
 }; 
 
 //-------------------------------------------------------------------------------

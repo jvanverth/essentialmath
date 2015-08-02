@@ -33,8 +33,8 @@ class IvVertexBufferD3D11 : private IvVertexBuffer
 {
 public:
     // interface routines
-	virtual void* BeginLoadData();
-	virtual bool  EndLoadData();
+    virtual void* BeginLoadData();
+    virtual bool  EndLoadData();
 
     friend class IvResourceManagerD3D11;
     friend class IvRendererD3D11;
@@ -42,26 +42,26 @@ public:
 private:
     // constructor/destructor
     IvVertexBufferD3D11();
-	~IvVertexBufferD3D11();
+    ~IvVertexBufferD3D11();
     
     // creation 
-	bool Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
-		        ID3D11Device* device);
+    bool Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
+                ID3D11Device* device);
     
     // destruction
     void Destroy();
 
     // activate
-	bool MakeActive(ID3D11DeviceContext* device);
+    bool MakeActive(ID3D11DeviceContext* device);
 
 private:
     // copy operations
     IvVertexBufferD3D11(const IvVertexBufferD3D11& other);
-	IvVertexBufferD3D11& operator=(const IvVertexBufferD3D11& other);
+    IvVertexBufferD3D11& operator=(const IvVertexBufferD3D11& other);
 
-	ID3D11Buffer* mBufferPtr;
-	void*		  mDataPtr;
-	IvDataUsage   mUsage;
+    ID3D11Buffer* mBufferPtr;
+    void*         mDataPtr;
+    IvDataUsage   mUsage;
 };
 
 

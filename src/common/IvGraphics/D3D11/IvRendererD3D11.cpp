@@ -32,58 +32,58 @@
 
 static D3D_PRIMITIVE_TOPOLOGY sPrimTypeMap[kPrimTypeCount] =
 {
-	D3D_PRIMITIVE_TOPOLOGY_POINTLIST,
-	D3D_PRIMITIVE_TOPOLOGY_LINELIST,
-	D3D_PRIMITIVE_TOPOLOGY_LINESTRIP,
-	D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
-	D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
+    D3D_PRIMITIVE_TOPOLOGY_POINTLIST,
+    D3D_PRIMITIVE_TOPOLOGY_LINELIST,
+    D3D_PRIMITIVE_TOPOLOGY_LINESTRIP,
+    D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+    D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
 };
 
 static IvShaderProgramD3D11* sDefaultShaders[kVertexFormatCount];
 
 static D3D11_BLEND sBlendFunc[kBlendFuncCount] =
 {
-	D3D11_BLEND_ZERO,
-	D3D11_BLEND_ONE,
-	D3D11_BLEND_SRC_COLOR,
-	D3D11_BLEND_INV_SRC_COLOR,
-	D3D11_BLEND_SRC_ALPHA,
-	D3D11_BLEND_INV_SRC_ALPHA,
-	D3D11_BLEND_DEST_COLOR,
-	D3D11_BLEND_INV_DEST_COLOR,
-	D3D11_BLEND_DEST_ALPHA,
-	D3D11_BLEND_INV_DEST_ALPHA,
+    D3D11_BLEND_ZERO,
+    D3D11_BLEND_ONE,
+    D3D11_BLEND_SRC_COLOR,
+    D3D11_BLEND_INV_SRC_COLOR,
+    D3D11_BLEND_SRC_ALPHA,
+    D3D11_BLEND_INV_SRC_ALPHA,
+    D3D11_BLEND_DEST_COLOR,
+    D3D11_BLEND_INV_DEST_COLOR,
+    D3D11_BLEND_DEST_ALPHA,
+    D3D11_BLEND_INV_DEST_ALPHA,
 };
 
 static D3D11_BLEND sBlendAlphaFunc[kBlendFuncCount] =
 {
-	D3D11_BLEND_ZERO,
-	D3D11_BLEND_ONE,
-	D3D11_BLEND_SRC_ALPHA,
-	D3D11_BLEND_INV_SRC_ALPHA,
-	D3D11_BLEND_SRC_ALPHA,
-	D3D11_BLEND_INV_SRC_ALPHA,
-	D3D11_BLEND_DEST_ALPHA,
-	D3D11_BLEND_INV_DEST_ALPHA,
-	D3D11_BLEND_DEST_ALPHA,
-	D3D11_BLEND_INV_DEST_ALPHA,
+    D3D11_BLEND_ZERO,
+    D3D11_BLEND_ONE,
+    D3D11_BLEND_SRC_ALPHA,
+    D3D11_BLEND_INV_SRC_ALPHA,
+    D3D11_BLEND_SRC_ALPHA,
+    D3D11_BLEND_INV_SRC_ALPHA,
+    D3D11_BLEND_DEST_ALPHA,
+    D3D11_BLEND_INV_DEST_ALPHA,
+    D3D11_BLEND_DEST_ALPHA,
+    D3D11_BLEND_INV_DEST_ALPHA,
 };
 
 static D3D11_BLEND_OP sBlendOp[kBlendOpCount] =
 {
-	D3D11_BLEND_OP_ADD,
-	D3D11_BLEND_OP_SUBTRACT,
-	D3D11_BLEND_OP_MIN,
-	D3D11_BLEND_OP_MAX,
+    D3D11_BLEND_OP_ADD,
+    D3D11_BLEND_OP_SUBTRACT,
+    D3D11_BLEND_OP_MIN,
+    D3D11_BLEND_OP_MAX,
 };
 
 static D3D11_COMPARISON_FUNC sDepthFunc[kDepthTestCount] =
 {
-	D3D11_COMPARISON_ALWAYS,
-	D3D11_COMPARISON_GREATER,
-	D3D11_COMPARISON_GREATER_EQUAL,
-	D3D11_COMPARISON_LESS,
-	D3D11_COMPARISON_LESS_EQUAL
+    D3D11_COMPARISON_ALWAYS,
+    D3D11_COMPARISON_GREATER,
+    D3D11_COMPARISON_GREATER_EQUAL,
+    D3D11_COMPARISON_LESS,
+    D3D11_COMPARISON_LESS_EQUAL
 };
 
 //-------------------------------------------------------------------------------
@@ -105,10 +105,10 @@ IvRendererD3D11::Create(ID3D11Device* device, ID3D11DeviceContext* context,
         return false;
     }
     
-	if (!mRenderer)
-	{
+    if (!mRenderer)
+    {
         mRenderer = new IvRendererD3D11(device, context, renderTarget, depthStencilTarget);
-	}
+    }
     return ( mRenderer != 0 );
 
 }   // End of IvRenderer::Create()
@@ -126,28 +126,28 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
     , mRenderTarget(NULL)
     , mDepthStencilTarget(NULL)
 {
-	mDevice = device;
-	mDevice->AddRef();
+    mDevice = device;
+    mDevice->AddRef();
 
-	mContext = context;
-	mContext->AddRef();
+    mContext = context;
+    mContext->AddRef();
 
     SetTargets(renderTarget, depthStencilTarget);
 
     mShader = NULL;
 
-	mClearColor[0] = 1.0f;
-	mClearColor[1] = 1.0f;
-	mClearColor[2] = 1.0f;
-	mClearColor[3] = 1.0f;
-	mClearDepth = 1.0f;
+    mClearColor[0] = 1.0f;
+    mClearColor[1] = 1.0f;
+    mClearColor[2] = 1.0f;
+    mClearColor[3] = 1.0f;
+    mClearDepth = 1.0f;
 
-	mSrcBlend = mSrcBlendAlpha = D3D11_BLEND_ONE;
-	mDestBlend = mDestBlendAlpha = D3D11_BLEND_ZERO;
-	mBlendOp = D3D11_BLEND_OP_ADD;
-	mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+    mSrcBlend = mSrcBlendAlpha = D3D11_BLEND_ONE;
+    mDestBlend = mDestBlendAlpha = D3D11_BLEND_ZERO;
+    mBlendOp = D3D11_BLEND_OP_ADD;
+    mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	mAPI = kD3D11;
+    mAPI = kD3D11;
 
 }   // End of IvRendererD3D11::IvRendererD3D11()
 
@@ -159,7 +159,7 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
 //-------------------------------------------------------------------------------
 IvRendererD3D11::~IvRendererD3D11()
 {
-	// delete shader program?
+    // delete shader program?
     for ( unsigned int i = 0; i < kVertexFormatCount; ++i )
     {
         if (sDefaultShaders[i])
@@ -177,11 +177,11 @@ IvRendererD3D11::~IvRendererD3D11()
 
     ReleaseTargets();
 
-	mContext->Release();
-	mContext = 0;
+    mContext->Release();
+    mContext = 0;
 
-	mDevice->Release();
-	mDevice = 0;
+    mDevice->Release();
+    mDevice = 0;
 
 }   // End of IvRendererD3D11::~IvRendererD3D11()
 
@@ -216,21 +216,21 @@ IvRendererD3D11::Initialize( unsigned int width, unsigned int height )
 void 
 IvRendererD3D11::Resize(unsigned int width, unsigned int height ) 
 {
-	// prevent divide by zero
+    // prevent divide by zero
     if (height == 0)                                    
     {
         height = 1;                                 
     }
 
     // set up current viewport
-	D3D11_VIEWPORT vp;
-	vp.Width = (FLOAT)width;
-	vp.Height = (FLOAT)height;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	mContext->RSSetViewports(1, &vp);
+    D3D11_VIEWPORT vp;
+    vp.Width = (FLOAT)width;
+    vp.Height = (FLOAT)height;
+    vp.MinDepth = 0.0f;
+    vp.MaxDepth = 1.0f;
+    vp.TopLeftX = 0;
+    vp.TopLeftY = 0;
+    mContext->RSSetViewports(1, &vp);
     mWidth = width;
     mHeight = height;
 
@@ -300,7 +300,7 @@ void IvRendererD3D11::ReleaseTargets()
 bool 
 IvRendererD3D11::InitD3D11()                                   
 {
-	/*
+    /*
     // turn on smooth shading
     mDevice->SetRenderState( D3DRS_SHADEMODE, D3DSHADE_GOURAUD );    
     */
@@ -312,26 +312,26 @@ IvRendererD3D11::InitD3D11()
     SetDepthTest(kLessEqualDepthTest);
     SetDepthWrite(true);
 
-	// Set solid fill
-	SetFillMode(kSolidFill);
+    // Set solid fill
+    SetFillMode(kSolidFill);
 
-	// Initialize the depth-stencil state.
-	mDepthTestFunc = kLessEqualDepthTest;
-	mDepthWrite = TRUE;
-	UpdateDepthStencilState();
+    // Initialize the depth-stencil state.
+    mDepthTestFunc = kLessEqualDepthTest;
+    mDepthWrite = TRUE;
+    UpdateDepthStencilState();
 
-	// Initialize the blend state
-	mSrcBlend = D3D11_BLEND_ONE;
-	mDestBlend = D3D11_BLEND_ZERO;
-	mBlendOp = D3D11_BLEND_OP_ADD;
-	mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	UpdateBlendState();
+    // Initialize the blend state
+    mSrcBlend = D3D11_BLEND_ONE;
+    mDestBlend = D3D11_BLEND_ZERO;
+    mBlendOp = D3D11_BLEND_OP_ADD;
+    mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+    UpdateBlendState();
 
-	/*
+    /*
     // set point size
     float pointSize = 5.0f;
     mDevice->SetRenderState( D3DRS_POINTSIZE, *((DWORD*)&pointSize) );
-	*/
+    */
     return true;                                        
 
 }   // End of IvRendererD3D11::InitGL()
@@ -346,10 +346,10 @@ void
 IvRendererD3D11::SetClearColor( float red, float green, float blue, float alpha )  
 {
     // set clear color
-	mClearColor[0] = red;
-	mClearColor[1] = green;
-	mClearColor[2] = blue;
-	mClearColor[3] = alpha;
+    mClearColor[0] = red;
+    mClearColor[1] = green;
+    mClearColor[2] = blue;
+    mClearColor[3] = alpha;
 }
 
 
@@ -382,15 +382,15 @@ IvRendererD3D11::ClearBuffers(IvClearBuffer buffer)
     switch (buffer)
     {
         case kColorClear:
-			mContext->ClearRenderTargetView(mRenderTarget, mClearColor);
+            mContext->ClearRenderTargetView(mRenderTarget, mClearColor);
             break;
         case kDepthClear:
-			mContext->ClearDepthStencilView(mDepthStencilTarget, D3D11_CLEAR_DEPTH, mClearDepth, 0);
+            mContext->ClearDepthStencilView(mDepthStencilTarget, D3D11_CLEAR_DEPTH, mClearDepth, 0);
             break;
         case kColorDepthClear:
-			mContext->ClearRenderTargetView(mRenderTarget, mClearColor);
-			mContext->ClearDepthStencilView(mDepthStencilTarget, D3D11_CLEAR_DEPTH, mClearDepth, 0);
-			break;
+            mContext->ClearRenderTargetView(mRenderTarget, mClearColor);
+            mContext->ClearDepthStencilView(mDepthStencilTarget, D3D11_CLEAR_DEPTH, mClearDepth, 0);
+            break;
     };
 }
 
@@ -403,13 +403,13 @@ IvRendererD3D11::ClearBuffers(IvClearBuffer buffer)
 void 
 IvRendererD3D11::SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc destBlend, IvBlendOp op)
 {
-	mSrcBlend = sBlendFunc[srcBlend];
-	mDestBlend = sBlendFunc[destBlend];
-	mSrcBlendAlpha = sBlendAlphaFunc[srcBlend];
-	mDestBlendAlpha = sBlendAlphaFunc[destBlend];
-	mBlendOp = sBlendOp[op];
+    mSrcBlend = sBlendFunc[srcBlend];
+    mDestBlend = sBlendFunc[destBlend];
+    mSrcBlendAlpha = sBlendAlphaFunc[srcBlend];
+    mDestBlendAlpha = sBlendAlphaFunc[destBlend];
+    mBlendOp = sBlendOp[op];
 
-	UpdateBlendState();
+    UpdateBlendState();
 }
 
 
@@ -420,18 +420,18 @@ IvRendererD3D11::SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc destBlend, IvBle
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetColorMask( bool red, bool green, bool blue, bool alpha )
 {
-	unsigned char mask = 0;
-	if (red)
-		mask |= D3D11_COLOR_WRITE_ENABLE_RED;
-	if (green)
-		mask |= D3D11_COLOR_WRITE_ENABLE_GREEN;
-	if (blue)
-		mask |= D3D11_COLOR_WRITE_ENABLE_BLUE;
-	if (alpha)
-		mask |= D3D11_COLOR_WRITE_ENABLE_ALPHA;
-	mWriteMask = mask;
+    unsigned char mask = 0;
+    if (red)
+        mask |= D3D11_COLOR_WRITE_ENABLE_RED;
+    if (green)
+        mask |= D3D11_COLOR_WRITE_ENABLE_GREEN;
+    if (blue)
+        mask |= D3D11_COLOR_WRITE_ENABLE_BLUE;
+    if (alpha)
+        mask |= D3D11_COLOR_WRITE_ENABLE_ALPHA;
+    mWriteMask = mask;
 
-	UpdateBlendState();
+    UpdateBlendState();
 }
 
 //-------------------------------------------------------------------------------
@@ -441,33 +441,33 @@ void IvRendererD3D11::SetColorMask( bool red, bool green, bool blue, bool alpha 
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::UpdateBlendState()
 {
-	D3D11_BLEND_DESC blendDesc;
-	ID3D11BlendState* blendState;
+    D3D11_BLEND_DESC blendDesc;
+    ID3D11BlendState* blendState;
 
-	// ideally we'd only call this at most once per draw
-	// the assumption is that the client will only be either setting blend funcs
-	// or the write mask
-	ZeroMemory(&blendDesc, sizeof(blendDesc));
-	blendDesc.RenderTarget[0].BlendEnable =
-		!(D3D11_BLEND_ONE == mSrcBlend && D3D11_BLEND_ZERO == mDestBlend && D3D11_BLEND_OP_ADD == mBlendOp);
-	blendDesc.RenderTarget[0].SrcBlend = mSrcBlend;
-	blendDesc.RenderTarget[0].DestBlend = mDestBlend;
-	blendDesc.RenderTarget[0].BlendOp = mBlendOp;
-	blendDesc.RenderTarget[0].SrcBlendAlpha = mSrcBlendAlpha;
-	blendDesc.RenderTarget[0].DestBlendAlpha = mDestBlendAlpha;
-	blendDesc.RenderTarget[0].BlendOpAlpha = mBlendOp;
-	blendDesc.RenderTarget[0].RenderTargetWriteMask = mWriteMask;
+    // ideally we'd only call this at most once per draw
+    // the assumption is that the client will only be either setting blend funcs
+    // or the write mask
+    ZeroMemory(&blendDesc, sizeof(blendDesc));
+    blendDesc.RenderTarget[0].BlendEnable =
+        !(D3D11_BLEND_ONE == mSrcBlend && D3D11_BLEND_ZERO == mDestBlend && D3D11_BLEND_OP_ADD == mBlendOp);
+    blendDesc.RenderTarget[0].SrcBlend = mSrcBlend;
+    blendDesc.RenderTarget[0].DestBlend = mDestBlend;
+    blendDesc.RenderTarget[0].BlendOp = mBlendOp;
+    blendDesc.RenderTarget[0].SrcBlendAlpha = mSrcBlendAlpha;
+    blendDesc.RenderTarget[0].DestBlendAlpha = mDestBlendAlpha;
+    blendDesc.RenderTarget[0].BlendOpAlpha = mBlendOp;
+    blendDesc.RenderTarget[0].RenderTargetWriteMask = mWriteMask;
 
-	// Create the blend state from the description we just filled out.
-	HRESULT result = mDevice->CreateBlendState(&blendDesc, &blendState);
-	if (FAILED(result))
-	{
-		ASSERT(false);
-		return;
-	}
-	// Now set the blend state.
-	mContext->OMSetBlendState(blendState, NULL, 0xffffffff);
-	blendState->Release();
+    // Create the blend state from the description we just filled out.
+    HRESULT result = mDevice->CreateBlendState(&blendDesc, &blendState);
+    if (FAILED(result))
+    {
+        ASSERT(false);
+        return;
+    }
+    // Now set the blend state.
+    mContext->OMSetBlendState(blendState, NULL, 0xffffffff);
+    blendState->Release();
 }
 
 //-------------------------------------------------------------------------------
@@ -477,29 +477,29 @@ void IvRendererD3D11::UpdateBlendState()
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetFillMode( IvFillMode fill )
 {
-	// Setup the raster description which will determine how and what polygons will be drawn.
-	D3D11_RASTERIZER_DESC rasterDesc;
-	ID3D11RasterizerState* rasterState;
-	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
-	rasterDesc.AntialiasedLineEnable = false;
-	rasterDesc.CullMode = (fill == kSolidFill) ? D3D11_CULL_BACK : D3D11_CULL_NONE;
-	rasterDesc.DepthBias = 0;
-	rasterDesc.DepthBiasClamp = 0.0f;
-	rasterDesc.DepthClipEnable = true;
-	rasterDesc.FillMode = (fill == kSolidFill) ? D3D11_FILL_SOLID : D3D11_FILL_WIREFRAME;
-	rasterDesc.FrontCounterClockwise = true;
-	rasterDesc.MultisampleEnable = false;
-	rasterDesc.ScissorEnable = false;
-	rasterDesc.SlopeScaledDepthBias = 0.0f;
-	// Create the rasterizer state from the description we just filled out.
-	HRESULT result = mDevice->CreateRasterizerState(&rasterDesc, &rasterState);
-	if (FAILED(result))
-	{
-		return;
-	}
-	// Now set the rasterizer state.
-	mContext->RSSetState(rasterState);
-	rasterState->Release();
+    // Setup the raster description which will determine how and what polygons will be drawn.
+    D3D11_RASTERIZER_DESC rasterDesc;
+    ID3D11RasterizerState* rasterState;
+    ZeroMemory(&rasterDesc, sizeof(rasterDesc));
+    rasterDesc.AntialiasedLineEnable = false;
+    rasterDesc.CullMode = (fill == kSolidFill) ? D3D11_CULL_BACK : D3D11_CULL_NONE;
+    rasterDesc.DepthBias = 0;
+    rasterDesc.DepthBiasClamp = 0.0f;
+    rasterDesc.DepthClipEnable = true;
+    rasterDesc.FillMode = (fill == kSolidFill) ? D3D11_FILL_SOLID : D3D11_FILL_WIREFRAME;
+    rasterDesc.FrontCounterClockwise = true;
+    rasterDesc.MultisampleEnable = false;
+    rasterDesc.ScissorEnable = false;
+    rasterDesc.SlopeScaledDepthBias = 0.0f;
+    // Create the rasterizer state from the description we just filled out.
+    HRESULT result = mDevice->CreateRasterizerState(&rasterDesc, &rasterState);
+    if (FAILED(result))
+    {
+        return;
+    }
+    // Now set the rasterizer state.
+    mContext->RSSetState(rasterState);
+    rasterState->Release();
 }
 
 
@@ -510,12 +510,12 @@ void IvRendererD3D11::SetFillMode( IvFillMode fill )
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetShadeMode(IvShadeMode shade)
 {
-	/*
+    /*
     if (shade == kFlatShaded)
         mDevice->SetRenderState( D3DRS_SHADEMODE, D3DSHADE_FLAT );
     else if (shade == kGouraudShaded)
         mDevice->SetRenderState( D3DRS_SHADEMODE, D3DSHADE_GOURAUD );
-	*/
+    */
 }
 
 
@@ -527,23 +527,23 @@ void IvRendererD3D11::SetShadeMode(IvShadeMode shade)
 IvShadeMode 
 IvRendererD3D11::GetShadeMode()
 {
-	/*
-	DWORD mode;
-	mDevice->GetRenderState( D3DRS_SHADEMODE, &mode );
+    /*
+    DWORD mode;
+    mDevice->GetRenderState( D3DRS_SHADEMODE, &mode );
     if (mode == D3DSHADE_FLAT)
-	{
+    {
         return kFlatShaded;
-	}
+    }
     else if (mode == D3DSHADE_GOURAUD)
-	{
-		return kGouraudShaded;
-	}
-	else*/
-	{
-//		ASSERT(false);
-		return kGouraudShaded;
-	}
-	
+    {
+        return kGouraudShaded;
+    }
+    else*/
+    {
+//      ASSERT(false);
+        return kGouraudShaded;
+    }
+    
 }
 
 
@@ -554,9 +554,9 @@ IvRendererD3D11::GetShadeMode()
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetDepthTest(IvDepthTestFunc func)
 {
-	mDepthTestFunc = func;
-	mDepthWrite = (func != kDisableDepthTest);
-	UpdateDepthStencilState();
+    mDepthTestFunc = func;
+    mDepthWrite = (func != kDisableDepthTest);
+    UpdateDepthStencilState();
 }
 
 
@@ -578,8 +578,8 @@ IvDepthTestFunc IvRendererD3D11::GetDepthTest()
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::SetDepthWrite(bool write)
 {
-	mDepthWrite = write;
-	UpdateDepthStencilState();
+    mDepthWrite = write;
+    UpdateDepthStencilState();
 }
 
 
@@ -590,25 +590,25 @@ void IvRendererD3D11::SetDepthWrite(bool write)
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::UpdateDepthStencilState()
 {
-	// Initialize the description of the stencil state.
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	ID3D11DepthStencilState* depthState;
-	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
-	// Set up the description of the stencil state.
-	depthStencilDesc.DepthEnable = mDepthWrite;
-	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	depthStencilDesc.DepthFunc = sDepthFunc[mDepthTestFunc];
-	depthStencilDesc.StencilEnable = false;
-	// Create the depth stencil state.
-	HRESULT result = mDevice->CreateDepthStencilState(&depthStencilDesc, &depthState);
-	if (FAILED(result))
-	{
-		ASSERT(false);
-		return;
-	}
-	// Set the depth stencil state.
-	mContext->OMSetDepthStencilState(depthState, 1);
-	depthState->Release();
+    // Initialize the description of the stencil state.
+    D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
+    ID3D11DepthStencilState* depthState;
+    ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
+    // Set up the description of the stencil state.
+    depthStencilDesc.DepthEnable = mDepthWrite;
+    depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+    depthStencilDesc.DepthFunc = sDepthFunc[mDepthTestFunc];
+    depthStencilDesc.StencilEnable = false;
+    // Create the depth stencil state.
+    HRESULT result = mDevice->CreateDepthStencilState(&depthStencilDesc, &depthState);
+    if (FAILED(result))
+    {
+        ASSERT(false);
+        return;
+    }
+    // Set the depth stencil state.
+    mContext->OMSetDepthStencilState(depthState, 1);
+    depthState->Release();
 }
 
 
@@ -670,8 +670,8 @@ void IvRendererD3D11::SetShaderProgram(IvShaderProgram* program)
     else
     {
         // Otherwise (NULL shader), we will need to bind a default shader later 
-		mContext->VSSetShader(NULL, NULL, 0);
-		mContext->VSSetShader(NULL, NULL, 0);
+        mContext->VSSetShader(NULL, NULL, 0);
+        mContext->VSSetShader(NULL, NULL, 0);
     }
 }
 
@@ -686,55 +686,55 @@ void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 {
     BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
-	// update any default uniforms
-	if ( mShader )
-	{
-		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-		if ( modelviewproj )
-		{
-			modelviewproj->SetValue( mWVPMat, 0 );
-		}
-		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-		if ( normalMat )
-		{
-			normalMat->SetValue( mNormalMat, 0 );
-		}
-		IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-		if (diffuseColor)
-		{
-			diffuseColor->SetValue(mDiffuseColor,0);
-		}
-		IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-		if ( ambient )
-		{
-			ambient->SetValue(mLightAmbient,0);
-		}
-		IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-		if ( diffuse )
-		{
-			diffuse->SetValue(mLightDiffuse,0);
-		}
-		IvUniform* direction = mShader->GetUniform("IvLightDirection");
-		if ( direction )
-		{
-			direction->SetValue(mLightDirection,0);
-		}
-	}
+    // update any default uniforms
+    if ( mShader )
+    {
+        IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+        if ( modelviewproj )
+        {
+            modelviewproj->SetValue( mWVPMat, 0 );
+        }
+        IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
+        if ( normalMat )
+        {
+            normalMat->SetValue( mNormalMat, 0 );
+        }
+        IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
+        if (diffuseColor)
+        {
+            diffuseColor->SetValue(mDiffuseColor,0);
+        }
+        IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
+        if ( ambient )
+        {
+            ambient->SetValue(mLightAmbient,0);
+        }
+        IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
+        if ( diffuse )
+        {
+            diffuse->SetValue(mLightDiffuse,0);
+        }
+        IvUniform* direction = mShader->GetUniform("IvLightDirection");
+        if ( direction )
+        {
+            direction->SetValue(mLightDirection,0);
+        }
+    }
 
-	mShader->BindUniforms( mContext );
+    mShader->BindUniforms( mContext );
 
-	if (vertexBuffer)
+    if (vertexBuffer)
         static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive( mContext );
     else
         return;
 
     if (indexBuffer)
-		static_cast<IvIndexBufferD3D11*>(indexBuffer)->MakeActive( mContext );
+        static_cast<IvIndexBufferD3D11*>(indexBuffer)->MakeActive( mContext );
     else
         return;
 
-	mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
-	mContext->DrawIndexed(numIndices, 0, 0);
+    mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
+    mContext->DrawIndexed(numIndices, 0, 0);
 }
 
 //-------------------------------------------------------------------------------
@@ -746,50 +746,50 @@ void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, un
 {
     BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
-	// update any default uniforms
-	if ( mShader )
-	{
-		IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-		if ( modelviewproj )
-		{
-			modelviewproj->SetValue(mWVPMat, 0);
-		}
-		IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-		if ( normalMat )
-		{
-			normalMat->SetValue(mNormalMat, 0);
-		}
-		IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-		if (diffuseColor)
-		{
-			diffuseColor->SetValue(mDiffuseColor,0);
-		}
-		IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-		if ( ambient )
-		{
-			ambient->SetValue(mLightAmbient,0);
-		}
-		IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-		if ( diffuse )
-		{
-			diffuse->SetValue(mLightDiffuse,0);
-		}
-		IvUniform* direction = mShader->GetUniform("IvLightDirection");
-		if ( direction )
-		{
-			direction->SetValue(mLightDirection,0);
-		}
-	}
+    // update any default uniforms
+    if ( mShader )
+    {
+        IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+        if ( modelviewproj )
+        {
+            modelviewproj->SetValue(mWVPMat, 0);
+        }
+        IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
+        if ( normalMat )
+        {
+            normalMat->SetValue(mNormalMat, 0);
+        }
+        IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
+        if (diffuseColor)
+        {
+            diffuseColor->SetValue(mDiffuseColor,0);
+        }
+        IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
+        if ( ambient )
+        {
+            ambient->SetValue(mLightAmbient,0);
+        }
+        IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
+        if ( diffuse )
+        {
+            diffuse->SetValue(mLightDiffuse,0);
+        }
+        IvUniform* direction = mShader->GetUniform("IvLightDirection");
+        if ( direction )
+        {
+            direction->SetValue(mLightDirection,0);
+        }
+    }
 
-	mShader->BindUniforms(mContext);
+    mShader->BindUniforms(mContext);
 
     if (vertexBuffer)
         static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive( mContext );
     else
         return;
 
-	mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
-	mContext->Draw(numVertices, 0);
+    mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
+    mContext->Draw(numVertices, 0);
 }
 
 
@@ -811,12 +811,12 @@ void IvRendererD3D11::BindDefaultShaderIfNeeded(IvVertexFormat format)
         sDefaultShaders[format] = static_cast<IvShaderProgramD3D11*>(
             mResourceManager->CreateShaderProgram( vs, fs ));
 
-		if (format == kNPFormat || format == kPFormat)
-		{
-			IvUniform* diffuseColor = sDefaultShaders[format]->GetUniform("IvDiffuseColor");
-			// defaults to white
-			diffuseColor->SetValue(IvVector4(1.0f, 1.0f, 1.0f, 1.0f), 0);
-		}
+        if (format == kNPFormat || format == kPFormat)
+        {
+            IvUniform* diffuseColor = sDefaultShaders[format]->GetUniform("IvDiffuseColor");
+            // defaults to white
+            diffuseColor->SetValue(IvVector4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+        }
     }
 
     SetShaderProgram(sDefaultShaders[format]);

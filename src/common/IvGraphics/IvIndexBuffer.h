@@ -37,14 +37,14 @@ public:
 protected:
     // constructor/destructor
     IvIndexBuffer() : mNumIndices(0) {}
-	virtual ~IvIndexBuffer() {}
+    virtual ~IvIndexBuffer() {}
 
     unsigned int        mNumIndices;
 
 private:
     // copy operations (unimplemented so we can't copy)
     IvIndexBuffer(const IvIndexBuffer& other);
-	IvIndexBuffer& operator=(const IvIndexBuffer& other);
+    IvIndexBuffer& operator=(const IvIndexBuffer& other);
 }; 
 
 //-------------------------------------------------------------------------------

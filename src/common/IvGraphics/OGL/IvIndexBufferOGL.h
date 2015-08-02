@@ -47,7 +47,7 @@ public:
 private:
     // constructor/destructor
     IvIndexBufferOGL(); 
-	~IvIndexBufferOGL();
+    ~IvIndexBufferOGL();
 
     // creation 
     bool Create( unsigned int numVertices, void* data, IvDataUsage usage );
@@ -61,9 +61,9 @@ private:
 private:
     // copy operations
     IvIndexBufferOGL(const IvIndexBufferOGL& other);
-	IvIndexBufferOGL& operator=(const IvIndexBufferOGL& other);
+    IvIndexBufferOGL& operator=(const IvIndexBufferOGL& other);
 
-	GLuint      mBufferID;
+    GLuint      mBufferID;
     IvDataUsage mUsage;
 };
 

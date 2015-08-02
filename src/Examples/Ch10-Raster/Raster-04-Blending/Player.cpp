@@ -46,40 +46,40 @@
 //-------------------------------------------------------------------------------
 static void CopyAndPremulAlpha(void* outData, void* inData, unsigned int width, unsigned int height)
 {
-	unsigned char* inComponent = (unsigned char*)inData;
-	unsigned char* outComponent = (unsigned char*)outData;
-	for (unsigned int j = 0; j < height; ++j)
-	{
-		for (unsigned int i = 0; i < width; ++i)
-		{
-			// sRGB input
-			float r = *inComponent++/255.f;
-			float g = *inComponent++/255.f;
-			float b = *inComponent++/255.f;
-			unsigned char a = *inComponent++;
-			float aFloat = (float)a/255.f;
+    unsigned char* inComponent = (unsigned char*)inData;
+    unsigned char* outComponent = (unsigned char*)outData;
+    for (unsigned int j = 0; j < height; ++j)
+    {
+        for (unsigned int i = 0; i < width; ++i)
+        {
+            // sRGB input
+            float r = *inComponent++/255.f;
+            float g = *inComponent++/255.f;
+            float b = *inComponent++/255.f;
+            unsigned char a = *inComponent++;
+            float aFloat = (float)a/255.f;
 
-			// convert to approximately linear
-			r *= r;
-			g *= g;
-			b *= b;
+            // convert to approximately linear
+            r *= r;
+            g *= g;
+            b *= b;
 
-			// premultiply alpha
-			r *= aFloat;
-			g *= aFloat;
-			b *= aFloat;
+            // premultiply alpha
+            r *= aFloat;
+            g *= aFloat;
+            b *= aFloat;
 
-			// convert back to approximately sRGB gamma
-			r = IvSqrt(r);
-			g = IvSqrt(g);
-			b = IvSqrt(b);
+            // convert back to approximately sRGB gamma
+            r = IvSqrt(r);
+            g = IvSqrt(g);
+            b = IvSqrt(b);
 
-			*outComponent++ = (unsigned char) (r*255.f);
-			*outComponent++ = (unsigned char) (g*255.f);
-			*outComponent++ = (unsigned char) (b*255.f);
-			*outComponent++ = a;
-		}
-	}
+            *outComponent++ = (unsigned char) (r*255.f);
+            *outComponent++ = (unsigned char) (g*255.f);
+            *outComponent++ = (unsigned char) (b*255.f);
+            *outComponent++ = a;
+        }
+    }
 }
 
 //-------------------------------------------------------------------------------
@@ -93,20 +93,20 @@ static IvTexture* CreateTextureFromFile(const char* file)
     IvImage* image = IvImage::CreateFromFile(file);
     if (image)
     {
-		if (image->GetBytesPerPixel() == 4)
-		{
-			tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-				kRGBA32TexFmt, image->GetWidth(), image->GetHeight(), NULL, kDefaultUsage);
+        if (image->GetBytesPerPixel() == 4)
+        {
+            tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+                kRGBA32TexFmt, image->GetWidth(), image->GetHeight(), NULL, kDefaultUsage);
 
-			unsigned char* pixels = (unsigned char*)(tex->BeginLoadData(0));
-			CopyAndPremulAlpha(pixels, image->GetPixels(), image->GetWidth(), image->GetHeight());
-			tex->EndLoadData(0);
-		}
-		else
-		{
-			tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-				kRGB24TexFmt, image->GetWidth(), image->GetHeight(), image->GetPixels(), kImmutableUsage);
-		}
+            unsigned char* pixels = (unsigned char*)(tex->BeginLoadData(0));
+            CopyAndPremulAlpha(pixels, image->GetPixels(), image->GetWidth(), image->GetHeight());
+            tex->EndLoadData(0);
+        }
+        else
+        {
+            tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+                kRGB24TexFmt, image->GetWidth(), image->GetHeight(), image->GetPixels(), kImmutableUsage);
+        }
 
         delete image;
         image = 0;
@@ -295,7 +295,7 @@ Player::Render()
     IvSetWorldMatrix(transform);
 
     // disable blending
-	SetBlendFuncs(kNoneBlendMode);
+    SetBlendFuncs(kNoneBlendMode);
 
     // set base texture
     mTextureUniform->SetValue(mBaseTexture);
@@ -323,7 +323,7 @@ Player::Render()
     
     IvSetWorldMatrix(transformOutside);
 
-	SetBlendFuncs(mBlendMode);
+    SetBlendFuncs(mBlendMode);
 
     // set blending texture
     mTextureUniform->SetValue(mBlendTextures[mCurrentBlendTexIndex]);
@@ -340,24 +340,24 @@ Player::Render()
 //-------------------------------------------------------------------------------
 void Player::SetBlendFuncs(BlendMode mode)
 {
-	switch (mode)
-	{
-	case kNoneBlendMode:
-		IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kZeroBlendFunc, kAddBlendOp);
-		break;
+    switch (mode)
+    {
+    case kNoneBlendMode:
+        IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kZeroBlendFunc, kAddBlendOp);
+        break;
 
-	case kOpacityBlendMode:
-		IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kOneMinusSrcAlphaBlendFunc, kAddBlendOp);
-		break;
+    case kOpacityBlendMode:
+        IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kOneMinusSrcAlphaBlendFunc, kAddBlendOp);
+        break;
 
-	case kAddBlendMode:
-		IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kOneBlendFunc, kAddBlendOp);
-		break;
+    case kAddBlendMode:
+        IvRenderer::mRenderer->SetBlendFunc(kOneBlendFunc, kOneBlendFunc, kAddBlendOp);
+        break;
 
-	case kModulateBlendMode:
-		IvRenderer::mRenderer->SetBlendFunc(kZeroBlendFunc, kSrcColorBlendFunc, kAddBlendOp);
-		break;
-	};
+    case kModulateBlendMode:
+        IvRenderer::mRenderer->SetBlendFunc(kZeroBlendFunc, kSrcColorBlendFunc, kAddBlendOp);
+        break;
+    };
 }
 
 //-------------------------------------------------------------------------------

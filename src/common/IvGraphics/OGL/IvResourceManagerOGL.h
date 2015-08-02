@@ -39,7 +39,7 @@ public:
                                        void* data, IvDataUsage usage );
     void Destroy( IvVertexBuffer* vb );
     
-	IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data,
+    IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data,
                                       IvDataUsage usage );
     void Destroy( IvIndexBuffer* ib );
     

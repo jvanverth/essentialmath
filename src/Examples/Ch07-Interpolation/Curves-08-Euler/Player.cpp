@@ -202,7 +202,7 @@ Player::Render()
                                                                                   NULL, kDefaultUsage);
     }
 
-	IvCPVertex* curveDataPtr = (IvCPVertex*) mStrip0->BeginLoadData();
+    IvCPVertex* curveDataPtr = (IvCPVertex*) mStrip0->BeginLoadData();
     for (unsigned int i = 0; i < mNumPoints; ++i)
     {
         curveDataPtr[i].position = mStoredPoints[0][i];
@@ -217,7 +217,7 @@ Player::Render()
                                                                                   NULL, kDefaultUsage);
     }
 
-	curveDataPtr = (IvCPVertex*) mStrip1->BeginLoadData();
+    curveDataPtr = (IvCPVertex*) mStrip1->BeginLoadData();
     for (unsigned int i = 0; i < mNumPoints; ++i)
     {
         curveDataPtr[i].position = mStoredPoints[1][i];

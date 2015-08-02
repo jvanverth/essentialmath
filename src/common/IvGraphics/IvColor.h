@@ -27,7 +27,7 @@ struct IvColor
     UChar8 mGreen;
     UChar8 mBlue;
     UChar8 mAlpha;
-	inline void Set(UChar8 r, UChar8 g, UChar8 b, UChar8 a) { mRed = r; mGreen = g; mBlue = b; mAlpha = a; }
+    inline void Set(UChar8 r, UChar8 g, UChar8 b, UChar8 a) { mRed = r; mGreen = g; mBlue = b; mAlpha = a; }
 };
 
 #endif

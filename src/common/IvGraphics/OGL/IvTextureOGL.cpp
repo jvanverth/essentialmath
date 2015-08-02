@@ -104,7 +104,7 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
     mUsage = usage;
     mTempData = NULL;
     
-	return true;
+    return true;
 }
 
 //-------------------------------------------------------------------------------

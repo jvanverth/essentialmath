@@ -113,7 +113,7 @@ Player::~Player()
 
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mSphereVerts);
 
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mTexture);
 

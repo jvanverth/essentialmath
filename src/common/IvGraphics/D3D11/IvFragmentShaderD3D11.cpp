@@ -80,7 +80,7 @@ static const char sShaderTCPFormat[] =
 "{\n"
 "    float4 pos : SV_POSITION;\n"
 "    float4 color : COLOR0;\n"
-"	 float2 uv : TEXCOORD0;\n"
+"    float2 uv : TEXCOORD0;\n"
 "};\n"
 "SAMPLER_2D(defaultTexture);\n"
 "float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
@@ -93,7 +93,7 @@ static const char sShaderTNPFormat[] =
 "{\n"
 "    float4 pos : SV_POSITION;\n"
 "    float4 color : COLOR0;\n"
-"	 float2 uv : TEXCOORD0;\n"
+"    float2 uv : TEXCOORD0;\n"
 "};\n"
 "SAMPLER_2D(defaultTexture);\n"
 "float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
@@ -168,49 +168,49 @@ IvFragmentShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device
     shaderSrc[headerLength + length - 1] = 0;
     fclose(fp);
 
-	DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
+    DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
 #ifdef _DEBUG
-	flags |= D3DCOMPILE_DEBUG;
+    flags |= D3DCOMPILE_DEBUG;
 #endif
 
-	ID3DBlob* code;
-	ID3DBlob* errorMessages = NULL;
+    ID3DBlob* code;
+    ID3DBlob* errorMessages = NULL;
 
     size_t foo = sizeof(shaderSrc);
     if (FAILED(D3DCompile(shaderSrc, headerLength + length, NULL, NULL, NULL, "ps_main", "ps_4_0",
         flags, 0, &code, &errorMessages)))
     {
-		if (errorMessages)
-		{
-			const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
+        if (errorMessages)
+        {
+            const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
 
-			DEBUG_OUT("Pixel shader error: ");
-			DEBUG_OUT(errors << std::endl);
+            DEBUG_OUT("Pixel shader error: ");
+            DEBUG_OUT(errors << std::endl);
             DEBUG_OUT(shaderSrc << std::endl);
-			errorMessages->Release();
-		}
+            errorMessages->Release();
+        }
         delete [] shaderSrc;
-		return false;
-	}
-	if (errorMessages)
-	{
-		errorMessages->Release();
-	}
+        return false;
+    }
+    if (errorMessages)
+    {
+        errorMessages->Release();
+    }
     delete [] shaderSrc;
 
-	HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
-	if (SUCCEEDED(result))
-	{
-		mConstantTable = IvConstantTableD3D11::Create(device, code);
-	}
-	if (FAILED(result) || NULL == mConstantTable)
-	{
-		code->Release();
-		return false;
-	}
+    HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
+    if (SUCCEEDED(result))
+    {
+        mConstantTable = IvConstantTableD3D11::Create(device, code);
+    }
+    if (FAILED(result) || NULL == mConstantTable)
+    {
+        code->Release();
+        return false;
+    }
 
-	code->Release();
-	return true;
+    code->Release();
+    return true;
 }
 
 //-------------------------------------------------------------------------------
@@ -221,13 +221,13 @@ IvFragmentShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device
 bool
 IvFragmentShaderD3D11::CreateFromString(const char* string, ID3D11Device* device)
 {
-	DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
+    DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS;
 #ifdef _DEBUG
-	flags |= D3DCOMPILE_DEBUG;
+    flags |= D3DCOMPILE_DEBUG;
 #endif
 
-	ID3DBlob* code;
-	ID3DBlob* errorMessages = NULL;
+    ID3DBlob* code;
+    ID3DBlob* errorMessages = NULL;
 
     int length = strlen(string);
     int headerLength = sizeof(sShaderHeader);
@@ -238,10 +238,10 @@ IvFragmentShaderD3D11::CreateFromString(const char* string, ID3D11Device* device
     // now add the string
     memcpy(shaderSrc + headerLength - 1, string, length+1);
 
-	// compile the shader to assembly
+    // compile the shader to assembly
     if (FAILED(D3DCompile(shaderSrc, headerLength + length, NULL, NULL, NULL, "ps_main", "ps_4_0",
-		flags, 0, &code, &errorMessages)))
-	{
+        flags, 0, &code, &errorMessages)))
+    {
         if (errorMessages)
         {
             const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
@@ -251,27 +251,27 @@ IvFragmentShaderD3D11::CreateFromString(const char* string, ID3D11Device* device
             errorMessages->Release();
         }
         delete [] shaderSrc;
-		return false;
-	}
-	if (errorMessages)
-	{
-		errorMessages->Release();
-	}
+        return false;
+    }
+    if (errorMessages)
+    {
+        errorMessages->Release();
+    }
     delete [] shaderSrc;
 
-	HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
-	if (SUCCEEDED(result))
-	{
-		mConstantTable = IvConstantTableD3D11::Create(device, code);
-	}
-	if (FAILED(result) || NULL == mConstantTable)
-	{
-		code->Release();
-		return false;
-	}
+    HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
+    if (SUCCEEDED(result))
+    {
+        mConstantTable = IvConstantTableD3D11::Create(device, code);
+    }
+    if (FAILED(result) || NULL == mConstantTable)
+    {
+        code->Release();
+        return false;
+    }
 
-	code->Release();
-	return true;
+    code->Release();
+    return true;
 }
 
 //-------------------------------------------------------------------------------
@@ -293,15 +293,15 @@ IvFragmentShaderD3D11::CreateDefault(IvVertexFormat format, ID3D11Device* device
 void
 IvFragmentShaderD3D11::Destroy()
 {
-	if ( mShaderPtr )
-	{
-		mShaderPtr->Release();
-		mShaderPtr = 0;
-	}
+    if ( mShaderPtr )
+    {
+        mShaderPtr->Release();
+        mShaderPtr = 0;
+    }
 
     if ( mConstantTable )
     {
-		mConstantTable->Release();
-		mConstantTable = 0;
+        mConstantTable->Release();
+        mConstantTable = 0;
     }
 }

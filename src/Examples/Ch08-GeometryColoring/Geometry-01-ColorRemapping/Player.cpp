@@ -149,8 +149,8 @@ Player::~Player()
     for (i = 0; i < NUM_TEX; i++)
         IvRenderer::mRenderer->GetResourceManager()->Destroy(mTextures[i]); 
 
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShaderScale);
-	IvRenderer::mRenderer->GetResourceManager()->Destroy(mShaderClamp);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShaderScale);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShaderClamp);
 
 }   // End of Player::~Player()
 

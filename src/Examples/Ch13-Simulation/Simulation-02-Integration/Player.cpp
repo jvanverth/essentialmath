@@ -55,9 +55,9 @@ std::vector<IvVector3> positions;
 
 const char* modeStrings[] =
 {
-	"Euler", "Midpoint", 
-	"RK4", "NaiveImplicit", "PredictorCorrector", 
-	"Symplectic", "Verlet"
+    "Euler", "Midpoint", 
+    "RK4", "NaiveImplicit", "PredictorCorrector", 
+    "Symplectic", "Verlet"
 };
 
 //-------------------------------------------------------------------------------
@@ -71,14 +71,14 @@ const char* modeStrings[] =
 //-------------------------------------------------------------------------------
 Player::Player()
 {
-	mTranslate = radius*IvVector3::zAxis;
-	mVelocity = -velocity*IvVector3::yAxis;
-	mMass = 10.0f;
+    mTranslate = radius*IvVector3::zAxis;
+    mVelocity = -velocity*IvVector3::yAxis;
+    mMass = 10.0f;
 
     mMode = kEuler;
     SetWindowTitle( modeStrings[mMode] );
 
-	positions.push_back( mTranslate );
+    positions.push_back( mTranslate );
 
     mFrameCounter = 0;
     mOrbit = 0;
@@ -117,19 +117,19 @@ Player::Update( float dt )
         mMode = (Mode)((mMode+1)%kMaxMode);
         SetWindowTitle( modeStrings[mMode] );
 
-		mTranslate = radius*IvVector3::zAxis;
-		mVelocity = -velocity*IvVector3::yAxis;
+        mTranslate = radius*IvVector3::zAxis;
+        mVelocity = -velocity*IvVector3::yAxis;
 
         mFrameCounter = 0;
-		positions.clear();
+        positions.clear();
     }
 
     // reset simulation
     if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
     {
         mTranslate = radius*IvVector3::zAxis;
-		mVelocity = -velocity*IvVector3::yAxis;
-		positions.clear();
+        mVelocity = -velocity*IvVector3::yAxis;
+        positions.clear();
         mFrameCounter = 0;
     }
 
@@ -141,11 +141,11 @@ Player::Update( float dt )
     if ( mMode == kEuler )
     {
         // Euler's method
-	    // compute new position, velocity
-	    mTranslate += mVelocity*dt;
-	    mVelocity += accel*dt;
-	    // clear small values
-	    mVelocity.Clean();	
+        // compute new position, velocity
+        mTranslate += mVelocity*dt;
+        mVelocity += accel*dt;
+        // clear small values
+        mVelocity.Clean();  
     }
     else if ( mMode == kMidpoint )
     {
@@ -171,20 +171,20 @@ Player::Update( float dt )
     {
         // Runge-Kutta 4 method
         // compute steps
-		IvVector3 xk1 = dt*mVelocity;
-		IvVector3 vk1 = dt*accel;
+        IvVector3 xk1 = dt*mVelocity;
+        IvVector3 vk1 = dt*accel;
 
         IvVector3 midVelocity = mVelocity + 0.5f*vk1;
-		IvVector3 xk2 = dt*(midVelocity);
-		IvVector3 vk2 = dt*(CurrentForce( mTranslate + 0.5f*xk1, midVelocity ) / mMass);
+        IvVector3 xk2 = dt*(midVelocity);
+        IvVector3 vk2 = dt*(CurrentForce( mTranslate + 0.5f*xk1, midVelocity ) / mMass);
 
         midVelocity = mVelocity + 0.5f*vk2;
-		IvVector3 xk3 = dt*(midVelocity);
-		IvVector3 vk3 = dt*(CurrentForce( mTranslate + 0.5f*xk2, midVelocity ) / mMass);
+        IvVector3 xk3 = dt*(midVelocity);
+        IvVector3 vk3 = dt*(CurrentForce( mTranslate + 0.5f*xk2, midVelocity ) / mMass);
 
         midVelocity = mVelocity + vk3;
-		IvVector3 xk4 = dt*(midVelocity);
-		IvVector3 vk4 = dt*(CurrentForce( mTranslate + xk3, midVelocity ) / mMass);
+        IvVector3 xk4 = dt*(midVelocity);
+        IvVector3 vk4 = dt*(CurrentForce( mTranslate + xk3, midVelocity ) / mMass);
 
         // compute new position, velocity
         mTranslate += (xk1 + 2.0f*xk2 + 2.0f*xk3 + xk4)/6.0f;
@@ -211,46 +211,46 @@ Player::Update( float dt )
         // clear small values
         mVelocity.Clean();      
     }
-	else if ( mMode == kNaiveImplicit )
-	{
+    else if ( mMode == kNaiveImplicit )
+    {
         // naive predictor-corrector
-	    // compute new position, velocity
-	    IvVector3 midTranslate = mTranslate + mVelocity*dt;
-	    IvVector3 midVelocity = mVelocity + accel*dt;
-	    // clear small values
-	    midVelocity.Clean();
+        // compute new position, velocity
+        IvVector3 midTranslate = mTranslate + mVelocity*dt;
+        IvVector3 midVelocity = mVelocity + accel*dt;
+        // clear small values
+        midVelocity.Clean();
 
-		IvVector3 midAccel = CurrentForce( midTranslate, midVelocity )/mMass;
-		// clear small values
-		midAccel.Clean(); 
+        IvVector3 midAccel = CurrentForce( midTranslate, midVelocity )/mMass;
+        // clear small values
+        midAccel.Clean(); 
 
-		mTranslate += dt*(midVelocity);
-		mVelocity += dt*(midAccel);
-	}
-	else if ( mMode == kPredictorCorrector )
-	{
+        mTranslate += dt*(midVelocity);
+        mVelocity += dt*(midAccel);
+    }
+    else if ( mMode == kPredictorCorrector )
+    {
         // first order predictor-corrector
-	    // compute new position, velocity
-	    IvVector3 midTranslate = mTranslate + mVelocity*dt;
-	    IvVector3 midVelocity = mVelocity + accel*dt;
-	    // clear small values
-	    midVelocity.Clean();
+        // compute new position, velocity
+        IvVector3 midTranslate = mTranslate + mVelocity*dt;
+        IvVector3 midVelocity = mVelocity + accel*dt;
+        // clear small values
+        midVelocity.Clean();
 
-		IvVector3 midAccel = CurrentForce( midTranslate, midVelocity )/mMass;
-		// clear small values
-		midAccel.Clean(); 
+        IvVector3 midAccel = CurrentForce( midTranslate, midVelocity )/mMass;
+        // clear small values
+        midAccel.Clean(); 
 
-		mTranslate += 0.5f*dt*(midVelocity + mVelocity);
-		mVelocity += 0.5f*dt*(midAccel + accel);
-	}
+        mTranslate += 0.5f*dt*(midVelocity + mVelocity);
+        mVelocity += 0.5f*dt*(midAccel + accel);
+    }
     else 
     {
         // symplectic Euler
-	    mVelocity += accel*dt;
-	    // clear small values
-	    mVelocity.Clean();	
-	    // compute new position, velocity
-	    mTranslate += mVelocity*dt;
+        mVelocity += accel*dt;
+        // clear small values
+        mVelocity.Clean();  
+        // compute new position, velocity
+        mTranslate += mVelocity*dt;
     }
 
     if (mFrameCounter == 0)
@@ -272,12 +272,12 @@ Player::CurrentForce( const IvVector3& position, const IvVector3& velocity )
 {   
     IvVector3 totalForce = -position;
 
-	float localRadius = position.Length();
-	float localVelocity = 2.0f*kPI*localRadius/duration;
-	float localAcceleration = localVelocity*localVelocity/localRadius;
+    float localRadius = position.Length();
+    float localVelocity = 2.0f*kPI*localRadius/duration;
+    float localAcceleration = localVelocity*localVelocity/localRadius;
 
-	totalForce.Normalize();
-	totalForce *= localAcceleration*mMass;
+    totalForce.Normalize();
+    totalForce *= localAcceleration*mMass;
 
     return totalForce;
 
@@ -299,12 +299,12 @@ Player::Render()
     IvSetWorldMatrix(transform);
     IvDrawSphere(0.25f, kCyan );
 
-	// draw expected orbit
+    // draw expected orbit
     if ( !mOrbit )
     {
         mOrbit = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 33,
                                                                                  NULL, kDefaultUsage);
-	    IvCPVertex* dataPtr = (IvCPVertex*) mOrbit->BeginLoadData();
+        IvCPVertex* dataPtr = (IvCPVertex*) mOrbit->BeginLoadData();
         for (UInt32 i = 0; i <= 32; ++i)
         {
             float theta = (float)i*2.0f*kPI/32.0f;
@@ -323,7 +323,7 @@ Player::Render()
                                                                                 NULL, kDynamicUsage);
     }
 
-	IvCPVertex* dataPtr = (IvCPVertex*) mPath->BeginLoadData();
+    IvCPVertex* dataPtr = (IvCPVertex*) mPath->BeginLoadData();
     UInt32 numVerts = positions.size() < 1280 ? positions.size() : 1280; 
     for (size_t i = 0; i < numVerts; ++i)
     {

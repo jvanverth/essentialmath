@@ -363,12 +363,12 @@ SimObject::Render()
     
     IvSetWorldMatrix( transform );
     
-	// clear to default shader
-	IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
-	IvRenderer::mRenderer->SetShaderProgram(0);
+    // clear to default shader
+    IvShaderProgram* oldShader = IvRenderer::mRenderer->GetShaderProgram();
+    IvRenderer::mRenderer->SetShaderProgram(0);
     
     // create matrix to scale to radius
-	transform.Scaling(IvVector3(1.0f,1.0f,1.0f));
+    transform.Scaling(IvVector3(1.0f,1.0f,1.0f));
     
     // concatenate with the current matrix
     IvMatrix44 currentMat = IvRenderer::mRenderer->GetWorldMatrix();
@@ -378,7 +378,7 @@ SimObject::Render()
     
     // draw it
     IvColor color = kCyan;
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
     IvRenderer::mRenderer->Draw(kTriangleListPrim, gStoneVertices, gStoneIndices);
     
     IvMatrix44 rotate;
@@ -386,12 +386,12 @@ SimObject::Render()
     
     IvRenderer::mRenderer->SetWorldMatrix(currentMat * rotate * transform);
     color = kRed;
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(color.mRed/255.f, color.mGreen/255.f, color.mBlue/255.f, color.mAlpha/255.f);
     IvRenderer::mRenderer->Draw(kTriangleListPrim, gStoneVertices, gStoneIndices);
     
-	// restore original state
-	IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	IvRenderer::mRenderer->SetShaderProgram( oldShader );
+    // restore original state
+    IvRenderer::mRenderer->SetDefaultDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+    IvRenderer::mRenderer->SetShaderProgram( oldShader );
     IvRenderer::mRenderer->SetWorldMatrix(currentMat);
 }
 

@@ -52,7 +52,7 @@ public:
 private:
     // constructor/destructor
     IvShaderProgramOGL();
-	~IvShaderProgramOGL();
+    ~IvShaderProgramOGL();
     
     // initialization
     bool Create( GLuint vertexShaderID, GLuint fragmentShaderID );
@@ -66,10 +66,10 @@ private:
 private:
     // copy operations
     IvShaderProgramOGL(const IvShaderProgramOGL& other);
-	IvShaderProgramOGL& operator=(const IvShaderProgramOGL& other);
+    IvShaderProgramOGL& operator=(const IvShaderProgramOGL& other);
 
-	GLuint				mProgramID;
-	unsigned int		mNextTextureStage;
+    GLuint              mProgramID;
+    unsigned int        mNextTextureStage;
     std::map<std::string, IvUniformOGL*> mUniforms;
 };
 

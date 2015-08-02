@@ -100,7 +100,7 @@ bool IvIndexedGeometry::LoadFromStream(IvReader& in, IvCapsule& capsule)
     mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
                                                                                 NULL, kDefaultUsage);
     dataPtr = (IvCNPVertex*) mVertices->BeginLoadData();
-    tempPosition = new IvVector3[numVerts];	// save for capsule creation
+    tempPosition = new IvVector3[numVerts]; // save for capsule creation
     for ( UInt32 i = 0; i < numVerts; ++i )
     {
         float x, y, z;
@@ -118,7 +118,7 @@ bool IvIndexedGeometry::LoadFromStream(IvReader& in, IvCapsule& capsule)
     {
         float x, y, z;
         in >> x >> y >> z;
-	    dataPtr[i].normal.Set(x,y,z);
+        dataPtr[i].normal.Set(x,y,z);
         if (!in.good())
         {
             goto error_exit;
@@ -171,7 +171,7 @@ bool IvIndexedGeometry::LoadFromStream(IvReader& in, IvCapsule& capsule)
         goto error_exit;
     }
     indexPtr = 0;
-	
+    
     // initialize the model-space capsule to the vertex data
     capsule.Set(tempPosition, numVerts);
 

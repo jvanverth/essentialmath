@@ -37,10 +37,10 @@ class IvResourceManagerD3D11 : public IvResourceManager
 { 
 public:
     IvVertexBuffer* CreateVertexBuffer(IvVertexFormat format, unsigned int numVertices, 
-		                               void* data, IvDataUsage usage);
+                                       void* data, IvDataUsage usage);
     void Destroy( IvVertexBuffer* vb); 
     
-	IvIndexBuffer* CreateIndexBuffer(unsigned int numIndices, void* data, IvDataUsage usage);
+    IvIndexBuffer* CreateIndexBuffer(unsigned int numIndices, void* data, IvDataUsage usage);
     void Destroy( IvIndexBuffer* ib); 
     
     IvVertexShader* CreateVertexShaderFromFile( const char* filename );
@@ -57,22 +57,22 @@ public:
     void Destroy( IvShaderProgram* sp );
 
     virtual IvTexture* CreateTexture( IvTextureFormat format, 
-		unsigned int width, unsigned int height, 
-		void* data, IvDataUsage usage);
-	virtual IvTexture* CreateMipmappedTexture(IvTextureFormat format,
-		unsigned int width, unsigned int height,
-		void** data, unsigned int levels, IvDataUsage usage);
-	void Destroy(IvTexture* tex);
+        unsigned int width, unsigned int height, 
+        void* data, IvDataUsage usage);
+    virtual IvTexture* CreateMipmappedTexture(IvTextureFormat format,
+        unsigned int width, unsigned int height,
+        void** data, unsigned int levels, IvDataUsage usage);
+    void Destroy(IvTexture* tex);
     
 private: 
-	IvResourceManagerD3D11(ID3D11Device* device);
+    IvResourceManagerD3D11(ID3D11Device* device);
     ~IvResourceManagerD3D11();
     
     friend class IvRendererD3D11;
     
 private: 
     // private D3D9 things 
-	ID3D11Device* mDevice;
+    ID3D11Device* mDevice;
 }; 
 
 //-------------------------------------------------------------------------------
