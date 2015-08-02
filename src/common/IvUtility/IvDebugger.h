@@ -30,7 +30,7 @@
     gDebugger.Flush(); \
 }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 #define DEBUG_OUT( x )  ERROR_OUT( x )
 #else
 #define DEBUG_OUT( x )
