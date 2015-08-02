@@ -1,3 +1,10 @@
+// Copyright (C) 2015 by James M. Van Verth and Lars M. Bishop.
+// Portions below Copyright (C) 2011 Ashima Arts. 
+// All rights reserved.
+//
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 #version 150
 
 in vec3 localPos;
@@ -28,8 +35,6 @@ void main()
 //     Lastmod : 20110822 (ijm)
 //     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
 //
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 //               Distributed under the MIT License.
 //               https://github.com/ashima/webgl-noise
 //
