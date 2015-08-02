@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Game core routines
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // Game::Perspective() creates a perspective projection matrix and sets it in 
 // the rendering pipeline.  It does this based on the field of view and locations

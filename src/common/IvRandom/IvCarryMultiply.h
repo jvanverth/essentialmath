@@ -3,7 +3,8 @@
 // 
 // Class to compute carry-multiply random number generator
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // Using George Marsaglia's original proposal, as we can't always assume we have
 // a 64-bit integer available.

@@ -3,7 +3,8 @@
 // 
 // Event handling routines
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 //===============================================================================
 

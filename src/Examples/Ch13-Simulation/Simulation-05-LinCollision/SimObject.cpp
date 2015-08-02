@@ -2,7 +2,8 @@
 // @ SimObject.cpp
 // ------------------------------------------------------------------------------
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This is the base class for simulation objects.  It handles integration of 
 // linear and angular factors, and collision detection and response.

@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Object database
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This is the main class for this demo.  It manages a set of objects, and 
 // detects collisions between them by using a sweep-and-prune method, which is

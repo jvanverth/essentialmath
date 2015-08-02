@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player object
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This demo shows the power of a simple scene graph, which allows for quick and
 // easy creation, management and rendering of hierachical scenes such as the

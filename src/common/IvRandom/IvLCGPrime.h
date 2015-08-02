@@ -3,7 +3,8 @@
 // 
 // Linear congruential class using prime modulus
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This RNG uses, as a default, a prime modulus and does the math necessary to
 // avoid overflow with 32-bit integers.

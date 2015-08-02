@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Class for managing a simple object that can collide with other objects
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This class has three main members: its position, a velocity, and a bounding
 // sphere.  The velocity is used to update the position, and to keep it contained

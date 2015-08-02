@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player object
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This example demonstrates some simple tank code.  The tank can be driven 
 // forward, backward, turned, and turned in place.  The orange lines indicate

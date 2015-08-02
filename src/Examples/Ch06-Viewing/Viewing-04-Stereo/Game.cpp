@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Game core routines
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This example demonstrates how to use oblique perspective projections to 
 // create red-blue stereograms, i.e. images that appear 3D if you wear

@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This demo implements a simple physical simulation using only linear forces.
 // The cyan sphere is being pulled towards the origin by a spring.  It is also 

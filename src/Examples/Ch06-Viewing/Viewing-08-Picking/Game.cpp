@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Game core routines
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This code example shows how to invert the OpenGL projection matrix to do 
 // picking.  Game::GetPickRay() computes the pick ray based on a standard

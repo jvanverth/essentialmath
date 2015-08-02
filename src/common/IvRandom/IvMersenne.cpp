@@ -6,7 +6,8 @@
 // Note: this class implements the original Mersenne Twister.  It does not use 
 // the faster SIMD-oriented Mersenne Twister as that uses 64-bit integers.
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 //
 //===============================================================================

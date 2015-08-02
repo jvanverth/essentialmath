@@ -3,7 +3,8 @@
 // 
 // Function to perform solve linear system using Gaussian elimination
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // Implementation notes:
 //     Matrix must be stored in column major order

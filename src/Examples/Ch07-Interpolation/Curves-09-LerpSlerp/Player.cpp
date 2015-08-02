@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This code shows the different between linear interpolation and spherical linear 
 // interpolation of quaternions.  The green cube uses slerp, the red cube uses lerp.  

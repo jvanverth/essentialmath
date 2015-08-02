@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player
 //
-// Copyright (C) 2007 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2007 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 //
 //

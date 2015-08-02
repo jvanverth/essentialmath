@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Clipper object
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This class implements a very simple clipping routine.  To use it, you set the 
 // clipping plane, using SetPlane().  Then for each triangle you first call 

@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player object
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This example demonstrates the three basic transforms and how to achieve
 // object-centered transformations.  At each frame we append or prepend 

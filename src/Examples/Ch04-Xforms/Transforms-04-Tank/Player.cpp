@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player object
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This example demonstrates one way to build a transform hierarchy.  A tank 
 // model is constructed of three pieces: body, turret and barrel.  When rendered

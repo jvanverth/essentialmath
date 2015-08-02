@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Object management class
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // To use this, you need to call Initialize() with the maximum number of objects
 // you expect to see.  Then you can add new objects using AddObject().  Calling

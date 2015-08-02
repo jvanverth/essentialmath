@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Game core routines
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // Builds an object database and then updates it.  Used for collision demo.
 // See ObjectDB.cpp for more details.

@@ -3,7 +3,8 @@
 // 
 // Linear congruential class using 64-bit arithmetic
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This RNG avoids issues with overflow by using 64-bit integers and then shifting
 // down to a 32-bit integer.  

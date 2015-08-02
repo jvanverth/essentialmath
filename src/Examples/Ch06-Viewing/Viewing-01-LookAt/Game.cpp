@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Game core routines
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // This demo shows how to set up a look-at view transformation.  The method
 // Game::LookAt() creates the world-to-view matrix and sets it in the rendering

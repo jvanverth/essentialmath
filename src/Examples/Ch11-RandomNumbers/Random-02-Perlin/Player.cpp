@@ -3,7 +3,8 @@
 // ------------------------------------------------------------------------------
 // Player
 //
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // In this demo we show different Perlin noise shaders: a sky and marble texture.
 // Both are created in the fragment shader, by passing the local position in and 

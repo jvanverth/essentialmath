@@ -3,7 +3,8 @@
 // 
 // Gaussian elimination routines
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008 by Elsevier, Inc. All rights reserved.
+// Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
 // Routines to solve linear equations, get inverse, and determinants for
 // matrices of arbitrary size
