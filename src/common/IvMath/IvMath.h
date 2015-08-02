@@ -32,7 +32,7 @@
 #define kHalfPI     1.5707963267948966192313216916398f
 #define kTwoPI      2.0f*kPI
 
-#ifdef PLATFORM_OSX
+#if defined(__APPLE__) && defined(__MACH__)
 #define sqrtf sqrt
 #define sinf sin
 #define cosf cos

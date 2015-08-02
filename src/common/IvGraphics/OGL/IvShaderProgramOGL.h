@@ -26,7 +26,7 @@
 
 #include "../IvShaderProgram.h"
 #include "../IvVertexFormats.h"
-#ifdef PLATFORM_OSX
+#if defined(__APPLE__) && defined(__MACH__)
 #include <OpenGL/gl3.h>
 #else
 #include <GL/glew.h>

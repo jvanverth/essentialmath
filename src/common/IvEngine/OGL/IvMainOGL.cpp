@@ -17,7 +17,7 @@
 
 #include <stdlib.h>
 
-#ifndef PLATFORM_OSX
+#if !defined(__APPLE__) || !defined(__MACH__)
 #include <GL/glew.h>
 #endif
 #include <GLFW/glfw3.h>
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     }
     glfwMakeContextCurrent(window);
     
-#ifndef PLATFORM_OSX
+#if !defined(__APPLE__) || !defined(__MACH__)
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if ( GLEW_OK != err )
