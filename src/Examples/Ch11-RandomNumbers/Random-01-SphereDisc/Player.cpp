@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // In this demo, we show various methods for generating random distributions: two
 // on a sphere and two on a disc.  In the first sphere and disc methods we try 
 // a slightly incorrect approach that leads to clumping in the "corners" in the 

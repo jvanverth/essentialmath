@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // This is the main class for this demo.  It manages a set of objects, and 
 // detects collisions between them by using a sweep-and-prune method, which is
 // handled in Update().  A list is created, storing the min and max x extents for

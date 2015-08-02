@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // This demo implements a simple physical simulation using only linear forces.
 // The cyan sphere is being pulled towards the origin by a spring.  It is also 
 // being affected by gravity and a slight drag force, as well as forces created

@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // This demo shows the effect of different integration methods on a simple 
 // orbiting object.  You can toggle between seven different integration methods:
 // Euler's method, midpoint method, Runge-Kutta 4, velocity Verlet, a naive 

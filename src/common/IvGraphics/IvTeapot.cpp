@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // As you can see below, this is based on the original SGI teapot rendering code.
 // We've replaced the OpenGL-specific Bezier surface rendering routines with our
 // own.
@@ -14,7 +17,10 @@
 /*
  * (c) Copyright 1993, Silicon Graphics, Inc.
  *
- * ALL RIGHTS RESERVED
+ * All rights reserved.
+//
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
  *
  * Permission to use, copy, modify, and distribute this software
  * for any purpose and without fee is hereby granted, provided

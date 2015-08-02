@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // This code example shows how to invert the OpenGL projection matrix to do 
 // picking.  Game::GetPickRay() computes the pick ray based on a standard
 // gluPerspective() matrix and the inverse view matrix.

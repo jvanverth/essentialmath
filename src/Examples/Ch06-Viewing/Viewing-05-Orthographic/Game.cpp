@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Game::Orthographic() creates a orthographic projection matrix and sets it in 
 // the rendering pipeline.  It does this based on the locations of a view window
 // and the near and far planes.

@@ -26,6 +26,9 @@ void main()
 //  Maintainer : ijm
 //     Lastmod : 20110822 (ijm)
 //     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //               Distributed under the MIT License.
 //               https://github.com/ashima/webgl-noise
 //

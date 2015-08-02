@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // This is the main player object.  It is derived from SimObject, so all the 
 // integration and collision detection code can be found there.  All this does
 // is set up forces to push the "player" around so it can hit the "obstacle".

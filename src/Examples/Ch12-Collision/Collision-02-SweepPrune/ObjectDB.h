@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // To use this, you need to call Initialize() with the maximum number of objects
 // you expect to see.  Then you can add new objects using AddObject().  Calling
 // Update() will move the objects and update their collision status.

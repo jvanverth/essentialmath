@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // In this demo we show different Perlin noise shaders: a sky and marble texture.
 // Both are created in the fragment shader, by passing the local position in and 
 // generating a noise value which is used to blend two colors. 

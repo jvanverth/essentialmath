@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Class to compute Mersenne Twister random number generator
 //
 // This class uses the Mersenne Twister type MT19937.  It does not use the faster

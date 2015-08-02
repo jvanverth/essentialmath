@@ -6,6 +6,9 @@
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // This example demonstrates how to use oblique perspective projections to 
 // create red-blue stereograms, i.e. images that appear 3D if you wear
 // glasses with a blue left lens and a red right lens.  This is based on 

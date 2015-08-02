@@ -7,6 +7,9 @@
 // Copyright (C) 2014 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // This RNG avoids issues with overflow by using an add-with-carry method.
 //===============================================================================
 
