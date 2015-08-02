@@ -43,13 +43,13 @@
 #endif
 
 #undef IV_APPROXIMATION   // commented out for the moment
-// 
-// These routines are from Lomont, "Floating Point Tricks," _Game Gems 6_
-// See also www.lomont.org
-//
 typedef union {float f; int i;} IntOrFloat;
 
-inline float IvSqrt( float val )       
+//
+// This routine is from Lomont, "Floating Point Tricks," _Game Gems 6_
+// See also www.lomont.org
+//
+inline float IvSqrt( float val )
 { 
 #if defined(IV_APPROXIMATION)
       assert(val >= 0);
@@ -65,14 +65,21 @@ inline float IvSqrt( float val )
 #endif
 }
 
-inline float IvRecipSqrt( float val ) 
+//
+// This routine is a classic approximation to rsqrt, attributed to
+// Greg Walsh.
+// The optimized values used are from http://rrrola.wz.cz/inv_sqrt.html
+//
+inline float IvRecipSqrt( float val )
 { 
 #if defined(IV_APPROXIMATION)
-    float valhalf = 0.5f*val;
     IntOrFloat workval;
     workval.f = val;
-    workval.i = 0x5f375a86 - (workval.i>>1); // initial guess y0 with magic number
-    workval.f = workval.f*(1.5f-valhalf*workval.f*workval.f);  // Newton step, increases accuracy
+    // initial guess y0 with magic number
+    workval.i = 0x5F1FFFF9 - (workval.i>>1);
+    // Newton step, increases accuracy
+    const float estimate_sq = workval.f*workval.f;
+    workval.f *= 0.703952253f*(2.38924456f-val*estimate_sq);
     return workval.f;
 #else
     return 1.0f/sqrtf( val );
