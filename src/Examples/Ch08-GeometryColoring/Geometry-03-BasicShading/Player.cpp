@@ -218,10 +218,10 @@ Player::CreateSphere()
     const unsigned int verts = steps * steps;
 
     mSphereVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kCPFormat, verts, NULL, kDefaultUsage);
+        kPFormat, verts, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
-    IvCPVertex* tempVerts = (IvCPVertex*)(mSphereVerts->BeginLoadData());
+    IvPVertex* tempVerts = (IvPVertex*)(mSphereVerts->BeginLoadData());
 
     // A double loop, walking around and down the sphere
     const float phiIncrement = kPI / (steps - 1);
@@ -248,11 +248,6 @@ Player::CreateSphere()
             tempVerts->position.x = mRadius * cosTheta * cosPhi;
             tempVerts->position.y = mRadius * sinTheta * cosPhi;
             tempVerts->position.z = mRadius * sinPhi;
-
-            tempVerts->color.mAlpha = 255;
-            tempVerts->color.mRed = 255;
-            tempVerts->color.mGreen = 255;
-            tempVerts->color.mBlue = 255;
 
             tempVerts++;
         }

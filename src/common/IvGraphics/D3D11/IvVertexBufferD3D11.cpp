@@ -26,6 +26,11 @@
 
 static ID3D11InputLayout * sInputLayout[kVertexFormatCount] = { 0 };
 
+D3D11_INPUT_ELEMENT_DESC sPFormatElements[] =
+{
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+};
+
 D3D11_INPUT_ELEMENT_DESC sCPFormatElements[] =
 {
 	{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -58,6 +63,17 @@ D3D11_INPUT_ELEMENT_DESC sTNPFormatElements[] =
 	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 8, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
+
+static const char sDummyShaderPFormat[] =
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"};\n"
+"VS_OUTPUT vs_main( float4 pos : POSITION )\n"
+"{\n"
+"    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
+"    return Out;\n"
+"}\n";
 
 static const char sDummyShaderCPFormat[] =
 "struct VS_OUTPUT\n"
@@ -209,7 +225,12 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
 
 		switch (format)
 		{
-		case kCPFormat:
+        case kPFormat:
+            elements = sPFormatElements;
+            numElements = sizeof(sPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+            shaderString = sDummyShaderPFormat;
+            break;
+        case kCPFormat:
 			elements = sCPFormatElements;
 			numElements = sizeof(sCPFormatElements) / sizeof(D3D11_INPUT_ELEMENT_DESC);
 			shaderString = sDummyShaderCPFormat;

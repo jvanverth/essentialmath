@@ -31,6 +31,14 @@ static const char sShaderHeader[] =
 
 static char const* sDefaultVertexShader[kVertexFormatCount] = {0};
 
+static const char sShaderPFormat[] =
+"uniform mat4 IvModelViewProjectionMatrix;\n"
+"layout(location = POSITION) in vec3 IvPos;"
+"void main()\n"
+"{\n"
+"    gl_Position = IvModelViewProjectionMatrix*vec4(IvPos,1.0);\n"
+"}\n";
+
 static const char sShaderCPFormat[] =
 "uniform mat4 IvModelViewProjectionMatrix;\n"
 "layout(location = COLOR) in vec4 IvColor;"
@@ -126,6 +134,7 @@ static const char sShaderTNPFormat[] =
 //-------------------------------------------------------------------------------
 IvVertexShaderOGL::IvVertexShaderOGL() : IvVertexShader(), mShaderID(0)
 {
+    sDefaultVertexShader[kPFormat] = sShaderPFormat;
     sDefaultVertexShader[kCPFormat] = sShaderCPFormat;
     sDefaultVertexShader[kNPFormat] = sShaderNPFormat;
     sDefaultVertexShader[kCNPFormat] = sShaderCNPFormat;

@@ -94,6 +94,9 @@ IvVertexBufferOGL::Create(IvVertexFormat format, unsigned int numVertices,
     size_t offset = 0;
     switch (mVertexFormat)
     {
+        case kPFormat:
+            break;
+
         case kCPFormat:
         default:
             glEnableVertexAttribArray(COLOR);

@@ -31,6 +31,17 @@ static const char sShaderHeader[] =
 "#define TEXTURE(x, uv) x.Sample( x##Sampler, uv )\n"
 "\n";
 
+static const char sShaderPFormat[] =
+"float4   IvDiffuseColor;\n"
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"};\n"
+"float4 ps_main( VS_OUTPUT input ) : SV_Target\n"
+"{\n"
+"    return IvDiffuseColor;\n"
+"}\n";
+
 static const char sShaderCPFormat[] =
 "struct VS_OUTPUT\n"
 "{\n"
@@ -103,6 +114,7 @@ IvFragmentShaderD3D11::IvFragmentShaderD3D11() : IvFragmentShader()
     , mShaderPtr(0)
     , mConstantTable(0)
 {
+    sDefaultFragmentShader[kPFormat] = sShaderPFormat;
     sDefaultFragmentShader[kCPFormat] = sShaderCPFormat;
     sDefaultFragmentShader[kNPFormat] = sShaderNPFormat;
     sDefaultFragmentShader[kCNPFormat] = sShaderCNPFormat;

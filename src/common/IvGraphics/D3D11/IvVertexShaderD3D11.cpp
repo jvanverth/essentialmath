@@ -30,6 +30,19 @@
 
 static char const* sDefaultVertexShader[kVertexFormatCount] = {0};
 
+static const char sShaderPFormat[] =
+"float4x4 IvModelViewProjectionMatrix;\n"
+"struct VS_OUTPUT\n"
+"{\n"
+"    float4 pos : SV_POSITION;\n"
+"};\n"
+"VS_OUTPUT vs_main( float4 pos : POSITION )\n"
+"{\n"
+"    VS_OUTPUT Out = (VS_OUTPUT) 0;\n"
+"    Out.pos = mul(IvModelViewProjectionMatrix, pos);\n"
+"    return Out;\n"
+"}\n";
+
 static const char sShaderCPFormat[] =
 "float4x4 IvModelViewProjectionMatrix;\n"
 "struct VS_OUTPUT\n"
@@ -141,6 +154,7 @@ IvVertexShaderD3D11::IvVertexShaderD3D11() : IvVertexShader()
     , mShaderPtr(0)
     , mConstantTable(0)
 {
+    sDefaultVertexShader[kPFormat] = sShaderPFormat;
     sDefaultVertexShader[kCPFormat] = sShaderCPFormat;
     sDefaultVertexShader[kNPFormat] = sShaderNPFormat;
     sDefaultVertexShader[kCNPFormat] = sShaderCNPFormat;

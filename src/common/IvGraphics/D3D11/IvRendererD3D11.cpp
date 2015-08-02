@@ -811,7 +811,7 @@ void IvRendererD3D11::BindDefaultShaderIfNeeded(IvVertexFormat format)
         sDefaultShaders[format] = static_cast<IvShaderProgramD3D11*>(
             mResourceManager->CreateShaderProgram( vs, fs ));
 
-		if (format == kNPFormat)
+		if (format == kNPFormat || format == kPFormat)
 		{
 			IvUniform* diffuseColor = sDefaultShaders[format]->GetUniform("IvDiffuseColor");
 			// defaults to white
@@ -821,4 +821,3 @@ void IvRendererD3D11::BindDefaultShaderIfNeeded(IvVertexFormat format)
 
     SetShaderProgram(sDefaultShaders[format]);
 }
-        

@@ -23,7 +23,16 @@
 
 static char const* sDefaultFragmentShader[kVertexFormatCount] = {0};
 
-static const char sShaderCPFormat[] = 
+static const char sShaderPFormat[] =
+"#version 150\n"
+"uniform vec4 IvDiffuseColor;\n"
+"out vec4 fragColor;\n"
+"void main()\n"
+"{\n"
+"    fragColor = IvDiffuseColor;\n"
+"}\n";
+
+static const char sShaderCPFormat[] =
 "#version 150\n"
 "in vec4 color;\n"
 "out vec4 fragColor;\n"
@@ -84,6 +93,7 @@ static const char sShaderTNPFormat[] =
 IvFragmentShaderOGL::IvFragmentShaderOGL() : IvFragmentShader()
     , mShaderID(0)
 {
+    sDefaultFragmentShader[kPFormat] = sShaderPFormat;
     sDefaultFragmentShader[kCPFormat] = sShaderCPFormat;
     sDefaultFragmentShader[kNPFormat] = sShaderNPFormat;
     sDefaultFragmentShader[kCNPFormat] = sShaderCNPFormat;

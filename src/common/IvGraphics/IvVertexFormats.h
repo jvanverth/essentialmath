@@ -27,16 +27,26 @@
 // enum for requesting format
 enum IvVertexFormat 
 {
+    kPFormat,       // position only
     kCPFormat,      // color, position
     kNPFormat,      // normal, position
 	kCNPFormat,		// color, normal, position
     kTCPFormat,     // texture coord, color, position
     kTNPFormat,      // texture coord, normal, position
-    kVertexFormatCount
+
+    kLastVertexFormat = kTNPFormat
+
 };
+const int kVertexFormatCount = kLastVertexFormat + 1;
 
 // individual format structs
 // note that in a "real" renderer some of these would make use of compressed data
+
+// a bit silly, but consistent
+struct IvPVertex
+{
+    IvVector3 position;
+};
 
 struct IvCPVertex
 {
@@ -73,6 +83,7 @@ struct IvTNPVertex
 
 const unsigned int kIvVFSize[] =
 {
+    sizeof(IvPVertex),
     sizeof(IvCPVertex),
     sizeof(IvNPVertex),
     sizeof(IvCNPVertex),
