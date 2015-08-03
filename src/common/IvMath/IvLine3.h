@@ -64,8 +64,10 @@ public:
     inline void Clean() { mOrigin.Clean(); mDirection.Clean(); }
 
     // transform!
-    IvLine3 Transform( float scale, const IvQuat& rotation, 
-                              const IvVector3& translation ) const;
+    IvLine3 Transform(float scale, const IvQuat& rotation,
+                      const IvVector3& translation ) const;
+    IvLine3 Transform(float scale, const IvMatrix33& rotation,
+                      const IvVector3& translation) const;
 
     // distance
     friend float DistanceSquared( const IvLine3& line0, const IvLine3& line1, 

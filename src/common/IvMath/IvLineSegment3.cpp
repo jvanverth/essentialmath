@@ -20,7 +20,6 @@
 #include "IvLine3.h"
 #include "IvMath.h"
 #include "IvMatrix33.h"
-#include "IvMatrix44.h"
 #include "IvQuat.h"
 #include "IvVector3.h"
 
@@ -190,27 +189,18 @@ IvLineSegment3::Set( const IvVector3& endpoint0, const IvVector3& endpoint1 )
 // Transforms segment into new space
 //-----------------------------------------------------------------------------
 IvLineSegment3  
-IvLineSegment3::Transform( float scale, const IvQuat& rotate, const IvVector3& translate ) const
+IvLineSegment3::Transform( float scale, const IvQuat& quat, const IvVector3& translate ) const
 {
     IvLineSegment3 segment;
-    IvMatrix44    transform(rotate);
-    transform(0,0) *= scale;
-    transform(1,0) *= scale;
-    transform(2,0) *= scale;
-    transform(0,1) *= scale;
-    transform(1,1) *= scale;
-    transform(2,1) *= scale;
-    transform(0,2) *= scale;
-    transform(1,2) *= scale;
-    transform(2,2) *= scale;
 
-    segment.mDirection = transform.Transform( mDirection );
+    IvMatrix33    rotate(quat);
 
-    transform(0,3) = translate.x;
-    transform(1,3) = translate.y;
-    transform(2,3) = translate.z;
+    segment.mDirection = rotate * mDirection;
+    segment.mDirection *= scale;
 
-    segment.mOrigin = transform.TransformPoint( mOrigin );
+    segment.mOrigin = rotate * mOrigin;
+    segment.mOrigin *= scale;
+    segment.mOrigin += translate;
 
     return segment;
 
@@ -227,24 +217,13 @@ IvLineSegment3::Transform( float scale, const IvMatrix33& rotate,
                            const IvVector3& translate ) const
 {
     IvLineSegment3 segment;
-    IvMatrix44    transform(rotate);
-    transform(0,0) *= scale;
-    transform(1,0) *= scale;
-    transform(2,0) *= scale;
-    transform(0,1) *= scale;
-    transform(1,1) *= scale;
-    transform(2,1) *= scale;
-    transform(0,2) *= scale;
-    transform(1,2) *= scale;
-    transform(2,2) *= scale;
 
-    segment.mDirection = transform.Transform( mDirection );
+    segment.mDirection = rotate * mDirection;
+    segment.mDirection *= scale;
 
-    transform(0,3) = translate.x;
-    transform(1,3) = translate.y;
-    transform(2,3) = translate.z;
-
-    segment.mOrigin = transform.TransformPoint( mOrigin );
+    segment.mOrigin = rotate * mOrigin;
+    segment.mOrigin *= scale;
+    segment.mOrigin += translate;
 
     return segment;
 

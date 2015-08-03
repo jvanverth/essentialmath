@@ -17,7 +17,7 @@
 
 #include "IvLine3.h"
 #include "IvMath.h"
-#include "IvMatrix44.h"
+#include "IvMatrix33.h"
 #include "IvQuat.h"
 #include "IvVector3.h"
 
@@ -165,28 +165,39 @@ IvLine3::Set( const IvVector3& origin, const IvVector3& direction )
 // Transforms ray into new space
 //-----------------------------------------------------------------------------
 IvLine3 
-IvLine3::Transform( float scale, const IvQuat& rotate, const IvVector3& translate ) const
+IvLine3::Transform( float scale, const IvQuat& quat, const IvVector3& translate ) const
 {
     IvLine3 line;
-    IvMatrix44    transform(rotate);
-    transform(0,0) *= scale;
-    transform(1,0) *= scale;
-    transform(2,0) *= scale;
-    transform(0,1) *= scale;
-    transform(1,1) *= scale;
-    transform(2,1) *= scale;
-    transform(0,2) *= scale;
-    transform(1,2) *= scale;
-    transform(2,2) *= scale;
+    IvMatrix33    rotate(quat);
 
-    line.mDirection = transform.Transform( mDirection );
-    line.mDirection.Normalize();
+    line.mDirection = rotate * mDirection;
+    line.mDirection *= scale;
 
-    transform(0,3) = translate.x;
-    transform(1,3) = translate.y;
-    transform(2,3) = translate.z;
+    line.mOrigin = rotate * mOrigin;
+    line.mOrigin *= scale;
+    line.mOrigin += translate;
 
-    line.mOrigin = transform.TransformPoint( mOrigin );
+    return line;
+
+}   // End of IvLine3::Transform()
+
+
+//----------------------------------------------------------------------------
+// @ IvLine3::Transform()
+// ---------------------------------------------------------------------------
+// Transforms ray into new space
+//-----------------------------------------------------------------------------
+IvLine3
+IvLine3::Transform( float scale, const IvMatrix33& rotate, const IvVector3& translate ) const
+{
+    IvLine3 line;
+
+    line.mDirection = rotate * mDirection;
+    line.mDirection *= scale;
+
+    line.mOrigin = rotate * mOrigin;
+    line.mOrigin *= scale;
+    line.mOrigin += translate;
 
     return line;
 
