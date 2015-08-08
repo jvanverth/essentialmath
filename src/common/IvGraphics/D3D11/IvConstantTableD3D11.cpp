@@ -1,11 +1,13 @@
 //===============================================================================
 // @ IvConstantTableD3D11.cpp
 // 
-// Description
+// Replacement for D3D9 constant table
 // ------------------------------------------------------------------------------
-// Copyright (C) 2014  James M. Van Verth & Lars M. Bishop
+// Copyright (C) 2014-2015   James M. Van Verth & Lars M. Bishop
+// All rights reserved.
 //
-// Implementation notes
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //===============================================================================
 
 //-------------------------------------------------------------------------------

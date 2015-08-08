@@ -1,7 +1,7 @@
 //===============================================================================
 // @ IvVertexShader.h
 // 
-// Description
+// Base vertex shader class interface
 // ------------------------------------------------------------------------------
 // Copyright (C) 2008-2015  James M. Van Verth and Lars M. Bishop.
 // All rights reserved.

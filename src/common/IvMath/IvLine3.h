@@ -1,16 +1,13 @@
 //===============================================================================
 // @ IvLine3.h
 // 
-// Description
+// 3D line class
 // ------------------------------------------------------------------------------
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-//
-//
-//
 //===============================================================================
 
 #ifndef __IvLine3__h__

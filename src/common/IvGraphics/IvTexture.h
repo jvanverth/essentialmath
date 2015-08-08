@@ -1,15 +1,13 @@
 //===============================================================================
 // @ IvTexture.h
 // 
-// Description
+// Base class for texture
 // ------------------------------------------------------------------------------
 // Copyright (C) 2008-2015  James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-//
-// Usage notes
 //===============================================================================
 
 #ifndef __IvTexture__h__

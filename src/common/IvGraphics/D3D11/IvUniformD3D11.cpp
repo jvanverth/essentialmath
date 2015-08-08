@@ -1,11 +1,13 @@
 //===============================================================================
 // @ IvUniformD3D11.cpp
 // 
-// Description
+// D3D11 shader uniform/constant implementation
 // ------------------------------------------------------------------------------
-// Copyright (C) 2013  James M. Van Verth & Lars M. Bishop
+// Copyright (C) 2008-2015  James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
 //
-// Implementation notes
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //===============================================================================
 
 //-------------------------------------------------------------------------------

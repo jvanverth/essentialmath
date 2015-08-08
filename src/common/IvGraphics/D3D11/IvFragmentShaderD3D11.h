@@ -1,17 +1,13 @@
 //===============================================================================
 // @ IvFragmentShaderD3D11.h
 // 
-// Description
+// D3D11 fragment shader implementation
 // ------------------------------------------------------------------------------
 // Copyright (C) 2008-2015   James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-//
-// Change history:
-//
-// Usage notes
 //===============================================================================
 
 #ifndef __IvFragmentShaderD3D11__h__

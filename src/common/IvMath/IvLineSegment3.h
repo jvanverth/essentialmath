@@ -1,7 +1,7 @@
 //===============================================================================
 // @ IvLineSegment3.h
 // 
-// Description
+// 3D line segment class
 // ------------------------------------------------------------------------------
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.

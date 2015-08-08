@@ -1,7 +1,7 @@
 //===============================================================================
-// @ IvMain.cpp
+// @ IvMainOGL.cpp
 // 
-// Start up and main event loop
+// Start up and main event loop for OpenGL
 // ------------------------------------------------------------------------------
 // Copyright (C) 2008-2015 by James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
