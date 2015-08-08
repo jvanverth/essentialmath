@@ -193,7 +193,11 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
     
     // load in the source
     const char* shaderSources[2] = {sShaderHeader, shaderSrc};
-    GLint shaderLengths[2] = {strlen(sShaderHeader), strlen(shaderSrc)};
+    GLint shaderLengths[2] =
+    {
+        (GLint)strlen(sShaderHeader),
+        (GLint)strlen(shaderSrc)
+    };
     glShaderSource( mShaderID, 2, (const GLchar**)shaderSources, shaderLengths );
     
     // compile it
@@ -207,7 +211,7 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
         if(len > 0) 
         {
             char* str = new char[len];
-            glGetShaderInfoLog(mShaderID, len, NULL, str);
+            glGetShaderInfoLog(mShaderID, len, nullptr, str);
             ERROR_OUT("Vertex shader error: ");
             ERROR_OUT(str << std::endl);
             delete [] str;
@@ -235,7 +239,11 @@ IvVertexShaderOGL::CreateFromString( const char* string )
     
     // load in the source
     const char* shaderSources[2] = {sShaderHeader, string};
-    GLint shaderLengths[2] = {strlen(sShaderHeader), strlen(string)};
+    GLint shaderLengths[2] =
+    {
+        (GLint)strlen(sShaderHeader),
+        (GLint)strlen(string)
+    };
     glShaderSource( mShaderID, 2, (const GLchar**)shaderSources, shaderLengths );
     
     // compile it
@@ -249,7 +257,7 @@ IvVertexShaderOGL::CreateFromString( const char* string )
         if(len > 0) 
         {
             char* str = new char[len];
-            glGetShaderInfoLog(mShaderID, len, NULL, str);
+            glGetShaderInfoLog(mShaderID, len, nullptr, str);
             DEBUG_OUT("Vertex shader error: ");
             DEBUG_OUT(str << std::endl);
         }

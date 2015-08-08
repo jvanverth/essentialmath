@@ -58,14 +58,14 @@ Player::Player()
 
     mRadius = 3.0f;
 
-    mCylinderIndices = NULL;
+    mCylinderIndices = nullptr;
 
     int i;
     for (i = 0; i < NUM_TEX; i++)
-        mCylinderVerts[i] = NULL;
+        mCylinderVerts[i] = nullptr;
 
     for (i = 0; i < NUM_TEX; i++)
-        mTextures[i] = NULL;
+        mTextures[i] = nullptr;
 
     mCurrentTexIndex = 0;
     mCurrentUVIndex = 0;
@@ -90,7 +90,7 @@ Player::Player()
 
     const unsigned int size = 128;
     mTextures[1] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, size, size, NULL, kDefaultUsage);
+        kRGB24TexFmt, size, size, nullptr, kDefaultUsage);
     mTextures[1]->SetMagFiltering(kBilerpTexMagFilter);
     mTextures[1]->SetMinFiltering(kBilerpTexMinFilter);
     mTextures[1]->SetAddressingU(kWrapTexAddr);
@@ -326,9 +326,9 @@ Player::CreateCylinderVertexArrays()
     // U-coord of 1.0f
     const unsigned int steps = 32;
     mCylinderVerts[0] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, (steps + 1) * steps, NULL, kDefaultUsage);
+        kTCPFormat, (steps + 1) * steps, nullptr, kDefaultUsage);
     mCylinderVerts[1] = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, (steps + 1) * steps, NULL, kDefaultUsage);
+        kTCPFormat, (steps + 1) * steps, nullptr, kDefaultUsage);
 
     IvTCPVertex* tempVerts0 = (IvTCPVertex*)(mCylinderVerts[0]->BeginLoadData());
     IvTCPVertex* tempVerts1 = (IvTCPVertex*)(mCylinderVerts[1]->BeginLoadData());
@@ -398,7 +398,7 @@ Player::CreateCylinderVertexArrays()
     unsigned int cylinderIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-        cylinderIndexCount, NULL, kDefaultUsage);
+        cylinderIndexCount, nullptr, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mCylinderIndices->BeginLoadData();
 

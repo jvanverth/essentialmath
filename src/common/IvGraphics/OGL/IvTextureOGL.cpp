@@ -104,7 +104,7 @@ IvTextureOGL::Create(unsigned int width, unsigned int height, IvTextureFormat fo
     glBindTexture(GL_TEXTURE_2D, currentTex);
     
     mUsage = usage;
-    mTempData = NULL;
+    mTempData = nullptr;
     
     return true;
 }
@@ -207,7 +207,7 @@ IvTextureOGL::CreateMipmapped(unsigned int width, unsigned int height, IvTexture
     glBindTexture(GL_TEXTURE_2D, currentTex);
     
     mUsage = usage;
-    mTempData = NULL;
+    mTempData = nullptr;
     
     return true;
 }
@@ -225,7 +225,7 @@ IvTextureOGL::Destroy()
 
     ASSERT(!mTempData);
     delete mTempData;
-    mTempData = NULL;
+    mTempData = nullptr;
 }
 
 //-------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ void* IvTextureOGL::BeginLoadData(unsigned int level)
 {
     if (mUsage == kImmutableUsage || mTempData)
     {
-        return NULL;
+        return nullptr;
     }
     
     unsigned width = mWidth;
@@ -321,7 +321,7 @@ bool  IvTextureOGL::EndLoadData(unsigned int level)
     glBindTexture(GL_TEXTURE_2D, currentTex);
     
     delete [] mTempData;
-    mTempData = NULL;
+    mTempData = nullptr;
     
     return true;
 }

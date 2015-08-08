@@ -189,7 +189,7 @@ IvVertexShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device)
     fullFilename = fullFilename + std::string(".hlslv");
 
     // convert to LPCWSTR
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &fullFilename[0], (int)fullFilename.size(), NULL, 0);
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &fullFilename[0], (int)fullFilename.size(), nullptr, 0);
     std::wstring wstrTo(size_needed, 0);
     MultiByteToWideChar(CP_UTF8, 0, &fullFilename[0], (int)fullFilename.size(), &wstrTo[0], size_needed);
 
@@ -199,9 +199,9 @@ IvVertexShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device)
 #endif
 
     ID3DBlob* code;
-    ID3DBlob* errorMessages = NULL;
+    ID3DBlob* errorMessages = nullptr;
 
-    if (FAILED(D3DCompileFromFile(wstrTo.c_str(), NULL, NULL, "vs_main", "vs_4_0",
+    if (FAILED(D3DCompileFromFile(wstrTo.c_str(), nullptr, nullptr, "vs_main", "vs_4_0",
         flags, 0, &code, &errorMessages)))
     {
         if (errorMessages)
@@ -219,12 +219,12 @@ IvVertexShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device)
         errorMessages->Release();
     }
 
-    HRESULT result = device->CreateVertexShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
+    HRESULT result = device->CreateVertexShader(code->GetBufferPointer(), code->GetBufferSize(), nullptr, &mShaderPtr);
     if (SUCCEEDED(result))
     {
         mConstantTable = IvConstantTableD3D11::Create(device, code);
     }
-    if (FAILED(result) || NULL == mConstantTable)
+    if (FAILED(result) || nullptr == mConstantTable)
     {
         code->Release();
         return false;
@@ -248,10 +248,10 @@ IvVertexShaderD3D11::CreateFromString(const char* string, ID3D11Device* device)
 #endif
 
     ID3DBlob* code;
-    ID3DBlob* errorMessages = NULL;
+    ID3DBlob* errorMessages = nullptr;
 
     // compile the shader to assembly
-    if ( FAILED(D3DCompile( string, strlen(string)+1, NULL, NULL, NULL, "vs_main", "vs_4_0", 
+    if ( FAILED(D3DCompile( string, strlen(string)+1, nullptr, nullptr, nullptr, "vs_main", "vs_4_0", 
                                flags, 0, &code, &errorMessages )) )
     {
         const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
@@ -265,12 +265,12 @@ IvVertexShaderD3D11::CreateFromString(const char* string, ID3D11Device* device)
         errorMessages->Release();
     }
 
-    HRESULT result = device->CreateVertexShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
+    HRESULT result = device->CreateVertexShader(code->GetBufferPointer(), code->GetBufferSize(), nullptr, &mShaderPtr);
     if (SUCCEEDED(result))
     {
         mConstantTable = IvConstantTableD3D11::Create(device, code);
     }
-    if (FAILED(result) || NULL == mConstantTable)
+    if (FAILED(result) || nullptr == mConstantTable)
     {
         code->Release();
         return false;

@@ -22,7 +22,7 @@
 //-- Statics --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-IvStackAllocator* IvStackAllocator::mScratchAllocator = NULL;
+IvStackAllocator* IvStackAllocator::mScratchAllocator = nullptr;
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -60,7 +60,7 @@ void* IvStackAllocator::Allocate(size_t bytes)
     if (fCurrentOffset + bytes > fTotalBytes)
     {
         ASSERT(false);
-        return NULL;
+        return nullptr;
     }
 
     void* alloc = fAllocation + fCurrentOffset;

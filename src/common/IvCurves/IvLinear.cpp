@@ -195,7 +195,7 @@ IvLinear::RebuildVertexBuffers()
     if ( mCurveVertices == 0 )
     {
         mCurveVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, mCount,
-                                                                                         NULL, kDefaultUsage);
+                                                                                         nullptr, kDefaultUsage);
     }
 
     IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
@@ -218,7 +218,7 @@ IvLinear::RebuildVertexBuffers()
     if ( mPointVertices == 0 )
     {
         mPointVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, mCount,
-                                                                                         NULL, kDefaultUsage);
+                                                                                         nullptr, kDefaultUsage);
     }
 
     IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();

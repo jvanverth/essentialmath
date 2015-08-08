@@ -283,9 +283,9 @@ void IvPointRendererD3D11::Setup()
             sFragmentShader[format]));
 
         // create the vertex layout
-        D3D11_INPUT_ELEMENT_DESC* elements = NULL;
+        D3D11_INPUT_ELEMENT_DESC* elements = nullptr;
         UINT numElements = 0;
-        const char* shaderString = NULL;
+        const char* shaderString = nullptr;
 
         switch (format)
         {
@@ -322,12 +322,12 @@ void IvPointRendererD3D11::Setup()
         }
 
         ID3DBlob* code;
-        ID3DBlob* errorMessages = NULL;
+        ID3DBlob* errorMessages = nullptr;
 
         // compile the shader to assembly
         // it's not ideal to compile the vertex shader again, but we only have to
         // go through this process once to create the layout
-        if (FAILED(D3DCompile(shaderString, strlen(shaderString) + 1, NULL, NULL, NULL, "vs_main", "vs_4_0",
+        if (FAILED(D3DCompile(shaderString, strlen(shaderString) + 1, nullptr, nullptr, nullptr, "vs_main", "vs_4_0",
             D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, &code, &errorMessages)))
         {
             const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());

@@ -68,9 +68,9 @@ public:
     const IvMatrix44& GetProjectionMatrix();
     void SetProjectionMatrix(const IvMatrix44& matrix) final;
 
-    // Setting this to NULL uses the default shader for the vertex format
+    // Setting this to nullptr uses the default shader for the vertex format
     // that is drawn
-    // However, if NULL is set, Get will return NULL, as the default shader cannot
+    // However, if nullptr is set, Get will return nullptr, as the default shader cannot
     // be determined without a vertex format
     IvShaderProgram* GetShaderProgram() final;
     void SetShaderProgram(IvShaderProgram* program) final;

@@ -101,7 +101,7 @@ Barrel::ReadData()
         return false;
 
     mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
-                                                                                NULL, kDefaultUsage);
+                                                                                nullptr, kDefaultUsage);
     IvCNPVertex* dataPtr = (IvCNPVertex*) mVertices->BeginLoadData();
 
     // read positions
@@ -161,7 +161,7 @@ Barrel::ReadData()
 
     // read indices
     mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numTankBodyIndices,
-                                                                              NULL, kDefaultUsage);
+                                                                              nullptr, kDefaultUsage);
     UInt32* indexPtr = static_cast<UInt32*>(mIndices->BeginLoadData());
     for ( UInt32 i = 0; i < numTankBodyIndices; ++i )
     {

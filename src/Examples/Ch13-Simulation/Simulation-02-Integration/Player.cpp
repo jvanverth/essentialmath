@@ -307,7 +307,7 @@ Player::Render()
     if ( !mOrbit )
     {
         mOrbit = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 33,
-                                                                                 NULL, kDefaultUsage);
+                                                                                 nullptr, kDefaultUsage);
         IvCPVertex* dataPtr = (IvCPVertex*) mOrbit->BeginLoadData();
         for (UInt32 i = 0; i <= 32; ++i)
         {
@@ -324,7 +324,7 @@ Player::Render()
     if ( !mPath )
     {
         mPath = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1280,
-                                                                                NULL, kDynamicUsage);
+                                                                                nullptr, kDynamicUsage);
     }
 
     IvCPVertex* dataPtr = (IvCPVertex*) mPath->BeginLoadData();

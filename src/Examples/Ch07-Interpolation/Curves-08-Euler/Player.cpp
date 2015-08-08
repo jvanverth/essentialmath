@@ -203,7 +203,7 @@ Player::Render()
     if ( !mStrip0 )
     {
         mStrip0 = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1280,
-                                                                                  NULL, kDefaultUsage);
+                                                                                  nullptr, kDefaultUsage);
     }
 
     IvCPVertex* curveDataPtr = (IvCPVertex*) mStrip0->BeginLoadData();
@@ -218,7 +218,7 @@ Player::Render()
     if ( !mStrip1 )
     {
         mStrip1 = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 1280,
-                                                                                  NULL, kDefaultUsage);
+                                                                                  nullptr, kDefaultUsage);
     }
 
     curveDataPtr = (IvCPVertex*) mStrip1->BeginLoadData();

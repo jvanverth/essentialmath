@@ -128,7 +128,7 @@ IvIndexBufferOGL::BeginLoadData()
 {
     if (mUsage == kImmutableUsage)
     {
-        return NULL;
+        return nullptr;
     }
     
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mBufferID );

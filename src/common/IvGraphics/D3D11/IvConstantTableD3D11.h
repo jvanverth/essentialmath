@@ -67,14 +67,14 @@ private:
     static void Destroy(IvConstantTableD3D11* table);
 
     // constructor/destructor
-    IvConstantTableD3D11() : mRefCount(1), mBuffer(NULL), mBacking(NULL), 
+    IvConstantTableD3D11() : mRefCount(1), mBuffer(nullptr), mBacking(nullptr),
                             mDirty(false) {}
     ~IvConstantTableD3D11()
     {
         if (mBuffer)
         {
             mBuffer->Release();
-            mBuffer = NULL;
+            mBuffer = nullptr;
         }
         delete mBacking;
     }
