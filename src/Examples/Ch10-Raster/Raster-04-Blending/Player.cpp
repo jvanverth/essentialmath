@@ -91,7 +91,7 @@ static void CopyAndPremulAlpha(void* outData, void* inData, unsigned int width, 
 //-------------------------------------------------------------------------------
 static IvTexture* CreateTextureFromFile(const char* file)
 {
-    IvTexture* tex = nullptr;
+    IvTexture* tex = NULL;
 
     // Load the image into this texture
     IvImage* image = IvImage::CreateFromFile(file);
@@ -100,7 +100,7 @@ static IvTexture* CreateTextureFromFile(const char* file)
         if (image->GetBytesPerPixel() == 4)
         {
             tex = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-                kRGBA32TexFmt, image->GetWidth(), image->GetHeight(), nullptr, kDefaultUsage);
+                kRGBA32TexFmt, image->GetWidth(), image->GetHeight(), NULL, kDefaultUsage);
 
             unsigned char* pixels = (unsigned char*)(tex->BeginLoadData(0));
             CopyAndPremulAlpha(pixels, image->GetPixels(), image->GetWidth(), image->GetHeight());
@@ -144,10 +144,10 @@ Player::Player()
 
     unsigned int i;
 
-    mBaseTexture = nullptr;
+    mBaseTexture = NULL;
 
     for (i = 0; i < NUM_BLEND_TEX; i++)
-        mBlendTextures[i] = nullptr;
+        mBlendTextures[i] = NULL;
 
     mCurrentBlendTexIndex = 0;
 
@@ -390,7 +390,7 @@ Player::CreateCylinder()
     // U-coord of 1.0f
     const unsigned int steps = 32;
     mCylinderVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, (steps + 1) * steps, nullptr, kDefaultUsage);
+        kTCPFormat, (steps + 1) * steps, NULL, kDefaultUsage);
 
     IvTCPVertex* tempVerts0 = (IvTCPVertex*)(mCylinderVerts->BeginLoadData());
 
@@ -449,7 +449,7 @@ Player::CreateCylinder()
     unsigned int cylinderIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-        cylinderIndexCount, nullptr, kDefaultUsage);
+        cylinderIndexCount, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mCylinderIndices->BeginLoadData();
 

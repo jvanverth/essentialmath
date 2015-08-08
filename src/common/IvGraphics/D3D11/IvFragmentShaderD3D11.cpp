@@ -176,10 +176,10 @@ IvFragmentShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device
 #endif
 
     ID3DBlob* code;
-    ID3DBlob* errorMessages = nullptr;
+    ID3DBlob* errorMessages = NULL;
 
     size_t foo = sizeof(shaderSrc);
-    if (FAILED(D3DCompile(shaderSrc, headerLength + length, nullptr, nullptr, nullptr, "ps_main", "ps_4_0",
+    if (FAILED(D3DCompile(shaderSrc, headerLength + length, NULL, NULL, NULL, "ps_main", "ps_4_0",
         flags, 0, &code, &errorMessages)))
     {
         if (errorMessages)
@@ -200,12 +200,12 @@ IvFragmentShaderD3D11::CreateFromFile(const char* filename, ID3D11Device* device
     }
     delete [] shaderSrc;
 
-    HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), nullptr, &mShaderPtr);
+    HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
     if (SUCCEEDED(result))
     {
         mConstantTable = IvConstantTableD3D11::Create(device, code);
     }
-    if (FAILED(result) || nullptr == mConstantTable)
+    if (FAILED(result) || NULL == mConstantTable)
     {
         code->Release();
         return false;
@@ -229,7 +229,7 @@ IvFragmentShaderD3D11::CreateFromString(const char* string, ID3D11Device* device
 #endif
 
     ID3DBlob* code;
-    ID3DBlob* errorMessages = nullptr;
+    ID3DBlob* errorMessages = NULL;
 
     int length = strlen(string);
     int headerLength = sizeof(sShaderHeader);
@@ -241,7 +241,7 @@ IvFragmentShaderD3D11::CreateFromString(const char* string, ID3D11Device* device
     memcpy(shaderSrc + headerLength - 1, string, length+1);
 
     // compile the shader to assembly
-    if (FAILED(D3DCompile(shaderSrc, headerLength + length, nullptr, nullptr, nullptr, "ps_main", "ps_4_0",
+    if (FAILED(D3DCompile(shaderSrc, headerLength + length, NULL, NULL, NULL, "ps_main", "ps_4_0",
         flags, 0, &code, &errorMessages)))
     {
         if (errorMessages)
@@ -261,12 +261,12 @@ IvFragmentShaderD3D11::CreateFromString(const char* string, ID3D11Device* device
     }
     delete [] shaderSrc;
 
-    HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), nullptr, &mShaderPtr);
+    HRESULT result = device->CreatePixelShader(code->GetBufferPointer(), code->GetBufferSize(), NULL, &mShaderPtr);
     if (SUCCEEDED(result))
     {
         mConstantTable = IvConstantTableD3D11::Create(device, code);
     }
-    if (FAILED(result) || nullptr == mConstantTable)
+    if (FAILED(result) || NULL == mConstantTable)
     {
         code->Release();
         return false;

@@ -36,7 +36,7 @@
 IvConstantTableD3D11*
 IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
 {
-    ID3D11ShaderReflection* pReflector = nullptr;
+    ID3D11ShaderReflection* pReflector = NULL;
     D3DReflect(code->GetBufferPointer(), code->GetBufferSize(),
         IID_ID3D11ShaderReflection, (void**)&pReflector);
 
@@ -55,11 +55,11 @@ IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
 
     table->mBacking = new char[constantBufferDesc.Size];
     table->mBackingSize = constantBufferDesc.Size;
-    if (nullptr == table->mBacking)
+    if (NULL == table->mBacking)
     {
         delete table;
         pReflector->Release();
-        return nullptr;
+        return NULL;
     }
 
     for (unsigned int i = 0; i < constantBufferDesc.Variables; ++i)
@@ -70,7 +70,7 @@ IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
         {
             delete table;
             pReflector->Release();
-            return nullptr;
+            return NULL;
         }
         ID3D11ShaderReflectionType* type = var->GetType();
         D3D11_SHADER_TYPE_DESC typeDesc;
@@ -78,7 +78,7 @@ IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
         {
             delete table;
             pReflector->Release();
-            return nullptr;
+            return NULL;
         }
 
         IvConstantDesc constantDesc;
@@ -108,7 +108,7 @@ IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
             // unsupported uniform type
             delete table;
             pReflector->Release();
-            return nullptr;
+            return NULL;
         }
         constantDesc.mCount = typeDesc.Elements != 0 ? typeDesc.Elements : 1;
 
@@ -123,11 +123,11 @@ IvConstantTableD3D11::Create(ID3D11Device* device, ID3DBlob* code)
     cbDesc.MiscFlags = 0;
     cbDesc.StructureByteStride = 0;
 
-    if (FAILED(device->CreateBuffer(&cbDesc, nullptr, &table->mBuffer)))
+    if (FAILED(device->CreateBuffer(&cbDesc, NULL, &table->mBuffer)))
     {
         delete table;
         pReflector->Release();
-        return nullptr;
+        return NULL;
     }
 
 get_textures:
@@ -168,7 +168,7 @@ get_textures:
             // unsupported resource type
             delete table;
             pReflector->Release();
-            return nullptr;
+            return NULL;
         }
     }
 
@@ -219,7 +219,7 @@ bool IvConstantTableD3D11::GetConstantDesc(const char* name, IvConstantDesc* con
 //-------------------------------------------------------------------------------
 bool IvConstantTableD3D11::MakeActiveVS(ID3D11DeviceContext* context)
 {
-    if (mBuffer == 0 || nullptr == mBacking)
+    if (mBuffer == 0 || NULL == mBacking)
         return false;
 
     if (mDirty)
@@ -252,7 +252,7 @@ bool IvConstantTableD3D11::MakeActiveVS(ID3D11DeviceContext* context)
 //-------------------------------------------------------------------------------
 bool IvConstantTableD3D11::MakeActivePS(ID3D11DeviceContext* context)
 {
-    if (mBuffer == 0 || nullptr == mBacking)
+    if (mBuffer == 0 || NULL == mBacking)
         return false;
 
     if (mDirty)

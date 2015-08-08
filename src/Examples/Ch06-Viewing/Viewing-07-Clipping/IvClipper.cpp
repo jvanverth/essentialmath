@@ -147,7 +147,7 @@ IvClipper::FinishClip()
     if ( !mBuffer )
     {
         mBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 6,
-                                                                                  nullptr, kDefaultUsage);
+                                                                                  NULL, kDefaultUsage);
     }
 
     IvCPVertex* dataPtr = (IvCPVertex*) mBuffer->BeginLoadData();

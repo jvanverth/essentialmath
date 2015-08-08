@@ -135,8 +135,8 @@ IvShaderProgramD3D11::MakeActive(ID3D11DeviceContext* context)
     if ( mVertexShaderPtr == 0 || mFragmentShaderPtr == 0 )
         return false;
     
-    context->VSSetShader(mVertexShaderPtr, nullptr, 0);
-    context->PSSetShader(mFragmentShaderPtr, nullptr, 0);
+    context->VSSetShader(mVertexShaderPtr, NULL, 0);
+    context->PSSetShader(mFragmentShaderPtr, NULL, 0);
 
     //*** Update the uniforms here?
 
@@ -198,7 +198,7 @@ IvShaderProgramD3D11::GetUniform(char const* name)
     }
     else
     {
-        return nullptr;
+        return NULL;
     }
 
     IvUniformD3D11* uniform;

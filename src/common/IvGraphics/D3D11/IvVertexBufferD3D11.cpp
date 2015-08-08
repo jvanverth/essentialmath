@@ -199,7 +199,7 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
     vertexBufferDesc.MiscFlags = 0;
     //*** replacement for D3DMANAGED?
 
-    D3D11_SUBRESOURCE_DATA* initDataPtr = nullptr;
+    D3D11_SUBRESOURCE_DATA* initDataPtr = NULL;
     D3D11_SUBRESOURCE_DATA initData;
     if (data)
     {
@@ -217,9 +217,9 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
 
     if (sInputLayout[format] == 0)
     {
-        D3D11_INPUT_ELEMENT_DESC* elements = nullptr;
+        D3D11_INPUT_ELEMENT_DESC* elements = NULL;
         UINT numElements = 0;
-        const char* shaderString = nullptr;
+        const char* shaderString = NULL;
 
         switch (format)
         {
@@ -255,7 +255,7 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
             break;
         }
 
-        if (nullptr == shaderString)
+        if (NULL == shaderString)
         {
             mBufferPtr->Release();
             mBufferPtr = 0;
@@ -263,10 +263,10 @@ IvVertexBufferD3D11::Create(IvVertexFormat format, unsigned int numVertices, voi
         }
 
         ID3DBlob* code;
-        ID3DBlob* errorMessages = nullptr;
+        ID3DBlob* errorMessages = NULL;
 
         // compile the shader to assembly
-        if (FAILED(D3DCompile(shaderString, strlen(shaderString) + 1, nullptr, nullptr, nullptr, "vs_main", "vs_4_0",
+        if (FAILED(D3DCompile(shaderString, strlen(shaderString) + 1, NULL, NULL, NULL, "vs_main", "vs_4_0",
             D3DCOMPILE_ENABLE_STRICTNESS|D3DCOMPILE_DEBUG, 0, &code, &errorMessages)))
         {
             const char* errors = reinterpret_cast<const char*>(errorMessages->GetBufferPointer());
@@ -362,13 +362,13 @@ IvVertexBufferD3D11::BeginLoadData()
 {
     if (mUsage == kImmutableUsage)
     {
-        return nullptr;
+        return NULL;
     }
     
     // already "locked"
     if (mDataPtr)
     {
-        return nullptr;
+        return NULL;
     }
 
     mDataPtr = (void*) new unsigned char[mNumVertices*kIvVFSize[mVertexFormat]];
@@ -400,7 +400,7 @@ IvVertexBufferD3D11::EndLoadData()
     if (kDefaultUsage == mUsage)
     {
         // use UpdateSubresource()
-        d3dContext->UpdateSubresource(mBufferPtr, 0, nullptr, mDataPtr, mNumVertices*kIvVFSize[mVertexFormat], mNumVertices*kIvVFSize[mVertexFormat]);
+        d3dContext->UpdateSubresource(mBufferPtr, 0, NULL, mDataPtr, mNumVertices*kIvVFSize[mVertexFormat], mNumVertices*kIvVFSize[mVertexFormat]);
     }
     else if (kDynamicUsage == mUsage)
     {
@@ -421,7 +421,7 @@ IvVertexBufferD3D11::EndLoadData()
     }
 
     delete[] mDataPtr;
-    mDataPtr = nullptr;
+    mDataPtr = NULL;
 
     return true;
 }

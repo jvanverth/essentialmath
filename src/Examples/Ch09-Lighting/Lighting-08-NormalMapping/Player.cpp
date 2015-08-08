@@ -56,11 +56,11 @@ Player::Player()
     mScale = 1.0f;
     mTranslate.Zero();
 
-    mPlaneIndices = nullptr;
+    mPlaneIndices = NULL;
 
-    mPlaneVerts = nullptr;
+    mPlaneVerts = NULL;
 
-    mTexture = nullptr;
+    mTexture = NULL;
 
     // Load the soup can image into this texture
     IvImage* image = IvImage::CreateFromFile("normal.tga");
@@ -261,7 +261,7 @@ void
 Player::CreatePlane()                                    
 {
     mPlaneVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4, nullptr, kDefaultUsage);
+        kTCPFormat, 4, NULL, kDefaultUsage);
 
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mPlaneVerts->BeginLoadData());
 
@@ -301,7 +301,7 @@ Player::CreatePlane()
 
     mPlaneVerts->EndLoadData();
 
-    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, nullptr, kDefaultUsage);
+    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mPlaneIndices->BeginLoadData();
 

@@ -40,13 +40,13 @@ bool IvHierarchy::gDisplayHierarchyBounds = false;
 //-------------------------------------------------------------------------------
 IvHierarchy::IvHierarchy() 
     : mNumNodes(0)
-    , mParents(nullptr)
-    , mLocalTransforms(nullptr)
-    , mWorldTransforms(nullptr)
-    , mWorldSpheres(nullptr)
-    , mLocalCapsules(nullptr)
-    , mWorldCapsules(nullptr)
-    , mGeometries(nullptr)
+    , mParents(NULL)
+    , mLocalTransforms(NULL)
+    , mWorldTransforms(NULL)
+    , mWorldSpheres(NULL)
+    , mLocalCapsules(NULL)
+    , mWorldCapsules(NULL)
+    , mGeometries(NULL)
 {
 }  // End of IvHierarchy::IvHierarchy
 

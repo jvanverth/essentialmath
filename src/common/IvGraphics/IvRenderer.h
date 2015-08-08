@@ -171,9 +171,9 @@ public:
     void SetDefaultLightDiffuse(float red, float green, float blue, float alpha);
     void SetDefaultLightDirection(const IvVector3& direction);
 
-    // Setting this to nullptr uses the default shader for the vertex format
+    // Setting this to NULL uses the default shader for the vertex format
     // that is drawn
-    // However, if nullptr is set, Get will return nullptr, as the default shader cannot
+    // However, if NULL is set, Get will return NULL, as the default shader cannot
     // be determined without a vertex format
     virtual IvShaderProgram* GetShaderProgram() = 0;
     virtual void SetShaderProgram(IvShaderProgram* program) = 0;

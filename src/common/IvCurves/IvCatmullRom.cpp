@@ -593,7 +593,7 @@ IvCatmullRom::RebuildVertexBuffers()
     if ( mCurveVertices == 0 )
     {
         mCurveVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, numverts,
-                                                                                         nullptr, kDefaultUsage);
+                                                                                         NULL, kDefaultUsage);
     }
 
     IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
@@ -620,7 +620,7 @@ IvCatmullRom::RebuildVertexBuffers()
     if ( mPointVertices == 0 )
     {
         mPointVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, mCount,
-                                                                                         nullptr, kDefaultUsage);
+                                                                                         NULL, kDefaultUsage);
     }
 
     IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();

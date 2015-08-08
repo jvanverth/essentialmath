@@ -56,13 +56,13 @@ Player::Player()
     mScale = 1.0f;
     mTranslate.Zero();
 
-    mPlaneIndices = nullptr;
+    mPlaneIndices = NULL;
 
-    mPlaneVerts = nullptr;
+    mPlaneVerts = NULL;
 
     unsigned int i;
     for (i = 0; i < NUM_TEX; i++)
-        mTextures[i] = nullptr;
+        mTextures[i] = NULL;
 
     mCurrentTexIndex = 0;
 
@@ -87,7 +87,7 @@ Player::Player()
 
     const unsigned int size = 256;
     mTextures[1] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, size, size, nullptr, kDefaultUsage);
+        kRGB24TexFmt, size, size, NULL, kDefaultUsage);
     mTextures[1]->SetMagFiltering(kBilerpTexMagFilter);
     mTextures[1]->SetMinFiltering(kBilerpTexMinFilter);
     mTextures[1]->SetAddressingU(kWrapTexAddr);
@@ -315,7 +315,7 @@ void
 Player::CreatePlane()                                    
 {
     mPlaneVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4, nullptr, kDefaultUsage);
+        kTCPFormat, 4, NULL, kDefaultUsage);
 
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mPlaneVerts->BeginLoadData());
 
@@ -355,7 +355,7 @@ Player::CreatePlane()
 
     mPlaneVerts->EndLoadData();
 
-    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, nullptr,
+    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, NULL,
                                                                                    kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mPlaneIndices->BeginLoadData();

@@ -94,7 +94,7 @@ IvRendererOGL::Create()
 //-------------------------------------------------------------------------------
 IvRendererOGL::IvRendererOGL() : IvRenderer()
 {
-    mShader = nullptr;
+    mShader = NULL;
 
     mAPI = kOpenGL;
 
@@ -494,7 +494,7 @@ void IvRendererOGL::SetShaderProgram(IvShaderProgram* program)
     }
     else
     {
-        // Otherwise (nullptr shader), we will need to bind a default shader later 
+        // Otherwise (NULL shader), we will need to bind a default shader later 
         glUseProgram( 0 );
     }
 }

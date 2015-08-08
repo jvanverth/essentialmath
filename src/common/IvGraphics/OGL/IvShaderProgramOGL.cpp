@@ -128,7 +128,7 @@ IvShaderProgramOGL::GetUniform(char const* name)
 {
     if (!name)
     {
-        return nullptr;
+        return NULL;
     }
 
     // Did we already query the uniform?
@@ -140,7 +140,7 @@ IvShaderProgramOGL::GetUniform(char const* name)
     // First, query the location
     GLint location = glGetUniformLocation(mProgramID, name);
     if (location == -1)
-        return nullptr;
+        return NULL;
     
     // now find it in the list of uniforms to get type and size
     GLint numUniforms = 0;
@@ -166,7 +166,7 @@ IvShaderProgramOGL::GetUniform(char const* name)
 
     // not found
     if ( !found || count < 0 )
-        return nullptr;
+        return NULL;
     
     IvUniformType ivType;
     switch (type)
@@ -187,7 +187,7 @@ IvShaderProgramOGL::GetUniform(char const* name)
             ivType = kTextureUniform;
             break;
         default:
-            return nullptr;
+            return NULL;
     };
 
     IvUniformOGL* uniform = new IvUniformOGL(ivType, (unsigned int)count, this, location, 

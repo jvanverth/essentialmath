@@ -21,7 +21,7 @@
 //-- Static Members -------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#define BUFFER_OFFSET(i) ((char *)nullptr + (i))
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
@@ -197,7 +197,7 @@ IvVertexBufferOGL::BeginLoadData()
 {
     if (mUsage == kImmutableUsage)
     {
-        return nullptr;
+        return NULL;
     }
     
     glBindBuffer( GL_ARRAY_BUFFER, mBufferID );

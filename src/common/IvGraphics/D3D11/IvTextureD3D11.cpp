@@ -102,13 +102,13 @@ IvTextureD3D11::Create(unsigned int width, unsigned int height, IvTextureFormat 
     {
         mLevels = new Level[mLevelCount];
 
-        mLevels[0].mData = nullptr;
+        mLevels[0].mData = NULL;
         mLevels[0].mWidth = mWidth;
         mLevels[0].mHeight = mHeight;
         mLevels[0].mSize = mWidth*mHeight*texelSize;
     }
 
-    D3D11_SUBRESOURCE_DATA* subresourcePtr = nullptr;
+    D3D11_SUBRESOURCE_DATA* subresourcePtr = NULL;
     D3D11_SUBRESOURCE_DATA subresourceData;
     void* pixelData = data;
     if (data)
@@ -169,7 +169,7 @@ IvTextureD3D11::Create(unsigned int width, unsigned int height, IvTextureFormat 
     mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
     // verify formats
 
-    if (FAILED(device->CreateShaderResourceView(mTexturePtr, nullptr, &mShaderResourceView)))
+    if (FAILED(device->CreateShaderResourceView(mTexturePtr, NULL, &mShaderResourceView)))
     {
         mTexturePtr->Release();
         mTexturePtr = 0;
@@ -259,7 +259,7 @@ IvTextureD3D11::CreateMipmapped(unsigned int width, unsigned int height, IvTextu
         mLevels[i].mSize = size;
     }
 
-    D3D11_SUBRESOURCE_DATA* subresourceData = nullptr;
+    D3D11_SUBRESOURCE_DATA* subresourceData = NULL;
     if (data)
     {
         subresourceData = new D3D11_SUBRESOURCE_DATA[mLevelCount];
@@ -319,7 +319,7 @@ IvTextureD3D11::CreateMipmapped(unsigned int width, unsigned int height, IvTextu
             for (unsigned int level = 0; level < mLevelCount; ++level)
             {
                 delete[] mLevels[level].mData;
-                mLevels[level].mData = nullptr;
+                mLevels[level].mData = NULL;
             }
         }
     }
@@ -327,7 +327,7 @@ IvTextureD3D11::CreateMipmapped(unsigned int width, unsigned int height, IvTextu
     mD3DFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
     // verify formats
 
-    if (FAILED(device->CreateShaderResourceView(mTexturePtr, nullptr, &mShaderResourceView)))
+    if (FAILED(device->CreateShaderResourceView(mTexturePtr, NULL, &mShaderResourceView)))
     {
         mTexturePtr->Release();
         mTexturePtr = 0;
@@ -413,13 +413,13 @@ void* IvTextureD3D11::BeginLoadData(unsigned int level)
 {
     if (kImmutableUsage == mUsage || level >= mLevelCount)
     {
-        return nullptr;
+        return NULL;
     }
 
     // already "locked"
     if (mLevels[level].mData)
     {
-        return nullptr;
+        return NULL;
     }
 
     mLevels[level].mData = (void*) new unsigned char[mLevels[level].mSize];
@@ -457,7 +457,7 @@ bool  IvTextureD3D11::EndLoadData(unsigned int level)
             Convert24Bit(pixelData, mLevels[level].mData, mLevels[level].mWidth, mLevels[level].mHeight);
         }
 
-        d3dContext->UpdateSubresource(mTexturePtr, level, nullptr, pixelData, 4 * mLevels[level].mWidth, mLevels[level].mSize);
+        d3dContext->UpdateSubresource(mTexturePtr, level, NULL, pixelData, 4 * mLevels[level].mWidth, mLevels[level].mSize);
 
         if (kRGB24TexFmt == mFormat)
         {
@@ -493,7 +493,7 @@ bool  IvTextureD3D11::EndLoadData(unsigned int level)
     }
 
     delete [] mLevels[level].mData;
-    mLevels[level].mData = nullptr;
+    mLevels[level].mData = NULL;
 
     return true;
 }

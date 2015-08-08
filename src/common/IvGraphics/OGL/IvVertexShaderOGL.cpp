@@ -207,7 +207,7 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
         if(len > 0) 
         {
             char* str = new char[len];
-            glGetShaderInfoLog(mShaderID, len, nullptr, str);
+            glGetShaderInfoLog(mShaderID, len, NULL, str);
             ERROR_OUT("Vertex shader error: ");
             ERROR_OUT(str << std::endl);
             delete [] str;
@@ -249,7 +249,7 @@ IvVertexShaderOGL::CreateFromString( const char* string )
         if(len > 0) 
         {
             char* str = new char[len];
-            glGetShaderInfoLog(mShaderID, len, nullptr, str);
+            glGetShaderInfoLog(mShaderID, len, NULL, str);
             DEBUG_OUT("Vertex shader error: ");
             DEBUG_OUT(str << std::endl);
         }

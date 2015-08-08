@@ -543,7 +543,7 @@ IvUniformBSpline::RebuildVertexBuffers()
     {
         mCurveVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat,
                                                                                          vertsPerSegment*(mCount-3),
-                                                                                         nullptr, kDefaultUsage);
+                                                                                         NULL, kDefaultUsage);
     }
 
     IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
@@ -615,7 +615,7 @@ IvUniformBSpline::RebuildVertexBuffers()
     if ( mPointVertices == 0 )
     {
         mPointVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, mCount,
-                                                                                         nullptr, kDefaultUsage);
+                                                                                         NULL, kDefaultUsage);
     }
 
     IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();

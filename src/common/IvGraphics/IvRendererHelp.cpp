@@ -173,7 +173,7 @@ IvDrawAxes()
         size_t currentOffset = IvStackAllocator::mScratchAllocator->GetCurrentOffset();
         IvCPVertex* dataPtr = (IvCPVertex*) IvStackAllocator::mScratchAllocator->Allocate(kIvVFSize[kCPFormat] * 6);
         
-        if (nullptr == dataPtr)
+        if (NULL == dataPtr)
         {
             return;
         }
@@ -832,10 +832,10 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     if ( capsuleBottomVertices == 0 )
     {
         capsuleBottomVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-                                            kNPFormat, slices*stacks/2+1, nullptr, kDefaultUsage);
+                                            kNPFormat, slices*stacks/2+1, NULL, kDefaultUsage);
         IvNPVertex* vertexPtr = (IvNPVertex*) capsuleBottomVertices->BeginLoadData();
         capsuleBottomIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-                                            3*slices*stacks, nullptr, kDefaultUsage);
+                                            3*slices*stacks, NULL, kDefaultUsage);
         UInt32* indexPtr = (UInt32*) capsuleBottomIndices->BeginLoadData();
         int currentVertex = 0;
         int currentIndex = 0;
@@ -912,10 +912,10 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     if ( capsuleTopVertices == 0 )
     {
         capsuleTopVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-                                                  kNPFormat, slices*stacks/2+1, nullptr, kDefaultUsage);
+                                                  kNPFormat, slices*stacks/2+1, NULL, kDefaultUsage);
         IvNPVertex* vertexPtr = (IvNPVertex*) capsuleTopVertices->BeginLoadData();
         capsuleTopIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-                                                  3*slices*stacks, nullptr, kDefaultUsage);
+                                                  3*slices*stacks, NULL, kDefaultUsage);
         UInt32* indexPtr = (UInt32*) capsuleTopIndices->BeginLoadData();
         int currentVertex = 0;
         int currentIndex = 0;
@@ -996,10 +996,10 @@ IvDrawCapsule( const IvLineSegment3& segment, float radius, IvColor color )
     if ( capsuleMidVertices == 0 )
     {
         capsuleMidVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-                                                            kNPFormat, slices*2, nullptr, kDefaultUsage);
+                                                            kNPFormat, slices*2, NULL, kDefaultUsage);
         IvNPVertex* vertexPtr = (IvNPVertex*) capsuleMidVertices->BeginLoadData();
         capsuleMidIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
-                                                            6*slices, nullptr, kDefaultUsage);
+                                                            6*slices, NULL, kDefaultUsage);
         UInt32* indexPtr = (UInt32*) capsuleMidIndices->BeginLoadData();
         int currentVertex = 0;
         int currentIndex = 0;
@@ -1149,7 +1149,7 @@ IvDrawLine( const IvVector3& from, const IvVector3& to, IvColor color )
     if ( lineVertexBuffer == 0 )
     {
         lineVertexBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 2,
-                                                                                           nullptr, kDynamicUsage);
+                                                                                           NULL, kDynamicUsage);
     }
     
     IvCPVertex* dataPtr = (IvCPVertex*) lineVertexBuffer->BeginLoadData();
@@ -1226,7 +1226,7 @@ IvDrawTeapot( IvColor color, bool useDefaultShader )
         IvStackAllocator::mScratchAllocator->Reset(currentOffset);
     }
 
-    IvShaderProgram* oldShader = nullptr;
+    IvShaderProgram* oldShader = NULL;
     if (useDefaultShader)
     {
         // clear to default shader
@@ -1295,7 +1295,7 @@ IvDrawTexturedTeapot( bool useDefaultShader )
         }
     }
 
-    IvShaderProgram* oldShader = nullptr;
+    IvShaderProgram* oldShader = NULL;
     if (useDefaultShader)
     {
         // clear to default shader

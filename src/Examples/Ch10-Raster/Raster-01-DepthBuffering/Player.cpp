@@ -211,7 +211,7 @@ Player::CreateQuad()
     const float size = 7.0f;
 
     mQuadVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kCPFormat, 4, nullptr, kDefaultUsage);
+        kCPFormat, 4, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvCPVertex* tempVerts = (IvCPVertex*)(mQuadVerts->BeginLoadData());
@@ -235,7 +235,7 @@ Player::CreateQuad()
     mQuadVerts->EndLoadData();
 
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(4, nullptr, kDefaultUsage);
+        CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
 

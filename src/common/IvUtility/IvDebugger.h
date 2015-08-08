@@ -51,7 +51,7 @@ public:
     IvDebugger();
     virtual ~IvDebugger();
     
-    // Default (nullptr or empty filename) will turn off file logging
+    // Default (NULL or empty filename) will turn off file logging
     void DumpToFile( const char* filename = 0 );
     
     void Flush( void );

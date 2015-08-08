@@ -155,7 +155,7 @@ Game::Render()
     if ( !mPlaneBuffer )
     {
         mPlaneBuffer = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 44,
-                                                                                       nullptr, kDefaultUsage);
+                                                                                       NULL, kDefaultUsage);
         IvCPVertex* dataPtr = (IvCPVertex*) mPlaneBuffer->BeginLoadData();
         for ( float x = -10.0f; x <= 10.0f; x += 2.0f )
         {

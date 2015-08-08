@@ -52,9 +52,9 @@ Player::Player()
 
     mRadius = 3.0f;
 
-    mSphereIndices = nullptr;
+    mSphereIndices = NULL;
 
-    mSphereVerts = nullptr;
+    mSphereVerts = NULL;
 
     CreateSphere();
 }   // End of Player::Player()
@@ -198,7 +198,7 @@ Player::CreateSphere()
     const unsigned int verts = steps * steps;
 
     mSphereVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kCPFormat, verts, nullptr, kDefaultUsage);
+        kCPFormat, verts, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvCPVertex* tempVerts = (IvCPVertex*)(mSphereVerts->BeginLoadData());
@@ -248,7 +248,7 @@ Player::CreateSphere()
     const unsigned int sphereIndexCount = steps * 2 + (steps - 1) * (steps * 2 + 2);
 
     mSphereIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(sphereIndexCount, nullptr, kDefaultUsage);
+        CreateIndexBuffer(sphereIndexCount, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mSphereIndices->BeginLoadData());
 

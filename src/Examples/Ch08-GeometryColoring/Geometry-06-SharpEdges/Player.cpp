@@ -54,11 +54,11 @@ Player::Player()
     mScale = 1.0f;
     mTranslate.Zero();
 
-    mSharpStripIndices = nullptr;
-    mSmoothStripIndices = nullptr;
+    mSharpStripIndices = NULL;
+    mSmoothStripIndices = NULL;
 
-    mSharpStripVerts = nullptr;
-    mSmoothStripVerts = nullptr;
+    mSharpStripVerts = NULL;
+    mSmoothStripVerts = NULL;
 
     mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
         IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
@@ -221,9 +221,9 @@ Player::CreateStrips()
     const unsigned int stripQuads = 4;
 
     mSmoothStripVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kCPFormat, stripQuads * 2, nullptr, kDefaultUsage);
+        kCPFormat, stripQuads * 2, NULL, kDefaultUsage);
     mSharpStripVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kCPFormat, stripQuads * 4, nullptr, kDefaultUsage);
+        kCPFormat, stripQuads * 4, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvCPVertex* tempSmoothVerts = (IvCPVertex*)(mSmoothStripVerts->BeginLoadData());
@@ -254,9 +254,9 @@ Player::CreateStrips()
     mSharpStripVerts->EndLoadData();
 
     mSmoothStripIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(stripQuads * 2, nullptr, kDefaultUsage);
+        CreateIndexBuffer(stripQuads * 2, NULL, kDefaultUsage);
     mSharpStripIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(stripQuads * 6 - 2, nullptr, kDefaultUsage);
+        CreateIndexBuffer(stripQuads * 6 - 2, NULL, kDefaultUsage);
 
     unsigned int* tempSmoothIndices = (unsigned int*)(mSmoothStripIndices->BeginLoadData());
     unsigned int* tempSharpIndices = (unsigned int*)(mSharpStripIndices->BeginLoadData());

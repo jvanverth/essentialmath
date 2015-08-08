@@ -78,7 +78,7 @@ IvIndexBufferD3D11::Create(unsigned int numIndices, void* data, IvDataUsage usag
     indexBufferDesc.MiscFlags = 0;
     //*** replacement for D3DMANAGED?
 
-    D3D11_SUBRESOURCE_DATA* initDataPtr = nullptr;
+    D3D11_SUBRESOURCE_DATA* initDataPtr = NULL;
     D3D11_SUBRESOURCE_DATA initData;
     if (data)
     {
@@ -147,7 +147,7 @@ IvIndexBufferD3D11::BeginLoadData()
 {
     if (mUsage == kImmutableUsage)
     {
-        return nullptr;
+        return NULL;
     }
 
     mDataPtr = (void*) new unsigned char[mNumIndices*sizeof(unsigned int)];
@@ -180,7 +180,7 @@ IvIndexBufferD3D11::EndLoadData()
     if (kDefaultUsage == mUsage)
     {
         // use UpdateSubresource()
-        d3dContext->UpdateSubresource(mBufferPtr, 0, nullptr, mDataPtr, mNumIndices*sizeof(unsigned int), mNumIndices*sizeof(unsigned int));
+        d3dContext->UpdateSubresource(mBufferPtr, 0, NULL, mDataPtr, mNumIndices*sizeof(unsigned int), mNumIndices*sizeof(unsigned int));
     }
     else if (kDynamicUsage == mUsage)
     {
@@ -201,7 +201,7 @@ IvIndexBufferD3D11::EndLoadData()
     }
 
     delete[] mDataPtr;
-    mDataPtr = nullptr;
+    mDataPtr = NULL;
 
     return true;
 }

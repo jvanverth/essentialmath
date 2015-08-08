@@ -30,14 +30,14 @@
 #include <IvEventHandler.h>
 #include <D3D11/IvRendererD3D11.h>
 
-HINSTANCE               gHInstance = nullptr;
-HWND                    gHwnd = nullptr;
-IDXGISwapChain*         gSwapChain = nullptr;
-ID3D11Device*           gDevice = nullptr;
-ID3D11DeviceContext*    gContext = nullptr;
-ID3D11RenderTargetView* gRenderTargetView = nullptr;
-ID3D11Texture2D*        gDepthStencilBuffer = nullptr;
-ID3D11DepthStencilView* gDepthStencilView = nullptr;
+HINSTANCE               gHInstance = NULL;
+HWND                    gHwnd = NULL;
+IDXGISwapChain*         gSwapChain = NULL;
+ID3D11Device*           gDevice = NULL;
+ID3D11DeviceContext*    gContext = NULL;
+ID3D11RenderTargetView* gRenderTargetView = NULL;
+ID3D11Texture2D*        gDepthStencilBuffer = NULL;
+ID3D11DepthStencilView* gDepthStencilView = NULL;
 UINT                    gSyncInterval = 0;
 ID3D11Debug*            gD3dDebug;
 bool                    gIsFullscreen = false;
@@ -123,7 +123,7 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
     MSG msg = { 0 };
     while (WM_QUIT != msg.message)
     {
-        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
@@ -157,7 +157,7 @@ wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nC
 
 bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
 {
-    gHInstance = GetModuleHandle(nullptr);
+    gHInstance = GetModuleHandle(NULL);
 
     // Register class
     WNDCLASSEX wcex;
@@ -168,9 +168,9 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
     wcex.cbWndExtra = 0;
     wcex.hInstance = gHInstance;
     wcex.hIcon = LoadIcon(gHInstance, (LPCTSTR)IDI_WINLOGO);
-    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = nullptr;
+    wcex.lpszMenuName = NULL;
     wcex.lpszClassName = L"ExampleWindowClass";
     wcex.hIconSm = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_WINLOGO);
     if (!RegisterClassEx(&wcex))
@@ -209,7 +209,7 @@ bool InitWindow(LPWSTR name, int& width, int& height, bool fullscreen)
 
     // Create window
     gHwnd = CreateWindow(L"ExampleWindowClass", name, WS_OVERLAPPEDWINDOW,
-                         posX, posY, width, height, nullptr, nullptr, gHInstance, nullptr);
+                         posX, posY, width, height, NULL, NULL, gHInstance, NULL);
     if (!gHwnd)
     {
         return false;
@@ -257,9 +257,9 @@ bool InitDevice(unsigned int width, unsigned int height, bool fullscreen, bool v
     UINT deviceFlags = 0;
 #endif
     // Create the swap chain, Direct3D device, and Direct3D device context.
-    HRESULT result = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, deviceFlags, nullptr, 0,
+    HRESULT result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, deviceFlags, NULL, 0,
                                            D3D11_SDK_VERSION, &swapChainDesc, &gSwapChain, 
-                                           &gDevice, nullptr, &gContext);
+                                           &gDevice, NULL, &gContext);
     if (FAILED(result))
     {
         //*** fallback to WARP?
@@ -308,17 +308,17 @@ bool GetRefreshRate(unsigned int width, unsigned int height,
 
     // Now we enumerate all the display modes that match 32-bit RGBA w/sRGB gamma
     unsigned int numModes;
-    DXGI_MODE_DESC* displayModeList = nullptr;
-    result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_ENUM_MODES_INTERLACED, &numModes, nullptr);
+    DXGI_MODE_DESC* displayModeList = NULL;
+    result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL);
     if (SUCCEEDED(result))
     {
         displayModeList = new DXGI_MODE_DESC[numModes];
-        if (nullptr != displayModeList)
+        if (NULL != displayModeList)
         {
             result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList);
         }
     }
-    if (nullptr == displayModeList || FAILED(result))
+    if (NULL == displayModeList || FAILED(result))
     {
         adapterOutput->Release();
         adapter->Release();
@@ -372,37 +372,37 @@ void DestroyDevice()
 {
     if (gSwapChain)
     {
-        gSwapChain->SetFullscreenState(false, nullptr);
+        gSwapChain->SetFullscreenState(false, NULL);
     }
     
     if (gDepthStencilView)
     {
         gDepthStencilView->Release();
-        gDepthStencilView = nullptr;
+        gDepthStencilView = NULL;
     }
 
     if (gDepthStencilBuffer)
     {
         gDepthStencilBuffer->Release();
-        gDepthStencilBuffer = nullptr;
+        gDepthStencilBuffer = NULL;
     }
     
     if (gRenderTargetView)
     {
         gRenderTargetView->Release();
-        gRenderTargetView = nullptr;
+        gRenderTargetView = NULL;
     }
 
     if (gSwapChain)
     {
         gSwapChain->Release();
-        gSwapChain = nullptr;
+        gSwapChain = NULL;
     }
 
     if (gContext)
     {
         gContext->Release();
-        gContext = nullptr;
+        gContext = NULL;
     }
     
 #if _DEBUG
@@ -410,14 +410,14 @@ void DestroyDevice()
     if (gD3dDebug)
     {
         gD3dDebug->Release();
-        gD3dDebug = nullptr;
+        gD3dDebug = NULL;
     }
 #endif
 
     if (gDevice)
     {
         gDevice->Release();
-        gDevice = nullptr;
+        gDevice = NULL;
     }
 }
 
@@ -461,17 +461,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             if (gRenderTargetView)
             {
                 gRenderTargetView->Release();
-                gRenderTargetView = nullptr;
+                gRenderTargetView = NULL;
             }
             if (gDepthStencilView)
             {
                 gDepthStencilView->Release();
-                gDepthStencilView = nullptr;
+                gDepthStencilView = NULL;
             }
             if (gDepthStencilBuffer)
             {
                 gDepthStencilBuffer->Release();
-                gDepthStencilBuffer = nullptr;
+                gDepthStencilBuffer = NULL;
             }
 
             HRESULT hr;
@@ -480,14 +480,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             hr = gSwapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
 
             // Create a render target view
-            ID3D11Texture2D* backBuffer = nullptr;
+            ID3D11Texture2D* backBuffer = NULL;
             hr = gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
             if (FAILED(hr))
             {
                 PostQuitMessage(0);
                 return E_FAIL;
             }
-            hr = gDevice->CreateRenderTargetView(backBuffer, nullptr, &gRenderTargetView);
+            hr = gDevice->CreateRenderTargetView(backBuffer, NULL, &gRenderTargetView);
             backBuffer->Release();
             if (FAILED(hr))
             {
@@ -509,7 +509,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             depthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
             depthBufferDesc.CPUAccessFlags = 0;
             depthBufferDesc.MiscFlags = 0;
-            hr = gDevice->CreateTexture2D(&depthBufferDesc, nullptr, &gDepthStencilBuffer);
+            hr = gDevice->CreateTexture2D(&depthBufferDesc, NULL, &gDepthStencilBuffer);
             if (FAILED(hr))
             {
                 gRenderTargetView->Release();
@@ -745,7 +745,7 @@ CommandLineWToArgvA(PWCHAR CmdLine, int* _argc)
         i++;
     }
     _argv[j] = '\0';
-    argv[argc] = nullptr;
+    argv[argc] = NULL;
 
     (*_argc) = argc;
     return argv;

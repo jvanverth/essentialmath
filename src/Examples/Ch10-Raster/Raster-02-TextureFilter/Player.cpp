@@ -75,7 +75,7 @@ Player::Player()
 
     const unsigned int size = 128;
     mCheckerTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
-        kRGB24TexFmt, size, size, nullptr, kDynamicUsage);
+        kRGB24TexFmt, size, size, NULL, kDynamicUsage);
     mCheckerTexture->SetMagFiltering(kBilerpTexMagFilter);
     mCheckerTexture->SetMinFiltering(kBilerpTexMinFilter);
     mCheckerTexture->SetAddressingU(kClampTexAddr);
@@ -280,7 +280,7 @@ Player::CreateQuad()
     const float size = 3.0f;
 
     mQuadVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4, nullptr, kDefaultUsage);
+        kTCPFormat, 4, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mQuadVerts->BeginLoadData());
@@ -304,7 +304,7 @@ Player::CreateQuad()
     mQuadVerts->EndLoadData();
 
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(4, nullptr, kDefaultUsage);
+        CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
 

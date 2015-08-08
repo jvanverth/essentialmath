@@ -713,7 +713,7 @@ IvHermite::RebuildVertexBuffers()
     {
         mCurveVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat,
                                                                                          vertsPerSegment*(mCount-1),
-                                                                                         nullptr, kDefaultUsage);
+                                                                                         NULL, kDefaultUsage);
     }
 
     IvCPVertex* curveDataPtr = (IvCPVertex*) mCurveVertices->BeginLoadData();
@@ -766,7 +766,7 @@ IvHermite::RebuildVertexBuffers()
     if ( mPointVertices == 0 )
     {
         mPointVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, mCount,
-                                                                                         nullptr, kDefaultUsage);
+                                                                                         NULL, kDefaultUsage);
     }
 
     IvCPVertex *pointDataPtr = (IvCPVertex*) mPointVertices->BeginLoadData();
@@ -790,7 +790,7 @@ IvHermite::RebuildVertexBuffers()
     if ( mTangentVertices == 0 )
     {
         mTangentVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCPFormat, 4*(mCount-1),
-                                                                                           nullptr, kDefaultUsage);
+                                                                                           NULL, kDefaultUsage);
     }
 
     IvCPVertex *tangentDataPtr = (IvCPVertex*) mTangentVertices->BeginLoadData();

@@ -128,8 +128,8 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
                                  ID3D11RenderTargetView* renderTarget, 
                                  ID3D11DepthStencilView* depthStencilTarget)
     : IvRenderer()
-    , mRenderTarget(nullptr)
-    , mDepthStencilTarget(nullptr)
+    , mRenderTarget(NULL)
+    , mDepthStencilTarget(NULL)
 {
     mDevice = device;
     mDevice->AddRef();
@@ -139,7 +139,7 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
 
     SetTargets(renderTarget, depthStencilTarget);
 
-    mShader = nullptr;
+    mShader = NULL;
 
     mClearColor[0] = 1.0f;
     mClearColor[1] = 1.0f;
@@ -472,7 +472,7 @@ void IvRendererD3D11::UpdateBlendState()
         return;
     }
     // Now set the blend state.
-    mContext->OMSetBlendState(blendState, nullptr, 0xffffffff);
+    mContext->OMSetBlendState(blendState, NULL, 0xffffffff);
     blendState->Release();
 }
 
@@ -675,9 +675,9 @@ void IvRendererD3D11::SetShaderProgram(IvShaderProgram* program)
     }
     else
     {
-        // Otherwise (nullptr shader), we will need to bind a default shader later 
-        mContext->VSSetShader(nullptr, nullptr, 0);
-        mContext->VSSetShader(nullptr, nullptr, 0);
+        // Otherwise (NULL shader), we will need to bind a default shader later 
+        mContext->VSSetShader(NULL, NULL, 0);
+        mContext->VSSetShader(NULL, NULL, 0);
     }
 }
 

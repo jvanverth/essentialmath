@@ -65,7 +65,7 @@ Player::Player()
 
     // create a texture "name" to reference later
     mMipmapLevelBandsTex = IvRenderer::mRenderer->GetResourceManager()->CreateMipmappedTexture(
-        kRGB24TexFmt, 256, 256, nullptr, 9, kDefaultUsage);
+        kRGB24TexFmt, 256, 256, NULL, 9, kDefaultUsage);
 
     mMipmapLevelBandsTex->SetMagFiltering(kBilerpTexMagFilter);
     mMipmapLevelBandsTex->SetMinFiltering(kBilerpTexMinFilter);
@@ -100,7 +100,7 @@ Player::Player()
     // Create a classic checkerboard pattern to show off aliasing
     // create a texture "name" to reference later
     mCheckerBoardTex = IvRenderer::mRenderer->GetResourceManager()->CreateMipmappedTexture(
-        kRGB24TexFmt, 256, 256, nullptr, 5, kDefaultUsage);
+        kRGB24TexFmt, 256, 256, NULL, 5, kDefaultUsage);
 
     mCheckerBoardTex->SetMagFiltering(kBilerpTexMagFilter);
     mCheckerBoardTex->SetMinFiltering(kBilerpTexMinFilter);
@@ -323,7 +323,7 @@ Player::CreateQuad()
     const float size = 1.0f;
 
     mQuadVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kTCPFormat, 4, nullptr, kDefaultUsage);
+        kTCPFormat, 4, NULL, kDefaultUsage);
 
     // temporary pointers that can be stepped along the arrays
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mQuadVerts->BeginLoadData());
@@ -347,7 +347,7 @@ Player::CreateQuad()
     mQuadVerts->EndLoadData();
 
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
-        CreateIndexBuffer(4, nullptr, kDefaultUsage);
+        CreateIndexBuffer(4, NULL, kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
 
