@@ -34,6 +34,8 @@ namespace IvPointRendererD3D11
     void Setup();
     void Teardown();
 
+    void SetPointSize(float size);
+
     void SetShaderAndVertexBuffer(IvVertexFormat format, IvVertexBuffer* buffer);
 };
 

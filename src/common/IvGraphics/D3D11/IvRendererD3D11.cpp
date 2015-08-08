@@ -336,11 +336,8 @@ IvRendererD3D11::InitD3D11()
     mWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
     UpdateBlendState();
 
-    /*
-    // set point size
-    float pointSize = 5.0f;
-    mDevice->SetRenderState( D3DRS_POINTSIZE, *((DWORD*)&pointSize) );
-    */
+    IvPointRendererD3D11::SetPointSize(5.0f);
+
     return true;                                        
 
 }   // End of IvRendererD3D11::InitGL()

@@ -217,6 +217,8 @@ static const char sFragmentShaderTCP[] =
 
 static IvShaderProgram* sShaders[kVertexFormatCount] = { 0 };
 
+static float sPointSize = 2.0f;
+
 //-------------------------------------------------------------------------------
 //-- Methods --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
@@ -324,6 +326,11 @@ void IvPointRendererD3D11::Teardown()
         IvRenderer::mRenderer->GetResourceManager()->Destroy(sShaders[format]);
         sInputLayout[format]->Release();
     }
+}
+
+void IvPointRendererD3D11::SetPointSize(float size)
+{
+    sPointSize = size;
 }
 
 void IvPointRendererD3D11::SetShaderAndVertexBuffer(IvVertexFormat format, IvVertexBuffer* buffer)
