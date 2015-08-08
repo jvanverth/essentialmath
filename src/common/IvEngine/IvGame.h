@@ -9,13 +9,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-//
-//
 // Usage notes:
 //
 // The static function Create() is declared here, but defined in the file 
 // Game.cpp for a particular example.  This is to allow IvMain.cpp to just call
-// IvGame::Create() to transparently create the particular class Game. 
+// IvGame::Create() to transparently create the particular subclass of Game.
 //===============================================================================
 
 #ifndef __IvGame__h__

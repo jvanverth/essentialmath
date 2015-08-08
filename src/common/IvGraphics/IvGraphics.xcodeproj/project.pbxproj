@@ -23,7 +23,6 @@
 		CE8C5E370D748EC90006FDB9 /* IvTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E310D748EC90006FDB9 /* IvTexture.h */; };
 		CE8C5E380D748EC90006FDB9 /* IvTextureFormats.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E320D748EC90006FDB9 /* IvTextureFormats.h */; };
 		CE8C5E390D748EC90006FDB9 /* IvUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8C5E330D748EC90006FDB9 /* IvUniform.h */; };
-		CEE19D890C67F7E100D80249 /* IvDeviceListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE19D710C67F7E100D80249 /* IvDeviceListener.h */; };
 		CEE19D8D0C67F7E100D80249 /* IvVertexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE19D750C67F7E100D80249 /* IvVertexBuffer.h */; };
 		CEE19D920C67F7E100D80249 /* IvVertexBufferOGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE19D7B0C67F7E100D80249 /* IvVertexBufferOGL.h */; };
 		CEE19D990C67F7E100D80249 /* IvVertexBufferOGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEE19D820C67F7E100D80249 /* IvVertexBufferOGL.cpp */; };
@@ -64,7 +63,6 @@
 		CE8C5E310D748EC90006FDB9 /* IvTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvTexture.h; sourceTree = "<group>"; };
 		CE8C5E320D748EC90006FDB9 /* IvTextureFormats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvTextureFormats.h; sourceTree = "<group>"; };
 		CE8C5E330D748EC90006FDB9 /* IvUniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IvUniform.h; sourceTree = "<group>"; };
-		CEE19D710C67F7E100D80249 /* IvDeviceListener.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvDeviceListener.h; sourceTree = "<group>"; };
 		CEE19D750C67F7E100D80249 /* IvVertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVertexBuffer.h; sourceTree = "<group>"; };
 		CEE19D7B0C67F7E100D80249 /* IvVertexBufferOGL.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IvVertexBufferOGL.h; sourceTree = "<group>"; };
 		CEE19D820C67F7E100D80249 /* IvVertexBufferOGL.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = IvVertexBufferOGL.cpp; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 				CE8C5E320D748EC90006FDB9 /* IvTextureFormats.h */,
 				CE8C5E330D748EC90006FDB9 /* IvUniform.h */,
 				CE8C5E2C0D748EBA0006FDB9 /* IvColor.h */,
-				CEE19D710C67F7E100D80249 /* IvDeviceListener.h */,
 				CEEACEE90C90EC6900995013 /* IvFragmentShader.h */,
 				CEEACEB00C90E8DC00995013 /* IvIndexBuffer.h */,
 				CEEACEB30C90E8EB00995013 /* IvRenderer.h */,
@@ -177,7 +174,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEE19D890C67F7E100D80249 /* IvDeviceListener.h in Headers */,
 				CEE19D8D0C67F7E100D80249 /* IvVertexBuffer.h in Headers */,
 				CEE19D920C67F7E100D80249 /* IvVertexBufferOGL.h in Headers */,
 				CEE19D9F0C67F7E100D80249 /* IvVertexFormats.h in Headers */,

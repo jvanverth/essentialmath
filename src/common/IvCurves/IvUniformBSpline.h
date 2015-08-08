@@ -9,8 +9,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-//
-//
 // Usage notes:
 //     A change here from the other curves.  Because the B-spline is an 
 // approximating curve, it doesn't make sense to set times at each position,
