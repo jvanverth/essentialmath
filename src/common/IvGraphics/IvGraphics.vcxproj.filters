@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IvColor.h" />
-    <ClInclude Include="IvDeviceListener.h" />
     <ClInclude Include="IvFragmentShader.h" />
     <ClInclude Include="IvIndexBuffer.h" />
     <ClInclude Include="IvRenderer.h" />
