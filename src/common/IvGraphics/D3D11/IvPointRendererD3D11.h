@@ -36,7 +36,9 @@ namespace IvPointRendererD3D11
 
     void SetPointSize(float size);
 
-    void SetShaderAndVertexBuffer(IvVertexFormat format, IvVertexBuffer* buffer);
+    void SetShaderAndVertexBuffer(ID3D11DeviceContext* context,
+                                  IvVertexFormat format, IvVertexBuffer* buffer);
+    void Draw(ID3D11DeviceContext* context, int numVertices);
 };
 
 

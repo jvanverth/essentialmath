@@ -720,19 +720,19 @@ void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, un
 
     if (primType == kPointListPrim)
     {
+        IvShaderProgram* oldShader = mShader;
+
         // set special instanced point shader
-        IvPointRendererD3D11::SetShaderAndVertexBuffer(vertexBuffer->GetVertexFormat(),
+        IvPointRendererD3D11::SetShaderAndVertexBuffer(mContext,
+                                                       vertexBuffer->GetVertexFormat(),
                                                        vertexBuffer);
 
         ASSERT(mShader);
         UpdateUniforms();
 
-        // use triangle strip topology
-        mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
-//        mContext->IASetPrimitiveTopology(sPrimTypeMap[kTriangleStripPrim]);
+        IvPointRendererD3D11::Draw(mContext, numVertices);
 
-        // draw instanced
-        mContext->Draw(numVertices, 0);
+        SetShaderProgram(oldShader);
     }
     else
     {
