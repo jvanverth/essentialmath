@@ -67,6 +67,9 @@
     <ClCompile Include="OGL\IvTextureOGL.cpp">
       <Filter>OGL</Filter>
     </ClCompile>
+    <ClCompile Include="D3D11\IvPointRendererD3D11.cpp">
+      <Filter>D3D11</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IvColor.h" />
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="OGL\IvTextureOGL.h">
       <Filter>OGL</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D11\IvPointRendererD3D11.h">
+      <Filter>D3D11</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

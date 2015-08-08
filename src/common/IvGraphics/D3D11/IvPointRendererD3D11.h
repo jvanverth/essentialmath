@@ -1,69 +1,40 @@
 //===============================================================================
-// @ IvVertexBufferD3D11.h
+// @ IvPointRendererD3D11.h
 // 
-// D3D11 vertex buffer implementation
+// D3D11 code for handling sized points
 // ------------------------------------------------------------------------------
-// Copyright (C) 2008-2015   James M. Van Verth and Lars M. Bishop.
+// Copyright (C) 2015   James M. Van Verth and Lars M. Bishop.
 // All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //===============================================================================
 
-#ifndef __IvVertexBufferD3D11__h__
-#define __IvVertexBufferD3D11__h__
+#ifndef __IvPointRendererD3D11__h__
+#define __IvPointRendererD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-#include "../IvVertexBuffer.h"
-#include "IvResourceManager.h"
-#include <d3d11.h>
+#include "IvVertexFormats.h"
 
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+class IvVertexBuffer;
+
 //-------------------------------------------------------------------------------
 //-- Classes --------------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-class IvVertexBufferD3D11 : private IvVertexBuffer
+namespace IvPointRendererD3D11
 {
-public:
-    // interface routines
-    virtual void* BeginLoadData();
-    virtual bool  EndLoadData();
+    void Setup();
+    void Teardown();
 
-    friend class IvResourceManagerD3D11;
-    friend class IvRendererD3D11;
-
-    ID3D11Buffer* GetBufferPtr() { return mBufferPtr; }
-
-private:
-    // constructor/destructor
-    IvVertexBufferD3D11();
-    ~IvVertexBufferD3D11();
-    
-    // creation 
-    bool Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,
-                ID3D11Device* device);
-    
-    // destruction
-    void Destroy();
-
-    // activate
-    bool MakeActive(ID3D11DeviceContext* device);
-
-private:
-    // copy operations
-    IvVertexBufferD3D11(const IvVertexBufferD3D11& other);
-    IvVertexBufferD3D11& operator=(const IvVertexBufferD3D11& other);
-
-    ID3D11Buffer* mBufferPtr;
-    void*         mDataPtr;
-    IvDataUsage   mUsage;
+    void SetShaderAndVertexBuffer(IvVertexFormat format, IvVertexBuffer* buffer);
 };
 
 

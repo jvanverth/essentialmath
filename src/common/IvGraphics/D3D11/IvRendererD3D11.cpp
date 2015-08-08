@@ -22,6 +22,7 @@
 #include "IvIndexBufferD3D11.h"
 #include <IvMath.h>
 #include "IvMatrix44.h"
+#include "IvPointRendererD3D11.h"
 #include "IvRendererD3D11.h"
 #include "IvResourceManagerD3D11.h"
 #include "IvShaderProgramD3D11.h"
@@ -43,7 +44,7 @@ static D3D_PRIMITIVE_TOPOLOGY sPrimTypeMap[kPrimTypeCount] =
     D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
 };
 
-static IvShaderProgramD3D11* sDefaultShaders[kVertexFormatCount];
+static IvShaderProgramD3D11* sDefaultShaders[kVertexFormatCount] = { 0 };
 
 static D3D11_BLEND sBlendFunc[kBlendFuncCount] =
 {
@@ -163,6 +164,8 @@ IvRendererD3D11::IvRendererD3D11(ID3D11Device* device, ID3D11DeviceContext* cont
 //-------------------------------------------------------------------------------
 IvRendererD3D11::~IvRendererD3D11()
 {
+    IvPointRendererD3D11::Teardown();
+
     // delete shader program?
     for ( unsigned int i = 0; i < kVertexFormatCount; ++i )
     {
@@ -206,6 +209,8 @@ IvRendererD3D11::Initialize( unsigned int width, unsigned int height )
     
     // create resource manager
     mResourceManager = new IvResourceManagerD3D11( mDevice );
+
+    IvPointRendererD3D11::Setup();
 
     return true;
     
@@ -688,54 +693,17 @@ void IvRendererD3D11::SetShaderProgram(IvShaderProgram* program)
 void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, 
                            IvIndexBuffer* indexBuffer, unsigned int numIndices)
 {
-    BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
-
-    // update any default uniforms
-    if ( mShader )
+    if (!vertexBuffer || !indexBuffer)
     {
-        IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-        if ( modelviewproj )
-        {
-            modelviewproj->SetValue( mWVPMat, 0 );
-        }
-        IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-        if ( normalMat )
-        {
-            normalMat->SetValue( mNormalMat, 0 );
-        }
-        IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-        if (diffuseColor)
-        {
-            diffuseColor->SetValue(mDiffuseColor,0);
-        }
-        IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-        if ( ambient )
-        {
-            ambient->SetValue(mLightAmbient,0);
-        }
-        IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-        if ( diffuse )
-        {
-            diffuse->SetValue(mLightDiffuse,0);
-        }
-        IvUniform* direction = mShader->GetUniform("IvLightDirection");
-        if ( direction )
-        {
-            direction->SetValue(mLightDirection,0);
-        }
+        return;
     }
 
-    mShader->BindUniforms( mContext );
+    BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
+    ASSERT(mShader);
+    UpdateUniforms();
 
-    if (vertexBuffer)
-        static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive( mContext );
-    else
-        return;
-
-    if (indexBuffer)
-        static_cast<IvIndexBufferD3D11*>(indexBuffer)->MakeActive( mContext );
-    else
-        return;
+    static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive( mContext );
+    static_cast<IvIndexBufferD3D11*>(indexBuffer)->MakeActive( mContext );
 
     mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
     mContext->DrawIndexed(numIndices, 0, 0);
@@ -748,52 +716,39 @@ void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer,
 //-------------------------------------------------------------------------------
 void IvRendererD3D11::Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices)
 {
-    BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
-
-    // update any default uniforms
-    if ( mShader )
+    if (!vertexBuffer)
     {
-        IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
-        if ( modelviewproj )
-        {
-            modelviewproj->SetValue(mWVPMat, 0);
-        }
-        IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
-        if ( normalMat )
-        {
-            normalMat->SetValue(mNormalMat, 0);
-        }
-        IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
-        if (diffuseColor)
-        {
-            diffuseColor->SetValue(mDiffuseColor,0);
-        }
-        IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
-        if ( ambient )
-        {
-            ambient->SetValue(mLightAmbient,0);
-        }
-        IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
-        if ( diffuse )
-        {
-            diffuse->SetValue(mLightDiffuse,0);
-        }
-        IvUniform* direction = mShader->GetUniform("IvLightDirection");
-        if ( direction )
-        {
-            direction->SetValue(mLightDirection,0);
-        }
+        return;
     }
 
-    mShader->BindUniforms(mContext);
+    if (primType == kPointListPrim)
+    {
+        // set special instanced point shader
+        IvPointRendererD3D11::SetShaderAndVertexBuffer(vertexBuffer->GetVertexFormat(),
+                                                       vertexBuffer);
 
-    if (vertexBuffer)
-        static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive( mContext );
+        ASSERT(mShader);
+        UpdateUniforms();
+
+        // use triangle strip topology
+        mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
+//        mContext->IASetPrimitiveTopology(sPrimTypeMap[kTriangleStripPrim]);
+
+        // draw instanced
+        mContext->Draw(numVertices, 0);
+    }
     else
-        return;
+    {
+        BindDefaultShaderIfNeeded(vertexBuffer->GetVertexFormat());
 
-    mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
-    mContext->Draw(numVertices, 0);
+        ASSERT(mShader);
+        UpdateUniforms();
+
+        static_cast<IvVertexBufferD3D11*>(vertexBuffer)->MakeActive(mContext);
+
+        mContext->IASetPrimitiveTopology(sPrimTypeMap[primType]);
+        mContext->Draw(numVertices, 0);
+    }
 }
 
 
@@ -824,4 +779,46 @@ void IvRendererD3D11::BindDefaultShaderIfNeeded(IvVertexFormat format)
     }
 
     SetShaderProgram(sDefaultShaders[format]);
+}
+
+
+//-------------------------------------------------------------------------------
+// @ IvRendererD3D11::UpdateUniforms()
+//-------------------------------------------------------------------------------
+// Update the current shader's uniform values
+//-------------------------------------------------------------------------------
+void IvRendererD3D11::UpdateUniforms()
+{
+    IvUniform* modelviewproj = mShader->GetUniform("IvModelViewProjectionMatrix");
+    if (modelviewproj)
+    {
+        modelviewproj->SetValue(mWVPMat, 0);
+    }
+    IvUniform* normalMat = mShader->GetUniform("IvNormalMatrix");
+    if (normalMat)
+    {
+        normalMat->SetValue(mNormalMat, 0);
+    }
+    IvUniform* diffuseColor = mShader->GetUniform("IvDiffuseColor");
+    if (diffuseColor)
+    {
+        diffuseColor->SetValue(mDiffuseColor, 0);
+    }
+    IvUniform* ambient = mShader->GetUniform("IvLightAmbient");
+    if (ambient)
+    {
+        ambient->SetValue(mLightAmbient, 0);
+    }
+    IvUniform* diffuse = mShader->GetUniform("IvLightDiffuse");
+    if (diffuse)
+    {
+        diffuse->SetValue(mLightDiffuse, 0);
+    }
+    IvUniform* direction = mShader->GetUniform("IvLightDirection");
+    if (direction)
+    {
+        direction->SetValue(mLightDirection, 0);
+    }
+
+    mShader->BindUniforms(mContext);
 }

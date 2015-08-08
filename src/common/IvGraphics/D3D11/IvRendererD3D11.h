@@ -85,6 +85,7 @@ public:
 protected:
     bool InitD3D11();
     void BindDefaultShaderIfNeeded(IvVertexFormat format);
+    void UpdateUniforms();
 
     IvShaderProgramD3D11* mShader;
 
