@@ -33,8 +33,8 @@ class IvVertexBufferD3D11 : private IvVertexBuffer
 {
 public:
     // interface routines
-    virtual void* BeginLoadData();
-    virtual bool  EndLoadData();
+    void* BeginLoadData() final;
+    bool  EndLoadData() final;
 
     friend class IvResourceManagerD3D11;
     friend class IvRendererD3D11;
@@ -44,7 +44,7 @@ public:
 private:
     // constructor/destructor
     IvVertexBufferD3D11();
-    ~IvVertexBufferD3D11();
+    ~IvVertexBufferD3D11() final;
     
     // creation 
     bool Create(IvVertexFormat format, unsigned int numVertices, void* data, IvDataUsage usage,

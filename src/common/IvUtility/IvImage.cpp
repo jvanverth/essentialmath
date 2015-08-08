@@ -159,7 +159,7 @@ IvImage::operator=(const IvImage& other)
 //-------------------------------------------------------------------------------
 // @ IvImage::CreateFromFile
 //-------------------------------------------------------------------------------
-// Creates and returns an image representing the given file, or NULL if the file
+// Creates and returns an image representing the given file, or nullptr if the file
 // does not exist or is an unsupported format
 //-------------------------------------------------------------------------------
 IvImage* IvImage::CreateFromFile(const char* pcFilename)

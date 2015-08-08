@@ -39,25 +39,25 @@ class IvUniformOGL : public IvUniform
 public:
     friend class IvShaderProgramOGL;
 
-    virtual void SetValue( float value, unsigned int index);
-    virtual void SetValue( const IvVector3& value, unsigned int index );
-    virtual void SetValue( const IvVector4& value, unsigned int index );
-    virtual void SetValue( const IvMatrix44& value, unsigned int index );
-    virtual void SetValue( IvTexture* value );
+    void SetValue(float value, unsigned int index) final;
+    void SetValue(const IvVector3& value, unsigned int index) final;
+    void SetValue(const IvVector4& value, unsigned int index) final;
+    void SetValue(const IvMatrix44& value, unsigned int index) final;
+    void SetValue(IvTexture* value) final;
     
     // return false on type mismatch
-    virtual bool GetValue( float& value, unsigned int index) const;
-    virtual bool GetValue( IvVector3& value, unsigned int index ) const;
-    virtual bool GetValue( IvVector4& value, unsigned int index ) const;
-    virtual bool GetValue( IvMatrix44& value, unsigned int index ) const;
-    virtual bool GetValue( IvTexture*& value ) const;
+    bool GetValue(float& value, unsigned int index) const final;
+    bool GetValue(IvVector3& value, unsigned int index) const final;
+    bool GetValue(IvVector4& value, unsigned int index) const final;
+    bool GetValue(IvMatrix44& value, unsigned int index) const final;
+    bool GetValue(IvTexture*& value) const final;
     
 protected:
     // constructor/destructor
     IvUniformOGL(IvUniformType type, unsigned int count, 
-        IvShaderProgramOGL* shader, unsigned int shaderIndex,
-        unsigned int textureStage);
-    virtual ~IvUniformOGL();
+                 IvShaderProgramOGL* shader, unsigned int shaderIndex,
+                 unsigned int textureStage);
+    virtual ~IvUniformOGL() final;
     void Update();
 
     IvShaderProgramOGL* mShader;

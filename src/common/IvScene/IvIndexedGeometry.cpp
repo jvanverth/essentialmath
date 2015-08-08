@@ -102,7 +102,7 @@ bool IvIndexedGeometry::LoadFromStream(IvReader& in, IvCapsule& capsule)
 
     // read verts
     mVertices = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(kCNPFormat, numVerts,
-                                                                                NULL, kDefaultUsage);
+                                                                                nullptr, kDefaultUsage);
     dataPtr = (IvCNPVertex*) mVertices->BeginLoadData();
     tempPosition = new IvVector3[numVerts]; // save for capsule creation
     for ( UInt32 i = 0; i < numVerts; ++i )
@@ -160,7 +160,7 @@ bool IvIndexedGeometry::LoadFromStream(IvReader& in, IvCapsule& capsule)
 
     // read indices
     mIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(numIndices,
-                                                                              NULL, kDefaultUsage);
+                                                                              nullptr, kDefaultUsage);
     indexPtr = static_cast<UInt32*>(mIndices->BeginLoadData());
     for ( UInt32 i = 0; i < numIndices; ++i )
     {

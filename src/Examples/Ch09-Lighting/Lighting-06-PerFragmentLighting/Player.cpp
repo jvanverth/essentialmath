@@ -56,9 +56,9 @@ Player::Player()
     mScale = 1.0f;
     mTranslate.Zero();
 
-    mPlaneIndices = NULL;
+    mPlaneIndices = nullptr;
 
-    mPlaneVerts = NULL;
+    mPlaneVerts = nullptr;
 
     mVertlitShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
         IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
@@ -254,7 +254,7 @@ void
 Player::CreatePlane()                                    
 {
     mPlaneVerts = IvRenderer::mRenderer->GetResourceManager()->CreateVertexBuffer(
-        kNPFormat, 4, NULL, kDefaultUsage);
+        kNPFormat, 4, nullptr, kDefaultUsage);
 
     IvNPVertex* tempVerts = (IvNPVertex*)(mPlaneVerts->BeginLoadData());
 
@@ -282,7 +282,7 @@ Player::CreatePlane()
 
     mPlaneVerts->EndLoadData();
 
-    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, NULL,
+    mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, nullptr,
                                                                                    kDefaultUsage);
 
     unsigned int* tempIndices = (unsigned int*)mPlaneIndices->BeginLoadData();

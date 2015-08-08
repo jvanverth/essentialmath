@@ -44,7 +44,7 @@ public:
 private:
     // constructor/destructor
     IvFragmentShaderD3D11();
-    ~IvFragmentShaderD3D11();
+    ~IvFragmentShaderD3D11() final;
     
     // initialization
     bool CreateFromFile(const char* filename, ID3D11Device* device);

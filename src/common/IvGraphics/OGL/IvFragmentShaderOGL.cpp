@@ -160,7 +160,7 @@ IvFragmentShaderOGL::CreateFromFile( const char* filename )
         if(len > 0) 
         {
             char* str = new char[len];
-            glGetShaderInfoLog(mShaderID, len, NULL, str);
+            glGetShaderInfoLog(mShaderID, len, nullptr, str);
             ERROR_OUT("Fragment shader error: ");
             ERROR_OUT(str << std::endl);
         }
@@ -198,7 +198,7 @@ IvFragmentShaderOGL::CreateFromString( const char* string )
         if(len > 0) 
         {
             char* str = new char[len];
-            glGetShaderInfoLog(mShaderID, len, NULL, str);
+            glGetShaderInfoLog(mShaderID, len, nullptr, str);
             DEBUG_OUT("Fragment shader error: ");
             DEBUG_OUT(str << std::endl);
         }

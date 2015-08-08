@@ -35,19 +35,19 @@ public:
     friend class IvUniformOGL;
 
     // interface routines
-    virtual void* BeginLoadData(unsigned int level = 0);
-    virtual bool  EndLoadData(unsigned int level = 0);
+    void* BeginLoadData(unsigned int level = 0) final;
+    bool  EndLoadData(unsigned int level = 0) final;
 
-    virtual void SetAddressingU(IvTextureAddrMode mode);
-    virtual void SetAddressingV(IvTextureAddrMode mode);
+    void SetAddressingU(IvTextureAddrMode mode) final;
+    void SetAddressingV(IvTextureAddrMode mode) final;
 
-    virtual void SetMagFiltering(IvTextureMagFilter filter);
-    virtual void SetMinFiltering(IvTextureMinFilter filter);
+    void SetMagFiltering(IvTextureMagFilter filter) final;
+    void SetMinFiltering(IvTextureMinFilter filter) final;
 
 protected:
     // constructor/destructor
     IvTextureOGL();
-    virtual ~IvTextureOGL();
+    ~IvTextureOGL() final;
 
     // creation
     bool Create(unsigned int width, unsigned int height, IvTextureFormat format,

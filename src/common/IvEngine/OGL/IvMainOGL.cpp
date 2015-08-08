@@ -38,7 +38,7 @@ static void error_callback(int error, const char* description)
     ERROR_OUT(description << std::endl);
 }
 
-static GLFWwindow* window = NULL;
+static GLFWwindow* window = nullptr;
 
 //-------------------------------------------------------------------------------
 // @ main()
@@ -66,13 +66,13 @@ int main(int argc, char *argv[])
     bool fullscreen = false;
     if (fullscreen)
     {
-        window = glfwCreateWindow(640, 480, "Example", glfwGetPrimaryMonitor(), NULL);
+        window = glfwCreateWindow(640, 480, "Example", glfwGetPrimaryMonitor(), nullptr);
     }
     else
     {
-        window = glfwCreateWindow(640, 480, "Example", NULL, NULL);
+        window = glfwCreateWindow(640, 480, "Example", nullptr, nullptr);
     }
-    if (NULL == window) 
+    if (nullptr == window) 
     {
         ERROR_OUT("Error: could not create window" << std::endl);
         glfwTerminate();

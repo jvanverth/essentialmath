@@ -1,5 +1,5 @@
 //===============================================================================
-// @ IvShaderProgramD3D9.h
+// @ IvShaderProgramD3D11.h
 // 
 // D3D11 implementation for combined vertex and fragment/pixel shader
 // ------------------------------------------------------------------------------
@@ -10,8 +10,8 @@
 // found in the LICENSE file.
 //===============================================================================
 
-#ifndef __IvShaderProgramD3D9__h__
-#define __IvShaderProgramD3D9__h__
+#ifndef __IvShaderProgramD3D11__h__
+#define __IvShaderProgramD3D11__h__
 
 //-------------------------------------------------------------------------------
 //-- Dependencies ---------------------------------------------------------------
@@ -21,7 +21,6 @@
 #include <string>
 
 #include <d3d11.h>
-//#include <D3DX9Shader.h>
 
 #include "../IvShaderProgram.h"
 #include "../IvVertexFormats.h"
@@ -44,7 +43,7 @@ class IvShaderProgramD3D11 : public IvShaderProgram
 {
 public:
     // interface routines
-    virtual IvUniform* GetUniform(char const* name);
+    IvUniform* GetUniform(char const* name) final;
 
     friend class IvResourceManagerD3D11;
     friend class IvRendererD3D11;
@@ -52,7 +51,7 @@ public:
 private:
     // constructor/destructor
     IvShaderProgramD3D11();
-    ~IvShaderProgramD3D11();
+    ~IvShaderProgramD3D11() final;
     
     // initialization
     bool Create( IvVertexShaderD3D11* vertexShaderPtr, IvFragmentShaderD3D11* fragmentShaderPtr );

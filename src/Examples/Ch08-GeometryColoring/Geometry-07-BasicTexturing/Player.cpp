@@ -58,14 +58,14 @@ Player::Player()
 
     mRadius = 3.0f;
 
-    mCylinderIndices = NULL;
+    mCylinderIndices = nullptr;
 
     unsigned int i;
     for (i = 0; i < NUM_UVS; i++)
-        mCylinderVerts[i] = NULL;
+        mCylinderVerts[i] = nullptr;
 
     for (i = 0; i < NUM_TEX; i++)
-        mTextures[i] = NULL;
+        mTextures[i] = nullptr;
 
     mCurrentTexIndex = 0;
     mCurrentUVIndex = 0;
@@ -91,7 +91,7 @@ Player::Player()
     const unsigned int size = 128;
     mTextures[1] = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(kRGB24TexFmt,
                                                                               size, size,
-                                                                              NULL, kDefaultUsage);
+                                                                              nullptr, kDefaultUsage);
     mTextures[1]->SetMagFiltering(kBilerpTexMagFilter);
     mTextures[1]->SetMinFiltering(kBilerpTexMinFilter);
     mTextures[1]->SetAddressingU(kWrapTexAddr);

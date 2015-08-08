@@ -46,7 +46,7 @@ public:
 private:
     // constructor/destructor
     IvVertexShaderOGL();
-    ~IvVertexShaderOGL();
+    ~IvVertexShaderOGL() final;
     
     // initialization
     bool CreateFromFile( const char* filename );

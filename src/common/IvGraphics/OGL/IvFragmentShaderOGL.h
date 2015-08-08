@@ -46,7 +46,7 @@ public:
 private:
     // constructor/destructor
     IvFragmentShaderOGL();
-    ~IvFragmentShaderOGL();
+    ~IvFragmentShaderOGL() final;
     
     // initialization
     bool CreateFromFile( const char* filename );

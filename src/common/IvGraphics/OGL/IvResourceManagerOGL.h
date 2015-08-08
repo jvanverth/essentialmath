@@ -37,38 +37,38 @@ class IvTexture;
 class IvResourceManagerOGL : public IvResourceManager
 { 
 public:
-    IvVertexBuffer* CreateVertexBuffer( IvVertexFormat format, unsigned int numVertices,
-                                       void* data, IvDataUsage usage );
-    void Destroy( IvVertexBuffer* vb );
+    IvVertexBuffer* CreateVertexBuffer(IvVertexFormat format, unsigned int numVertices,
+                                       void* data, IvDataUsage usage) final;
+    void Destroy(IvVertexBuffer* vb) final;
     
-    IvIndexBuffer* CreateIndexBuffer( unsigned int numIndices, void* data,
-                                      IvDataUsage usage );
-    void Destroy( IvIndexBuffer* ib );
+    IvIndexBuffer* CreateIndexBuffer(unsigned int numIndices, void* data,
+                                     IvDataUsage usage) final;
+    void Destroy(IvIndexBuffer* ib) final;
     
-    IvVertexShader* CreateVertexShaderFromFile( const char* filename );
-    IvVertexShader* CreateVertexShaderFromString( const char* string );
-    IvVertexShader* CreateDefaultVertexShader( IvVertexFormat format );
-    void Destroy( IvVertexShader* vs );
+    IvVertexShader* CreateVertexShaderFromFile(const char* filename) final;
+    IvVertexShader* CreateVertexShaderFromString(const char* string) final;
+    IvVertexShader* CreateDefaultVertexShader(IvVertexFormat format) final;
+    void Destroy(IvVertexShader* vs) final;
     
-    IvFragmentShader* CreateFragmentShaderFromFile( const char* filename );
-    IvFragmentShader* CreateFragmentShaderFromString( const char* string );
-    IvFragmentShader* CreateDefaultFragmentShader( IvVertexFormat format );
-    void Destroy( IvFragmentShader* vs );
+    IvFragmentShader* CreateFragmentShaderFromFile(const char* filename) final;
+    IvFragmentShader* CreateFragmentShaderFromString(const char* string) final;
+    IvFragmentShader* CreateDefaultFragmentShader(IvVertexFormat format) final;
+    void Destroy(IvFragmentShader* vs) final;
     
-    IvShaderProgram* CreateShaderProgram( IvVertexShader* vs, IvFragmentShader* fs );
-    void Destroy( IvShaderProgram* sp );
+    IvShaderProgram* CreateShaderProgram(IvVertexShader* vs, IvFragmentShader* fs) final;
+    void Destroy(IvShaderProgram* sp) final;
 
     virtual IvTexture* CreateTexture(IvTextureFormat format,
                                      unsigned int width, unsigned int height,
-                                     void* data, IvDataUsage usage);
+                                     void* data, IvDataUsage usage) final;
     virtual IvTexture* CreateMipmappedTexture(IvTextureFormat format,
                                               unsigned int width, unsigned int height,
-                                              void** data, unsigned int levels, IvDataUsage usage);
-    void Destroy( IvTexture* tex );
+                                              void** data, unsigned int levels, IvDataUsage usage) final;
+    void Destroy(IvTexture* tex) final;
     
 private: 
     IvResourceManagerOGL();
-    ~IvResourceManagerOGL();
+    ~IvResourceManagerOGL() final;
     
     friend class IvRendererOGL;
     

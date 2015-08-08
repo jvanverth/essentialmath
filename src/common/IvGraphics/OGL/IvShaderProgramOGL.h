@@ -44,7 +44,7 @@ class IvShaderProgramOGL : public IvShaderProgram
 {
 public:
     // interface routines
-    virtual IvUniform* GetUniform(char const* name);
+    IvUniform* GetUniform(char const* name) final;
 
     friend class IvResourceManagerOGL;
     friend class IvRendererOGL;
@@ -52,7 +52,7 @@ public:
 private:
     // constructor/destructor
     IvShaderProgramOGL();
-    ~IvShaderProgramOGL();
+    ~IvShaderProgramOGL() final;
     
     // initialization
     bool Create( GLuint vertexShaderID, GLuint fragmentShaderID );

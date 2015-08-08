@@ -39,37 +39,37 @@ friend class IvRenderer;
 public:
     bool static Create();
 
-    virtual bool Initialize( unsigned int  width, unsigned int  height );
-    virtual void Resize( unsigned int width, unsigned int height );
+    bool Initialize(unsigned int  width, unsigned int  height) final;
+    void Resize(unsigned int width, unsigned int height) final;
         
-    virtual void  SetClearColor( float red, float green, float blue, float alpha );
-    virtual void  SetClearDepth( float depth );
-    virtual void  ClearBuffers(IvClearBuffer buffer);
+    void  SetClearColor(float red, float green, float blue, float alpha) final;
+    void  SetClearDepth(float depth) final;
+    void  ClearBuffers(IvClearBuffer buffer) final;
 
-    virtual void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op);
-    virtual void SetColorMask( bool red, bool green, bool blue, bool alpha );
-    virtual void SetFillMode(IvFillMode fill);
-    virtual void SetShadeMode(IvShadeMode shade);
-    virtual IvShadeMode GetShadeMode();
+    void SetBlendFunc(IvBlendFunc srcBlend, IvBlendFunc dstBlend, IvBlendOp op) final;
+    void SetColorMask(bool red, bool green, bool blue, bool alpha) final;
+    void SetFillMode(IvFillMode fill) final;
+    void SetShadeMode(IvShadeMode shade) final;
+    IvShadeMode GetShadeMode() final;
 
-    virtual void SetDepthTest(IvDepthTestFunc func);
-    virtual IvDepthTestFunc GetDepthTest();
-    virtual void SetDepthWrite(bool write);
+    void SetDepthTest(IvDepthTestFunc func) final;
+    IvDepthTestFunc GetDepthTest() final;
+    void SetDepthWrite(bool write) final;
 
-    virtual void SetWorldMatrix(const IvMatrix44& matrix);
-    virtual void SetViewMatrix(const IvMatrix44& matrix);
-    virtual void SetProjectionMatrix(const IvMatrix44& matrix);
+    void SetWorldMatrix(const IvMatrix44& matrix) final;
+    void SetViewMatrix(const IvMatrix44& matrix) final;
+    void SetProjectionMatrix(const IvMatrix44& matrix) final;
 
-    // Setting this to NULL uses the default shader for the vertex format
+    // Setting this to nullptr uses the default shader for the vertex format
     // that is drawn
-    // However, if NULL is set, Get will return NULL, as the default shader cannot
+    // However, if nullptr is set, Get will return nullptr, as the default shader cannot
     // be determined without a vertex format
-    virtual IvShaderProgram* GetShaderProgram();
-    virtual void SetShaderProgram(IvShaderProgram* program);
+    IvShaderProgram* GetShaderProgram() final;
+    void SetShaderProgram(IvShaderProgram* program) final;
     
-    virtual void Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, 
-                      IvIndexBuffer* indexBuffer, unsigned int numIndices);
-    virtual void Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices);
+    void Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, 
+                      IvIndexBuffer* indexBuffer, unsigned int numIndices) final;
+    void Draw(IvPrimType primType, IvVertexBuffer* vertexBuffer, unsigned int numVertices) final;
     
 protected:
     int InitGL(void);
@@ -80,7 +80,7 @@ protected:
 private:
     // constructor/destructor
     IvRendererOGL();
-    ~IvRendererOGL();
+    ~IvRendererOGL() final;
 
     // copy operations
     IvRendererOGL(const IvRendererOGL& other);
