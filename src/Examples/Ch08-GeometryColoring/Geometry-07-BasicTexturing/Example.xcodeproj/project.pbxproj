@@ -19,6 +19,8 @@
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
 		CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4D19B2B65C008870FC /* IOKit.framework */; };
 		CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */; };
+		CEC373C01B77916C00F1EA30 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEC373BF1B77916C00F1EA30 /* Info.plist */; };
+		CEC373C21B77922900F1EA30 /* image.tga in Resources */ = {isa = PBXBuildFile; fileRef = CEC373C11B7791A900F1EA30 /* image.tga */; };
 		CEF01E0B1A3532300074BE84 /* textureShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CEF01E0A1A3532300074BE84 /* textureShader.glslf */; };
 		CEF01E0D1A35323A0074BE84 /* textureShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CEF01E0C1A35323A0074BE84 /* textureShader.glslv */; };
 /* End PBXBuildFile section */
@@ -98,6 +100,8 @@
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
+		CEC373BF1B77916C00F1EA30 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEC373C11B7791A900F1EA30 /* image.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = image.tga; sourceTree = "<group>"; };
 		CEF01E0A1A3532300074BE84 /* textureShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslf; sourceTree = "<group>"; };
 		CEF01E0C1A35323A0074BE84 /* textureShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +166,8 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEC373C11B7791A900F1EA30 /* image.tga */,
+				CEC373BF1B77916C00F1EA30 /* Info.plist */,
 			);
 			name = Resources;
 			sourceTree = SOURCE_ROOT;
@@ -314,8 +320,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC373C21B77922900F1EA30 /* image.tga in Resources */,
 				CEF01E0B1A3532300074BE84 /* textureShader.glslf in Resources */,
 				CEF01E0D1A35323A0074BE84 /* textureShader.glslv in Resources */,
+				CEC373C01B77916C00F1EA30 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,7 +381,7 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -401,7 +409,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
