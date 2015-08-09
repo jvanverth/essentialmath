@@ -113,7 +113,12 @@ int main(int argc, char *argv[])
     }
 
     // set up renderer
-    if (!IvRendererOGL::Create() || !IvRendererOGL::mRenderer->Initialize( 640, 480 ))
+    
+    int width;
+    int height;
+    glfwGetFramebufferSize(window, &width, &height);
+    
+    if (!IvRendererOGL::Create() || !IvRendererOGL::mRenderer->Initialize( width, height ))
     {
         IvRenderer::Destroy();
         IvGame::Destroy();
