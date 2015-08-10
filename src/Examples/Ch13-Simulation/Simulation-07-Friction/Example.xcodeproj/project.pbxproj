@@ -102,6 +102,7 @@
 		CE27A0DA1B4C7A3E00253766 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		CE27A0F11B4C7B9200253766 /* SimObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimObject.cpp; sourceTree = "<group>"; };
 		CE27A0F21B4C7B9200253766 /* SimObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimObject.h; sourceTree = "<group>"; };
+		CE55F92F1B7845BC00E6A6C1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6960EC1B4B3620001F2AC5 /* IvCollision.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvCollision.xcodeproj; path = ../../../common/IvCollision/IvCollision.xcodeproj; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.1.1/lib-MacOS-10.8/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -179,6 +180,7 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE55F92F1B7845BC00E6A6C1 /* Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -421,7 +423,7 @@
 					../../../common/IvGraphics,
 					../../../common/IvCollision,
 				);
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -456,7 +458,7 @@
 					../../../common/IvGraphics,
 					../../../common/IvCollision,
 				);
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

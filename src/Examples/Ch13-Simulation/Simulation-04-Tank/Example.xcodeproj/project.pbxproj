@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE6960F41B4B3642001F2AC5 /* libIvCollision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6960F11B4B3620001F2AC5 /* libIvCollision.a */; };
-		CE6960FD1B4B3769001F2AC5 /* libIvScene.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6960FA1B4B3735001F2AC5 /* libIvScene.a */; };
 		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
 		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
 		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
@@ -21,37 +19,14 @@
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
 		CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4D19B2B65C008870FC /* IOKit.framework */; };
 		CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */; };
+		CEAE5A2A1B7824650078090B /* Barrel.txt in Resources */ = {isa = PBXBuildFile; fileRef = CEAE5A271B7824650078090B /* Barrel.txt */; };
+		CEAE5A2B1B7824650078090B /* Tank.txt in Resources */ = {isa = PBXBuildFile; fileRef = CEAE5A281B7824650078090B /* Tank.txt */; };
+		CEAE5A2C1B7824650078090B /* Turret.txt in Resources */ = {isa = PBXBuildFile; fileRef = CEAE5A291B7824650078090B /* Turret.txt */; };
+		CEAE5A531B7826210078090B /* libIvCollision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAE5A321B7824820078090B /* libIvCollision.a */; };
+		CEAE5A541B7826260078090B /* libIvScene.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAE5A381B7824980078090B /* libIvScene.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CE6960F01B4B3620001F2AC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE6960EC1B4B3620001F2AC5 /* IvCollision.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D;
-			remoteInfo = IvCollision;
-		};
-		CE6960F21B4B363C001F2AC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE6960EC1B4B3620001F2AC5 /* IvCollision.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
-			remoteInfo = IvCollision;
-		};
-		CE6960F91B4B3735001F2AC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE6960F51B4B3735001F2AC5 /* IvScene.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D;
-			remoteInfo = IvScene;
-		};
-		CE6960FB1B4B3764001F2AC5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE6960F51B4B3735001F2AC5 /* IvScene.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
-			remoteInfo = IvScene;
-		};
 		CE9C454B0D74C80100FBB88B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */;
@@ -108,12 +83,39 @@
 			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = IvGraphics;
 		};
+		CEAE5A311B7824820078090B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEAE5A2D1B7824820078090B /* IvCollision.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = IvCollision;
+		};
+		CEAE5A371B7824980078090B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEAE5A331B7824980078090B /* IvScene.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = IvScene;
+		};
+		CEAE5A391B7824C00078090B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEAE5A2D1B7824820078090B /* IvCollision.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = IvCollision;
+		};
+		CEAE5A3B1B7824C40078090B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEAE5A331B7824980078090B /* IvScene.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = IvScene;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE6960EC1B4B3620001F2AC5 /* IvCollision.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvCollision.xcodeproj; path = ../../../common/IvCollision/IvCollision.xcodeproj; sourceTree = "<group>"; };
-		CE6960F51B4B3735001F2AC5 /* IvScene.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvScene.xcodeproj; path = ../../../common/IvScene/IvScene.xcodeproj; sourceTree = "<group>"; };
+		CE5E14591B7707B700D66A2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.1.1/lib-MacOS-10.8/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -128,6 +130,11 @@
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
+		CEAE5A271B7824650078090B /* Barrel.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Barrel.txt; sourceTree = "<group>"; };
+		CEAE5A281B7824650078090B /* Tank.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tank.txt; sourceTree = "<group>"; };
+		CEAE5A291B7824650078090B /* Turret.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Turret.txt; sourceTree = "<group>"; };
+		CEAE5A2D1B7824820078090B /* IvCollision.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvCollision.xcodeproj; path = ../../../common/IvCollision/IvCollision.xcodeproj; sourceTree = "<group>"; };
+		CEAE5A331B7824980078090B /* IvScene.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvScene.xcodeproj; path = ../../../common/IvScene/IvScene.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE6960FD1B4B3769001F2AC5 /* libIvScene.a in Frameworks */,
-				CE6960F41B4B3642001F2AC5 /* libIvCollision.a in Frameworks */,
+				CEAE5A541B7826260078090B /* libIvScene.a in Frameworks */,
+				CEAE5A531B7826210078090B /* libIvCollision.a in Frameworks */,
 				CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */,
 				CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */,
 				CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */,
@@ -164,8 +171,8 @@
 		20286C29FDCF999611CA2CEA /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				CE6960F51B4B3735001F2AC5 /* IvScene.xcodeproj */,
-				CE6960EC1B4B3620001F2AC5 /* IvCollision.xcodeproj */,
+				CEAE5A331B7824980078090B /* IvScene.xcodeproj */,
+				CEAE5A2D1B7824820078090B /* IvCollision.xcodeproj */,
 				CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */,
 				CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */,
 				CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */,
@@ -192,6 +199,10 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE5E14591B7707B700D66A2A /* Info.plist */,
+				CEAE5A271B7824650078090B /* Barrel.txt */,
+				CEAE5A281B7824650078090B /* Tank.txt */,
+				CEAE5A291B7824650078090B /* Turret.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -207,22 +218,6 @@
 				CE9C453D0D74C79D00FBB88B /* OpenGL.framework */,
 			);
 			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
-		CE6960ED1B4B3620001F2AC5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE6960F11B4B3620001F2AC5 /* libIvCollision.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		CE6960F61B4B3735001F2AC5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE6960FA1B4B3735001F2AC5 /* libIvScene.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		CE9C45480D74C80100FBB88B /* Products */ = {
@@ -257,6 +252,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CEAE5A2E1B7824820078090B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEAE5A321B7824820078090B /* libIvCollision.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEAE5A341B7824980078090B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEAE5A381B7824980078090B /* libIvScene.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -271,8 +282,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				CE6960FC1B4B3764001F2AC5 /* PBXTargetDependency */,
-				CE6960F31B4B363C001F2AC5 /* PBXTargetDependency */,
+				CEAE5A3C1B7824C40078090B /* PBXTargetDependency */,
+				CEAE5A3A1B7824C00078090B /* PBXTargetDependency */,
 				CE9C45740D74CA3300FBB88B /* PBXTargetDependency */,
 				CE9C45760D74CA3300FBB88B /* PBXTargetDependency */,
 				CE9C45780D74CA3300FBB88B /* PBXTargetDependency */,
@@ -303,8 +314,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = CE6960ED1B4B3620001F2AC5 /* Products */;
-					ProjectRef = CE6960EC1B4B3620001F2AC5 /* IvCollision.xcodeproj */;
+					ProductGroup = CEAE5A2E1B7824820078090B /* Products */;
+					ProjectRef = CEAE5A2D1B7824820078090B /* IvCollision.xcodeproj */;
 				},
 				{
 					ProductGroup = CE9C45540D74C82D00FBB88B /* Products */;
@@ -319,8 +330,8 @@
 					ProjectRef = CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */;
 				},
 				{
-					ProductGroup = CE6960F61B4B3735001F2AC5 /* Products */;
-					ProjectRef = CE6960F51B4B3735001F2AC5 /* IvScene.xcodeproj */;
+					ProductGroup = CEAE5A341B7824980078090B /* Products */;
+					ProjectRef = CEAE5A331B7824980078090B /* IvScene.xcodeproj */;
 				},
 				{
 					ProductGroup = CE9C45480D74C80100FBB88B /* Products */;
@@ -335,20 +346,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		CE6960F11B4B3620001F2AC5 /* libIvCollision.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libIvCollision.a;
-			remoteRef = CE6960F01B4B3620001F2AC5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE6960FA1B4B3735001F2AC5 /* libIvScene.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libIvScene.a;
-			remoteRef = CE6960F91B4B3735001F2AC5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CE9C454C0D74C80100FBB88B /* libIvUtility.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -377,6 +374,20 @@
 			remoteRef = CE9C455D0D74C84100FBB88B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CEAE5A321B7824820078090B /* libIvCollision.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIvCollision.a;
+			remoteRef = CEAE5A311B7824820078090B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEAE5A381B7824980078090B /* libIvScene.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIvScene.a;
+			remoteRef = CEAE5A371B7824980078090B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -384,6 +395,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEAE5A2B1B7824650078090B /* Tank.txt in Resources */,
+				CEAE5A2C1B7824650078090B /* Turret.txt in Resources */,
+				CEAE5A2A1B7824650078090B /* Barrel.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,16 +416,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CE6960F31B4B363C001F2AC5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IvCollision;
-			targetProxy = CE6960F21B4B363C001F2AC5 /* PBXContainerItemProxy */;
-		};
-		CE6960FC1B4B3764001F2AC5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IvScene;
-			targetProxy = CE6960FB1B4B3764001F2AC5 /* PBXContainerItemProxy */;
-		};
 		CE9C45740D74CA3300FBB88B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IvEngine;
@@ -432,13 +436,22 @@
 			name = IvGraphics;
 			targetProxy = CE9C45790D74CA3300FBB88B /* PBXContainerItemProxy */;
 		};
+		CEAE5A3A1B7824C00078090B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvCollision;
+			targetProxy = CEAE5A391B7824C00078090B /* PBXContainerItemProxy */;
+		};
+		CEAE5A3C1B7824C40078090B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvScene;
+			targetProxy = CEAE5A3B1B7824C40078090B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C0E91AC608A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				COPY_PHASE_STRIP = NO;
@@ -459,7 +472,7 @@
 					../../../common/IvCollision,
 					../../../common/IvScene,
 				);
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -479,7 +492,6 @@
 		C0E91AC708A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -495,7 +507,7 @@
 					../../../common/IvCollision,
 					../../../common/IvScene,
 				);
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -514,6 +526,7 @@
 		C0E91ACA08A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -530,6 +543,7 @@
 		C0E91ACB08A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

@@ -49,10 +49,39 @@
 			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = IvGraphics;
 		};
+		CE9C45730D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45530D74C82D00FBB88B /* IvEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IvEngine;
+		};
+		CE9C45750D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45470D74C80100FBB88B /* IvUtility.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IvUtility;
+		};
+		CE9C45770D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C454D0D74C81500FBB88B /* IvMath.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IvMath;
+		};
+		CE9C45790D74CA3300FBB88B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9C45590D74C84100FBB88B /* IvGraphics.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = IvGraphics;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE5E14591B7707B700D66A2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.1.1/lib-MacOS-10.8/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -123,6 +152,7 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE5E14591B7707B700D66A2A /* Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -186,6 +216,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				CE9C45740D74CA3300FBB88B /* PBXTargetDependency */,
+				CE9C45760D74CA3300FBB88B /* PBXTargetDependency */,
+				CE9C45780D74CA3300FBB88B /* PBXTargetDependency */,
+				CE9C457A0D74CA3300FBB88B /* PBXTargetDependency */,
 			);
 			name = Example;
 			productInstallPath = "$(HOME)/Applications";
@@ -287,6 +321,29 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		CE9C45740D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvEngine;
+			targetProxy = CE9C45730D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+		CE9C45760D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvUtility;
+			targetProxy = CE9C45750D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+		CE9C45780D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvMath;
+			targetProxy = CE9C45770D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+		CE9C457A0D74CA3300FBB88B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IvGraphics;
+			targetProxy = CE9C45790D74CA3300FBB88B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		C0E91AC608A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -303,15 +360,11 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					/Users/jvsquare/Projects/Ivy3/src/common/Libs/OSXDebug,
-					/Users/jvsquare/Projects/Ivy3/src/gl,
-					/Users/jvsquare/Projects/Ivy3/src/glew/lib,
-					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.1.1/lib-MacOS-10.8",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.1.1/lib-MacOS-10.8\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -334,15 +387,11 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					/Users/jvsquare/Projects/Ivy3/src/common/Libs/OSXDebug,
-					/Users/jvsquare/Projects/Ivy3/src/gl,
-					/Users/jvsquare/Projects/Ivy3/src/glew/lib,
-					"/Users/jvsquare/Projects/Ivy3/src/glfw-3.1.1/lib-MacOS-10.8",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../glfw-3.1.1/lib-MacOS-10.8\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -357,6 +406,7 @@
 		C0E91ACA08A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -373,6 +423,7 @@
 		C0E91ACB08A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

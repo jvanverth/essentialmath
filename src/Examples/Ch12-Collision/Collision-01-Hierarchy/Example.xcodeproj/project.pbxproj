@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE55F8D61B78415500E6A6C1 /* conning.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8CF1B78415500E6A6C1 /* conning.txt */; };
+		CE55F8D71B78415500E6A6C1 /* dive_planes.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8D01B78415500E6A6C1 /* dive_planes.txt */; };
+		CE55F8D81B78415500E6A6C1 /* periscope.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8D11B78415500E6A6C1 /* periscope.txt */; };
+		CE55F8D91B78415500E6A6C1 /* propeller.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8D21B78415500E6A6C1 /* propeller.txt */; };
+		CE55F8DA1B78415500E6A6C1 /* rudder.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8D31B78415500E6A6C1 /* rudder.txt */; };
+		CE55F8DB1B78415500E6A6C1 /* sub_body.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8D41B78415500E6A6C1 /* sub_body.txt */; };
+		CE55F8DC1B78415500E6A6C1 /* tail.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8D51B78415500E6A6C1 /* tail.txt */; };
 		CE6960F41B4B3642001F2AC5 /* libIvCollision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6960F11B4B3620001F2AC5 /* libIvCollision.a */; };
 		CE6960FD1B4B3769001F2AC5 /* libIvScene.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6960FA1B4B3735001F2AC5 /* libIvScene.a */; };
 		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
@@ -112,6 +119,14 @@
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE55F8CD1B78413100E6A6C1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE55F8CF1B78415500E6A6C1 /* conning.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = conning.txt; sourceTree = "<group>"; };
+		CE55F8D01B78415500E6A6C1 /* dive_planes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dive_planes.txt; sourceTree = "<group>"; };
+		CE55F8D11B78415500E6A6C1 /* periscope.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = periscope.txt; sourceTree = "<group>"; };
+		CE55F8D21B78415500E6A6C1 /* propeller.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = propeller.txt; sourceTree = "<group>"; };
+		CE55F8D31B78415500E6A6C1 /* rudder.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rudder.txt; sourceTree = "<group>"; };
+		CE55F8D41B78415500E6A6C1 /* sub_body.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sub_body.txt; sourceTree = "<group>"; };
+		CE55F8D51B78415500E6A6C1 /* tail.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tail.txt; sourceTree = "<group>"; };
 		CE6960EC1B4B3620001F2AC5 /* IvCollision.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvCollision.xcodeproj; path = ../../../common/IvCollision/IvCollision.xcodeproj; sourceTree = "<group>"; };
 		CE6960F51B4B3735001F2AC5 /* IvScene.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IvScene.xcodeproj; path = ../../../common/IvScene/IvScene.xcodeproj; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.1.1/lib-MacOS-10.8/libglfw3.a"; sourceTree = "<group>"; };
@@ -192,6 +207,14 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE55F8CD1B78413100E6A6C1 /* Info.plist */,
+				CE55F8CF1B78415500E6A6C1 /* conning.txt */,
+				CE55F8D01B78415500E6A6C1 /* dive_planes.txt */,
+				CE55F8D11B78415500E6A6C1 /* periscope.txt */,
+				CE55F8D21B78415500E6A6C1 /* propeller.txt */,
+				CE55F8D31B78415500E6A6C1 /* rudder.txt */,
+				CE55F8D41B78415500E6A6C1 /* sub_body.txt */,
+				CE55F8D51B78415500E6A6C1 /* tail.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -384,6 +407,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE55F8DC1B78415500E6A6C1 /* tail.txt in Resources */,
+				CE55F8D91B78415500E6A6C1 /* propeller.txt in Resources */,
+				CE55F8DB1B78415500E6A6C1 /* sub_body.txt in Resources */,
+				CE55F8DA1B78415500E6A6C1 /* rudder.txt in Resources */,
+				CE55F8D81B78415500E6A6C1 /* periscope.txt in Resources */,
+				CE55F8D61B78415500E6A6C1 /* conning.txt in Resources */,
+				CE55F8D71B78415500E6A6C1 /* dive_planes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +489,7 @@
 					../../../common/IvCollision,
 					../../../common/IvScene,
 				);
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -495,7 +525,7 @@
 					../../../common/IvCollision,
 					../../../common/IvScene,
 				);
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

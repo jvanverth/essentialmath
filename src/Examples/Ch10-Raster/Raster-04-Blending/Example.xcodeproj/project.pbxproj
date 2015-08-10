@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE55F8BB1B783F8500E6A6C1 /* darkdots.tga in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8B51B783F8500E6A6C1 /* darkdots.tga */; };
+		CE55F8BC1B783F8500E6A6C1 /* fence.tga in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8B61B783F8500E6A6C1 /* fence.tga */; };
+		CE55F8BD1B783F8500E6A6C1 /* glowdots.tga in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8B71B783F8500E6A6C1 /* glowdots.tga */; };
+		CE55F8BE1B783F8500E6A6C1 /* image.tga in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8B81B783F8500E6A6C1 /* image.tga */; };
+		CE55F8BF1B783F8500E6A6C1 /* textureShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8B91B783F8500E6A6C1 /* textureShader.glslf */; };
+		CE55F8C01B783F8500E6A6C1 /* textureShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CE55F8BA1B783F8500E6A6C1 /* textureShader.glslv */; };
 		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
 		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
 		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
@@ -82,6 +88,13 @@
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE55F8B51B783F8500E6A6C1 /* darkdots.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = darkdots.tga; sourceTree = "<group>"; };
+		CE55F8B61B783F8500E6A6C1 /* fence.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = fence.tga; sourceTree = "<group>"; };
+		CE55F8B71B783F8500E6A6C1 /* glowdots.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = glowdots.tga; sourceTree = "<group>"; };
+		CE55F8B81B783F8500E6A6C1 /* image.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = image.tga; sourceTree = "<group>"; };
+		CE55F8B91B783F8500E6A6C1 /* textureShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslf; sourceTree = "<group>"; };
+		CE55F8BA1B783F8500E6A6C1 /* textureShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslv; sourceTree = "<group>"; };
+		CE5E14591B7707B700D66A2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.1.1/lib-MacOS-10.8/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -149,6 +162,8 @@
 				CE9C45660D74C89400FBB88B /* Game.h */,
 				CE9C45620D74C88600FBB88B /* Player.cpp */,
 				CE9C45630D74C88600FBB88B /* Player.h */,
+				CE55F8B91B783F8500E6A6C1 /* textureShader.glslf */,
+				CE55F8BA1B783F8500E6A6C1 /* textureShader.glslv */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -156,6 +171,11 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE5E14591B7707B700D66A2A /* Info.plist */,
+				CE55F8B51B783F8500E6A6C1 /* darkdots.tga */,
+				CE55F8B61B783F8500E6A6C1 /* fence.tga */,
+				CE55F8B71B783F8500E6A6C1 /* glowdots.tga */,
+				CE55F8B81B783F8500E6A6C1 /* image.tga */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -308,6 +328,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE55F8BC1B783F8500E6A6C1 /* fence.tga in Resources */,
+				CE55F8C01B783F8500E6A6C1 /* textureShader.glslv in Resources */,
+				CE55F8BD1B783F8500E6A6C1 /* glowdots.tga in Resources */,
+				CE55F8BE1B783F8500E6A6C1 /* image.tga in Resources */,
+				CE55F8BF1B783F8500E6A6C1 /* textureShader.glslf in Resources */,
+				CE55F8BB1B783F8500E6A6C1 /* darkdots.tga in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,7 +378,6 @@
 		C0E91AC608A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				COPY_PHASE_STRIP = NO;
@@ -365,7 +390,7 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -385,7 +410,6 @@
 		C0E91AC708A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -393,7 +417,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -412,6 +436,7 @@
 		C0E91ACA08A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -428,6 +453,7 @@
 		C0E91ACB08A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

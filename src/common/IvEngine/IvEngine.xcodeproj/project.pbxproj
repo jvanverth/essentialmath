@@ -116,7 +116,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0620;
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "IvEngine" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -154,6 +154,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -175,6 +176,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
@@ -201,6 +203,7 @@
 					../IvMath,
 					../IvGraphics,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -221,6 +224,7 @@
 					../IvMath,
 					../IvGraphics,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OBJROOT = build;
 				PREBINDING = NO;
 				SYMROOT = ../Libs;

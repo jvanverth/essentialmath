@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE5472C11B782C5300FBFA59 /* textureShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CE5472BE1B782C5300FBFA59 /* textureShader.glslv */; };
+		CE5472C51B782C7900FBFA59 /* image.tga in Resources */ = {isa = PBXBuildFile; fileRef = CE5472C41B782C6300FBFA59 /* image.tga */; };
+		CE55F83E1B782E8500E6A6C1 /* textureShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CE55F83D1B782E8500E6A6C1 /* textureShader.glslf */; };
 		CE92666319B2A0940051D56D /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE92666219B2A0940051D56D /* libglfw3.a */; };
 		CE9C453E0D74C79D00FBB88B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453D0D74C79D00FBB88B /* OpenGL.framework */; };
 		CE9C45400D74C7AD00FBB88B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C453F0D74C7AD00FBB88B /* Foundation.framework */; };
@@ -19,10 +22,6 @@
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
 		CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4D19B2B65C008870FC /* IOKit.framework */; };
 		CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */; };
-		CEC373C01B77916C00F1EA30 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEC373BF1B77916C00F1EA30 /* Info.plist */; };
-		CEC373C21B77922900F1EA30 /* image.tga in Resources */ = {isa = PBXBuildFile; fileRef = CEC373C11B7791A900F1EA30 /* image.tga */; };
-		CEF01E0B1A3532300074BE84 /* textureShader.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CEF01E0A1A3532300074BE84 /* textureShader.glslf */; };
-		CEF01E0D1A35323A0074BE84 /* textureShader.glslv in Resources */ = {isa = PBXBuildFile; fileRef = CEF01E0C1A35323A0074BE84 /* textureShader.glslv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +85,10 @@
 
 /* Begin PBXFileReference section */
 		8D0C4E970486CD37000505A6 /* ExampleD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE5472BE1B782C5300FBFA59 /* textureShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslv; sourceTree = "<group>"; };
+		CE5472C41B782C6300FBFA59 /* image.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = image.tga; sourceTree = "<group>"; };
+		CE55F83D1B782E8500E6A6C1 /* textureShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslf; sourceTree = "<group>"; };
+		CE5E14591B7707B700D66A2A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE92666219B2A0940051D56D /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../../glfw-3.1.1/lib-MacOS-10.8/libglfw3.a"; sourceTree = "<group>"; };
 		CE9C453D0D74C79D00FBB88B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		CE9C453F0D74C7AD00FBB88B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -100,10 +103,6 @@
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
-		CEC373BF1B77916C00F1EA30 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEC373C11B7791A900F1EA30 /* image.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = image.tga; sourceTree = "<group>"; };
-		CEF01E0A1A3532300074BE84 /* textureShader.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslf; sourceTree = "<group>"; };
-		CEF01E0C1A35323A0074BE84 /* textureShader.glslv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShader.glslv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,8 +156,8 @@
 				CE9C45660D74C89400FBB88B /* Game.h */,
 				CE9C45620D74C88600FBB88B /* Player.cpp */,
 				CE9C45630D74C88600FBB88B /* Player.h */,
-				CEF01E0A1A3532300074BE84 /* textureShader.glslf */,
-				CEF01E0C1A35323A0074BE84 /* textureShader.glslv */,
+				CE55F83D1B782E8500E6A6C1 /* textureShader.glslf */,
+				CE5472BE1B782C5300FBFA59 /* textureShader.glslv */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -166,11 +165,11 @@
 		20286C2CFDCF999611CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CEC373C11B7791A900F1EA30 /* image.tga */,
-				CEC373BF1B77916C00F1EA30 /* Info.plist */,
+				CE5E14591B7707B700D66A2A /* Info.plist */,
+				CE5472C41B782C6300FBFA59 /* image.tga */,
 			);
 			name = Resources;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		20286C32FDCF999611CA2CEA /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
@@ -320,10 +319,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEC373C21B77922900F1EA30 /* image.tga in Resources */,
-				CEF01E0B1A3532300074BE84 /* textureShader.glslf in Resources */,
-				CEF01E0D1A35323A0074BE84 /* textureShader.glslv in Resources */,
-				CEC373C01B77916C00F1EA30 /* Info.plist in Resources */,
+				CE5472C51B782C7900FBFA59 /* image.tga in Resources */,
+				CE55F83E1B782E8500E6A6C1 /* textureShader.glslf in Resources */,
+				CE5472C11B782C5300FBFA59 /* textureShader.glslv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,7 +366,6 @@
 		C0E91AC608A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				COPY_PHASE_STRIP = NO;
@@ -401,7 +398,6 @@
 		C0E91AC708A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = .;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -428,6 +424,7 @@
 		C0E91ACA08A95435008D54AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -444,6 +441,7 @@
 		C0E91ACB08A95435008D54AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
