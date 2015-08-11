@@ -194,6 +194,12 @@ reshapeCallback(GLFWwindow* window, int w, int h)
 static void 
 keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    // only handle ASCII chars
+    if (key > 127)
+    {
+        return;
+    }
+    
     if (action == GLFW_PRESS || action == GLFW_REPEAT) 
     {
         IvGame::mGame->mEventHandler->KeyDown( key );   // Handle key down event
