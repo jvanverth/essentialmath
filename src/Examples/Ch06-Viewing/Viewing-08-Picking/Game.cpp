@@ -108,7 +108,7 @@ Game::UpdateObjects( float /*dt*/ )
 {
     // handle picking
     unsigned int h, v;
-    if (mEventHandler->IsMouseDown( h, v ))
+    if (mEventHandler->IsMousePressed( h, v ))
     {
         // get the pick ray
         IvVector3 ray = GetPickRay( (float) h, (float) v, IvRenderer::mRenderer->GetFOV(),
@@ -117,8 +117,6 @@ Game::UpdateObjects( float /*dt*/ )
         // compute intersection with z=0 plane
         float t = -mEyePoint.z/ray.z;
         mClickPosition = mEyePoint + t*ray;
-
-        mEventHandler->MouseUp();
     }
         
 }   // End of Game::Update()
