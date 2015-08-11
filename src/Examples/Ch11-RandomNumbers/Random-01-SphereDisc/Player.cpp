@@ -211,9 +211,8 @@ Player::Update( float dt )
     mRotate = rotate*mRotate;
     mRotate.Normalize();
         
-    if (IvGame::mGame->mEventHandler->IsKeyDown('m'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('m'))
     {
-        IvGame::mGame->mEventHandler->KeyUp('m');
         mMode = (mMode+1)%4;
         IvCPVertex* dataPtr = (IvCPVertex*) mVertices->BeginLoadData();
         for (unsigned int i = 0; i < 1500; ++i)
@@ -240,7 +239,7 @@ Player::Update( float dt )
     }
 
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         mRotate.Identity();
         mScale = 1.0f;

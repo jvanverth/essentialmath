@@ -103,7 +103,7 @@ Player::Update( float dt )
         rebuildCurve = true;
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         if (mRun)
         {
@@ -118,8 +118,6 @@ Player::Update( float dt )
         mContinuity = 0.0f;
         mBias = 0.0f;
         rebuildCurve = true;
-        
-        IvGame::mGame->mEventHandler->KeyUp(' ');
     }
 
     if (rebuildCurve)

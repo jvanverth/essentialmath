@@ -106,7 +106,7 @@ Player::Update( float dt )
     float heading = 0.0f, pitch = 0.0f, roll = 0.0f;
 
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         if (mRun)
         {
@@ -125,16 +125,13 @@ Player::Update( float dt )
             // start 'er up again
             mRun = true;
         }
-
-        IvGame::mGame->mEventHandler->KeyUp(' ');
     }
 
     // swap orientation reps
-    if (IvGame::mGame->mEventHandler->IsKeyDown('x'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('x'))
     {
         mUseQuat = !mUseQuat;
 
-        IvGame::mGame->mEventHandler->KeyUp('x');
         mNumPoints = 0;
     }
 

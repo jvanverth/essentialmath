@@ -241,20 +241,16 @@ Player::Update( float dt )
     }
 
     // change texture
-    if (IvGame::mGame->mEventHandler->IsKeyDown('t'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('t'))
     {
         mCurrentTexIndex = (mCurrentTexIndex + 1) % NUM_TEX;
 
         mShaderScale->GetUniform("Texture")->SetValue(mTextures[mCurrentTexIndex]);
         mShaderClamp->GetUniform("Texture")->SetValue(mTextures[mCurrentTexIndex]);
-
-        IvGame::mGame->mEventHandler->KeyUp('t');
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('s'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('s'))
     {
-        IvGame::mGame->mEventHandler->KeyUp('s');
-
         if (IvRenderer::mRenderer->GetShaderProgram() == mShaderClamp)
             IvRenderer::mRenderer->SetShaderProgram(mShaderScale);
         else

@@ -45,7 +45,7 @@ bool                    gIsFullscreen = false;
 PCHAR*  CommandLineWToArgvA( PWCHAR CmdLine, int* _argc );
 
 void    CALLBACK OnKeyboard( UINT nChar, bool bKeyDown, bool bAltDown );
-void    CALLBACK OnMouse( bool bLeftButtonDown, bool bRightButtonDown, bool bMiddleButtonDown, 
+void    CALLBACK OnMouse(bool bLeftButtonDown, bool bRightButtonDown, bool bMiddleButtonDown, 
                          bool bSideButton1Down, bool bSideButton2Down, int nMouseWheelDelta, 
                          int xPos, int yPos );
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -569,6 +569,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_LBUTTONDOWN:
     case WM_RBUTTONDOWN:
     case WM_MBUTTONDOWN:
+    case WM_LBUTTONUP:
+    case WM_RBUTTONUP:
+    case WM_MBUTTONUP:
         {
             bool bLeftDown = ((wParam & MK_LBUTTON) != 0);
             bool bRightDown = ((wParam & MK_RBUTTON) != 0);
@@ -587,7 +590,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             OnMouse(bLeftDown, bRightDown, bMiddleDown, false, false, 0, xPos, yPos);
         }
         break;
-
+    
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
@@ -601,13 +604,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void CALLBACK OnKeyboard( UINT nChar, bool bKeyDown, bool bAltDown )
 {
     UINT theChar = MapVirtualKey( nChar, 2 );
+    // Handle Extended ASCII only
+    if (theChar > 255)
+    {
+        return;
+    }
     if ( bKeyDown)
     {
-        IvGame::mGame->mEventHandler->KeyDown( theChar );   // Handle key down event
+        IvGame::mGame->mEventHandler->OnKeyDown( theChar );   // Handle key down event
     }
     else
     {
-        IvGame::mGame->mEventHandler->KeyUp( theChar ); // Handle key up event
+        IvGame::mGame->mEventHandler->OnKeyUp( theChar ); // Handle key up event
     }
 }
 
@@ -620,14 +628,13 @@ void CALLBACK OnMouse( bool bLeftButtonDown, bool bRightButtonDown, bool bMiddle
 {
     if ( bLeftButtonDown )
     {
-        IvGame::mGame->mEventHandler->MouseDown( xPos, yPos );
+        IvGame::mGame->mEventHandler->OnMouseDown( xPos, yPos );
     }
     else
     {
-        IvGame::mGame->mEventHandler->MouseUp();
+        IvGame::mGame->mEventHandler->OnMouseUp();
     }
 }
-
 
 //-------------------------------------------------------------------------------
 // @ GetTime()

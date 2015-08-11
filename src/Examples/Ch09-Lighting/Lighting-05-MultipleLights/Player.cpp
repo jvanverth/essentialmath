@@ -235,14 +235,13 @@ Player::Update( float dt )
         materialChanged = true;
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('c'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('c'))
     {
-        IvGame::mGame->mEventHandler->KeyUp('c');
         mCurrentLight = (mCurrentLight + 1) % NUM_LIGHTS;
     }
 
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         mLightPos[0] = IvVector3(-15.0f, -10.0f, 0.0f);
         mLightPos[1] = IvVector3(15.0f, -10.0f, 0.0f);

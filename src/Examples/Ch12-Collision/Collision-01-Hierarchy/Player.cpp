@@ -279,15 +279,13 @@ Player::Update( float dt )
         update = true;
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('q'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('q'))
     {
         IvHierarchy::gDisplayHierarchyBounds = !IvHierarchy::gDisplayHierarchyBounds;
-        IvGame::mGame->mEventHandler->KeyUp('q');
     }
-    if (IvGame::mGame->mEventHandler->IsKeyDown('e'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('e'))
     {
         IvHierarchy::gDisplayLeafBounds = !IvHierarchy::gDisplayLeafBounds;
-        IvGame::mGame->mEventHandler->KeyUp('e');
     }
 
     // For ease of use, just update the entire scene if any transforms have

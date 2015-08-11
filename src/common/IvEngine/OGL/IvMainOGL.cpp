@@ -194,8 +194,8 @@ reshapeCallback(GLFWwindow* window, int w, int h)
 static void 
 keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    // only handle ASCII chars
-    if (key > 127)
+    // Handle Extended ASCII only
+    if (key > 255)
     {
         return;
     }

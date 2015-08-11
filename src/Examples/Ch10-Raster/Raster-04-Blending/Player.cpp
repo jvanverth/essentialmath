@@ -248,7 +248,7 @@ Player::Update( float dt )
     mTranslate += xlate;
     
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         mRotate.Identity();
         mScale = 1.0f;
@@ -256,18 +256,15 @@ Player::Update( float dt )
     }
 
     // change texture
-    if (IvGame::mGame->mEventHandler->IsKeyDown('t'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('t'))
     {
         mCurrentBlendTexIndex = (mCurrentBlendTexIndex + 1) % NUM_BLEND_TEX;
-        IvGame::mGame->mEventHandler->KeyUp('t');
     }
 
     // change blending mode
-    if (IvGame::mGame->mEventHandler->IsKeyDown('b'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('b'))
     {
         mBlendMode = (BlendMode)((mBlendMode + 1) % kBlendModeCount);
-
-        IvGame::mGame->mEventHandler->KeyUp('b');
     }
 }   // End of Player::Update()
 

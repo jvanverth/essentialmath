@@ -226,7 +226,7 @@ Player::Update( float dt )
 
     // cycle through the filtering modes - note that we need to set the filtering modes for
     // both textures, as these are stored as a part of BindTexture
-    if (IvGame::mGame->mEventHandler->IsKeyDown('f'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('f'))
     {
         switch (mFilter)
         {
@@ -249,8 +249,6 @@ Player::Update( float dt )
             mFilter = FILTER_BILERP;
             break;
         };
-
-        IvGame::mGame->mEventHandler->KeyUp('f');
     }
 
 }   // End of Player::Update()

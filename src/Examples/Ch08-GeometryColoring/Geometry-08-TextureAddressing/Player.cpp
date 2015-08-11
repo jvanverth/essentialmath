@@ -225,23 +225,20 @@ Player::Update( float dt )
     }
 
     // change texture
-    if (IvGame::mGame->mEventHandler->IsKeyDown('t'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('t'))
     {
         mCurrentTexIndex = (mCurrentTexIndex + 1) % NUM_TEX;
 
         mShader->GetUniform("Texture")->SetValue(mTextures[mCurrentTexIndex]);
-
-        IvGame::mGame->mEventHandler->KeyUp('t');
     }
 
     // change texture UVs
-    if (IvGame::mGame->mEventHandler->IsKeyDown('c'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('c'))
     {
         mCurrentUVIndex = (mCurrentUVIndex + 1) % NUM_UVS;
-        IvGame::mGame->mEventHandler->KeyUp('c');
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('h'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('h'))
     {
         int i;
 
@@ -249,10 +246,8 @@ Player::Update( float dt )
 
         for (i = 0; i < NUM_TEX; i++)
             mTextures[i]->SetAddressingU(mHorizontalWrap ? kWrapTexAddr : kClampTexAddr);
-
-        IvGame::mGame->mEventHandler->KeyUp('h');
     }
-    if (IvGame::mGame->mEventHandler->IsKeyDown('v'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('v'))
     {
         int i;
 
@@ -260,8 +255,6 @@ Player::Update( float dt )
 
         for (i = 0; i < NUM_TEX; i++)
             mTextures[i]->SetAddressingV(mVerticalWrap ? kWrapTexAddr : kClampTexAddr);
-
-        IvGame::mGame->mEventHandler->KeyUp('v');
     }
 
 

@@ -120,7 +120,7 @@ Player::Update( float dt )
     xlate.Translation( xlatevector );
     
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         mTransform.Identity();
     }

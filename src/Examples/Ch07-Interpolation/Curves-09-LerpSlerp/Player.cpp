@@ -108,7 +108,7 @@ void
 Player::Update( float dt )
 {
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         if (mRun)
         {
@@ -121,14 +121,12 @@ Player::Update( float dt )
         {
             mRun = true;
         }
-        IvGame::mGame->mEventHandler->KeyUp(' ');
     }
 
     // toggle spline correction
-    if (IvGame::mGame->mEventHandler->IsKeyDown('c'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('c'))
     {
         mCorrection = !mCorrection;
-        IvGame::mGame->mEventHandler->KeyUp('c');
     }
 
     // animate!

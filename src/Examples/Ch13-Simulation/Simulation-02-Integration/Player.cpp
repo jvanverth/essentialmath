@@ -114,10 +114,8 @@ Player::Update( float dt )
     // we'll use a fixed integration time to get fixed results at all frame rates
     dt = .01f;
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('m'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('m'))
     {
-        IvGame::mGame->mEventHandler->KeyUp('m');
-
         mMode = (Mode)((mMode+1)%kMaxMode);
         SetWindowTitle( modeStrings[mMode] );
 

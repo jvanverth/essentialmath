@@ -179,26 +179,22 @@ Player::Update( float dt )
     mRotate = rotate*mRotate;
     
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         mRotate.Identity();
         mScale = 1.0f;
     }
 
     // switch filtering mode
-    if (IvGame::mGame->mEventHandler->IsKeyDown('f'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('f'))
     {
         mBilerp = !mBilerp;
-
-        IvGame::mGame->mEventHandler->KeyUp('f');
     }
 
     // switch texture
-    if (IvGame::mGame->mEventHandler->IsKeyDown('t'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('t'))
     {
         mCheckerboard = !mCheckerboard;
-
-        IvGame::mGame->mEventHandler->KeyUp('t');
     }
 
 }   // End of Player::Update()

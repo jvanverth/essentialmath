@@ -166,10 +166,9 @@ Game::UpdateObjects( float dt )
     }
 
     // toggle projection
-    if (mEventHandler->IsKeyDown('p'))
+    if (mEventHandler->IsKeyPressed('p'))
     {
         mUseOrthographic = !mUseOrthographic;
-        mEventHandler->KeyUp('p');
     }
 
     // reset

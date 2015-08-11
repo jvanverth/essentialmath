@@ -80,7 +80,7 @@ Player::~Player()
 void
 Player::Update( float dt )
 {
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         if (mRun)
         {
@@ -91,8 +91,6 @@ Player::Update( float dt )
         {
             mRun = true;
         }
-
-        IvGame::mGame->mEventHandler->KeyUp(' ');
     }
 
     if (mRun)

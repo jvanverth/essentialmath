@@ -86,7 +86,7 @@ void
 Player::Update( float dt )
 {
     // update based on input
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         if (mRun)
         {
@@ -97,15 +97,11 @@ Player::Update( float dt )
         {
             mRun = true;
         }
-        
-        IvGame::mGame->mEventHandler->KeyUp(' ');
     }
 
-    if (IvGame::mGame->mEventHandler->IsKeyDown('m'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('m'))
     {
         mMode = (mMode + 1)%4;
-        
-        IvGame::mGame->mEventHandler->KeyUp('m');
     }
 
     if (mRun)

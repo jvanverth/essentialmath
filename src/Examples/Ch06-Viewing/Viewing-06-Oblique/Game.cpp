@@ -162,10 +162,9 @@ Game::UpdateObjects( float dt )
     }
 
     // toggle projection
-    if (mEventHandler->IsKeyDown('p'))
+    if (mEventHandler->IsKeyPressed('p'))
     {
         mUseCabinet = !mUseCabinet;
-        mEventHandler->KeyUp('p');
     }
 
     // reset

@@ -148,14 +148,13 @@ Player::Update( float dt )
     xlate.Set( x, y, z );
     mTranslate += xlate;
     
-    if (IvGame::mGame->mEventHandler->IsKeyDown('s'))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed('s'))
     {
-        IvGame::mGame->mEventHandler->KeyUp('s');
         mUseSkyShader = !mUseSkyShader;
     }
 
     // clear transform
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         mRotate.Identity();
         mScale = 1.0f;
