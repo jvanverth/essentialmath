@@ -201,6 +201,8 @@ IvGame::Update()
         UpdateObjects(mClock->GetElapsedTime());
     }
     
+    mEventHandler->Update();
+    
 }   // End of IvGame::Update()
 
 

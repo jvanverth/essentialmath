@@ -202,11 +202,11 @@ keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     
     if (action == GLFW_PRESS || action == GLFW_REPEAT) 
     {
-        IvGame::mGame->mEventHandler->KeyDown( key );   // Handle key down event
+        IvGame::mGame->mEventHandler->OnKeyDown( key );   // Handle key down event
     }
     else 
     {
-        IvGame::mGame->mEventHandler->KeyUp( key ); // Handle key up event
+        IvGame::mGame->mEventHandler->OnKeyUp( key ); // Handle key up event
     }
     
 }
@@ -220,11 +220,11 @@ mouseCallback(GLFWwindow* window, int button, int action, int mods)
         {
             double x, y;
             glfwGetCursorPos(window, &x, &y);
-            IvGame::mGame->mEventHandler->MouseDown( (int)x, (int)y );
+            IvGame::mGame->mEventHandler->OnMouseDown( (int)x, (int)y );
         }
         else
         {
-            IvGame::mGame->mEventHandler->MouseUp();
+            IvGame::mGame->mEventHandler->OnMouseUp();
         }
     }
 }

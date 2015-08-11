@@ -36,9 +36,11 @@ IvEventHandler::IvEventHandler()
 {
     // clear key states
     memset(mKeys, 0, sizeof(bool)*256);
+    memset(mKeyPressed, 0, sizeof(bool)*256);
+    memset(mKeyReleased, 0, sizeof(bool)*256);
     mMouseX = 0;  mMouseY = 0;
-    mMouseDown = false;
-        
+    mMouseDown = mMousePressed = mMouseReleased = false;
+
 }   // End of IvEventHandler::IvEventHandler()
 
 //-------------------------------------------------------------------------------
@@ -80,11 +82,16 @@ operator<<(IvWriter& out, const IvEventHandler& source)
 // Handle key down event
 //-------------------------------------------------------------------------------
 void
-IvEventHandler::KeyDown( unsigned char key )
+IvEventHandler::OnKeyDown( unsigned char key )
 {
     if (isupper(key))
         key = tolower(key);
-    mKeys[key] = true;          // Mark It As true
+    
+    if (!mKeys[key])
+    {
+        mKeys[key] = true;
+        mKeyPressed[key] = true;
+    }
 
 }   // End of IvEventHandler::KeyDown()
 
@@ -96,11 +103,16 @@ IvEventHandler::KeyDown( unsigned char key )
 // Handle key up event
 //-------------------------------------------------------------------------------
 void
-IvEventHandler::KeyUp( unsigned char key )
+IvEventHandler::OnKeyUp( unsigned char key )
 {
     if (isupper(key))
         key = tolower(key);
-    mKeys[key] = false;         // Mark It As false
+    
+    if (mKeys[key])
+    {
+        mKeys[key] = false;
+        mKeyReleased[key] = true;
+    }
     
 }   // End of IvEventHandler::KeyUp()
 
@@ -112,9 +124,13 @@ IvEventHandler::KeyUp( unsigned char key )
 // Handle mouse down event
 //-------------------------------------------------------------------------------
 void
-IvEventHandler::MouseDown( unsigned int h, unsigned int v )
+IvEventHandler::OnMouseDown( unsigned int h, unsigned int v )
 {
-    mMouseDown = true;
+    if (!mMouseDown)
+    {
+        mMouseDown = true;
+        mMousePressed = true;
+    }
     mMouseX = h;
     mMouseY = v;
 
@@ -128,8 +144,12 @@ IvEventHandler::MouseDown( unsigned int h, unsigned int v )
 // Handle mouse up event
 //-------------------------------------------------------------------------------
 void
-IvEventHandler::MouseUp()
+IvEventHandler::OnMouseUp()
 {
-    mMouseDown = false;
+    if (mMouseDown)
+    {
+        mMouseDown = false;
+        mMouseReleased = true;
+    }
     
 }   // End of IvEventHandler::MouseUp()

@@ -212,7 +212,7 @@ Player::Update( float dt )
     mTank.SetLocalTranslate(mTank.GetLocalTranslate(kTankIndex) + xlate, kTankIndex);
     
     // clear transforms
-    if (IvGame::mGame->mEventHandler->IsKeyDown(' '))
+    if (IvGame::mGame->mEventHandler->IsKeyPressed(' '))
     {
         IvQuat reset;
         reset.Identity();
