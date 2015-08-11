@@ -188,7 +188,10 @@ visibilityCallback(GLFWwindow* window, int vis)
 static void
 reshapeCallback(GLFWwindow* window, int w, int h)
 {
-    IvRenderer::mRenderer->Resize( w, h );
+    int width;
+    int height;
+    glfwGetFramebufferSize(window, &width, &height);
+    IvRenderer::mRenderer->Resize( width, height );
 }
 
 static void 
@@ -220,7 +223,19 @@ mouseCallback(GLFWwindow* window, int button, int action, int mods)
         {
             double x, y;
             glfwGetCursorPos(window, &x, &y);
-            IvGame::mGame->mEventHandler->OnMouseDown( (int)x, (int)y );
+            
+            int width;
+            int height;
+            glfwGetFramebufferSize(window, &width, &height);
+            
+            int windowWidth;
+            int windowHeight;
+            glfwGetWindowSize(window, &windowWidth, &windowHeight);
+            
+            double scaleX = width/(float)windowWidth;
+            double scaleY = height/(float)windowHeight;
+            
+            IvGame::mGame->mEventHandler->OnMouseDown( (int)scaleX*x, (int)scaleY*y );
         }
         else
         {
