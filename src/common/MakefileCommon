@@ -9,16 +9,8 @@ CC = g++
 
 CFLAGS_EXT = 
 ifeq ($(PLATFORM), Linux)
-	CFLAGS_EXT = -ffriend-injection
+	CFLAGS_EXT = -ffriend-injection -std=c++11
 endif 
-
-ifeq ($(PLATFORM), OSX)
- 	CFLAGS_EXT = -fvisibility-inlines-hidden
-endif
-
-ifeq ($(PLATFORM), MinGW)
- 	CFLAGS_EXT = -DGLEW_STATIC
-endif
 
 release: BUILD = Release
 release: CFLAGS = -c -O $(CFLAGS_EXT) 
@@ -47,11 +39,7 @@ TARGETDIR = $(COMMONDIR)/Libs/$(PLATFORM)$(BUILD)
 OBJSDIR = $(PLATFORM)$(BUILD)
 HEADERSDIR = $(COMMONDIR)/Includes$(TARGETSUFFIX)
 
-ifeq ($(PLATFORM),Linux)
-	SYSIPATH = -I/usr/X11R6/include
-else
-	SYSIPATH =
-endif
+SYSIPATH = 
 
 $(OBJSDIR):
 	-mkdir -p $(OBJSDIR)

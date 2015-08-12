@@ -14,6 +14,8 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+#include <string.h>
+
 #include "IvShaderProgramOGL.h"
 #include "IvAssert.h"
 #include "IvFragmentShaderOGL.h"

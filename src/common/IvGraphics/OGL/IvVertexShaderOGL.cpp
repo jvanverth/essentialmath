@@ -17,7 +17,7 @@
 #include "IvVertexShaderOGL.h"
 #include "IvAssert.h"
 #include "IvDebugger.h"
-#include <string>
+#include <string.h>
 
 //-------------------------------------------------------------------------------
 //-- Static Members -------------------------------------------------------------

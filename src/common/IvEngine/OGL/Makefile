@@ -1,9 +1,5 @@
 IVTARGET = IvEngineOGL
-ifeq ($(PLATFORM), OSX)
-IVINCLUDEDIRS = -I../../IvGraphics -I../../IvUtility -I../../IvMath -I../ -I../../..
-else
-IVINCLUDEDIRS = -I../../IvGraphics -I../../IvUtility -I../../IvMath -I../ -I../../.. -I../../../glew/include
-endif
+IVINCLUDEDIRS = -I../../IvGraphics -I../../IvUtility -I../../IvMath -I../ -I../../.. -I../../../glew-1.12.0/include -I../../../glfw-3.1.1/include
 COPYHEADERS = False
 COMMONDIR = ../..
 TARGETSUFFIX = /OGL
