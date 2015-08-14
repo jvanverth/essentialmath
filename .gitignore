@@ -1,12 +1,15 @@
 *.sdf
 *.suo
 *.exe
+*.elf
 *.ilk
 Debug.txt
 Debug\ D3D11
 Release\ D3D11
 Debug\ OGL
 Release\ OGL
+LinuxRelease
+LinuxDebug
 *.vcxproj.user
 Win32Debug
 Win32Release

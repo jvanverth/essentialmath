@@ -13,7 +13,8 @@ Chapter: FORCE
 	cd 'Simulation-03-Torque' && $(MAKE) $(BUILD)
 	cd 'Simulation-04-Tank' && $(MAKE) $(BUILD)
 	cd 'Simulation-05-LinCollision' && $(MAKE) $(BUILD)
-	cd 'Simulation-06-AngCollision' && $(MAKE) $(BUILD)
+	cd 'Simulation-06-RotCollision' && $(MAKE) $(BUILD)
+	cd 'Simulation-07-Friction' && $(MAKE) $(BUILD)
 
 FORCE:
 

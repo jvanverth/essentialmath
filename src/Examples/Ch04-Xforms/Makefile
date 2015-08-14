@@ -12,7 +12,7 @@ Chapter: FORCE
 	cd 'Transforms-02-Centered' && $(MAKE) $(BUILD)
 	cd 'Transforms-03-Separate' && $(MAKE) $(BUILD)
 	cd 'Transforms-04-Tank' && $(MAKE) $(BUILD)
-	cd 'Transforms-05-SceneGraph' && $(MAKE) $(BUILD)
+	cd 'Transforms-05-Hierarchy' && $(MAKE) $(BUILD)
 
 FORCE:
 

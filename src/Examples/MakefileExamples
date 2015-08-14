@@ -1,27 +1,11 @@
 PLATFORM = Linux
 
 ifeq ($(PLATFORM),Linux)
-	CFLAGS_EXT = -ffriend-injection
+	CFLAGS_EXT = -ffriend-injection -std=c++11
 	TARGET_RELEASE = Example.elf
 	TARGET_DEBUG = ExampleD.elf
-	SYSLIBS = -lGLEW -lglut -lGLU -lGL	
-	SYSLPATH = -L/usr/X11R6/lib
-endif
-
-ifeq ($(PLATFORM),OSX)
- 	CFLAGS_EXT = -fvisibility-inlines-hidden
-	TARGET_RELEASE = Example
-	TARGET_DEBUG = ExampleD
-	SYSLIBS = -framework GLUT -framework OpenGL -framework	Foundation -framework AppKit
-	SYSLPATH =
-endif
-
-ifeq ($(PLATFORM),MinGW)
-	CFLAGS_EXT = 
-	TARGET_RELEASE = Example.exe
-	TARGET_DEBUG = ExampleD.exe
-	SYSLIBS = -lglew32s -lglut32 -lglu32 -lopengl32	
-	SYSLPATH = -L../../../../glew/lib -L../../../../gl
+	SYSLIBS = -lGLEW -lglfw3 -lGLU -lGL -lX11 -lXxf86vm -lXrandr -lpthread -lXinerama -lXi -lXcursor	
+	SYSLPATH = -L../../../../glfw-3.1.1/src
 endif
 
 LIBRARIES = $(SYSLIBS) $(EXTRAIVLIBS)  -lIvEngineOGL -lIvEngine -lIvGraphicsOGL -lIvGraphics -lIvMath -lIvUtility $(SYSLIBS)

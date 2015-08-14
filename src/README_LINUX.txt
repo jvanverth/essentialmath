@@ -7,11 +7,11 @@ If you have not already done so, please read the all-platform introductory file,
 ***********************************************************************
 *** System Requirements / Installation ***
 
-* This code distribution supports Linux.  This CDROM was built and tested using Ubuntu Linux 7.04 (Feisty Fawn).
+* This code distribution supports Linux.  It was built and tested using Ubuntu Linux 15.04 (Vivid Vervet).
 
-* The contents of the book's CDROM must be copied (keeping the hierarchy) to the local machine, as described in README_FIRST.TXT
+* The contents of the distribution must be copied (keeping the hierarchy) to the local machine, as described in README_FIRST.TXT
 
-* Packages for OpenGL, GLU, GLUT, and GLEW must be installed - see the section "OpenGL Specifics" below for details
+* Packages for OpenGL and GLEW must be installed, and the GLFW library must be built - see the section "OpenGL Specifics" below for details
 
 * Before building examples you will need to create the necessary libraries.
 See "Building Libraries and Demo Applications", for more details.
@@ -20,17 +20,27 @@ See "Building Libraries and Demo Applications", for more details.
 ***********************************************************************
 *** OpenGL Specifics ***
 
-The system must have development packages for OpenGL, GLU, and GLUT installed.  These should be part of a standard Linux distribution, although they may not be installed by default.  For example, under Ubuntu, you may need to use the package manager to install them.  
+The system must have development packages for OpenGL and GLEW installed.  These should be part of a standard Linux distribution, although they may not be installed by default.  For example, under Ubuntu, you may need to use the package manager to install them:
 
-The path to OpenGL, GLU, GLUT, and GLEW include and library files may be different on your system.  If so, you will need to change the SYSIPATH variable in /common/MakefileCommon, and the SYSLPATH variable in /Examples/MakefileExamples.
+	sudo apt-get install mesa-common-dev libglew-dev
 
-You should be sure that you are using the correct drivers for your video card.  With some cards the Ubuntu default drivers, for one, do not support the necessary OpenGL features.
+The path to OpenGL and GLEW include and library files may be different on your system.  If so, you will need to change the SYSIPATH variable in /common/MakefileCommon, and the SYSLPATH variable in /Examples/MakefileExamples. If GLEW is not available on your system, the necessary build files can be found in src/glew-1.12.0/.
 
+In addition, you will need to build the GLFW library. Again, the necessary dependencies may not be installed, namely Cmake and the xorg libraries. The following will build GLFW under Ubuntu:
+
+	sudo apt-get install cmake xorg-dev
+	cd src/glfw-3.1.1
+	cmake .
+	make
+
+However it is built, the Makefiles are expecting to find libglfw3.a in src/glfw-3.1.1/src/.
+
+Finally, you should be sure that you are using the correct drivers for your video card.  
 
 ***********************************************************************
 *** Building Libraries and Demo Applications ***
 
-The libraries and applications use the OpenGL GLUT and GLEW systems.  As mentioned, for best results you will need to make sure these are installed on your system.
+The libraries and applications use the OpenGL GLFW and GLEW systems.  As mentioned, for best results you will need to make sure these are installed on your system.
 
 The Linux platform uses "make" from a command prompt to build any or all of the libraries and demo applications.  A hierarchical build system allows the user to rebuild at any desired level in the code hierarchy.
 
@@ -48,7 +58,7 @@ To build, open a command prompt and change directory to the desired directory:
 
 * To rebuild a specific demo application, change directories to that demo's subdirectory under /Examples/Ch* and build as described below.
 
-* To build, note that Linux is the default platform.  To build any part of the code for Linux, use the following commands in the desired build directory:
+* To build any part of the code for Linux, use the following commands in the desired build directory:
 
 * For release builds:
 
