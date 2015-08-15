@@ -12,7 +12,7 @@ Microsoft Microsoft Visual Studio 2013 or later must be installed on the develop
 
 If you wish to use the D3D11 configurations and run the executables outside of Visual Studio, you may need to add src/Windows into your path via the PATH environment variable. This includes the Win32 shared library d3dcompiler_47.dll which is used to compile the HLSL shader files. Alternatively, you can copy d3dcompiler_47.dll into the same directory as any demo executable, or copy it to C:\Windows.
 
-If you get an error saying something like "Cannot open D3DCompiler_<x>.dll", the DLL we have given you is not the right one for your system. Try looking in your Direct3D setup, for example C:\Program Files (x86)\Windows Kits\8.1\bin\x86, for the latest version. You will need the Win32 DLL, not the Win64 DLL, as the projects are compiled to 32-bit.
+If you get an error saying something like "Cannot open D3DCompiler_4x.dll", the DLL we have given you is not the right one for your system. Try looking in your Direct3D setup, for example C:\Program Files (x86)\Windows Kits\8.1\bin\x86, for the latest version. You will need the Win32 DLL, not the Win64 DLL, as the projects are compiled to 32-bit.
 
 Microsoft Visual Studio Specifics
 ---------------------------------
