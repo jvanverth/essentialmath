@@ -31,7 +31,7 @@ To build any of the demo applications open the .xcodeproj for that particular ap
 
     src/Examples/Ch04-Xforms/Transforms-01-Interaction/Example.xcodeproj
 
-Each demo application .xcodeproj file includes the project files for any Iv libraries upon which the demo depends. This allows for easy rebuilding of the necessary libraries, as well as making it easier to step through engine code as desired when working with the demos.
+Before building you may need to switch the current scheme to be Example, rather than one of the sublibraries. Each demo application .xcodeproj file includes the project files for any Iv libraries upon which the demo depends. This allows for easy rebuilding of the necessary libraries, as well as making it easier to step through engine code as desired when working with the demos. 
 
 Running Demo Applications
 -------------------------
