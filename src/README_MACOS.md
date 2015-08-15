@@ -25,7 +25,7 @@ and build all of the projects contained in it (IvCollision, IvCurves, IvEngine, 
 
 To build a single Iv* library (such as IvMath), either select and build the project from within the Common workspace described above, or open the .xcodeproj file for that library (e.g. /common/IvMath/IvMath.xcodeproj) and build the project. 
 
-Unlike the other platforms, the library .xcodeproj files (and, by inclusion, the Common.xcodeproj file as well) will not copy that library's header files to /common/Includes at the end of compilation.  Instead, the include paths are explicitly set in each example's project file.  However, the library itself is built to the /common/Libs subdirectory that matches the build configuration (OSXRelease or OSXDebug).  However, the libraries themselves reference other Iv library headers directly from that library's source directory.  As a result, the libraries may be built in any order.
+Unlike the other platforms, the library .xcodeproj files (and, by inclusion, the Common.xcodeproj file as well) will not copy that library's header files to /common/Includes at the end of compilation.  Instead, the include paths are explicitly set in each example's project file.  However, the library itself is built to the /common/Libs subdirectory that matches the build configuration (OSXRelease or OSXDebug), and the libraries themselves reference other Iv library headers directly from that library's source directory.  As a result, the libraries may be built in any order.
 
 To build any of the demo applications open the .xcodeproj for that particular application from the matching chapter and demo subdirectory of /Examples.  For example, the first demo for Chapter 4 may be found in:
 
