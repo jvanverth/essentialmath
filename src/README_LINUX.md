@@ -20,16 +20,16 @@ OpenGL Specifics
 
 The system must have development packages for OpenGL and GLEW installed.  These should be part of a standard Linux distribution, although they may not be installed by default.  For example, under Ubuntu, you may need to use the package manager to install them:
 
-> sudo apt-get install mesa-common-dev libglew-dev
+    sudo apt-get install mesa-common-dev libglew-dev
 
 The path to OpenGL and GLEW include and library files may be different on your system.  If so, you will need to change the SYSIPATH variable in /common/MakefileCommon, and the SYSLPATH variable in /Examples/MakefileExamples. If GLEW is not available on your system, the necessary build files can be found in src/glew-1.12.0/.
 
 In addition, you will need to build the GLFW library. Again, the necessary dependencies may not be installed, namely Cmake and the xorg libraries. The following will build GLFW under Ubuntu:
 
-> sudo apt-get install cmake xorg-dev
-> cd src/glfw-3.1.1
-> cmake .
-> make
+    sudo apt-get install cmake xorg-dev
+    cd src/glfw-3.1.1
+    cmake .
+    make
 
 However it is built, the Makefiles are expecting to find libglfw3.a in src/glfw-3.1.1/src/.
 
@@ -60,19 +60,19 @@ To build, open a command prompt and change directory to the desired directory:
 
 * For release builds:
 
-> make
+    make
 
 OR
 
-> make release
+    make release
 
 * For debugging builds:
 
-> make debug
+    make debug
 
 * To clear out all builds of the current directory for Linux
 
-> make clean
+    make clean
 
 Running Demo Applications
 -------------------------
