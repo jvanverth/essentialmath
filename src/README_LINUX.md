@@ -1,5 +1,5 @@
-Linux Platform-Specific README FILE
-==================================
+Linux Platform-Specific Instructions
+====================================
 
 If you have not already done so, please read the all-platform introductory file, ../README.md, which is located in the main directory.
 
