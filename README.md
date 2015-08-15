@@ -1,7 +1,7 @@
 Essential Math Demos
 ====================
 
-This depot contains the sample code and example applications referenced in the book [Essential Mathematics for Games and Interactive Applications](http://www.essentialmath.com), along with additional supplementary code and files that should be of interest to readers of the book.
+This depot contains the sample code and example applications referenced in the book [Essential Mathematics for Games and Interactive Applications](http://www.essentialmath.com/book.htm), along with additional supplementary code and files that should be of interest to readers of the book.
 
 The following platforms are supported:
 
