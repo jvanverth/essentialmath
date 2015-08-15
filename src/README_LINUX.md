@@ -1,11 +1,10 @@
-***********************************************************************
-*** Linux Platform-Specific README FILE ***
+Linux Platform-Specific README FILE
+==================================
 
-If you have not already done so, please read the all-platform introductory file, /README_FIRST.TXT, which is located in the same directory as this file.
+If you have not already done so, please read the all-platform introductory file, ../README.md, which is located in the main directory.
 
-
-***********************************************************************
-*** System Requirements / Installation ***
+System Requirements / Installation
+----------------------------------
 
 * This code distribution supports Linux.  It was built and tested using Ubuntu Linux 15.04 (Vivid Vervet).
 
@@ -16,29 +15,28 @@ If you have not already done so, please read the all-platform introductory file,
 * Before building examples you will need to create the necessary libraries.
 See "Building Libraries and Demo Applications", for more details.
 
-
-***********************************************************************
-*** OpenGL Specifics ***
+OpenGL Specifics
+----------------
 
 The system must have development packages for OpenGL and GLEW installed.  These should be part of a standard Linux distribution, although they may not be installed by default.  For example, under Ubuntu, you may need to use the package manager to install them:
 
-	sudo apt-get install mesa-common-dev libglew-dev
+> sudo apt-get install mesa-common-dev libglew-dev
 
 The path to OpenGL and GLEW include and library files may be different on your system.  If so, you will need to change the SYSIPATH variable in /common/MakefileCommon, and the SYSLPATH variable in /Examples/MakefileExamples. If GLEW is not available on your system, the necessary build files can be found in src/glew-1.12.0/.
 
 In addition, you will need to build the GLFW library. Again, the necessary dependencies may not be installed, namely Cmake and the xorg libraries. The following will build GLFW under Ubuntu:
 
-	sudo apt-get install cmake xorg-dev
-	cd src/glfw-3.1.1
-	cmake .
-	make
+> sudo apt-get install cmake xorg-dev
+> cd src/glfw-3.1.1
+> cmake .
+> make
 
 However it is built, the Makefiles are expecting to find libglfw3.a in src/glfw-3.1.1/src/.
 
 Finally, you should be sure that you are using the correct drivers for your video card.  
 
-***********************************************************************
-*** Building Libraries and Demo Applications ***
+Building Libraries and Demo Applications
+----------------------------------------
 
 The libraries and applications use the OpenGL GLFW and GLEW systems.  As mentioned, for best results you will need to make sure these are installed on your system.
 
@@ -62,29 +60,26 @@ To build, open a command prompt and change directory to the desired directory:
 
 * For release builds:
 
-make
+> make
 
 OR
 
-make release
+> make release
 
 * For debugging builds:
 
-make debug
+> make debug
 
 * To clear out all builds of the current directory for Linux
 
-make clean
+> make clean
 
-
-***********************************************************************
-*** Running Demo Applications ***
+Running Demo Applications
+-------------------------
 
 * The demos may be run from the command line, or may be run directly.  The demo executables are built into the same directory as the demo's source files.  The release executable is Example.elf, and the debug executable is ExampleD.elf.
 
 * Some of the demos have no data files and may thus be run from any location.  However, numerous demos use local data files in the current directory.  As a result, it is best to run the demos from the directory to which they were built.
 
-
-***********************************************************************
 
 
