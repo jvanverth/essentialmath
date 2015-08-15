@@ -30,9 +30,9 @@ Please consult the platform-specific README files for any additional platform-sp
 * How to build and run the demo applications
 
 Supported platforms and their README files are as follows:
-* Linux:   src/README_LINUX.TXT
-* MacOS X: src/README_MACOS.TXT
-* Win32:   src/README_WIN32.TXT
+* Linux:   src/README_LINUX.md
+* MacOS X: src/README_MACOS.md
+* Windows:   src/README_WINDOWS.md
 
 Source Directory Structure
 --------------------------
