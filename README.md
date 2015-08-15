@@ -18,7 +18,7 @@ Installing The Libraries and Examples
 
 You can clone the depot using
 
-```git clone https://github.com/jvanverth/essentialmath.git```
+    git clone https://github.com/jvanverth/essentialmath.git
   
 Or you can [download it directly](https://github.com/jvanverth/essentialmath/archive/master.zip).
 
