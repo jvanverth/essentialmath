@@ -52,7 +52,7 @@ The following is a listing of the directories and demos in src/:
 * /IvScene - classes implementing a basic hierarchical data structure
 * /IvUtility - low-level system support code such as file I/O
 
-In addition, after building, the /common directory will include two other directories, whose contents are derived from the libraries above:
+&nbsp;&nbsp; In addition, after building, the /common directory will include two other directories, whose contents are derived from the libraries above:
 
 * Includes: When built, will contain all of the .h files for all of the Iv libraries.  Building an Iv library (on any platform) will automatically copy that library's latest headers to this directory.  The demo applications all reference this directory (using relative paths) for all Iv* headers.  For those platforms using Makefiles, you will need to build the common directory to generate these files.
 
