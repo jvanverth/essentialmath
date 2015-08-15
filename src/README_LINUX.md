@@ -56,21 +56,19 @@ To build, open a command prompt and change directory to the desired directory:
 
 * To rebuild a specific demo application, change directories to that demo's subdirectory under /Examples/Ch* and build as described below.
 
-* To build any part of the code for Linux, use the following commands in the desired build directory:
-
-* For release builds:
+To build any part of the code for Linux, use the following commands in the desired build directory. For release builds:
 
     make
 
-OR
+or
 
     make release
 
-* For debugging builds:
+For debugging builds:
 
     make debug
 
-* To clear out all builds of the current directory for Linux
+To clear out all builds of the current directory for Linux
 
     make clean
 
