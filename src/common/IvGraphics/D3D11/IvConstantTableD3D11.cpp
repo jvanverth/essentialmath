@@ -155,7 +155,11 @@ get_textures:
         }
         else if (bindingDesc.Type == D3D_SIT_SAMPLER && bindingDesc.BindCount == 1)
         {
-            IvConstantDesc& constantDesc = table->mConstants[bindingDesc.Name];
+            char strippedName[256];
+            const char* samplerKeyword = strstr(bindingDesc.Name, "Sampler");
+            strncpy(strippedName, bindingDesc.Name, samplerKeyword - bindingDesc.Name);
+            strippedName[samplerKeyword - bindingDesc.Name] = '\0';
+            IvConstantDesc& constantDesc = table->mConstants[strippedName];
             constantDesc.mType = IvUniformType::kTextureUniform;
             constantDesc.mSamplerSlot = bindingDesc.BindPoint;
         }

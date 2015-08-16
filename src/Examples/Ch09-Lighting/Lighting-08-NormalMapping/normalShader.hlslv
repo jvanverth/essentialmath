@@ -5,10 +5,14 @@
 // found in the LICENSE file.
 
 float4x4 IvModelViewProjectionMatrix;
+float4x4 IvNormalMatrix;
+float3 dirLightDirection;
+
 struct VS_OUTPUT
 {
 	float4 pos : SV_POSITION;
 	float2 uv : TEXCOORD0;
+	float3 lightDir : TEXCOORD1;
 };
 
 VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 unused : COLOR0, float4 pos : POSITION )
@@ -17,6 +21,8 @@ VS_OUTPUT vs_main( float2 uv : TEXCOORD0, float4 unused : COLOR0, float4 pos : P
 
     Out.pos = mul(IvModelViewProjectionMatrix, pos);
     Out.uv = uv;
+	// transform light direction from world space to object space
+	Out.lightDir = (float3)(mul(float4(dirLightDirection, 0), IvNormalMatrix));
 
     return Out;
 }

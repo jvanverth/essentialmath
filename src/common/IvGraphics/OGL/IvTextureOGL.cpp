@@ -235,7 +235,7 @@ IvTextureOGL::Destroy()
 //-------------------------------------------------------------------------------
 void IvTextureOGL::MakeActive(unsigned int unit)
 {
-    glActiveTexture(unit);
+    glActiveTexture(GL_TEXTURE0 + unit);
     glBindTexture(GL_TEXTURE_2D, mID);
 }
 

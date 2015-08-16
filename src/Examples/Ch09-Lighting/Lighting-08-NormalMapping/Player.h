@@ -54,7 +54,8 @@ private:
     IvIndexBuffer* mPlaneIndices;
     IvVertexBuffer* mPlaneVerts;
 
-    IvTexture* mTexture;
+    IvTexture* mColorTexture;
+    IvTexture* mNormalTexture;
 
     IvVector3 mLightPos;
 

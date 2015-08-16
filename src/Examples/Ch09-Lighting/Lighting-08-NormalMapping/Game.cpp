@@ -112,7 +112,7 @@ void
 Game::Render() // Here's Where We Do All The Drawing
 {   
     // look from (-10, 2, 10) at the origin of the world 
-    IvSetDefaultViewer(-10.0f, 2.0f, 10.0f);
+    IvSetDefaultViewer(-15.0f, 2.0f, 1.0f);
     
     // draw axes
     IvDrawAxes();

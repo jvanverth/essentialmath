@@ -60,24 +60,39 @@ Player::Player()
 
     mPlaneVerts = nullptr;
 
-    mTexture = nullptr;
+    mColorTexture = nullptr;
+    mNormalTexture = nullptr;
 
-    // Load the soup can image into this texture
-    IvImage* image = IvImage::CreateFromFile("normal.tga");
+    // Load the color and normal textures
+    IvImage* image = IvImage::CreateFromFile("brickwork-texture.tga");
     if (image)
     {
-        mTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+        mColorTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
             (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
             image->GetWidth(), image->GetHeight(), image->GetPixels(), kImmutableUsage);
 
         delete image;
         image = 0;
     }
+    mColorTexture->SetMagFiltering(kBilerpTexMagFilter);
+    mColorTexture->SetMinFiltering(kBilerpTexMinFilter);
+    mColorTexture->SetAddressingU(kWrapTexAddr);
+    mColorTexture->SetAddressingV(kWrapTexAddr);
 
-    mTexture->SetMagFiltering(kBilerpTexMagFilter);
-    mTexture->SetMinFiltering(kBilerpTexMinFilter);
-    mTexture->SetAddressingU(kWrapTexAddr);
-    mTexture->SetAddressingV(kWrapTexAddr);
+    image = IvImage::CreateFromFile("brickwork_normal-map.tga");
+    if (image)
+    {
+        mNormalTexture = IvRenderer::mRenderer->GetResourceManager()->CreateTexture(
+            (image->GetBytesPerPixel() == 4) ? kRGBA32TexFmt : kRGB24TexFmt,
+            image->GetWidth(), image->GetHeight(), image->GetPixels(), kImmutableUsage);
+
+        delete image;
+        image = 0;
+    }
+    mNormalTexture->SetMagFiltering(kBilerpTexMagFilter);
+    mNormalTexture->SetMinFiltering(kBilerpTexMinFilter);
+    mNormalTexture->SetAddressingU(kWrapTexAddr);
+    mNormalTexture->SetAddressingV(kWrapTexAddr);
 
     mShader = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
         IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
@@ -85,9 +100,10 @@ Player::Player()
         IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
         "normalShader"));
 
-    mShader->GetUniform("Texture")->SetValue(mTexture);
- 
-    mLightPos = IvVector3(0.0f, 0.8f, 0.2f);
+    mShader->GetUniform("NormalTexture")->SetValue(mNormalTexture);
+    mShader->GetUniform("ColorTexture")->SetValue(mColorTexture);
+
+    mLightPos = IvVector3(-0.8f, 0.8f, 0.8f);
     mLightPos.Normalize();
 
     IvRenderer::mRenderer->SetShaderProgram(mShader);
@@ -107,7 +123,8 @@ Player::~Player()
 
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mPlaneVerts);
     
-    IvRenderer::mRenderer->GetResourceManager()->Destroy(mTexture); 
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mNormalTexture);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mColorTexture);
 
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mShader);
 }   // End of Player::~Player()
@@ -196,7 +213,7 @@ Player::Update( float dt )
     if (lightDirChanged)
     {
         IvMatrix33 rotate;
-        rotate.RotationX(r);
+        rotate.RotationY(r);
        
         mLightPos = rotate * mLightPos;
         mLightPos.Normalize();
@@ -231,7 +248,7 @@ Player::Render()
     transform(1,3) = mTranslate.y;
     transform(2,3) = mTranslate.z;
 
-    mShader->GetUniform("dirLightPosition")->SetValue(mLightPos, 0);
+    mShader->GetUniform("dirLightDirection")->SetValue(mLightPos, 0);
 
     IvSetWorldMatrix(transform);
 
@@ -265,7 +282,7 @@ Player::CreatePlane()
 
     IvTCPVertex* tempVerts = (IvTCPVertex*)(mPlaneVerts->BeginLoadData());
 
-    tempVerts->position = IvVector3(-5.0f, -5.0f, 0.0f);
+    tempVerts->position = IvVector3(0.0f, -5.0f, -5.0f);
     tempVerts->texturecoord = IvVector2(1.0f, 0.0f);
     tempVerts->color.mAlpha = 
     tempVerts->color.mRed = 
@@ -274,7 +291,7 @@ Player::CreatePlane()
 
     tempVerts++;
 
-    tempVerts->position = IvVector3(5.0f, -5.0f, 0.0f);
+    tempVerts->position = IvVector3(0.0f, -5.0f, 5.0f);
     tempVerts->texturecoord = IvVector2(1.0f, 1.0f);
     tempVerts->color.mAlpha = 
     tempVerts->color.mRed = 
@@ -283,7 +300,7 @@ Player::CreatePlane()
 
     tempVerts++;
 
-    tempVerts->position = IvVector3(-5.0f, 5.0f, 0.0f);
+    tempVerts->position = IvVector3(0.0f, 5.0f, -5.0f);
     tempVerts->texturecoord = IvVector2(0.0f, 0.0f);
     tempVerts->color.mAlpha = 
     tempVerts->color.mRed = 
@@ -292,7 +309,7 @@ Player::CreatePlane()
 
     tempVerts++;
 
-    tempVerts->position = IvVector3(5.0f, 5.0f, 0.0f);
+    tempVerts->position = IvVector3(0.0f, 5.0f, 5.0f);
     tempVerts->texturecoord = IvVector2(0.0f, 1.0f);
     tempVerts->color.mAlpha = 
     tempVerts->color.mRed = 
@@ -308,7 +325,6 @@ Player::CreatePlane()
     unsigned int i;
     for (i = 0; i < 4; i++)
         tempIndices[i] = i;
-
 
     mPlaneIndices->EndLoadData();
 

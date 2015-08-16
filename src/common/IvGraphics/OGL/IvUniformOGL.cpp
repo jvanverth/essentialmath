@@ -40,7 +40,7 @@ IvUniformOGL::IvUniformOGL(IvUniformType type, unsigned int count,
     : IvUniform( type, count )
     , mShader( shader )
     , mShaderIndex( shaderIndex)
-    , mTextureStage( 0 )
+    , mTextureStage( stage )
 {
     switch (mType)
     {
@@ -58,7 +58,6 @@ IvUniformOGL::IvUniformOGL(IvUniformType type, unsigned int count,
             break;
         case kTextureUniform:
             mValue.mTexture = 0;
-            mTextureStage = stage;
             break;
     };
 }
@@ -303,7 +302,7 @@ void IvUniformOGL::Update()
             glUniformMatrix4fv(mShaderIndex, mCount, GL_FALSE, (GLfloat*)mValue.mMatrix44);
             break;
         case kTextureUniform:
-            glUniform1iv(mShaderIndex, 1, &mTextureStage);
+            glUniform1i(mShaderIndex, mTextureStage);
             break;
     };
     

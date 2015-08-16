@@ -164,6 +164,7 @@ IvFragmentShaderOGL::CreateFromFile( const char* filename )
             ERROR_OUT("Fragment shader error: ");
             ERROR_OUT(str << std::endl);
         }
+        Destroy();
         return false;
     }
 
@@ -202,6 +203,7 @@ IvFragmentShaderOGL::CreateFromString( const char* string )
             DEBUG_OUT("Fragment shader error: ");
             DEBUG_OUT(str << std::endl);
         }
+        Destroy();
         return false;
     }
     

@@ -217,6 +217,7 @@ IvVertexShaderOGL::CreateFromFile( const char* filename )
             delete [] str;
         }
         delete [] shaderSrc;
+        Destroy();
         return false;
     }
 
@@ -261,6 +262,7 @@ IvVertexShaderOGL::CreateFromString( const char* string )
             DEBUG_OUT("Vertex shader error: ");
             DEBUG_OUT(str << std::endl);
         }
+        Destroy();
         return false;
     }
     

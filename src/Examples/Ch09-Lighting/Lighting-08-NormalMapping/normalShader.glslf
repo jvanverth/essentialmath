@@ -7,15 +7,16 @@
 #version 150
 
 in vec2 uv;
+in vec3 lightDir;
 out vec4 fragColor;
 
-uniform vec3 dirLightPosition;
-uniform sampler2D Texture;
+uniform sampler2D ColorTexture;
+uniform sampler2D NormalTexture;
 
 void main()
 {
-    vec3 normal = 2.0 * (texture(Texture, uv).rgb - vec3(0.5));
-    float lighting = clamp(dot(normal, dirLightPosition), 0.0, 1.0);
+    vec3 normal = normalize(texture(NormalTexture, uv).rgb - vec3(0.5));
+    float lighting = clamp(dot(normal, lightDir), 0.0, 1.0);
 
-    fragColor = vec4(lighting, lighting, lighting, 1.0);
+    fragColor = lighting*texture(ColorTexture, uv);
 }
