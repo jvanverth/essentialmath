@@ -20,17 +20,19 @@
 //-- Dependencies ---------------------------------------------------------------
 //-------------------------------------------------------------------------------
 
+#include <stdint.h>
+
 //-------------------------------------------------------------------------------
 //-- Typedefs, Structs ----------------------------------------------------------
 //-------------------------------------------------------------------------------
 
-typedef unsigned char       UChar8;
-typedef char                Char8;
-typedef unsigned short      UInt16;
-typedef short               Int16;
-typedef unsigned int        UInt32;
-typedef int                 Int32;
-typedef unsigned long long  UInt64;
-typedef long long           Int64;
+typedef uint8_t             UChar8;
+typedef int8_t              Char8;
+typedef uint16_t            UInt16;
+typedef int16_t             Int16;
+typedef uint32_t            UInt32;
+typedef int32_t             Int32;
+typedef uint64_t            UInt64;
+typedef int64_t             Int64;
 
 #endif // __IvTypes__h__

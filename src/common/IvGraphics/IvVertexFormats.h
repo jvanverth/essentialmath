@@ -83,7 +83,7 @@ struct IvTNPVertex
     IvVector3 position;
 };
 
-const unsigned int kIvVFSize[] =
+const size_t kIvVFSize[] =
 {
     sizeof(IvPVertex),
     sizeof(IvCPVertex),
