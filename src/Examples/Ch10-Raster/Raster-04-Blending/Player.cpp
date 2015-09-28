@@ -448,12 +448,12 @@ Player::CreateCylinder()
     mCylinderIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(
         cylinderIndexCount, nullptr, kDefaultUsage);
 
-    unsigned int* tempIndices = (unsigned int*)mCylinderIndices->BeginLoadData();
+    UInt32* tempIndices = (UInt32*)mCylinderIndices->BeginLoadData();
 
     for (j = 0; j < steps; j++)
     {
-        unsigned int baseIndex0 = steps * j;
-        unsigned int baseIndex1 = steps * (j + 1);
+        UInt32 baseIndex0 = steps * j;
+        UInt32 baseIndex1 = steps * (j + 1);
 
         // restart the strip by doubling the last and next indices
         if (j != 0)

@@ -96,8 +96,8 @@ IvCarryMultiply::RandomFloat()
 {
     union
     {
-        unsigned int mI;
-        float        mF;
+        UInt32 mI;
+        float  mF;
     } floatConv;
     floatConv.mI = 0x3f800000 | (Random() >> 9);
     float f = floatConv.mF - 1.0f;

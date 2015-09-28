@@ -395,12 +395,12 @@ Player::CreateSphere()
     mSphereIndices = IvRenderer::mRenderer->GetResourceManager()->
         CreateIndexBuffer(sphereIndexCount, nullptr, kDefaultUsage);
 
-    unsigned int* tempIndices = (unsigned int*)(mSphereIndices->BeginLoadData());
+    UInt32* tempIndices = (UInt32*)(mSphereIndices->BeginLoadData());
 
     for (j = 0; j < steps; j++)
     {
-        unsigned int baseIndex0 = steps * j;
-        unsigned int baseIndex1 = steps * ((j + 1) % steps);
+        UInt32 baseIndex0 = steps * j;
+        UInt32 baseIndex1 = steps * ((j + 1) % steps);
 
         // restart the strip by doubling the last and next indices
         if (j != 0)

@@ -377,9 +377,9 @@ Player::CreateCylinderVertexArrays()
     UInt32* tempIndexPtr = tempIndices;
     for (j = 0; j < steps; j++)
     {
-        unsigned int baseIndex0 = steps * j;
-        unsigned int baseIndex1 = steps * (j + 1);
-        unsigned int lastBaseIndex1 = baseIndex1;
+        UInt32 baseIndex0 = steps * j;
+        UInt32 baseIndex1 = steps * (j + 1);
+        UInt32 lastBaseIndex1 = baseIndex1;
 
         // restart the strip by doubling the last and next indices
         if (j != 0)

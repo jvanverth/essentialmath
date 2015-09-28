@@ -43,7 +43,7 @@ struct IvConstantDesc
         };
         struct
         {
-            int           mTextureSlot;
+            intptr_t      mTextureSlot;
             int           mSamplerSlot;
         };
     };

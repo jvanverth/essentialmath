@@ -235,7 +235,7 @@ mouseCallback(GLFWwindow* window, int button, int action, int mods)
             double scaleX = width/(float)windowWidth;
             double scaleY = height/(float)windowHeight;
             
-            IvGame::mGame->mEventHandler->OnMouseDown( (int)scaleX*x, (int)scaleY*y );
+            IvGame::mGame->mEventHandler->OnMouseDown( (int)(scaleX*x), (int)(scaleY*y) );
         }
         else
         {

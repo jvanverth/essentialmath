@@ -71,14 +71,14 @@ protected:
         // to update most uniforms
         struct
         {
-            void*                mOffset;
+            void*                 mOffset;
             IvConstantTableD3D11* mConstantTable;
         };
         // we use the texture and sampler units for textures
         struct
         {
-            int                  mTextureUnit;
-            int                  mSamplerUnit;
+            intptr_t              mTextureUnit;
+            intptr_t              mSamplerUnit;
         };
     };
 

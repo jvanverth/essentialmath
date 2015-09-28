@@ -258,8 +258,8 @@ Player::CreateStrips()
     mSharpStripIndices = IvRenderer::mRenderer->GetResourceManager()->
         CreateIndexBuffer(stripQuads * 6 - 2, nullptr, kDefaultUsage);
 
-    unsigned int* tempSmoothIndices = (unsigned int*)(mSmoothStripIndices->BeginLoadData());
-    unsigned int* tempSharpIndices = (unsigned int*)(mSharpStripIndices->BeginLoadData());
+    UInt32* tempSmoothIndices = (UInt32*)(mSmoothStripIndices->BeginLoadData());
+    UInt32* tempSharpIndices = (UInt32*)(mSharpStripIndices->BeginLoadData());
 
     *(tempSmoothIndices++) = 0;
     *(tempSmoothIndices++) = 1;

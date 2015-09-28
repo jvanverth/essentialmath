@@ -103,7 +103,7 @@ IvVertexBufferOGL::Create(IvVertexFormat format, unsigned int numVertices,
         default:
             glEnableVertexAttribArray(COLOR);
             glVertexAttribPointer(COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (GLvoid*) offset);
-            offset += 4*sizeof(unsigned char);
+            offset += 4*sizeof(UChar8);
             break;
             
         case kNPFormat:
@@ -115,7 +115,7 @@ IvVertexBufferOGL::Create(IvVertexFormat format, unsigned int numVertices,
         case kCNPFormat:
             glEnableVertexAttribArray(COLOR);
             glVertexAttribPointer(COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (GLvoid*) offset);
-            offset += 4*sizeof(unsigned char);
+            offset += 4*sizeof(UChar8);
             glEnableVertexAttribArray(NORMAL);
             glVertexAttribPointer(NORMAL, 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*) offset);
             offset += 3*sizeof(float);
@@ -127,7 +127,7 @@ IvVertexBufferOGL::Create(IvVertexFormat format, unsigned int numVertices,
             offset += 2*sizeof(float);
             glEnableVertexAttribArray(COLOR);
             glVertexAttribPointer(COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (GLvoid*) offset);
-            offset += 4*sizeof(unsigned char);
+            offset += 4*sizeof(UChar8);
             break;
             
         case kTNPFormat:

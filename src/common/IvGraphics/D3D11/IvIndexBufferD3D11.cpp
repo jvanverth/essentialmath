@@ -58,7 +58,7 @@ bool
 IvIndexBufferD3D11::Create(unsigned int numIndices, void* data, IvDataUsage usage, ID3D11Device* device)
 {
     D3D11_BUFFER_DESC indexBufferDesc;
-    indexBufferDesc.ByteWidth = sizeof(unsigned int)*numIndices;
+    indexBufferDesc.ByteWidth = sizeof(UInt32)*numIndices;
     switch (usage)
     {
     default:
@@ -150,7 +150,7 @@ IvIndexBufferD3D11::BeginLoadData()
         return nullptr;
     }
 
-    mDataPtr = (void*) new unsigned char[mNumIndices*sizeof(unsigned int)];
+    mDataPtr = (void*) new unsigned char[mNumIndices*sizeof(UInt32)];
 
     return mDataPtr;
 }
@@ -180,7 +180,7 @@ IvIndexBufferD3D11::EndLoadData()
     if (kDefaultUsage == mUsage)
     {
         // use UpdateSubresource()
-        d3dContext->UpdateSubresource(mBufferPtr, 0, nullptr, mDataPtr, mNumIndices*sizeof(unsigned int), mNumIndices*sizeof(unsigned int));
+        d3dContext->UpdateSubresource(mBufferPtr, 0, nullptr, mDataPtr, mNumIndices*sizeof(UInt32), mNumIndices*sizeof(UInt32));
     }
     else if (kDynamicUsage == mUsage)
     {
@@ -194,7 +194,7 @@ IvIndexBufferD3D11::EndLoadData()
         }
 
         void* bufferData = mappedResource.pData;
-        memcpy(bufferData, mDataPtr, mNumIndices*sizeof(unsigned int));
+        memcpy(bufferData, mDataPtr, mNumIndices*sizeof(UInt32));
 
         //  Reenable GPU access to the vertex buffer data.
         d3dContext->Unmap(mBufferPtr, 0);

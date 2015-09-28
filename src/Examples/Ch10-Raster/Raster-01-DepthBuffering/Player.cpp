@@ -237,9 +237,9 @@ Player::CreateQuad()
     mQuadIndices = IvRenderer::mRenderer->GetResourceManager()->
         CreateIndexBuffer(4, nullptr, kDefaultUsage);
 
-    unsigned int* tempIndices = (unsigned int*)(mQuadIndices->BeginLoadData());
+    UInt32* tempIndices = (UInt32*)(mQuadIndices->BeginLoadData());
 
-    int j;
+    UInt32 j;
     for (j = 0; j < 4; j++)
         *(tempIndices++) = j;
 

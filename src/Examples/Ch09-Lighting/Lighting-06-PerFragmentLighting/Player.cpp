@@ -285,9 +285,9 @@ Player::CreatePlane()
     mPlaneIndices = IvRenderer::mRenderer->GetResourceManager()->CreateIndexBuffer(4, nullptr,
                                                                                    kDefaultUsage);
 
-    unsigned int* tempIndices = (unsigned int*)mPlaneIndices->BeginLoadData();
+    UInt32* tempIndices = (UInt32*)mPlaneIndices->BeginLoadData();
 
-    unsigned int i;
+    UInt32 i;
     for (i = 0; i < 4; i++)
         tempIndices[i] = i;
 
