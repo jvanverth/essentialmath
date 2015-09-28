@@ -550,14 +550,14 @@ void IvTextureD3D11::SetMagFiltering(IvTextureMagFilter filter)
         break;
     case kBilerpMipmapNearestTexMinFilter:
         mFilter = (filter == kNearestTexMagFilter)
-            ? D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR
-            : D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
+            ? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
+            : D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
         mEnableMip = true;
         break;
     case kNearestMipmapLerpTexMinFilter:
         mFilter = (filter == kNearestTexMagFilter)
-            ? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
-            : D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
+            ? D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR
+            : D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
         mEnableMip = true;
         break;
     case kBilerpMipmapLerpTexMinFilter:
@@ -599,14 +599,14 @@ void IvTextureD3D11::SetMinFiltering(IvTextureMinFilter filter)
         break;
     case kBilerpMipmapNearestTexMinFilter:
         mFilter = (mMagFilter == kNearestTexMagFilter)
-            ? D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR
-            : D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
+            ? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
+            : D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
         mEnableMip = true;
         break;
     case kNearestMipmapLerpTexMinFilter:
         mFilter = (mMagFilter == kNearestTexMagFilter)
-            ? D3D11_FILTER_MIN_LINEAR_MAG_MIP_POINT
-            : D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
+            ? D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR
+            : D3D11_FILTER_MIN_POINT_MAG_MIP_LINEAR;
         mEnableMip = true;
         break;
     case kBilerpMipmapLerpTexMinFilter:
