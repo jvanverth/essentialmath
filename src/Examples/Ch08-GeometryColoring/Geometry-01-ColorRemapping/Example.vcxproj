@@ -301,6 +301,8 @@
     <None Include="textureShaderClamp.hlslf" />
     <None Include="textureShaderScale.glslf" />
     <None Include="textureShaderScale.hlslf" />
+    <None Include="textureShaderToneMap.glslf" />
+    <None Include="textureShaderToneMap.hlslf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

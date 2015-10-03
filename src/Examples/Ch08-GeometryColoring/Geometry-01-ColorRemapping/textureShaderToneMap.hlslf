@@ -1,0 +1,46 @@
+// Copyright (C) 2015 by James M. Van Verth and Lars M. Bishop.
+// All rights reserved.
+//
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+float scale;
+SAMPLER_2D(Texture);
+
+struct VS_OUTPUT
+{
+	float4 pos : SV_POSITION;
+	float4 color : COLOR0;
+	float2 uv : TEXCOORD0;
+};
+
+// uses John Hable's filmic curve from Uncharted 2
+// See http://www.gdcvault.com/play/1012459/Uncharted_2__HDR_Lighting
+// and http://filmicgames.com/archives/75
+
+float A = 0.22;  // Shoulder strength
+float B = 0.30;  // Linear strength
+float C = 0.10;  // Linear angle
+float D = 0.20;  // Toe strength
+float E = 0.01;  // Toe numerator
+float F = 0.30;  // Toe denominator
+float W = 11.2;  // Base white value
+
+float3 Uncharted2Tonemap(float3 x)
+{
+    return ((x*(A*x+C*B)+D*E)/(x*(A*x+B)+D*F))-E/F;
+}
+
+float4 ps_main( VS_OUTPUT input ) : SV_TARGET
+{
+	float4 texColor = TEXTURE(Texture, input.uv);
+    
+    float ExposureBias = 2.0;
+    float3 corrected = Uncharted2Tonemap(ExposureBias*scale*texColor.rgb);
+
+    float3 whiteScale = 1.0/Uncharted2Tonemap(scale*11.2/16.0);
+	corrected *= whiteScale;
+
+    float4 fragColor = float4(corrected, texColor.a);
+    return fragColor;
+}
