@@ -21,6 +21,7 @@
 		CE9C45850D74CC0600FBB88B /* libIvEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C45580D74C82D00FBB88B /* libIvEngine.a */; };
 		CE9C45870D74CC0E00FBB88B /* libIvUtility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C454C0D74C80100FBB88B /* libIvUtility.a */; };
 		CE9C458B0D74CC1B00FBB88B /* libIvGraphics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9C455E0D74C84100FBB88B /* libIvGraphics.a */; };
+		CE9F1C2C1BC01C7000E49CFB /* textureShaderToneMap.glslf in Resources */ = {isa = PBXBuildFile; fileRef = CE9F1C2B1BC01C7000E49CFB /* textureShaderToneMap.glslf */; };
 		CEAB1F4E19B2B65C008870FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4D19B2B65C008870FC /* IOKit.framework */; };
 		CEAB1F5019B2B6A8008870FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
@@ -103,6 +104,7 @@
 		CE9C45630D74C88600FBB88B /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		CE9C45650D74C89400FBB88B /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		CE9C45660D74C89400FBB88B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		CE9F1C2B1BC01C7000E49CFB /* textureShaderToneMap.glslf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textureShaderToneMap.glslf; sourceTree = "<group>"; };
 		CEAB1F4D19B2B65C008870FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		CEAB1F4F19B2B6A8008870FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -161,6 +163,7 @@
 				CE5472BE1B782C5300FBFA59 /* textureShader.glslv */,
 				CE5472BF1B782C5300FBFA59 /* textureShaderClamp.glslf */,
 				CE5472C01B782C5300FBFA59 /* textureShaderScale.glslf */,
+				CE9F1C2B1BC01C7000E49CFB /* textureShaderToneMap.glslf */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				CE5472C11B782C5300FBFA59 /* textureShader.glslv in Resources */,
 				CE5472C21B782C5300FBFA59 /* textureShaderClamp.glslf in Resources */,
 				CE5472C31B782C5300FBFA59 /* textureShaderScale.glslf in Resources */,
+				CE9F1C2C1BC01C7000E49CFB /* textureShaderToneMap.glslf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

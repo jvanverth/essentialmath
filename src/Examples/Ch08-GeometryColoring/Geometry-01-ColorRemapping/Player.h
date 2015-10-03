@@ -62,6 +62,7 @@ private:
 
     IvShaderProgram* mShaderClamp;
     IvShaderProgram* mShaderScale;
+    IvShaderProgram* mShaderToneMap;
 };
 
 #endif

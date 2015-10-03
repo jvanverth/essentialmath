@@ -9,9 +9,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-//
-//
-//
 //===============================================================================
 
 //-------------------------------------------------------------------------------
@@ -124,13 +121,21 @@ Player::Player()
         IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
         "textureShaderScale"));
 
+    mShaderToneMap = IvRenderer::mRenderer->GetResourceManager()->CreateShaderProgram(
+        IvRenderer::mRenderer->GetResourceManager()->CreateVertexShaderFromFile(
+        "textureShader"),
+        IvRenderer::mRenderer->GetResourceManager()->CreateFragmentShaderFromFile(
+        "textureShaderToneMap"));
+    
     mShaderClamp->GetUniform("Texture")->SetValue(mTextures[0]);
     mShaderScale->GetUniform("Texture")->SetValue(mTextures[0]);
+    mShaderToneMap->GetUniform("Texture")->SetValue(mTextures[0]);
 
     mColorScale = 1.0f;
 
     mShaderClamp->GetUniform("scale")->SetValue(1.0f, 0);
     mShaderScale->GetUniform("scale")->SetValue(1.0f, 0);
+    mShaderToneMap->GetUniform("scale")->SetValue(1.0f, 0);
 
     IvRenderer::mRenderer->SetShaderProgram(mShaderClamp);
 
@@ -151,10 +156,13 @@ Player::~Player()
     
     unsigned int i;
     for (i = 0; i < NUM_TEX; i++)
-        IvRenderer::mRenderer->GetResourceManager()->Destroy(mTextures[i]); 
+    {
+        IvRenderer::mRenderer->GetResourceManager()->Destroy(mTextures[i]);
+    }
 
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mShaderScale);
     IvRenderer::mRenderer->GetResourceManager()->Destroy(mShaderClamp);
+    IvRenderer::mRenderer->GetResourceManager()->Destroy(mShaderToneMap);
 
 }   // End of Player::~Player()
 
@@ -227,17 +235,27 @@ Player::Update( float dt )
     if (IvGame::mGame->mEventHandler->IsKeyDown('-'))
     {
         mColorScale -= 0.01f;
+        if (mColorScale < 0.01f)
+        {
+            mColorScale = 0.01f;
+        }
 
         mShaderClamp->GetUniform("scale")->SetValue(mColorScale, 0);
         mShaderScale->GetUniform("scale")->SetValue(mColorScale, 0);
+        mShaderToneMap->GetUniform("scale")->SetValue(mColorScale, 0);
     }
 
     if (IvGame::mGame->mEventHandler->IsKeyDown('='))
     {
         mColorScale += 0.01f;
+        if (mColorScale > 16.0f)
+        {
+            mColorScale = 16.0f;
+        }
 
         mShaderClamp->GetUniform("scale")->SetValue(mColorScale, 0);
         mShaderScale->GetUniform("scale")->SetValue(mColorScale, 0);
+        mShaderToneMap->GetUniform("scale")->SetValue(mColorScale, 0);
     }
 
     // change texture
@@ -253,6 +271,8 @@ Player::Update( float dt )
     {
         if (IvRenderer::mRenderer->GetShaderProgram() == mShaderClamp)
             IvRenderer::mRenderer->SetShaderProgram(mShaderScale);
+        else if (IvRenderer::mRenderer->GetShaderProgram() == mShaderScale)
+            IvRenderer::mRenderer->SetShaderProgram(mShaderToneMap);
         else
             IvRenderer::mRenderer->SetShaderProgram(mShaderClamp);
     }
