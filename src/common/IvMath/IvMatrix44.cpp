@@ -349,7 +349,7 @@ IvMatrix44::Transpose()
     mV[8] = temp;
 
     temp = mV[3];
-    mV[2] = mV[12];
+    mV[3] = mV[12];
     mV[12] = temp;
 
     temp = mV[6];
