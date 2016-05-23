@@ -40,7 +40,7 @@ Obstacle::Obstacle() : SimObject()
 {
     SetTranslate( IvVector3( 0.0f, 3.0f, 0.0f ) );
     
-    mElasticity = 0.25f;
+    mElasticity = 0.65f;
     SetMass(20.0f);
 
 }   // End of Obstacle::Obstacle()

@@ -248,10 +248,16 @@ SimObject::HandleCollision( SimObject* other )
         if (vDotN < 0)
             return;
 
+        // Note: this is different from the presentation in the book,
+        // which is incorrect. There is a single coefficient of restitution
+        // for each pair of objects. The following is a reasonable approximation,
+        // assuming that mElasticity represents the coefficient of resitution
+        // between this object and a perfectly elastic surface.
+        float restitution = mElasticity*other->mElasticity;
         // compute impulse factor
         float modifiedVel = vDotN/(1.0f/mMass + 1.0f/other->mMass);
-        float j1 = -(1.0f+mElasticity)*modifiedVel;
-        float j2 = (1.0f+other->mElasticity)*modifiedVel;
+        float j1 = -(1.0f+restitution)*modifiedVel;
+        float j2 = (1.0f+restitution)*modifiedVel;
 
         // update velocities
         mVelocity += j1/mMass*collisionNormal;

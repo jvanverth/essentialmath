@@ -56,7 +56,7 @@ SimObject::SimObject()
     mTranslate.Zero();
 
     mMass = 17.0f;
-    mElasticity = 0.5f;   // varies between 0 and 1
+    mElasticity = 0.7f;   // varies between 0 and 1
     mSphere.SetRadius( 1.0f );
 
     mVelocity.Zero();
@@ -301,9 +301,15 @@ SimObject::HandleCollision( SimObject* other )
         IvVector3 sum = Cross(cross1, r1) + Cross(cross2, r2);
         denominator += (sum.Dot(collisionNormal));
         
+        // Note: this is different from the presentation in the book,
+        // which is incorrect. There is a single coefficient of restitution
+        // for each pair of objects. The following is a reasonable approximation,
+        // assuming that mElasticity represents the coefficient of resitution
+        // between this object and a perfectly elastic surface.
+        float restitution = mElasticity*other->mElasticity;
         // compute j
         float modifiedVel = vDotN/denominator;
-        float j_n = -(1.0f+mElasticity)*modifiedVel;
+        float j_n = -(1.0f+restitution)*modifiedVel;
         IvVector3 impulse = j_n*collisionNormal;
         IvVector3 otherImpulse = -impulse;
         
