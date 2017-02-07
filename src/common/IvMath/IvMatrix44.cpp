@@ -572,7 +572,7 @@ IvMatrix44::Rotation( const IvVector3& axis, float angle )
     // intermediate values
     float tx = t*nAxis.x;  float ty = t*nAxis.y;  float tz = t*nAxis.z;
     float sx = s*nAxis.x;  float sy = s*nAxis.y;  float sz = s*nAxis.z;
-    float txy = tx*nAxis.y; float tyz = tx*nAxis.z; float txz = tx*nAxis.z;
+    float txy = tx*nAxis.y; float tyz = ty*nAxis.z; float txz = tx*nAxis.z;
 
     // set matrix
     mV[0] = tx*nAxis.x + c;
